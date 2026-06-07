@@ -35,7 +35,7 @@ jobs:
           restore-keys: gradle-
 
       - name: Install packages
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Add Android platform
         run: npx cap add android
