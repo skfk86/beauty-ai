@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Beauty AI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
   --bg:#060108;--bg2:#0d060e;--card:#160d16;--card2:#1f1220;
@@ -46,7 +47,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 /* ─── APP ─── */
 #app{width:100%;height:100%;display:none;flex-direction:column;position:relative;overflow:hidden}
 .screen{position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;
-  scrollbar-width:none;padding-bottom:calc(66px + env(safe-area-inset-bottom,0px));display:none}
+  scrollbar-width:none;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px));display:none}
 .screen::-webkit-scrollbar{display:none}
 .screen.on{display:block;animation:fu .28s ease forwards}
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
@@ -126,7 +127,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 
 /* CATEGORIES */
 .sec-lbl{padding:14px 18px 9px;font-size:14px;font-weight:700;color:var(--gold2)}
-.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px;margin-bottom:16px}
 .cat-btn{background:var(--card);border:1px solid var(--border);border-radius:13px;
   padding:13px 12px;display:flex;align-items:center;gap:10px;
   cursor:pointer;transition:all .18s}
@@ -164,7 +165,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   text-align:center;max-width:90px}
 .bc-cat{font-size:9px;color:var(--gold);background:var(--gold-d);
   border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:8px}
-.view-all{margin:14px 18px 6px;background:var(--card);border:1px solid var(--border);
+.view-all{margin:14px 18px 20px;background:var(--card);border:1px solid var(--border);
   border-radius:12px;padding:13px;display:flex;align-items:center;justify-content:center;
   gap:8px;font-size:13px;font-weight:700;color:var(--dim);cursor:pointer}
 .view-all:active{background:var(--card2)}
@@ -204,7 +205,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 .mov.open{display:flex}
 .pm{background:var(--bg2);border-radius:22px 22px 0 0;padding:18px;
   width:100%;max-height:88vh;overflow-y:auto;scrollbar-width:none;
-  animation:su .28s ease;padding-bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+  animation:su .28s ease;padding-bottom:calc(30px + env(safe-area-inset-bottom,0px))}
 .pm::-webkit-scrollbar{display:none}
 @keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .pm-handle{width:36px;height:3px;background:var(--border);border-radius:2px;margin:0 auto 16px}
@@ -309,7 +310,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .plb{flex:1;font-size:13px;font-weight:700}
 .pvl{font-size:11px;color:var(--dim)}
-.danger-btn{width:100%;background:none;border:1px solid var(--border);border-radius:11px;
+.danger-btn{width:100%;background:none;margin-bottom:20px;border:1px solid var(--border);border-radius:11px;
   padding:12px;color:var(--dim);font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;margin:0 18px 18px;width:calc(100% - 36px)}
 
 /* ─── BOTTOM NAV ─── */
@@ -319,7 +320,8 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   padding-bottom:env(safe-area-inset-bottom,0px);z-index:200}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;
   padding:8px 2px 6px;cursor:pointer;transition:all .2s;gap:2px}
-.ni-ic{font-size:20px;transition:transform .2s}
+.ni-ic{font-size:20px;transition:transform .2s;display:flex;align-items:center;justify-content:center}
+.ni-ic i{font-size:18px}
 .ni-lb{font-size:9px;color:var(--muted);font-weight:700;transition:color .2s}
 .ni.on .ni-lb{color:var(--rose2)}
 .ni.on .ni-ic{transform:scale(1.1)}
@@ -345,7 +347,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 
 <!-- ONBOARDING -->
 <div id="ob">
-  <div class="ob-logo"><div class="ob-mh">BA</div><div class="ob-sub">BEAUTY AI</div></div>
+  <div class="ob-logo"><div class="ob-mh"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div class="ob-sub">BEAUTY AI</div></div>
   <div>
     <div style="font-size:26px;font-weight:900;color:var(--text)">Beauty AI</div>
     <div style="font-size:12px;color:var(--dim);margin-top:3px">مساعدتكِ الذكية لعالم الجمال</div>
@@ -354,7 +356,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     اكتشفي أشهر البراندات العالمية واحصلي على شرح صوتي ذكي لكل منتج 💕
   </div>
   <div class="ob-box">
-    <label>🔑 مفتاح Groq API (مجاني)</label>
+    <label><i class="fa-solid fa-key" style="color:var(--gold2)"></i> مفتاح Groq API (مجاني)</label>
     <input class="ob-inp" type="password" id="ob-key" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" dir="ltr">
     <div class="ob-hint">احصلي على مفتاح مجاني من <span style="color:var(--gold2)">console.groq.com</span></div>
     <button class="ob-btn" onclick="finishOB()">ابدئي التجربة ✨</button>
@@ -371,7 +373,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="hdr">
       <div class="hdr-menu"><span></span><span></span><span></span></div>
       <div class="hdr-title"><div class="ht-main">Beauty AI</div></div>
-      <button class="hdr-vip">👑 VIP</button>
+      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="greet">
       <div class="greet-heart">❤️</div>
@@ -384,7 +386,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <div class="wave-side" id="wl"></div>
       <div class="mic-wrap">
         <div class="mic-outer">
-          <button class="mic-btn" id="mic-btn" onclick="toggleVoice()">🎤</button>
+          <button class="mic-btn" id="mic-btn" onclick="toggleVoice()"><i class="fa-solid fa-microphone"></i></button>
         </div>
       </div>
       <div class="wave-side right" id="wr"></div>
@@ -392,47 +394,48 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="voice-hint" id="vh">اضغطي وتحدثي...</div>
 
     <div class="ai-box" id="ai-box">
-      <div class="ai-hd">✨ Beauty AI</div>
+      <div class="ai-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Beauty AI</div>
       <div class="ai-txt" id="ai-txt"></div>
-      <button class="spk-btn" id="spk-btn" onclick="speakR()">🔊 استمعي</button>
+      <button class="spk-btn" id="spk-btn" onclick="speakR()"><i class="fa-solid fa-volume-high"></i> استمعي</button>
     </div>
 
     <div class="txt-row">
-      <span class="srch-ic">💬</span>
+      <span class="srch-ic"><i class="fa-regular fa-comment-dots"></i></span>
       <input type="text" id="txt-in" placeholder="اكتبي سؤالكِ هنا..."
         onkeydown="if(event.key==='Enter')sendTxt()">
-      <button class="txt-send" onclick="sendTxt()">⬆️</button>
+      <button class="txt-send" onclick="sendTxt()"><i class="fa-solid fa-paper-plane"></i></button>
     </div>
 
     <div class="sec-lbl">استكشفي عالم الجمال</div>
     <div class="cat-grid">
       <div class="cat-btn" onclick="goF('مكياج')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.35),rgba(180,40,90,.15))">💄</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.35),rgba(180,40,90,.15))"><i class="fa-solid fa-palette" style="color:var(--rose2)"></i></div>
         <div><div class="cat-nm">مكياج</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('عطور')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(196,136,96,.35),rgba(212,175,55,.15))">🌸</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(196,136,96,.35),rgba(212,175,55,.15))"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
         <div><div class="cat-nm">عطور</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('عناية')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))">💆</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))"><i class="fa-solid fa-droplet" style="color:#60c0d0"></i></div>
         <div><div class="cat-nm">عناية بالبشرة</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('شعر')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(130,90,200,.3),rgba(190,90,160,.15))">✨</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(130,90,200,.3),rgba(190,90,160,.15))"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
         <div><div class="cat-nm">عناية بالشعر</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="navTo('brands')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.2),rgba(196,136,96,.15))">🌍</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.2),rgba(196,136,96,.15))"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
         <div><div class="cat-nm">براندات عالمية</div><div class="cat-sb">جميع الماركات</div></div>
       </div>
       <div class="cat-btn" onclick="navTo('favs')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.28),rgba(255,120,130,.1))">❤️</div>
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.28),rgba(255,120,130,.1))"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
         <div><div class="cat-nm">مفضلاتي</div><div class="cat-sb">المحفوظة</div></div>
       </div>
     </div>
-    <div style="height:6px"></div>
-  </div>
+    <div style="height:30px"></div>
+    <div style="height:30px"></div>
+</div>
 
   <!-- BRANDS -->
   <div id="s-brands" class="screen">
@@ -440,13 +443,13 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="hdr">
       <div class="hdr-menu" onclick="navTo('home')"><span></span><span></span><span></span></div>
       <div class="hdr-title"><div class="ht-main">البراندات العالمية</div></div>
-      <button class="hdr-vip">👑 VIP</button>
+      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div style="padding:0 18px 10px">
       <div style="font-size:11px;color:var(--dim)">استكشفي أشهر ماركات المكياج والعطور والعناية</div>
     </div>
     <div class="srch">
-      <span class="srch-ic">🔍</span>
+      <span class="srch-ic"><i class="fa-solid fa-magnifying-glass"></i></span>
       <input type="text" id="b-srch" placeholder="ابحثي عن براند أو منتج..." oninput="renderBrands()">
     </div>
     <div class="ftabs" id="ftabs">
@@ -458,16 +461,16 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     </div>
     <div class="brands-grid" id="b-grid"></div>
     <div class="view-all" id="view-all-btn">
-      <span>⊞</span><span>عرض جميع البراندات</span>
+      <span><i class="fa-solid fa-grip"></i></span><span>عرض جميع البراندات</span>
     </div>
-    <div style="height:6px"></div>
+    <div style="height:40px"></div>
   </div>
 
   <!-- BRAND DETAIL -->
   <div id="s-bdet" class="screen">
     <div class="stpad"></div>
     <div class="bk-bar">
-      <div class="bk-btn" onclick="back()">←</div>
+      <div class="bk-btn" onclick="back()"><i class="fa-solid fa-arrow-right"></i></div>
       <div style="flex:1;text-align:center;font-size:14px;font-weight:800">تفاصيل البراند</div>
       <div style="width:34px"></div>
     </div>
@@ -477,13 +480,13 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <div class="bd-cat-badge" id="bd-cat"></div>
     </div>
     <div class="ai-card">
-      <div class="ai-card-hd">✨ معلومات بالذكاء الاصطناعي</div>
+      <div class="ai-card-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> معلومات بالذكاء الاصطناعي</div>
       <div id="bd-ai"><div class="dots"><span></span><span></span><span></span></div></div>
-      <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()">🔊 استمعي للشرح</button>
+      <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()"><i class="fa-solid fa-volume-high"></i> استمعي للشرح</button>
     </div>
     <div class="sec-lbl">أشهر المنتجات</div>
     <div class="prow" id="bd-prods"></div>
-    <div style="height:10px"></div>
+    <div style="height:30px"></div>
   </div>
 
   <!-- FAVORITES -->
@@ -492,7 +495,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="hdr">
       <div class="hdr-menu" onclick="navTo('home')"><span></span><span></span><span></span></div>
       <div class="hdr-title"><div class="ht-main">مفضلاتي ❤️</div></div>
-      <button class="hdr-vip">👑 VIP</button>
+      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div id="fav-content"></div>
   </div>
@@ -503,45 +506,46 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="hdr">
       <div class="hdr-menu" onclick="navTo('home')"><span></span><span></span><span></span></div>
       <div class="hdr-title"><div class="ht-main">حسابي</div></div>
-      <button class="hdr-vip">👑 VIP</button>
+      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="prof-top">
-      <div class="prof-av">👩</div>
+      <div class="prof-av"><i class="fa-solid fa-user" style="color:#fff;font-size:30px"></i></div>
       <div style="font-size:16px;font-weight:900">مستخدمة Beauty AI</div>
       <div style="font-size:11px;color:var(--dim);margin-top:3px">خصوصيتكِ أولويتنا 🔒</div>
     </div>
     <div class="key-box">
-      <div class="key-lbl">🔑 مفتاح Groq API</div>
+      <div class="key-lbl"><i class="fa-solid fa-key" style="color:var(--gold2)"></i> مفتاح Groq API</div>
       <input class="key-inp" type="password" id="pr-key" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" dir="ltr">
-      <button class="save-btn" onclick="saveKey()">💾 حفظ المفتاح</button>
+      <button class="save-btn" onclick="saveKey()"><i class="fa-solid fa-floppy-disk"></i> حفظ المفتاح</button>
       <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px">احصلي على مفتاح مجاني من console.groq.com</div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic">🤖</div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Llama 3.3 70B</div></div>
-      <div class="pitem"><div class="pic">🎙️</div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
-      <div class="pitem"><div class="pic">🌐</div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
-      <div class="pitem"><div class="pic">📱</div><div class="plb">الإصدار</div><div class="pvl">v1.0 Beta</div></div>
-      <div class="pitem"><div class="pic">🔒</div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل صور أبداً</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Llama 3.3 70B</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v1.0 Beta</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل صور أبداً</div></div>
     </div>
-    <button class="danger-btn" onclick="clearFavs()">🗑️ مسح جميع المفضلات</button>
+    <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> مسح جميع المفضلات</button>
+    <div style="height:30px"></div>
   </div>
 
   <!-- BOTTOM NAV -->
   <nav class="bnav">
     <div class="ni on" id="ni-home" onclick="navTo('home')">
-      <div class="ni-ic">🏠</div><div class="ni-lb">الرئيسية</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-house"></i></div><div class="ni-lb">الرئيسية</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-favs" onclick="navTo('favs')">
-      <div class="ni-ic">❤️</div><div class="ni-lb">المفضلة</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-heart"></i></div><div class="ni-lb">المفضلة</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-brands" onclick="navTo('brands')">
-      <div class="ni-ic">✨</div><div class="ni-lb">التوصيات</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div class="ni-lb">التوصيات</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-gifts" onclick="showToast('قريباً 👑')">
-      <div class="ni-ic">🎁</div><div class="ni-lb">المكافآت</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-gift"></i></div><div class="ni-lb">المكافآت</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-prof" onclick="navTo('prof')">
-      <div class="ni-ic">👤</div><div class="ni-lb">حسابي</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-user"></i></div><div class="ni-lb">حسابي</div><div class="ni-dot"></div>
     </div>
   </nav>
 
@@ -563,20 +567,20 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <div class="vplayer">
         <div class="vp-top">
           <div class="vp-wave" id="vp-wl"></div>
-          <div class="vp-mic" id="vp-mic">🎤</div>
+          <div class="vp-mic" id="vp-mic"><i class="fa-solid fa-microphone"></i></div>
           <div class="vp-wave" id="vp-wr"></div>
         </div>
         <div class="vp-controls">
-          <button class="vp-ctrl" onclick="prevTrack()">⏮</button>
-          <button class="vp-play" id="vp-play" onclick="playExp()">▶</button>
-          <button class="vp-ctrl" onclick="nextTrack()">⏭</button>
+          <button class="vp-ctrl" onclick="prevTrack()"><i class="fa-solid fa-backward-step"></i></button>
+          <button class="vp-play" id="vp-play" onclick="playExp()"><i id="vp-play-ic" class="fa-solid fa-play"></i></button>
+          <button class="vp-ctrl" onclick="nextTrack()"><i class="fa-solid fa-forward-step"></i></button>
           <span class="vp-speed">1.0x</span>
         </div>
       </div>
-      <button class="ask-btn" onclick="askMoreModal()">🎤 اسأل المزيد عن المنتج</button>
+      <button class="ask-btn" onclick="askMoreModal()"><i class="fa-solid fa-microphone"></i> اسأل المزيد عن المنتج</button>
 
       <div class="ai-card" style="margin:0 0 13px">
-        <div class="ai-card-hd">✨ شرح صوتي للمنتج</div>
+        <div class="ai-card-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> شرح صوتي للمنتج</div>
         <div id="pm-ai"><div class="dots"><span></span><span></span><span></span></div></div>
       </div>
 
@@ -856,7 +860,7 @@ function openProd(brandId,prodId){
   const avgRt=p.rt;
   const bars=[[5,80],[4,12],[3,5],[2,2],[1,1]];
   document.getElementById('pm-revs').innerHTML=`
-    <div class="rev-hdr">⭐ تقييمات المستخدمين</div>
+    <div class="rev-hdr"><i class="fa-solid fa-star" style="color:var(--gold)"></i> تقييمات المستخدمين</div>
     <div class="rev-overall">
       <div>
         <div class="rev-score">${avgRt}</div>
@@ -887,7 +891,7 @@ function openProd(brandId,prodId){
   const allProds=Object.entries(PRODS).flatMap(([bid,ps])=>ps.map(p=>({...p,bid})));
   const sim=allProds.filter(x=>x.id!==p.id&&(BRANDS.find(bx=>bx.id===x.bid)?.cat===b.cat)).slice(0,3);
   document.getElementById('pm-sim').innerHTML=sim.length?`
-    <div class="sim-hdr">💡 اقتراحات مشابهة</div>
+    <div class="sim-hdr"><i class="fa-solid fa-lightbulb" style="color:var(--gold2)"></i> اقتراحات مشابهة</div>
     <div class="sim-grid">
       ${sim.map(s=>{
         const sb=BRANDS.find(bx=>bx.id===s.bid);
@@ -1069,13 +1073,14 @@ async function callGroq(msg,sys=''){
     method:'POST',
     headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
     body:JSON.stringify({
-      model:'llama-3.3-70b-versatile',
+      model:'deepseek-r1-distill-llama-70b',
       messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
-      max_tokens:450,temperature:0.7
+      max_tokens:600,temperature:0.7
     })
   });
   if(!r.ok)throw new Error(r.status);
-  return (await r.json()).choices[0].message.content;
+  const raw=(await r.json()).choices[0].message.content;
+  return raw.replace(/<think>[\s\S]*?<\/think>/g,'').trim();
 }
 
 // ══ TTS ══
