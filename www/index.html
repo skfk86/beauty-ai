@@ -1078,14 +1078,63 @@ async function callGroq(msg,sys=''){
   return (await r.json()).choices[0].message.content;
 }
 
-// ══ TTS ══
+// ══ TTS (Android WebView Fix) ══
+let ttsTimer=null;
+
 function speakTxt(text,cb){
-  speechSynthesis.cancel();if(!text)return;
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='ar-SA';u.rate=0.88;u.pitch=1.05;
-  speaking=true;
-  u.onend=()=>{speaking=false;if(cb)cb();};
-  speechSynthesis.speak(u);
+  if(!text)return;
+  if(ttsTimer)clearInterval(ttsTimer);
+  speechSynthesis.cancel();
+
+  setTimeout(()=>{
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='ar';u.rate=0.85;u.pitch=1.0;u.volume=1.0;
+    speaking=true;
+
+    u.onend=()=>{
+      speaking=false;
+      clearInterval(ttsTimer);
+      if(cb)cb();
+    };
+
+    u.onerror=()=>{
+      speaking=false;
+      clearInterval(ttsTimer);
+      // Fallback: Google TTS
+      googleTTS(text,cb);
+    };
+
+    speechSynthesis.speak(u);
+
+    // Android fix: يمنع التوقف التلقائي
+    ttsTimer=setInterval(()=>{
+      if(speechSynthesis.speaking){
+        speechSynthesis.pause();
+        speechSynthesis.resume();
+      } else {
+        clearInterval(ttsTimer);
+      }
+    },5000);
+
+  },150);
+}
+
+// Google TTS fallback
+function googleTTS(text,cb){
+  const max=200;
+  const parts=[];
+  for(let i=0;i<text.length;i+=max) parts.push(text.slice(i,i+max));
+  let idx=0;
+
+  function next(){
+    if(idx>=parts.length){if(cb)cb();return;}
+    const url=`https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(parts[idx])}&tl=ar&client=gtx&ttsspeed=0.9`;
+    const a=new Audio(url);
+    a.onended=()=>{idx++;next();};
+    a.onerror=()=>{idx++;next();};
+    a.play().catch(()=>{if(cb)cb();});
+  }
+  next();
 }
 
 // ══ PROFILE ══
