@@ -43,13 +43,36 @@ jobs:
       - name: Patch AndroidManifest
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
-
-          sed -i 's|<application|<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n    <uses-permission android:name="android.permission.VIBRATE" />\n\n    <application|' "$MANIFEST"
-
+          sed -i 's|<application|<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n    <application|' "$MANIFEST"
           sed -i 's|android:supportsRtl="true"|android:supportsRtl="true"\n        android:usesCleartextTraffic="true"|' "$MANIFEST"
 
-          echo "✅ Manifest patched:"
-          grep -n "permission\|cleartext\|Rtl" "$MANIFEST"
+      - name: Generate App Icons
+        run: |
+          sudo apt-get install -y imagemagick -q
+          ICON="resources/icon.png"
+
+          declare -A SIZES=(
+            ["mdpi"]=48
+            ["hdpi"]=72
+            ["xhdpi"]=96
+            ["xxhdpi"]=144
+            ["xxxhdpi"]=192
+          )
+
+          for density in "${!SIZES[@]}"; do
+            size="${SIZES[$density]}"
+            dir="android/app/src/main/res/mipmap-${density}"
+            mkdir -p "$dir"
+            convert "$ICON" -resize "${size}x${size}" "$dir/ic_launcher.png"
+            convert "$ICON" -resize "${size}x${size}" "$dir/ic_launcher_round.png"
+            convert "$ICON" -resize "${size}x${size}" "$dir/ic_launcher_foreground.png"
+            echo "✅ ${density}: ${size}x${size}"
+          done
+
+          # Play Store icon 512x512
+          mkdir -p resources
+          convert "$ICON" -resize "512x512" "resources/playstore-icon.png"
+          echo "✅ Play Store icon generated"
 
       - name: Capacitor Sync
         run: npx cap sync android
@@ -65,4 +88,11 @@ jobs:
         with:
           name: beauty-ai-v${{ github.run_number }}
           path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
+
+      - name: Upload Play Store Icon
+        uses: actions/upload-artifact@v4
+        with:
+          name: playstore-icon
+          path: resources/playstore-icon.png
           retention-days: 30
