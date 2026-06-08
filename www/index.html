@@ -925,7 +925,7 @@ async function testAPI(){
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'user',content:'hi'}],max_tokens:5})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'hi'}],max_tokens:5})
     });
     if(r.ok){
       st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
@@ -1344,7 +1344,7 @@ async function callGroq(msg,sys=''){
         'Content-Type':'application/json'
       },
       body:JSON.stringify({
-        model:'llama3-70b-8192',
+        model:'llama-3.3-70b-versatile',
         messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
         max_tokens:600,
         temperature:0.7
@@ -1474,7 +1474,7 @@ async function testAPI(){
     const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'user',content:'hi'}],max_tokens:5})
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'hi'}],max_tokens:5})
     });
     if(r.ok){
       st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
