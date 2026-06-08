@@ -1,4 +1,4 @@
-name: Build Beauty AI APK
+name: Build M8H APK
 
 on:
   push:
@@ -44,6 +44,7 @@ jobs:
           MANIFEST="android/app/src/main/AndroidManifest.xml"
           sed -i 's|<application|<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n\n    <application|' "$MANIFEST"
           sed -i 's|android:supportsRtl="true"|android:supportsRtl="true"\n        android:usesCleartextTraffic="true"\n        android:networkSecurityConfig="@xml/network_security_config"|' "$MANIFEST"
+          sed -i 's|android:roundIcon="[^"]*"||g' "$MANIFEST"
 
       - name: Add Network Security Config
         run: |
@@ -64,24 +65,35 @@ jobs:
             </domain-config>
           </network-security-config>
           XMLEOF
-          echo "✅ Network security config created"
+
+      - name: Capacitor Sync
+        run: npx cap sync android
 
       - name: Generate App Icons
         run: |
           sudo apt-get install -y imagemagick -q
           ICON="resources/icon.png"
+
+          convert "$ICON" -resize "1024x1024" /tmp/icon_base.png
+
           for density_size in "mdpi:48" "hdpi:72" "xhdpi:96" "xxhdpi:144" "xxxhdpi:192"; do
             density="${density_size%%:*}"
             size="${density_size##*:}"
             dir="android/app/src/main/res/mipmap-${density}"
             mkdir -p "$dir"
-            convert "$ICON" -resize "${size}x${size}" "$dir/ic_launcher.png"
-            convert "$ICON" -resize "${size}x${size}" "$dir/ic_launcher_round.png"
+            convert /tmp/icon_base.png -resize "${size}x${size}" "$dir/ic_launcher.png"
+            cp "$dir/ic_launcher.png" "$dir/ic_launcher_round.png"
+            echo "✅ ${density} ${size}x${size}"
           done
-          echo "✅ Icons generated"
 
-      - name: Capacitor Sync
-        run: npx cap sync android
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+          rm -rf android/app/src/main/res/mipmap-anydpi-v33
+          find android/app/src/main/res -name "ic_launcher_foreground.png" -delete
+          find android/app/src/main/res -name "ic_launcher_background*" -delete
+          find android/app/src/main/res -name "ic_launcher*.xml" -delete
+
+          echo "✅ All adaptive icon overrides removed"
+          ls android/app/src/main/res/mipmap-xxhdpi/
 
       - name: Build Debug APK
         run: |
@@ -92,6 +104,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: beauty-ai-v${{ github.run_number }}
+          name: M8H-v${{ github.run_number }}
           path: android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
