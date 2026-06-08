@@ -7,12 +7,12 @@
     "minWebViewVersion": 60,
     "backgroundColor": "#060108"
   },
-  "plugins": {
-    "SpeechRecognition": {
-      "language": "ar-SA"
-    },
-    "TextToSpeech": {
-      "language": "ar"
-    }
+  "server": {
+    "allowNavigation": [
+      "api.groq.com",
+      "translate.googleapis.com",
+      "fonts.googleapis.com",
+      "cdnjs.cloudflare.com"
+    ]
   }
 }

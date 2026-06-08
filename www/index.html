@@ -738,6 +738,10 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
         <input class="sb-key-inp" type="password" id="sb-key" placeholder="Groq API Key" dir="ltr">
         <button class="sb-key-save" onclick="saveSBKey()">حفظ</button>
       </div>
+      <button onclick="testAPI()" style="width:100%;background:none;border:1px solid var(--border);border-radius:9px;padding:8px;color:var(--dim);font-family:Cairo,sans-serif;font-size:11px;cursor:pointer;margin-top:8px">
+        <i class="fa-solid fa-circle-check"></i> اختبار الاتصال
+      </button>
+      <div id="api-status" style="font-size:11px;text-align:center;margin-top:6px;min-height:16px"></div>
     </div>
     <div class="sb-body">
       <div class="sb-section">التنقل</div>
@@ -912,6 +916,29 @@ function buildVPWave(){
 
 
 // ══ SIDEBAR ══
+async function testAPI(){
+  const k = document.getElementById('sb-key').value.trim() || apiKey;
+  const st = document.getElementById('api-status');
+  if(!k){ st.innerHTML='<span style="color:var(--gold2)">أدخلي المفتاح أولاً</span>'; return; }
+  st.innerHTML='<span style="color:var(--dim)">جاري الاختبار...</span>';
+  try{
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'user',content:'hi'}],max_tokens:5})
+    });
+    if(r.ok){
+      st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
+      localStorage.setItem('bai_key',k); apiKey=k;
+      document.getElementById('pr-key').value=k;
+    } else {
+      const d=await r.json().catch(()=>({}));
+      st.innerHTML='<span style="color:#e06060">❌ '+r.status+': '+(d.error?.message||'خطأ')+'</span>';
+    }
+  } catch(e){
+    st.innerHTML='<span style="color:#e06060">📵 '+e.message+'</span>';
+  }
+}
 function openSB(){
   document.getElementById('sb').classList.add('open');
   document.getElementById('sb-ov').classList.add('open');
@@ -1049,8 +1076,10 @@ async function loadBrAI(b){
     lastBrInfo=r;
     document.getElementById('bd-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
     document.getElementById('bd-spk').style.display='inline-flex';
-  }catch{
-    document.getElementById('bd-ai').innerHTML='<div style="color:var(--dim);font-size:12px">تعذر التحميل.</div>';
+  }catch(e){
+    const msg=e.message||'';
+    const txt=msg.includes('401')?'مفتاح API غير صحيح':msg.includes('NET_ERR')?'تحقق من الإنترنت':msg||'خطأ غير معروف';
+    document.getElementById('bd-ai').innerHTML='<div style="color:#e06060;font-size:12px">❌ '+txt+'</div>';
   }
 }
 function speakBr(){speakTxt(lastBrInfo);}
@@ -1143,8 +1172,10 @@ async function loadPrAI(p,b){
     );
     lastPrInfo=r;
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
-  }catch{
-    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">تعذر التحميل.</div>';
+  }catch(e){
+    const msg=e.message||'';
+    const txt=msg.includes('401')?'مفتاح API غير صحيح':msg.includes('NET_ERR')?'تحقق من الإنترنت':msg||'خطأ غير معروف';
+    document.getElementById('pm-ai').innerHTML='<div style="color:#e06060;font-size:12px">❌ '+txt+'</div>';
   }
 }
 
@@ -1283,25 +1314,54 @@ async function doAI(text){
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
     document.getElementById('spk-btn').style.display='inline-flex';
-  }catch{
-    document.getElementById('ai-txt').textContent='تعذر الاتصال. تحققي من مفتاح API.';
+  }catch(e){
+    const msg = e.message || '';
+    if(msg==='NO_KEY'){
+      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Groq API من القائمة الجانبية</span>';
+    } else if(msg.includes('401')){
+      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
+    } else if(msg.includes('429')){
+      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">⏳ تجاوزت الحد — انتظري دقيقة</span>';
+    } else if(msg.includes('NET_ERR')){
+      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
+    } else {
+      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">خطأ: '+msg+'</span>';
+    }
   }
 }
 function speakR(){speakTxt(lastResp);}
 
 // ══ GROQ ══
 async function callGroq(msg,sys=''){
-  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',
-    headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'llama3-70b-8192',
-      messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
-      max_tokens:600,temperature:0.7
-    })
-  });
-  if(!r.ok)throw new Error(r.status);
-  return (await r.json()).choices[0].message.content;
+  if(!apiKey) throw new Error('NO_KEY');
+  
+  let r;
+  try{
+    r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Authorization':'Bearer '+apiKey,
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        model:'llama3-70b-8192',
+        messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
+        max_tokens:600,
+        temperature:0.7
+      })
+    });
+  } catch(netErr){
+    throw new Error('NET_ERR: ' + netErr.message);
+  }
+  
+  if(!r.ok){
+    let errMsg = '';
+    try{ const e = await r.json(); errMsg = e.error?.message || ''; }catch{}
+    throw new Error('HTTP_' + r.status + (errMsg ? ': ' + errMsg : ''));
+  }
+  
+  const data = await r.json();
+  return data.choices[0].message.content;
 }
 
 // ══ TTS ══
@@ -1405,6 +1465,29 @@ function showToast(msg){
 
 
 // ══ SIDEBAR ══
+async function testAPI(){
+  const k = document.getElementById('sb-key').value.trim() || apiKey;
+  const st = document.getElementById('api-status');
+  if(!k){ st.innerHTML='<span style="color:var(--gold2)">أدخلي المفتاح أولاً</span>'; return; }
+  st.innerHTML='<span style="color:var(--dim)">جاري الاختبار...</span>';
+  try{
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
+      body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'user',content:'hi'}],max_tokens:5})
+    });
+    if(r.ok){
+      st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
+      localStorage.setItem('bai_key',k); apiKey=k;
+      document.getElementById('pr-key').value=k;
+    } else {
+      const d=await r.json().catch(()=>({}));
+      st.innerHTML='<span style="color:#e06060">❌ '+r.status+': '+(d.error?.message||'خطأ')+'</span>';
+    }
+  } catch(e){
+    st.innerHTML='<span style="color:#e06060">📵 '+e.message+'</span>';
+  }
+}
 function openSB(){
   document.getElementById('sb').classList.add('open');
   document.getElementById('sb-ov').classList.add('open');
