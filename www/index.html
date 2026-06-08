@@ -743,6 +743,41 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     </div>
   </div>
 
+  <!-- DISCOVER SCREEN -->
+  <div id="s-discover" class="screen">
+    <div class="stpad"></div>
+    <div class="hdr">
+      <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
+      <div class="hdr-title"><div class="ht-main">🔍 اكتشفي منتجات</div></div>
+      <div style="width:40px"></div>
+    </div>
+    <div style="padding:0 18px 12px">
+      <div style="font-size:11px;color:var(--dim)">ملايين منتج حقيقي من Open Beauty Facts</div>
+    </div>
+    <div class="srch" style="margin:0 18px 12px">
+      <span class="srch-ic"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <input type="text" id="obf-srch" placeholder="ابحثي عن أي منتج بالإنجليزي..." dir="ltr"
+        onkeydown="if(event.key==='Enter')searchOBF()">
+    </div>
+    <div class="ftabs" id="obf-ftabs">
+      <div class="ft on" onclick="searchOBFCat('makeup',this)">مكياج</div>
+      <div class="ft" onclick="searchOBFCat('perfume',this)">عطور</div>
+      <div class="ft" onclick="searchOBFCat('skincare',this)">عناية</div>
+      <div class="ft" onclick="searchOBFCat('hair',this)">شعر</div>
+      <div class="ft" onclick="searchOBFCat('lipstick',this)">شفاه</div>
+    </div>
+    <div id="obf-grid" style="padding:0 18px"></div>
+    <div style="height:40px"></div>
+  </div>
+
+  <!-- DISCOVER PRODUCT MODAL -->
+  <div id="obf-mov" onclick="closeOBFMod(event)" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.7);backdrop-filter:blur(3px)">
+    <div id="obf-pm" onclick="event.stopPropagation()" style="position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;border-top:1px solid var(--border);max-height:88vh;overflow-y:auto;padding:20px">
+      <div style="width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px"></div>
+      <div id="obf-pm-content"></div>
+    </div>
+  </div>
+
   <!-- BOTTOM NAV -->
   <nav class="bnav">
     <div class="ni on" id="ni-home" onclick="navTo('home')">
@@ -754,8 +789,8 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
     <div class="ni" id="ni-brands" onclick="navTo('brands')">
       <div class="ni-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div class="ni-lb">التوصيات</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-gifts" onclick="showToast('قريباً 👑')">
-      <div class="ni-ic"><i class="fa-solid fa-gift"></i></div><div class="ni-lb">المكافآت</div><div class="ni-dot"></div>
+    <div class="ni" id="ni-gifts" onclick="navTo('discover')">
+      <div class="ni-ic"><i class="fa-solid fa-magnifying-glass"></i></div><div class="ni-lb">اكتشفي</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-prof" onclick="navTo('prof')">
       <div class="ni-ic"><i class="fa-solid fa-user"></i></div><div class="ni-lb">حسابي</div><div class="ni-dot"></div>
@@ -1090,10 +1125,13 @@ function navTo(s){
   if(el){el.classList.add('on');el.scrollTop=0;}
   curScreen=s;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof'};
+  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts'};
   const ni=document.getElementById(map[s]);
   if(ni)ni.classList.add('on');
   if(s==='favs')renderFavs();
+  if(s==='discover' && !document.getElementById('obf-grid').innerHTML.trim()){
+    searchOBFCat('makeup', document.querySelector('#obf-ftabs .ft'));
+  }
 }
 
 function goF(cat){
@@ -1606,6 +1644,120 @@ function saveSBKey(){
 }
 
 init();
+
+// ══ OPEN BEAUTY FACTS ══
+const AMZN_TAG = 'YOUR-TAG-HERE';
+let obfLoading = false;
+
+function searchOBF(){
+  const q = document.getElementById('obf-srch').value.trim();
+  if(!q){ showToast('اكتبي اسم المنتج'); return; }
+  fetchOBF(`search_terms=${encodeURIComponent(q)}`);
+}
+
+function searchOBFCat(cat, el){
+  document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
+  el.classList.add('on');
+  fetchOBF(`tagtype_0=categories&tag_contains_0=contains&tag_0=${cat}`);
+}
+
+async function fetchOBF(params){
+  if(obfLoading) return;
+  obfLoading = true;
+  const grid = document.getElementById('obf-grid');
+  grid.innerHTML = '<div style="text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">جاري جلب المنتجات...</div></div>';
+  try{
+    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page_size=24&fields=product_name,brands,image_url,categories_tags,ingredients_text,ecoscore_grade&nocache=1`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const prods = (data.products||[]).filter(p=>p.product_name && p.product_name.trim());
+    if(!prods.length){
+      grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--dim);font-size:13px">لا توجد نتائج — جربي كلمة أخرى</div>';
+      obfLoading = false; return;
+    }
+    grid.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0">' +
+      prods.map((p,i)=>{
+        const name = p.product_name||'منتج';
+        const brand = p.brands||'';
+        const img = p.image_url||'';
+        const safe = name.replace(/'/g,"\\'");
+        const safeBrand = brand.replace(/'/g,"\\'");
+        const safeImg = img.replace(/'/g,"\\'");
+        const ingr = (p.ingredients_text||'').replace(/'/g,"\\'").substring(0,300);
+        return `<div onclick="openOBFProd('${safe}','${safeBrand}','${safeImg}','${ingr}')"
+          style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;active:opacity:.8">
+          <div style="height:110px;background:var(--card2);display:flex;align-items:center;justify-content:center;overflow:hidden">
+            ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<i class=\\'fa-solid fa-flask\\' style=\\'font-size:32px;color:var(--dim)\\'></i>'">`
+                  : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
+          </div>
+          <div style="padding:10px">
+            <div style="font-size:11px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${name}</div>
+            ${brand?`<div style="font-size:10px;color:var(--rose2);font-weight:600">${brand}</div>`:''}
+            <button onclick="event.stopPropagation();buyOnAmazon('${safe}')"
+              style="width:100%;margin-top:8px;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:8px;padding:7px;color:#fff;font-family:Cairo,sans-serif;font-size:11px;font-weight:700;cursor:pointer">
+              <i class="fa-solid fa-bag-shopping"></i> اشتري الآن
+            </button>
+          </div>
+        </div>`;
+      }).join('') + '</div>';
+  } catch(e){
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:#e06060;font-size:12px">❌ تحققي من الإنترنت</div>';
+  }
+  obfLoading = false;
+}
+
+function openOBFProd(name, brand, img, ingr){
+  const box = document.getElementById('obf-pm-content');
+  box.innerHTML = `
+    <div style="text-align:center;margin-bottom:16px">
+      ${img?`<img src="${img}" style="width:140px;height:140px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
+      <div style="font-size:16px;font-weight:900;margin-top:12px">${name}</div>
+      ${brand?`<div style="font-size:12px;color:var(--rose2);margin-top:4px">${brand}</div>`:''}
+    </div>
+    ${ingr?`<div style="background:var(--card2);border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:6px"><i class="fa-solid fa-flask"></i> المكونات</div>
+      <div style="font-size:10px;color:var(--dim);line-height:1.7;direction:ltr;text-align:left">${ingr}</div>
+    </div>`:''}
+    <div id="obf-ai-box" style="background:var(--card2);border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:6px"><i class="fa-solid fa-wand-magic-sparkles"></i> شرح بالذكاء الاصطناعي</div>
+      <div id="obf-ai-txt"><div class="dots"><span></span><span></span><span></span></div></div>
+    </div>
+    <button onclick="buyOnAmazon('${name.replace(/'/g,"\\'")}')"
+      style="width:100%;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:12px;padding:14px;color:#fff;font-family:Cairo,sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:10px">
+      <i class="fa-brands fa-amazon"></i> اشتري على Amazon
+    </button>
+    <button onclick="closeOBFMod()"
+      style="width:100%;background:none;border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--dim);font-family:Cairo,sans-serif;font-size:13px;cursor:pointer">
+      إغلاق
+    </button>`;
+  document.getElementById('obf-mov').style.display='block';
+  if(apiKey){
+    callGroq(
+      `اشرحي منتج "${name}" من ${brand||'براند جمال'}. ${ingr?'المكونات: '+ingr.substring(0,200):''}. ما فوائده، لمن يناسب، وهل يستحق الشراء؟`,
+      'أنتِ خبيرة جمال محترفة. أجيبي بالعربية بأسلوب مختصر ومفيد في 3 جمل.'
+    ).then(r=>{
+      const el=document.getElementById('obf-ai-txt');
+      if(el) el.textContent=r;
+    }).catch(()=>{
+      const el=document.getElementById('obf-ai-txt');
+      if(el) el.innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Groq للشرح 🔑</span>';
+    });
+  } else {
+    document.getElementById('obf-ai-txt').innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Groq للشرح 🔑</span>';
+  }
+}
+
+function closeOBFMod(e){
+  if(!e || e.target===document.getElementById('obf-mov'))
+    document.getElementById('obf-mov').style.display='none';
+}
+
+function buyOnAmazon(productName){
+  const tag = AMZN_TAG !== 'YOUR-TAG-HERE' ? `&tag=${AMZN_TAG}` : '';
+  const url = `https://www.amazon.com/s?k=${encodeURIComponent(productName)}${tag}`;
+  if(window.Capacitor) window.open(url,'_system');
+  else window.open(url,'_blank');
+}
 
 function openPrivacy(){
   const o=document.getElementById('prv-overlay');
