@@ -157,17 +157,18 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   font-family:'Cairo',sans-serif;cursor:pointer;white-space:nowrap;
   background:var(--card);border:1px solid var(--border);color:var(--dim);transition:all .18s}
 .ft.on{background:var(--rose-d);border-color:var(--rose);color:var(--rose2)}
-.brands-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
-  padding:0 18px;gap:8px}
-.bc{background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:14px 10px;cursor:pointer;transition:all .18s;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;min-height:80px;text-align:center}
-.bc:active{background:var(--card2);transform:scale(.95)}
-.bc-logo{font-size:12px;font-weight:900;letter-spacing:.5px;line-height:1.2;
-  text-align:center;max-width:90px}
+.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px}
+.bc{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  cursor:pointer;transition:all .18s;overflow:hidden;text-align:center}
+.bc:active{transform:scale(.96)}
+.bc-img-wrap{height:90px;display:flex;align-items:center;justify-content:center;
+  background:var(--card2);border-bottom:1px solid var(--border)}
+.bc-img-wrap img{width:70px;height:70px;object-fit:contain;border-radius:10px}
+.bc-img-fb{font-size:13px;font-weight:900;letter-spacing:.5px;color:var(--text);padding:0 8px;line-height:1.3}
+.bc-body{padding:10px}
+.bc-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:5px}
 .bc-cat{font-size:9px;color:var(--gold);background:var(--gold-d);
-  border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:8px}
+  border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:8px;display:inline-block}
 .view-all{margin:14px 18px 20px;background:var(--card);border:1px solid var(--border);
   border-radius:12px;padding:13px;display:flex;align-items:center;justify-content:center;
   gap:8px;font-size:13px;font-weight:700;color:var(--dim);cursor:pointer}
@@ -759,14 +760,25 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <input type="text" id="obf-srch" placeholder="ابحثي عن أي منتج بالإنجليزي..." dir="ltr"
         onkeydown="if(event.key==='Enter')searchOBF()">
     </div>
-    <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('makeup',this)">مكياج</div>
-      <div class="ft" onclick="searchOBFCat('perfume',this)">عطور</div>
-      <div class="ft" onclick="searchOBFCat('skincare',this)">عناية</div>
-      <div class="ft" onclick="searchOBFCat('hair',this)">شعر</div>
-      <div class="ft" onclick="searchOBFCat('lipstick',this)">شفاه</div>
+    <div style="overflow-x:auto;padding:0 18px 4px;scrollbar-width:none">
+      <div id="obf-ftabs" style="display:flex;gap:8px;width:max-content;padding-bottom:4px">
+        <div class="ft on"  onclick="searchOBFCat('makeup',this)">💄 مكياج</div>
+        <div class="ft"     onclick="searchOBFCat('women perfume',this)">🌸 عطور نساء</div>
+        <div class="ft"     onclick="searchOBFCat('men perfume',this)">🧴 عطور رجال</div>
+        <div class="ft"     onclick="searchOBFCat('perfume',this)">✨ كل العطور</div>
+        <div class="ft"     onclick="searchOBFCat('skincare',this)">🫧 عناية</div>
+        <div class="ft"     onclick="searchOBFCat('hair',this)">💇 شعر</div>
+        <div class="ft"     onclick="searchOBFCat('lipstick',this)">💋 شفاه</div>
+        <div class="ft"     onclick="searchOBFCat('foundation',this)">🎨 فاونديشن</div>
+        <div class="ft"     onclick="searchOBFCat('moisturizer',this)">💧 مرطب</div>
+        <div class="ft"     onclick="searchOBFCat('sunscreen',this)">☀️ واقي شمس</div>
+      </div>
     </div>
     <div id="obf-grid" style="padding:0 18px"></div>
+    <div id="obf-load-more" style="display:none;text-align:center;padding:16px">
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+    <div id="obf-sentinel" style="height:1px"></div>
     <div style="height:40px"></div>
   </div>
 
@@ -923,24 +935,30 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 <script>
 // ══ DATA ══
 const BRANDS=[
-  {id:'dior',   nm:'Dior',              ar:'ديور',             cat:'عطور',  logo:'DIOR',            lc:'#fff',  bg:'#1a0808',border:'#8b0000'},
-  {id:'chanel', nm:'Chanel',            ar:'شانيل',            cat:'عطور',  logo:'CHANEL',          lc:'#f0d080',bg:'#0a0a0a',border:'#c8a960'},
-  {id:'ysl',    nm:'YSL',              ar:'إيف سان لوران',    cat:'مكياج', logo:'YVES\nSAINT LAURENT',lc:'#f0c040',bg:'#100800',border:'#c8a020'},
-  {id:'rare',   nm:'Rare Beauty',       ar:'رير بيوتي',        cat:'مكياج', logo:'Rare Beauty',     lc:'#f0a0b8',bg:'#180810',border:'#c06090'},
-  {id:'huda',   nm:'Huda Beauty',       ar:'هدى بيوتي',        cat:'مكياج', logo:'huda\nBEAUTY',    lc:'#e09070',bg:'#180808',border:'#c07050'},
-  {id:'fenty',  nm:'Fenty Beauty',      ar:'فينتي بيوتي',      cat:'مكياج', logo:'FENTY\nBEAUTY',   lc:'#8090d0',bg:'#080810',border:'#5060a8'},
-  {id:'mac',    nm:'MAC',               ar:'ماك',              cat:'مكياج', logo:'MAC\nCOSMETICS',  lc:'#e0e0e0',bg:'#0a0a0a',border:'#808080'},
-  {id:'ct',     nm:'Charlotte Tilbury', ar:'شارلوت تيلبيري',   cat:'مكياج', logo:'Charlotte\nTilbury',lc:'#f0b080',bg:'#180a08',border:'#c48060'},
-  {id:'nars',   nm:'NARS',              ar:'نارس',             cat:'مكياج', logo:'NARS',            lc:'#ff7050',bg:'#100508',border:'#e03010'},
-  {id:'estee',  nm:'Estée Lauder',      ar:'إستي لودر',        cat:'عناية', logo:'ESTÉE\nLAUDER',   lc:'#70a080',bg:'#080f0a',border:'#406050'},
-  {id:'lancome',nm:'Lancôme',           ar:'لانكوم',           cat:'عناية', logo:'LANCÔME',         lc:'#f06090',bg:'#100810',border:'#d04070'},
-  {id:'lamer',  nm:'La Mer',            ar:'لا مير',           cat:'عناية', logo:'LA MER',          lc:'#60a0c0',bg:'#080f10',border:'#3080a0'},
-  {id:'kayali', nm:'Kay Ali',           ar:'كاي علي',          cat:'عطور',  logo:'KAY\nALI',        lc:'#f0a080',bg:'#180808',border:'#c87050'},
-  {id:'creed',  nm:'Creed',             ar:'كريد',             cat:'عطور',  logo:'CREED\n1760',     lc:'#8090d0',bg:'#080a0f',border:'#4060a8'},
-  {id:'tomford',nm:'Tom Ford',          ar:'توم فورد',         cat:'عطور',  logo:'TOM FORD\nBEAUTY',lc:'#d4a860',bg:'#100800',border:'#a08040'},
-  {id:'kera',   nm:'Kérastase',         ar:'كيراستاز',         cat:'شعر',   logo:'KÉRASTASE',       lc:'#d0a060',bg:'#100a08',border:'#a07040'},
-  {id:'olaplex',nm:'Olaplex',           ar:'أوليبلكس',         cat:'شعر',   logo:'Olaplex',         lc:'#7080c0',bg:'#080a10',border:'#4050a0'},
-  {id:'moroc',  nm:'Moroccanoil',        ar:'مروكانويل',        cat:'شعر',   logo:'moroccanoil',     lc:'#c07040',bg:'#100a06',border:'#804020'},
+  {id:'dior',    nm:'Dior',              ar:'ديور',             cat:'عطور',  domain:'dior.com',           bg:'#1a0808',border:'#8b0000'},
+  {id:'chanel',  nm:'Chanel',            ar:'شانيل',            cat:'عطور',  domain:'chanel.com',         bg:'#0a0a0a',border:'#c8a960'},
+  {id:'ysl',     nm:'YSL',              ar:'إيف سان لوران',    cat:'مكياج', domain:'yslbeauty.com',       bg:'#100800',border:'#c8a020'},
+  {id:'rare',    nm:'Rare Beauty',       ar:'رير بيوتي',        cat:'مكياج', domain:'rarebeauty.com',      bg:'#180810',border:'#c06090'},
+  {id:'huda',    nm:'Huda Beauty',       ar:'هدى بيوتي',        cat:'مكياج', domain:'hudabeauty.com',      bg:'#180808',border:'#c07050'},
+  {id:'fenty',   nm:'Fenty Beauty',      ar:'فينتي بيوتي',      cat:'مكياج', domain:'fentybeauty.com',     bg:'#080810',border:'#5060a8'},
+  {id:'mac',     nm:'MAC',               ar:'ماك',              cat:'مكياج', domain:'maccosmetics.com',    bg:'#0a0a0a',border:'#808080'},
+  {id:'ct',      nm:'Charlotte Tilbury', ar:'شارلوت تيلبيري',   cat:'مكياج', domain:'charlottetilbury.com',bg:'#180a08',border:'#c48060'},
+  {id:'nars',    nm:'NARS',              ar:'نارس',             cat:'مكياج', domain:'narscosmetics.com',   bg:'#100508',border:'#e03010'},
+  {id:'estee',   nm:'Estée Lauder',      ar:'إستي لودر',        cat:'عناية', domain:'esteelauder.com',     bg:'#080f0a',border:'#406050'},
+  {id:'lancome', nm:'Lancôme',           ar:'لانكوم',           cat:'عناية', domain:'lancome.com',         bg:'#100810',border:'#d04070'},
+  {id:'lamer',   nm:'La Mer',            ar:'لا مير',           cat:'عناية', domain:'cremedelamer.com',    bg:'#080f10',border:'#3080a0'},
+  {id:'kayali',  nm:'Kay Ali',           ar:'كاي علي',          cat:'عطور',  domain:'kayali.com',          bg:'#180808',border:'#c87050'},
+  {id:'creed',   nm:'Creed',             ar:'كريد',             cat:'عطور',  domain:'creedfragrances.com', bg:'#080a0f',border:'#4060a8'},
+  {id:'tomford', nm:'Tom Ford',          ar:'توم فورد',         cat:'عطور',  domain:'tomford.com',         bg:'#100800',border:'#a08040'},
+  {id:'kera',    nm:'Kérastase',         ar:'كيراستاز',         cat:'شعر',   domain:'kerastase.com',       bg:'#100a08',border:'#a07040'},
+  {id:'olaplex', nm:'Olaplex',           ar:'أوليبلكس',         cat:'شعر',   domain:'olaplex.com',         bg:'#080a10',border:'#4050a0'},
+  {id:'moroc',   nm:'Moroccanoil',       ar:'مروكانويل',        cat:'شعر',   domain:'moroccanoil.com',     bg:'#100a06',border:'#804020'},
+  {id:'givenchy',nm:'Givenchy',          ar:'جيفنشي',           cat:'عطور',  domain:'givenchy.com',        bg:'#080808',border:'#606060'},
+  {id:'versace', nm:'Versace',           ar:'فيرساتشي',         cat:'عطور',  domain:'versace.com',         bg:'#100808',border:'#a08000'},
+  {id:'armani',  nm:'Armani Beauty',     ar:'أرماني بيوتي',     cat:'مكياج', domain:'armanibeauty.com',    bg:'#080808',border:'#505050'},
+  {id:'cerave',  nm:'CeraVe',            ar:'سيرافي',           cat:'عناية', domain:'cerave.com',          bg:'#080a10',border:'#3060a0'},
+  {id:'laneige', nm:'Laneige',           ar:'لانيج',            cat:'عناية', domain:'laneige.com',         bg:'#081010',border:'#308080'},
+  {id:'dyson',   nm:'Dyson',             ar:'دايسون',           cat:'شعر',   domain:'dyson.com',           bg:'#080a10',border:'#8040a0'},
 ];
 
 const PRODS={
@@ -1132,6 +1150,7 @@ function navTo(s){
   if(s==='discover' && !document.getElementById('obf-grid').innerHTML.trim()){
     searchOBFCat('makeup', document.querySelector('#obf-ftabs .ft'));
   }
+  if(s==='discover') initOBFScroll();
 }
 
 function goF(cat){
@@ -1151,11 +1170,21 @@ function renderBrands(){
     const qm=!q||b.nm.toLowerCase().includes(q)||b.ar.includes(q);
     return cm&&qm;
   });
-  document.getElementById('b-grid').innerHTML=list.map(b=>`
-    <div class="bc" onclick="openBrand('${b.id}')" style="border-color:${b.border}20">
-      <div class="bc-logo" style="color:${b.lc};white-space:pre-line;font-size:${b.logo.length>8?9:11}px">${b.logo}</div>
-      <div class="bc-cat">${b.cat}</div>
-    </div>`).join('')||'<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">لا توجد نتائج</div>';
+  document.getElementById('b-grid').innerHTML=list.map(b=>{
+    const logo=`https://logo.clearbit.com/${b.domain}`;
+    const fb=b.nm.replace(' Beauty','').replace(' Cosmetics','').substring(0,10);
+    return `<div class="bc" onclick="openBrand('${b.id}')" style="border-color:${b.border}40">
+      <div class="bc-img-wrap" style="background:${b.bg}">
+        <img src="${logo}" alt="${b.nm}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <div class="bc-img-fb" style="display:none;color:${b.border}">${fb}</div>
+      </div>
+      <div class="bc-body">
+        <div class="bc-name">${b.ar}</div>
+        <div class="bc-cat">${b.cat}</div>
+      </div>
+    </div>`;
+  }).join('')||'<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">لا توجد نتائج</div>';
 }
 
 function setF(cat,el){
@@ -1169,13 +1198,10 @@ async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
   const bl=document.getElementById('bd-logo');
-  bl.style.background=`linear-gradient(135deg,${curBrand.bg},${curBrand.border})`;
-  bl.style.color=curBrand.lc;
-  bl.style.fontWeight='900';
-  bl.style.fontSize=curBrand.logo.length>8?'10px':'13px';
-  bl.style.whiteSpace='pre-line';
-  bl.style.textAlign='center';
-  bl.textContent=curBrand.logo;
+  bl.style.background=`linear-gradient(135deg,${curBrand.bg},${curBrand.border}30)`;
+  const logoUrl=`https://logo.clearbit.com/${curBrand.domain}`;
+  bl.innerHTML=`<img src="${logoUrl}" style="width:60px;height:60px;object-fit:contain;border-radius:12px"
+    onerror="this.parentNode.innerHTML='<span style=\\'font-size:13px;font-weight:900;color:${curBrand.border}\\'>${curBrand.nm}</span>'">`; 
   document.getElementById('bd-name').textContent=curBrand.ar;
   document.getElementById('bd-cat').textContent=curBrand.cat;
   document.getElementById('bd-ai').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
@@ -1685,62 +1711,113 @@ init();
 // ══ OPEN BEAUTY FACTS ══
 const AMZN_TAG = 'YOUR-TAG-HERE';
 let obfLoading = false;
+let obfPage = 1;
+let obfCurrentParams = '';
+let obfHasMore = true;
+let obfObserver = null;
 
 function searchOBF(){
   const q = document.getElementById('obf-srch').value.trim();
   if(!q){ showToast('اكتبي اسم المنتج'); return; }
-  fetchOBF(`search_terms=${encodeURIComponent(q)}`);
+  document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
+  fetchOBF(`search_terms=${encodeURIComponent(q)}`, true);
 }
 
 function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
-  fetchOBF(`tagtype_0=categories&tag_contains_0=contains&tag_0=${cat}`);
+  fetchOBF(`tagtype_0=categories&tag_contains_0=contains&tag_0=${encodeURIComponent(cat)}`, true);
 }
 
-async function fetchOBF(params){
-  if(obfLoading) return;
-  obfLoading = true;
+function renderOBFCards(prods, append){
   const grid = document.getElementById('obf-grid');
-  grid.innerHTML = '<div style="text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">جاري جلب المنتجات...</div></div>';
-  try{
-    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page_size=24&fields=product_name,brands,image_url,categories_tags,ingredients_text,ecoscore_grade&nocache=1`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const prods = (data.products||[]).filter(p=>p.product_name && p.product_name.trim());
-    if(!prods.length){
-      grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--dim);font-size:13px">لا توجد نتائج — جربي كلمة أخرى</div>';
-      obfLoading = false; return;
+  const cards = prods.map(p=>{
+    const name = p.product_name||'منتج';
+    const img  = p.image_url||'';
+    const brand= p.brands||'';
+    const safe = name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const safeBrand = brand.replace(/'/g,"\\'");
+    const safeImg   = img.replace(/'/g,"\\'");
+    const ingr = (p.ingredients_text||'').replace(/'/g,"\\'").replace(/"/g,'&quot;').substring(0,300);
+    return `<div onclick="openOBFProd('${safe}','${safeBrand}','${safeImg}','${ingr}')"
+      style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer">
+      <div style="height:110px;background:var(--card2);display:flex;align-items:center;justify-content:center;overflow:hidden">
+        ${img
+          ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<i class=\\'fa-solid fa-flask\\' style=\\'font-size:32px;color:var(--dim)\\'></i>'">`
+          : `<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>`}
+      </div>
+      <div style="padding:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${name}</div>
+        ${brand?`<div style="font-size:10px;color:var(--rose2);font-weight:600">${brand}</div>`:''}
+        <button onclick="event.stopPropagation();buyOnAmazon('${safe}')"
+          style="width:100%;margin-top:8px;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:8px;padding:7px;color:#fff;font-family:Cairo,sans-serif;font-size:11px;font-weight:700;cursor:pointer">
+          <i class="fa-solid fa-bag-shopping"></i> اشتري الآن
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+
+  if(append){
+    let inner = grid.querySelector('.obf-inner');
+    if(!inner){
+      inner = document.createElement('div');
+      inner.className = 'obf-inner';
+      inner.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0';
+      grid.appendChild(inner);
     }
-    grid.innerHTML = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0">' +
-      prods.map((p,i)=>{
-        const name = p.product_name||'منتج';
-        const brand = p.brands||'';
-        const img = p.image_url||'';
-        const safe = name.replace(/'/g,"\\'");
-        const safeBrand = brand.replace(/'/g,"\\'");
-        const safeImg = img.replace(/'/g,"\\'");
-        const ingr = (p.ingredients_text||'').replace(/'/g,"\\'").substring(0,300);
-        return `<div onclick="openOBFProd('${safe}','${safeBrand}','${safeImg}','${ingr}')"
-          style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;active:opacity:.8">
-          <div style="height:110px;background:var(--card2);display:flex;align-items:center;justify-content:center;overflow:hidden">
-            ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<i class=\\'fa-solid fa-flask\\' style=\\'font-size:32px;color:var(--dim)\\'></i>'">`
-                  : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
-          </div>
-          <div style="padding:10px">
-            <div style="font-size:11px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${name}</div>
-            ${brand?`<div style="font-size:10px;color:var(--rose2);font-weight:600">${brand}</div>`:''}
-            <button onclick="event.stopPropagation();buyOnAmazon('${safe}')"
-              style="width:100%;margin-top:8px;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:8px;padding:7px;color:#fff;font-family:Cairo,sans-serif;font-size:11px;font-weight:700;cursor:pointer">
-              <i class="fa-solid fa-bag-shopping"></i> اشتري الآن
-            </button>
-          </div>
-        </div>`;
-      }).join('') + '</div>';
-  } catch(e){
-    grid.innerHTML = '<div style="text-align:center;padding:40px;color:#e06060;font-size:12px">❌ تحققي من الإنترنت</div>';
+    inner.insertAdjacentHTML('beforeend', cards);
+  } else {
+    grid.innerHTML = `<div class="obf-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0">${cards}</div>`;
   }
+}
+
+async function fetchOBF(params, reset){
+  if(obfLoading) return;
+  if(reset){
+    obfPage = 1;
+    obfHasMore = true;
+    obfCurrentParams = params;
+    document.getElementById('obf-grid').innerHTML =
+      '<div style="text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">جاري جلب المنتجات...</div></div>';
+  }
+  if(!obfHasMore) return;
+  obfLoading = true;
+  document.getElementById('obf-load-more').style.display = obfPage > 1 ? 'block' : 'none';
+  try{
+    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=20&fields=product_name,brands,image_url,ingredients_text&nocache=1`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    const prods = (data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
+    const total  = data.count || 0;
+
+    if(!prods.length && obfPage===1){
+      document.getElementById('obf-grid').innerHTML =
+        '<div style="text-align:center;padding:40px;color:var(--dim);font-size:13px">لا توجد نتائج — جربي كلمة أخرى</div>';
+      obfHasMore = false;
+    } else {
+      renderOBFCards(prods, obfPage > 1);
+      obfPage++;
+      obfHasMore = (obfPage - 1) * 20 < total && prods.length === 20;
+    }
+  } catch(e){
+    if(obfPage===1)
+      document.getElementById('obf-grid').innerHTML =
+        '<div style="text-align:center;padding:40px;color:#e06060;font-size:12px">❌ تحققي من الإنترنت</div>';
+  }
+  document.getElementById('obf-load-more').style.display = 'none';
   obfLoading = false;
+}
+
+function initOBFScroll(){
+  if(obfObserver) obfObserver.disconnect();
+  const sentinel = document.getElementById('obf-sentinel');
+  const screen   = document.getElementById('s-discover');
+  obfObserver = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting && obfHasMore && !obfLoading){
+      fetchOBF(obfCurrentParams, false);
+    }
+  }, { root: screen, threshold: 0.1 });
+  obfObserver.observe(sentinel);
 }
 
 function openOBFProd(name, brand, img, ingr){
