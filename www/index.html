@@ -15,6 +15,12 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
+body.light-mode{
+  --bg:#f5f0f5;--bg2:#ede5ed;--card:#ffffff;--card2:#f8f0f8;
+  --border:#e0cce0;--rose:#c03060;--rose2:#d04070;
+  --rose-d:rgba(192,48,96,.12);--gold:#a06030;--gold2:#b07040;
+  --gold-d:rgba(160,96,48,.1);--text:#1a0a18;--dim:#705060;--muted:#c0a0b0;
+}
 body{font-family:'Cairo',sans-serif;color:var(--text)}
 
 /* ─── SPLASH SCREEN ─── */
@@ -725,6 +731,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v1.0 Beta</div></div>
+      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb">وضع العرض</div><div class="pvl" id="theme-lbl">ليلي / نهاري</div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل صور أبداً</div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:rgba(208,66,114,.18)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:700">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
@@ -1091,7 +1098,7 @@ const PRODS={
 };
 
 // ══ STATE ══
-let curScreen='home',prevScreen='home',curFilter='الكل';
+let curScreen='home',prevScreen='home',curFilter='All';
 let curBrand=null,curProd=null;
 let favs=JSON.parse(localStorage.getItem('bai_favs')||'[]');
 let apiKey=localStorage.getItem('bai_key')||'';
@@ -1226,11 +1233,12 @@ function navTo(s){
   const ni=document.getElementById(map[s]);
   if(ni)ni.classList.add('on');
   if(s==='favs')renderFavs();
+  if(s==='brands')renderBrands();
   if(s==='discover'){
     if(!document.getElementById('obf-grid').innerHTML.trim()){
       searchOBFCat('makeup', document.querySelector('#obf-ftabs .ft'));
     }
-    initOBFScroll();
+    setTimeout(initOBFScroll, 100);
   }
 }
 
@@ -1247,7 +1255,7 @@ function back(){navTo(prevScreen==='bdet'?'brands':prevScreen);}
 function renderBrands(){
   const q=(document.getElementById('b-srch')?.value||'').toLowerCase();
   const list=BRANDS.filter(b=>{
-    const cm=curFilter==='All'||curFilter==='All'||b.cat===curFilter;
+    const cm=curFilter==='All'||b.cat===curFilter;
     const qm=!q||b.nm.toLowerCase().includes(q)||b.ar.includes(q)||b.cat.toLowerCase().includes(q);
     return cm&&qm;
   });
@@ -1543,6 +1551,8 @@ function toggleVoice(){
 function startRec(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){showToast('المتصفح لا يدعم الصوت');return;}
+  stopSpeech(); // أوقف أي صوت قبل الاستماع
+  document.getElementById('stop-spk-btn').style.display='none';
   recog=new SR();recog.lang='ar-SA';recog.continuous=false;recog.interimResults=false;
   recog.onstart=()=>{
     isRec=true;
@@ -1584,7 +1594,13 @@ async function doAI(text){
       'أنتِ Beauty AI، مساعدة الجمال الذكية المتخصصة. خبرتكِ تشمل: المكياج بكل أنواعه (فاونديشن، كونتور، هايلايتر، أيلاينر، أحمر الشفاه...)، العطور وتحليل مكوناتها (النوتات الأمامية والوسطى والقاعدية، عائلات الروائح)، العناية بالبشرة (روتين الصباح والمساء، المكونات الفعالة كالنياسيناميد والريتينول وفيتامين C والهيالورونيك أسيد)، والعناية بالشعر. تقدرين تحللين أي منتج، تقترحين بدائل، تشرحين المكونات، تقارنين البراندات، وتبنين روتين جمال مخصص. أجيبي دائماً بالعربية بأسلوب ودي وعلمي ومختصر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
-    document.getElementById('spk-btn').style.display='inline-flex';
+    document.getElementById('spk-btn').style.display='none';
+    // الرد الصوتي التلقائي
+    document.getElementById('stop-spk-btn').style.display='inline-flex';
+    speakTxt(r, ()=>{
+      document.getElementById('stop-spk-btn').style.display='none';
+      document.getElementById('spk-btn').style.display='inline-flex';
+    });
   }catch(e){
     const msg = e.message || '';
     if(msg==='NO_KEY'){
@@ -1614,17 +1630,29 @@ function copyAIText(){
 }
 
 function clearAIText(){
-  if(!lastResp)return;
-  stopAISpeaking();
+  stopSpeech();
   lastResp='';
   document.getElementById('ai-txt').textContent='';
   document.getElementById('ai-box').classList.remove('vis');
   document.getElementById('spk-btn').style.display='none';
   document.getElementById('stop-spk-btn').style.display='none';
-  showToast('Cleared 🗑️');
+  showToast('تم المسح 🗑️');
 }
 
-function speakR(){speakTxt(lastResp);}
+function speakR(){
+  document.getElementById('spk-btn').style.display='none';
+  document.getElementById('stop-spk-btn').style.display='inline-flex';
+  speakTxt(lastResp, ()=>{
+    document.getElementById('stop-spk-btn').style.display='none';
+    document.getElementById('spk-btn').style.display='inline-flex';
+  });
+}
+
+function stopAISpeaking(){
+  stopSpeech();
+  document.getElementById('stop-spk-btn').style.display='none';
+  if(lastResp) document.getElementById('spk-btn').style.display='inline-flex';
+}
 
 // ══ GROQ ══
 async function callGroq(msg,sys=''){
@@ -1811,7 +1839,17 @@ function saveSBKey(){
   showToast('تم حفظ المفتاح ✅');
 }
 
-function applyTheme(){ /* dark theme only - fixed */ }
+function applyTheme(){
+  const isDark = localStorage.getItem('bai_theme') !== 'light';
+  document.body.classList.toggle('light-mode', !isDark);
+  const icon = document.getElementById('theme-icon');
+  if(icon) icon.className = isDark ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+}
+function toggleTheme(){
+  const isLight = document.body.classList.contains('light-mode');
+  localStorage.setItem('bai_theme', isLight ? 'dark' : 'light');
+  applyTheme();
+}
 
 init();
 applyTheme();
@@ -1926,12 +1964,15 @@ async function fetchOBF(params, reset=false){
 function initOBFScroll(){
   const screen = document.getElementById('s-discover');
   if(!screen) return;
-  screen.onscroll = function(){
+  // Remove old listener to avoid duplicates
+  screen.onscroll = null;
+  screen.addEventListener('scroll', function(){
     if(obfLoading || !obfHasMore) return;
-    if(screen.scrollTop + screen.clientHeight >= screen.scrollHeight - 400){
+    const remaining = screen.scrollHeight - screen.scrollTop - screen.clientHeight;
+    if(remaining < 600){
       fetchOBF(obfCurrentParams, false);
     }
-  };
+  }, {passive: true});
 }
 
 function openOBFProd(name, brand, img, ingr){
