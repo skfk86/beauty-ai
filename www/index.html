@@ -8,19 +8,29 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
-  --bg:#060108;--bg2:#0d060e;--card:#160d16;--card2:#1f1220;
-  --border:#3a1530;--rose:#d04272;--rose2:#e05585;
-  --rose-d:rgba(208,66,114,.14);--gold:#c48860;--gold2:#e8a878;
-  --gold-d:rgba(196,136,96,.11);--text:#f5eaf0;--dim:#8a6878;--muted:#45283c;
+  /* Dark mode — richer depth */
+  --bg:#07010a;--bg2:#0e0512;--card:#180e1a;--card2:#221326;
+  --border:#3d1535;--rose:#d63d6e;--rose2:#e85f87;
+  --rose-d:rgba(214,61,110,.16);--gold:#c8904a;--gold2:#eaaa60;
+  --gold-d:rgba(200,144,74,.12);--text:#f8edf4;--dim:#9a7088;--muted:#4a2c40;
+  /* Spacing scale */
+  --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;
+  /* Elevation */
+  --shadow-sm:0 2px 8px rgba(0,0,0,.3);
+  --shadow-md:0 4px 20px rgba(0,0,0,.4);
+  --shadow-lg:0 8px 32px rgba(0,0,0,.5);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body.theme-transitioning *{transition:background .3s,color .3s,border-color .3s !important}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
 body.light-mode{
-  --bg:#f5f0f5;--bg2:#ede5ed;--card:#ffffff;--card2:#f8f0f8;
-  --border:#e0cce0;--rose:#c03060;--rose2:#d04070;
-  --rose-d:rgba(192,48,96,.12);--gold:#a06030;--gold2:#b07040;
-  --gold-d:rgba(160,96,48,.1);--text:#1a0a18;--dim:#705060;--muted:#c0a0b0;
+  --bg:#fdf8fb;--bg2:#f5eef7;--card:#ffffff;--card2:#faf3fa;
+  --border:#e8d4e8;--rose:#c0305e;--rose2:#d04472;
+  --rose-d:rgba(192,48,94,.1);--gold:#9a5c28;--gold2:#b07038;
+  --gold-d:rgba(154,92,40,.09);--text:#160818;--dim:#6e4d60;--muted:#d0b8c8;
+  --shadow-sm:0 2px 8px rgba(80,0,40,.08);
+  --shadow-md:0 4px 20px rgba(80,0,40,.12);
+  --shadow-lg:0 8px 32px rgba(80,0,40,.15);
 }
 /* ── Light mode overrides for hardcoded elements ── */
 body.light-mode .bnav{
@@ -30,16 +40,16 @@ body.light-mode .bnav{
 body.light-mode .ni-lb{color:#705060}
 body.light-mode .ni.act .ni-lb{color:#c03060}
 body.light-mode .hdr-menu{
-  background:rgba(240,235,240,.9);
-  border-bottom:1px solid #e0cce0;
+  background:rgba(240,235,240,.15) !important;
 }
 body.light-mode .hdr-vip{
   background:linear-gradient(135deg,#f8ece0,#f0e4d0);
   border:1px solid var(--gold);
 }
-body.light-mode .sb-pan{
-  background:var(--bg2);
-  border-right:1px solid var(--border);
+body.light-mode .sb{
+  background:#ffffff !important;
+  border-left:1px solid #e0d0e8 !important;
+  box-shadow:-8px 0 32px rgba(80,0,40,.12) !important;
 }
 body.light-mode .sb-ov.open{background:rgba(0,0,0,.4)}
 body.light-mode .mov{background:rgba(255,255,255,.85)}
@@ -92,6 +102,19 @@ body.light-mode .srch-box input{
   color:var(--text);
   background:transparent;
 }
+body.light-mode .srch{
+  background:var(--card) !important;
+  border-color:var(--border) !important;
+}
+body.light-mode .srch input{
+  color:var(--text) !important;
+}
+body.light-mode .srch input::placeholder{
+  color:var(--muted) !important;
+}
+body.light-mode .srch-ic{
+  color:var(--dim) !important;
+}
 body.light-mode .ft{
   background:var(--card2);
   color:var(--dim);
@@ -101,7 +124,31 @@ body.light-mode .ft.on{
   background:var(--rose);
   color:#fff;
 }
-body.light-mode .sb-key-row{background:rgba(0,0,0,.06)}
+body.light-mode .sb-key-row{
+  background:#f8f0f8;
+  border:1.5px solid #e8d4e8;
+  border-radius:12px;
+}
+body.light-mode .sb-key-inp{
+  color:#160818 !important;
+  background:transparent !important;
+}
+body.light-mode .sb-key-inp::placeholder{
+  color:#9a7088 !important;
+}
+body.light-mode .sb-logo-txt{color:#d04472}
+body.light-mode .sb-hd{color:#9a7088}
+body.light-mode .sb-item-name{color:#160818}
+body.light-mode .sb-item-badge{background:#f0d8e8;color:#d04472}
+body.light-mode .sb-close{
+  background:#f5eef7 !important;
+  color:#160818 !important;
+  border:1px solid #e8d4e8 !important;
+}
+body.light-mode .sb-key-save{
+  background:linear-gradient(135deg,#c0305e,#d04472) !important;
+  color:#fff !important;
+}
 body.light-mode .sb-item{color:var(--text)}
 body.light-mode .sb-item:hover{background:var(--card2)}
 body.light-mode .pref-card{
@@ -437,7 +484,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   pointer-events:none;transition:background .3s}
 .sb-ov.open{background:rgba(0,0,0,.65);pointer-events:all}
 .sb{position:fixed;top:0;right:-280px;width:280px;height:100%;
-  background:var(--bg2);border-left:1px solid var(--border);
+  background:#0a0d1a;border-left:1px solid rgba(80,100,180,.2);
   z-index:701;transition:right .3s cubic-bezier(.4,0,.2,1);
   display:flex;flex-direction:column;overflow:hidden}
 .sb.open{right:0}
@@ -505,7 +552,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
   pointer-events:none;transition:background .3s}
 .sb-ov.open{background:rgba(0,0,0,.65);pointer-events:all}
 .sb{position:fixed;top:0;right:-280px;width:280px;height:100%;
-  background:var(--bg2);border-left:1px solid var(--border);
+  background:#0a0d1a;border-left:1px solid rgba(80,100,180,.2);
   z-index:701;transition:right .3s cubic-bezier(.4,0,.2,1);
   display:flex;flex-direction:column;overflow:hidden}
 .sb.open{right:0}
@@ -972,6 +1019,344 @@ body.light-mode .bc{background:#fff}
 body.light-mode .pdm-gallery{background:#f8f0f8}
 body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
 
+
+/* ════════════════════════════════════
+   ROSIVA UI/UX DESIGN SYSTEM v2
+════════════════════════════════════ */
+
+/* ── Global Typography ── */
+body{font-family:'Poppins','Cairo',sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.font-display{font-family:'Poppins',sans-serif;font-weight:800;letter-spacing:-.5px}
+
+/* ── Header — Elevated Glass ── */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 10px;
+  background:linear-gradient(180deg,var(--bg) 70%,transparent);
+  position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.hdr-title .ht-main{
+  font-size:20px;font-weight:900;
+  background:linear-gradient(135deg,var(--text) 0%,var(--rose2) 60%,var(--gold2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:-.5px;
+}
+.hdr-menu{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--card);border:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;cursor:pointer;
+  box-shadow:var(--shadow-sm);
+}
+.hdr-menu span{
+  display:block;width:16px;height:1.5px;
+  background:var(--text);border-radius:2px;transition:all .2s;
+}
+.hdr-vip{
+  font-size:11px;font-weight:700;padding:7px 12px;border-radius:20px;
+  background:linear-gradient(135deg,var(--gold-d),rgba(200,144,74,.2));
+  border:1px solid rgba(200,144,74,.35);color:var(--gold2);
+  cursor:pointer;letter-spacing:.3px;
+}
+
+/* ── Home — Greeting ── */
+.greet{
+  padding:20px 20px 8px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.greet-heart{font-size:22px;margin-bottom:2px}
+.greet-title{
+  font-size:26px;font-weight:900;color:var(--text);
+  line-height:1.2;letter-spacing:-.8px;
+}
+.greet-sub{font-size:13px;color:var(--dim);font-weight:400;margin-top:2px}
+
+/* ── Voice Section ── */
+.voice-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:0;padding:24px 0 8px;
+}
+.mic-btn{
+  width:76px;height:76px;border-radius:50%;
+  background:linear-gradient(145deg,var(--rose),#a02058);
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 8px rgba(214,61,110,.12),
+             0 0 0 16px rgba(214,61,110,.06),
+             0 8px 24px rgba(214,61,110,.4);
+  transition:transform .15s,box-shadow .15s;
+}
+.mic-btn i{color:#fff;font-size:28px}
+.mic-btn:active,.mic-btn.rec{
+  transform:scale(1.08);
+  box-shadow:0 0 0 10px rgba(214,61,110,.2),
+             0 0 0 22px rgba(214,61,110,.08),
+             0 8px 32px rgba(214,61,110,.5);
+}
+body.light-mode .mic-btn{
+  background:linear-gradient(145deg,var(--rose),#a02050) !important;
+  box-shadow:0 0 0 8px rgba(192,48,94,.1),
+             0 0 0 16px rgba(192,48,94,.05),
+             0 8px 24px rgba(192,48,94,.3) !important;
+}
+
+/* ── AI Response Box ── */
+.ai-box{
+  margin:14px 18px;border-radius:20px;
+  background:var(--card);border:1px solid var(--border);
+  padding:16px;box-shadow:var(--shadow-sm);
+  display:none;
+}
+.ai-box.vis{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── Bottom Nav Bar ── */
+.bnav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(7,1,10,.96);backdrop-filter:blur(24px);
+  border-top:1px solid var(--border);
+  display:flex;padding:8px 0;
+  padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));
+  z-index:600;
+}
+body.light-mode .bnav{
+  background:rgba(253,248,251,.97) !important;
+  border-top:1px solid var(--border) !important;
+}
+.ni{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;gap:3px;cursor:pointer;
+  padding:4px 2px;position:relative;
+}
+.ni-ic{
+  width:44px;height:28px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--dim);transition:all .2s;
+}
+.ni.act .ni-ic{
+  background:var(--rose-d);color:var(--rose2);
+}
+.ni-lb{
+  font-size:9.5px;font-weight:600;color:var(--dim);
+  letter-spacing:.2px;white-space:nowrap;
+}
+.ni.act .ni-lb{color:var(--rose2);font-weight:700}
+.ni-dot{
+  position:absolute;bottom:2px;
+  width:4px;height:4px;border-radius:50%;
+  background:var(--rose);opacity:0;transition:opacity .2s;
+}
+.ni.act .ni-dot{opacity:1}
+
+/* ── Filter Tabs ── */
+.ftabs{
+  display:flex;gap:8px;padding:12px 18px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.ftabs::-webkit-scrollbar{display:none}
+.ft{
+  display:flex;align-items:center;gap:5px;
+  padding:8px 16px;border-radius:20px;
+  border:1.5px solid var(--border);
+  font-size:12px;font-weight:600;color:var(--dim);
+  white-space:nowrap;cursor:pointer;transition:all .2s;
+  background:var(--card);
+}
+.ft.on{
+  background:var(--rose);border-color:var(--rose);
+  color:#fff;box-shadow:0 4px 12px rgba(214,61,110,.35);
+}
+body.light-mode .ft{background:var(--card);color:var(--dim);border-color:var(--border)}
+body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+/* ── Brand Grid ── */
+#b-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:14px;padding:14px 18px 20px;
+}
+.bc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:22px;cursor:pointer;overflow:hidden;
+  transition:transform .18s,box-shadow .18s;
+  box-shadow:var(--shadow-sm);
+}
+.bc:active{transform:scale(.95);box-shadow:none}
+.bc-banner{
+  height:120px;display:flex;align-items:center;
+  justify-content:center;position:relative;overflow:hidden;
+}
+.bc-logo{
+  width:80px;height:80px;border-radius:18px;
+  object-fit:contain;background:#fff;padding:8px;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+  position:relative;z-index:1;
+}
+.bc-logo-fb{
+  width:80px;height:80px;border-radius:18px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;font-weight:900;
+  position:relative;z-index:1;
+  box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.bc-body{padding:12px 14px 16px}
+.bc-name{
+  font-size:14px;font-weight:800;color:var(--text);
+  margin-bottom:6px;letter-spacing:-.3px;
+}
+.bc-cat{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;padding:4px 10px;border-radius:20px;
+  background:var(--rose-d);color:var(--rose2);
+  border:1px solid rgba(214,61,110,.2);
+}
+
+/* ── Product Cards ── */
+#obf-grid,#bd-prods{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;padding:14px 18px 20px;
+}
+.obf-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;cursor:pointer;
+  transition:transform .18s;box-shadow:var(--shadow-sm);
+}
+.obf-card:active{transform:scale(.95)}
+.obf-card-img{
+  height:150px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.obf-card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .3s;
+}
+.obf-card-badge{
+  position:absolute;top:8px;right:8px;
+  background:rgba(0,0,0,.6);color:#fff;
+  font-size:8px;font-weight:700;letter-spacing:.5px;
+  padding:4px 8px;border-radius:20px;
+  backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
+}
+.obf-card-body{padding:12px 12px 14px}
+.obf-card-brand{
+  font-size:9px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--rose2);margin-bottom:5px;
+}
+.obf-card-name{
+  font-size:12px;font-weight:700;color:var(--text);
+  line-height:1.45;margin-bottom:10px;
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+  min-height:35px;
+}
+.obf-card-buy{
+  width:100%;border:none;border-radius:12px;padding:9px;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  color:#fff;font-size:10px;font-weight:700;
+  font-family:'Poppins',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  letter-spacing:.3px;
+}
+
+/* ── Section Label ── */
+.sec-lbl{
+  font-size:11px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold2);
+  padding:16px 20px 8px;
+}
+
+/* ── Search Bar ── */
+.srch{
+  display:flex;align-items:center;gap:10px;
+  margin:10px 18px 8px;
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:16px;padding:10px 14px;
+  box-shadow:var(--shadow-sm);transition:border-color .2s;
+}
+.srch:focus-within{border-color:var(--rose)}
+.srch-ic{color:var(--dim);font-size:14px;flex-shrink:0}
+.srch input{
+  background:none;border:none;outline:none;
+  color:var(--text);font-size:13px;font-weight:500;
+  font-family:'Poppins',sans-serif;flex:1;
+}
+.srch input::placeholder{color:var(--muted)}
+body.light-mode .srch{
+  background:var(--card) !important;
+  border-color:var(--border) !important;
+}
+body.light-mode .srch:focus-within{border-color:var(--rose) !important}
+body.light-mode .srch input{color:var(--text) !important}
+
+/* ── Brand Detail Hero ── */
+.bd-hero-new{
+  position:relative;overflow:hidden;
+  min-height:230px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:28px;
+}
+.bd-hero-logo-wrap{
+  width:108px;height:108px;border-radius:28px;overflow:hidden;
+  background:#fff;padding:10px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),
+             0 0 0 1.5px rgba(255,255,255,.15);
+  margin-bottom:18px;position:relative;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+}
+.bd-hero-logo-wrap img{width:100%;height:100%;object-fit:contain}
+.bd-hero-name{
+  font-size:28px;font-weight:900;color:var(--text);
+  letter-spacing:-1px;text-align:center;position:relative;z-index:2;
+  margin-bottom:8px;
+}
+.bd-hero-cat{
+  font-size:10px;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--dim);
+  position:relative;z-index:2;
+}
+
+/* ── Dots loader ── */
+.dots{display:flex;gap:6px;justify-content:center;padding:8px 0}
+.dots span{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--rose);opacity:.4;
+  animation:dot-pulse 1.2s ease-in-out infinite;
+}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot-pulse{0%,80%,100%{transform:scale(.7);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));
+  left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:10px 20px;
+  font-size:12px;font-weight:600;color:var(--text);
+  box-shadow:var(--shadow-md);opacity:0;
+  transition:opacity .25s,transform .25s;
+  pointer-events:none;z-index:999;white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── Scrollbar ── */
+.screen{scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+
+/* ── Cards light mode ── */
+body.light-mode .bc,
+body.light-mode .obf-card{
+  background:#fff;
+  box-shadow:0 2px 12px rgba(80,0,40,.07);
+}
+body.light-mode .bc:active,
+body.light-mode .obf-card:active{box-shadow:none}
+
+/* ── Nav bar label trim ── */
+#ni-brands .ni-lb{font-size:8.5px}
+
 </style>
 </head>
 <body>
@@ -1020,9 +1405,10 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="greet">
-      <div class="greet-heart">❤️</div>
-      <div class="greet-title">Welcome!</div>
-      <div class="greet-sub">How can I help you today?</div>
+      <div class="greet-sub" style="font-size:12px;color:var(--dim);margin-bottom:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase">Your Beauty Assistant</div>
+      <div class="greet-title" style="font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1.15">
+        How can I help<br>you today ✨
+      </div>
     </div>
 
     <!-- WAVEFORM + MIC -->
@@ -1035,11 +1421,11 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
       </div>
       <div class="wave-side right" id="wr"></div>
     </div>
-    <div class="voice-hint" id="vh">Hold and speak...</div>
+    <div class="voice-hint" id="vh" style="font-size:12px;color:var(--dim);text-align:center;margin-top:10px;letter-spacing:.3px;font-weight:500">Tap to speak with Rosiva</div>
 
     <div class="ai-box" id="ai-box">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div class="ai-hd" style="margin-bottom:0"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva</div>
+        <div class="ai-hd" style="margin-bottom:0;font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
         <div style="display:flex;gap:6px" id="ai-actions">
           <button onclick="copyAIText()" title="Copy"
             style="background:var(--card2);border:1px solid var(--border);border-radius:8px;
@@ -1121,10 +1507,10 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
     </div>
     <div class="ftabs" id="ftabs">
       <div class="ft on" onclick="setF('All',this)">All</div>
-      <div class="ft" onclick="setF('Makeup',this)">Makeup</div>
-      <div class="ft" onclick="setF('Fragrances',this)">Fragrances</div>
-      <div class="ft" onclick="setF('Skincare',this)">Skincare</div>
-      <div class="ft" onclick="setF('Hair',this)">Hair</div>
+      <div class="ft" onclick="setF('Makeup',this)">💄 Makeup</div>
+      <div class="ft" onclick="setF('Fragrances',this)">🌸 Fragrance</div>
+      <div class="ft" onclick="setF('Skincare',this)">✨ Skincare</div>
+      <div class="ft" onclick="setF('Hair',this)">💇 Hair</div>
     </div>
     <div class="brands-grid" id="b-grid"></div>
     <div class="view-all" id="view-all-btn">
@@ -1195,7 +1581,9 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="prof-top">
-      <div class="prof-av"><i class="fa-solid fa-user" style="color:#fff;font-size:30px"></i></div>
+      <div class="prof-av" style="background:linear-gradient(135deg,var(--rose),var(--gold));width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px var(--rose-d),var(--shadow-md)">
+        <i class="fa-solid fa-user" style="color:#fff;font-size:30px"></i>
+      </div>
       <div style="font-size:16px;font-weight:900">Rosiva User</div>
       <div style="font-size:11px;color:var(--dim);margin-top:3px">Your Privacy is Our Priority 🔒</div>
     </div>
@@ -1311,7 +1699,7 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
     <div class="stpad"></div>
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">🔍 Discover Productات</div></div>
+      <div class="hdr-title"><div class="ht-main">🔍 Discover Products</div></div>
       <div style="width:40px"></div>
     </div>
     <div style="padding:0 18px 12px">
@@ -1323,11 +1711,11 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
         onkeydown="if(event.key==='Enter')searchOBF()">
     </div>
     <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('make-up',this)">Makeup</div>
-      <div class="ft" onclick="searchOBFCat('fragrances',this)">Fragrances</div>
-      <div class="ft" onclick="searchOBFCat('facial-care',this)">Skincare</div>
-      <div class="ft" onclick="searchOBFCat('hair-care',this)">Hair</div>
-      <div class="ft" onclick="searchOBFCat('lip-gloss',this)">Lips</div>
+      <div class="ft on" onclick="searchOBFCat('make-up',this)">💄 Makeup</div>
+      <div class="ft" onclick="searchOBFCat('fragrances',this)">🌸 Fragrance</div>
+      <div class="ft" onclick="searchOBFCat('facial-care',this)">✨ Skincare</div>
+      <div class="ft" onclick="searchOBFCat('hair-care',this)">💇 Hair</div>
+      <div class="ft" onclick="searchOBFCat('lip-gloss',this)">💋 Lips</div>
     </div>
     <div id="obf-grid" style="padding:0 18px"></div>
     <div id="obf-load-more" style="display:none;text-align:center;padding:20px">
@@ -1344,19 +1732,24 @@ body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
   <!-- BOTTOM NAV -->
   <nav class="bnav">
     <div class="ni on" id="ni-home" onclick="navTo('home')">
-      <div class="ni-ic"><i class="fa-solid fa-house"></i></div><div class="ni-lb">Home</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-house"></i></div>
+      <div class="ni-lb">Home</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-favs" onclick="navTo('favs')">
-      <div class="ni-ic"><i class="fa-solid fa-heart"></i></div><div class="ni-lb">Favorites</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
+      <div class="ni-lb">Favorites</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-brands" onclick="navTo('brands')">
-      <div class="ni-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div><div class="ni-lb">Recommendations</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-store"></i></div>
+      <div class="ni-lb">Brands</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-gifts" onclick="navTo('discover')">
-      <div class="ni-ic"><i class="fa-solid fa-magnifying-glass"></i></div><div class="ni-lb">Discover</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-compass"></i></div>
+      <div class="ni-lb">Discover</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-prof" onclick="navTo('prof')">
-      <div class="ni-ic"><i class="fa-solid fa-user"></i></div><div class="ni-lb">My Account</div><div class="ni-dot"></div>
+      <div class="ni-ic"><i class="fa-solid fa-user-circle"></i></div>
+      <div class="ni-lb">Account</div><div class="ni-dot"></div>
     </div>
   </nav>
 
@@ -1669,7 +2062,7 @@ function navTo(s){
   if(el){el.classList.add('on');el.scrollTop=0;}
   curScreen=s;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts'};
+  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts','bdet':'ni-brands'};
   const ni=document.getElementById(map[s]);
   if(ni)ni.classList.add('on');
   if(s==='favs')renderFavs();
@@ -1736,18 +2129,31 @@ function setF(cat,el){
 async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
-  document.getElementById('bd-hero-bg').style.background=
+    document.getElementById('bd-hero-bg').style.background=
     `linear-gradient(135deg,${curBrand.bg} 0%,${curBrand.border}40 100%)`;
-  const logoImg = document.getElementById('bd-logo-img');
-  logoImg.src=`https://logo.clearbit.com/${curBrand.domain}?size=200`;
+  const logoImg=document.getElementById('bd-logo-img');
+  const logoWrap=document.getElementById('bd-logo');
+  // Try clearbit first, then favicon, then text fallback
+  function tryLogo(urls, idx){
+    if(idx>=urls.length){
+      logoImg.style.display='none';
+      logoWrap.style.background=curBrand.border+'18';
+      logoWrap.style.display='flex';
+      logoWrap.style.alignItems='center';
+      logoWrap.style.justifyContent='center';
+      logoWrap.style.padding='0';
+      logoWrap.innerHTML=`<div style="font-size:32px;font-weight:900;letter-spacing:-2px;color:${curBrand.border};text-align:center;line-height:1">${curBrand.nm.substring(0,3).toUpperCase()}</div>`;
+      return;
+    }
+    logoImg.src=urls[idx];
+    logoImg.onerror=()=>tryLogo(urls,idx+1);
+  }
+  logoImg.style.display='block';
   logoImg.alt=curBrand.nm;
-  logoImg.onerror=function(){
-    this.style.display='none';
-    const wrap=document.getElementById('bd-logo');
-    wrap.style.background=curBrand.border+'20';
-    if(!wrap.querySelector('span'))
-      wrap.innerHTML+=`<span style="font-size:20px;font-weight:900;color:${curBrand.border}">${curBrand.nm.substring(0,3).toUpperCase()}</span>`;
-  };
+  tryLogo([
+    `https://logo.clearbit.com/${curBrand.domain}?size=200`,
+    `https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=128`,
+  ], 0);
   document.getElementById('bd-name').textContent=curBrand.nm;
   document.getElementById('bd-cat').textContent=curBrand.cat;
   document.getElementById('bd-ai').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
@@ -1874,7 +2280,7 @@ async function loadPrAI(p,b){
   try{
     const r=await callGroq(
       `Explain this product "${p.ar}" (${p.nm}) from the ${b.nm} brand in the ${b.cat} category. Product type and function, key ingredients or scent elements, optimal usage, who it suits (skin type or occasion), price range, pros and cons.`,
-      'You are a professional beauty expert and product consultant. You have precise knowledge of beauty product ingredients, real benefits, usage and suitability. Reply in English in an engaging and direct style in 4-5 sentences with practical information.'
+      'أنتِ Rosiva AI، خبيرة جمال ومستشارة منتجات محترفة. لديكِ معرفة دقيقة بمكونات منتجات الجمال وفوائدها الحقيقية وكيفية استخدامها ومن تناسب. أجيبي باللغة العربية بأسلوب ودي وعلمي في 4-5 جمل مفيدة.'
     );
     lastPrInfo=r;
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
@@ -1908,7 +2314,7 @@ async function askMoreModal(){
   const question=prompt('Ask about this product:','What are cheaper alternatives?');
   if(!question)return;
   try{
-    const r=await callGroq(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). You have comprehensive knowledge of alternatives, prices, ingredients, product comparisons, usage methods and occasions. Reply in English in a direct, practical and helpful style.`);
+    const r=await callGroq(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). لديكِ معرفة شاملة بالبدائل والأسعار والمكونات ومقارنات المنتجات وطرق الاستخدام والمناسبات. أجيبي باللغة العربية بأسلوب مباشر وعملي ومفيد.`);
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
     lastPrInfo=r;
   }catch{showToast('Connection error');}
@@ -2018,7 +2424,7 @@ async function doAI(text){
   document.getElementById('spk-btn').style.display='none';
   try{
     const r=await callGroq(text,
-      'You are Beauty AI, the specialized smart beauty assistant. Your expertise covers all types of makeup (foundation, contour, highlighter, eyeliner, lipstick...), fragrances and their analysis (top, middle and base notes, fragrance families), skincare (morning and evening routines, active ingredients like niacinamide, retinol, vitamin C and hyaluronic acid), and hair care. You can analyze any product, suggest alternatives, explain ingredients, compare brands and build a personalized beauty routine. Always reply in English in a friendly, scientific and concise style. If the question goes outside the beauty world, kindly redirect.');
+      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. عند سؤالكِ عن نفسكِ، قدّمي نفسكِ هكذا: أنا Rosiva AI، مساعدتكِ الشخصية للجمال داخل تطبيق Rosiva، مدعومة بالذكاء الاصطناعي لمساعدتكِ في اكتشاف المنتجات وفهم المكونات ومقارنة البراندات وبناء روتين جمالك المثالي. خبرتكِ تشمل: المكياج بجميع أنواعه (فاونديشن، كونتور، هايلايتر، أيلاينر، أحمر الشفاه...)، العطور وتحليل نوتاتها (الأمامية والوسطى والقاعدية وعائلات الروائح)، العناية بالبشرة (روتيني الصباح والمساء والمكونات الفعالة كالنياسيناميد والريتينول وفيتامين C والهيالورونيك أسيد)، والعناية بالشعر. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. إذا خرج السؤال عن عالم الجمال، وجّهي بلطف.');
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
     document.getElementById('spk-btn').style.display='none';
@@ -2301,6 +2707,118 @@ function searchOBF(){
   fetchOBF(`search_terms=${encodeURIComponent(q)}`, true);
 }
 
+// ══ OBF DISCOVER ══
+const PAGE_SIZE=24;
+
+async function fetchOBF(params, reset=false){
+  if(obfLoading) return;
+  if(reset){
+    obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0;
+    document.getElementById('obf-grid').innerHTML=
+      '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
+  }
+  if(!obfHasMore) return;
+  obfLoading=true;
+  try{
+    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+    const res=await fetch(url);
+    const data=await res.json();
+    const total=parseInt(data.count)||0;
+    const prods=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
+    if(!prods.length && obfPage===1){
+      document.getElementById('obf-grid').innerHTML=
+        '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
+      obfHasMore=false;
+    } else if(prods.length){
+      renderOBFCards(prods, obfPage>1);
+      obfLoadedCount=(obfLoadedCount||0)+prods.length;
+      obfPage++;
+      obfHasMore=prods.length>=PAGE_SIZE||(total>0&&obfLoadedCount<total);
+    } else {
+      obfHasMore=false;
+    }
+  }catch(e){
+    if(obfPage===1) document.getElementById('obf-grid').innerHTML=
+      '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:12px">❌ Check your internet connection</div>';
+  }
+  obfLoading=false;
+}
+
+// ══ BRAND PRODUCTS ══
+const BRAND_PAGE_SIZE=24;
+
+
+
+async function fetchBrandPage(b, page, append){
+  if(bdLoading) return;
+  bdLoading=true;
+  const container=document.getElementById('bd-prods');
+  const searchTerm=(b._aliases&&b._aliases[b._aliasIdx])||b.search||b.nm;
+  try{
+    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(searchTerm)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+    const res=await fetch(url, {headers:{'User-Agent':'RosivaBeautyApp/1.0'}});
+    const data=await res.json();
+    const total=parseInt(data.count)||0;
+    const prods=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
+    if(!prods.length && !append){
+      // try next alias if available
+      if(b._aliases && b._aliasIdx<b._aliases.length-1){
+        b._aliasIdx++; bdLoading=false;
+        fetchBrandPage(b,1,false); return;
+      }
+      container.innerHTML='<div style="grid-column:1/-1;padding:20px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand.<br><span style="font-size:10px">Try searching in the Discover screen</span></div>';
+      bdHasMore=false;
+    } else {
+      if(!append) container.innerHTML='';
+      prods.forEach(p=>container.appendChild(renderBrandProdCard(p,b)));
+      bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
+      bdPage=page+1;
+    }
+  }catch(e){
+    if(!append) container.innerHTML='<div style="grid-column:1/-1;padding:20px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
+  }
+  bdLoading=false;
+}
+
+async function loadBrandProdsOBF(b){
+  const BRAND_ALIASES={
+    'dior':   ['Dior','Christian Dior'],
+    'chanel': ['Chanel','CHANEL'],
+    'ysl':    ['Yves Saint Laurent','YSL'],
+    'lamer':  ['La Mer','Creme de la Mer'],
+    'estee':  ['Estee Lauder'],
+    'lancome':['Lancome','Lancôme'],
+    'ct':     ['Charlotte Tilbury'],
+    'kayali': ['Kayali','Kay Ali'],
+    'creed':  ['Creed'],
+    'tomford':['Tom Ford'],
+    'kera':   ['Kerastase','Kérastase'],
+    'olaplex':['Olaplex'],
+    'moroc':  ['Moroccanoil'],
+    'huda':   ['Huda Beauty'],
+    'fenty':  ['Fenty Beauty'],
+    'rare':   ['Rare Beauty'],
+    'mac':    ['MAC Cosmetics','MAC','M.A.C'],
+    'nars':   ['NARS'],
+  };
+  b._aliases=BRAND_ALIASES[b.id]||[b.search||b.nm];
+  b._aliasIdx=0;
+  bdPage=1; bdHasMore=true; bdLoading=false; bdCurrentBrand=b;
+  const container=document.getElementById('bd-prods');
+  container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Fetching products...</div></div>';
+  await fetchBrandPage(b,1,false);
+  // Infinite scroll
+  const screen=document.getElementById('s-bdet');
+  if(screen){
+    screen.onscroll=null;
+    screen.addEventListener('scroll',function(){
+      if(bdLoading||!bdHasMore||bdCurrentBrand!==b) return;
+      if(screen.scrollHeight-screen.scrollTop-screen.clientHeight<500)
+        fetchBrandPage(b,bdPage,true);
+    },{passive:true});
+  }
+}
+
 function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
@@ -2552,7 +3070,7 @@ async function loadProdAI(p){
   if(!el || !apiKey) return;
   el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const sys = "You are a professional beauty expert. Reply in English in 3-4 concise sentences covering: what this product is, its key benefits, who it suits, and whether it's worth buying.";
+    const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
@@ -2560,12 +3078,12 @@ async function loadProdAI(p){
       body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:180,temperature:0.7})
     });
     const data = await res.json();
-    const text = data.choices?.[0]?.message?.content||'Analysis not available.';
+    const text = data.choices?.[0]?.message?.content||'التحليل غير متاح حالياً.';
     el.textContent = text;
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
   }catch(e){
-    el.textContent = 'Add your Groq API key to get AI analysis.';
+    el.textContent = 'أضيفي مفتاح Groq API للحصول على تحليل الذكاء الاصطناعي.';
   }
 }
 
