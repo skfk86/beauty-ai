@@ -671,6 +671,307 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
   text-transform:uppercase;
   animation:sp-up .4s ease forwards .9s;opacity:0;
 }
+
+/* ══ BRAND CARDS — Premium Grid ══ */
+#b-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:14px;padding:14px 18px 20px;
+}
+.bc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;cursor:pointer;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;
+}
+.bc:active{transform:scale(.96)}
+.bc-banner{
+  height:110px;display:flex;align-items:center;
+  justify-content:center;position:relative;overflow:hidden;
+}
+.bc-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.5));
+}
+.bc-logo{
+  width:72px;height:72px;border-radius:16px;
+  object-fit:contain;background:#fff;padding:6px;
+  position:relative;z-index:1;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.bc-logo-fb{
+  width:72px;height:72px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:900;letter-spacing:-1px;
+  position:relative;z-index:1;
+}
+.bc-body{padding:12px 12px 14px}
+.bc-name{
+  font-size:14px;font-weight:800;color:var(--text);
+  margin-bottom:4px;letter-spacing:-.3px;
+}
+.bc-cat{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:9px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+  background:var(--rose-d);color:var(--rose2);
+  border:1px solid rgba(208,66,114,.2);
+}
+
+/* ══ BRAND DETAIL — Hero Redesign ══ */
+.bd-hero-new{
+  position:relative;overflow:hidden;
+  min-height:220px;display:flex;flex-direction:column;
+  align-items:center;justify-content:flex-end;
+  padding-bottom:24px;
+}
+.bd-hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--card2),var(--bg));
+}
+.bd-hero-bg-img{
+  position:absolute;inset:0;object-fit:cover;width:100%;height:100%;
+  opacity:.08;filter:blur(2px);
+}
+.bd-hero-logo-wrap{
+  position:relative;z-index:2;
+  width:100px;height:100px;border-radius:24px;overflow:hidden;
+  background:#fff;padding:8px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.1);
+  margin-bottom:16px;
+}
+.bd-hero-logo-wrap img{width:100%;height:100%;object-fit:contain}
+.bd-hero-name{
+  position:relative;z-index:2;
+  font-size:26px;font-weight:900;color:var(--text);
+  letter-spacing:-1px;text-align:center;margin-bottom:6px;
+}
+.bd-hero-cat{
+  position:relative;z-index:2;
+  font-size:10px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--dim);
+}
+
+/* ══ PRODUCT CARDS — Discover Grid ══ */
+#obf-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:12px;padding:14px 18px 20px;
+}
+.obf-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;cursor:pointer;
+  transition:transform .18s;position:relative;
+}
+.obf-card:active{transform:scale(.96)}
+.obf-card-img{
+  height:140px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.obf-card-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .3s;
+}
+.obf-card:active .obf-card-img img{transform:scale(1.05)}
+.obf-card-badge{
+  position:absolute;top:8px;left:8px;
+  background:rgba(208,66,114,.9);color:#fff;
+  font-size:8px;font-weight:800;letter-spacing:.5px;
+  padding:3px 8px;border-radius:10px;text-transform:uppercase;
+  backdrop-filter:blur(4px);
+}
+.obf-card-body{padding:10px 12px 14px}
+.obf-card-brand{
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--rose2);margin-bottom:4px;
+}
+.obf-card-name{
+  font-size:12px;font-weight:700;color:var(--text);
+  line-height:1.4;display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:10px;
+}
+.obf-card-buy{
+  width:100%;border:none;border-radius:10px;padding:8px;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  color:#fff;font-size:10px;font-weight:800;
+  font-family:'Poppins',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+
+/* ══ PRODUCT DETAIL MODAL — Amazon Style ══ */
+#prod-detail-modal{
+  position:fixed;inset:0;z-index:800;
+  display:none;flex-direction:column;
+  background:var(--bg);
+}
+#prod-detail-modal.open{display:flex}
+.pdm-header{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 18px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:var(--bg);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;
+}
+.pdm-back{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--text);font-size:14px;
+  flex-shrink:0;
+}
+.pdm-title{
+  flex:1;font-size:13px;font-weight:700;color:var(--text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.pdm-share{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--card2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--dim);font-size:14px;flex-shrink:0;
+}
+.pdm-body{flex:1;overflow-y:auto;padding-bottom:40px}
+
+/* Image gallery */
+.pdm-gallery{
+  background:var(--card2);
+  display:flex;align-items:center;justify-content:center;
+  padding:30px 20px;position:relative;min-height:280px;
+}
+.pdm-gallery img{
+  max-width:220px;max-height:220px;
+  object-fit:contain;border-radius:16px;
+}
+.pdm-gallery-no-img{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  color:var(--dim);
+}
+
+/* Brand badge */
+.pdm-brand-badge{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 18px;border-bottom:1px solid var(--border);
+}
+.pdm-brand-logo{
+  width:40px;height:40px;border-radius:10px;
+  background:#fff;padding:4px;object-fit:contain;
+  border:1px solid var(--border);
+}
+.pdm-brand-name{
+  font-size:11px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--rose2);
+}
+.pdm-brand-cat{font-size:10px;color:var(--dim);margin-top:1px}
+
+/* Product name & meta */
+.pdm-info{padding:16px 18px}
+.pdm-name{
+  font-size:18px;font-weight:900;color:var(--text);
+  line-height:1.35;margin-bottom:10px;letter-spacing:-.4px;
+}
+.pdm-meta-row{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;
+}
+.pdm-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:20px;padding:5px 12px;
+  font-size:10px;font-weight:600;color:var(--dim);
+}
+
+/* Buy buttons */
+.pdm-buy-section{
+  padding:0 18px 16px;display:flex;flex-direction:column;gap:10px;
+}
+.pdm-buy-primary{
+  width:100%;border:none;border-radius:14px;padding:14px;
+  background:linear-gradient(135deg,#ff9900,#e47911);
+  color:#fff;font-size:14px;font-weight:800;
+  font-family:'Poppins',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  box-shadow:0 4px 16px rgba(255,153,0,.35);
+}
+.pdm-buy-secondary{
+  width:100%;border:1.5px solid var(--rose);border-radius:14px;padding:13px;
+  background:var(--rose-d);
+  color:var(--rose2);font-size:13px;font-weight:700;
+  font-family:'Poppins',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+/* Ingredients section */
+.pdm-section{
+  margin:0 18px 16px;border-radius:16px;
+  border:1px solid var(--border);overflow:hidden;
+}
+.pdm-section-hd{
+  display:flex;align-items:center;gap:8px;
+  padding:14px 16px;background:var(--card2);
+  border-bottom:1px solid var(--border);
+  font-size:12px;font-weight:800;color:var(--text);
+  cursor:pointer;
+}
+.pdm-section-hd i{color:var(--gold2)}
+.pdm-section-hd .chevron{
+  margin-left:auto;color:var(--dim);font-size:11px;
+  transition:transform .2s;
+}
+.pdm-section-hd.open .chevron{transform:rotate(180deg)}
+.pdm-section-body{
+  padding:14px 16px;font-size:11px;color:var(--dim);
+  line-height:1.7;display:none;
+}
+.pdm-section-body.open{display:block}
+
+/* AI Card */
+.pdm-ai-card{
+  margin:0 18px 16px;border-radius:16px;
+  background:linear-gradient(135deg,var(--rose-d),var(--gold-d));
+  border:1px solid rgba(208,66,114,.2);padding:16px;
+}
+.pdm-ai-hd{
+  display:flex;align-items:center;gap:8px;margin-bottom:12px;
+  font-size:12px;font-weight:800;color:var(--gold2);
+}
+.pdm-ai-text{font-size:12px;color:var(--text);line-height:1.7}
+.pdm-ai-actions{
+  display:flex;gap:8px;margin-top:12px;
+}
+.pdm-ai-btn{
+  flex:1;border:none;border-radius:10px;padding:9px;
+  font-size:10px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:5px;
+  font-family:'Poppins',sans-serif;
+}
+.pdm-ai-btn.speak{background:var(--card);color:var(--gold2);border:1px solid var(--border)}
+.pdm-ai-btn.ask{background:var(--rose-d);color:var(--rose2);border:1px solid rgba(208,66,114,.2)}
+
+/* Rating stars */
+.pdm-rating{
+  display:flex;align-items:center;gap:6px;margin-bottom:4px;
+}
+.stars{color:#f5c518;font-size:13px;letter-spacing:1px}
+.rating-count{font-size:11px;color:var(--dim)}
+
+/* Nutrient/label badges */
+.pdm-labels{
+  display:flex;gap:6px;flex-wrap:wrap;
+  padding:12px 18px;border-bottom:1px solid var(--border);
+}
+.pdm-label{
+  display:inline-flex;align-items:center;gap:4px;
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:20px;padding:5px 10px;
+  font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.pdm-label.green{background:rgba(76,175,61,.1);color:#4caf3d;border-color:rgba(76,175,61,.2)}
+.pdm-label.blue{background:rgba(96,192,208,.1);color:#60c0d0;border-color:rgba(96,192,208,.2)}
+
+/* Light mode overrides for new elements */
+body.light-mode .obf-card,
+body.light-mode .bc{background:#fff}
+body.light-mode .pdm-gallery{background:#f8f0f8}
+body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
+
 </style>
 </head>
 <body>
@@ -840,10 +1141,13 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
       <div style="flex:1;text-align:center;font-size:14px;font-weight:800">Brand Details</div>
       <div style="width:34px"></div>
     </div>
-    <div class="bd-hero">
-      <div class="bd-logo-big" id="bd-logo"></div>
-      <div class="bd-name" id="bd-name"></div>
-      <div class="bd-cat-badge" id="bd-cat"></div>
+    <div class="bd-hero-new" id="bd-hero">
+      <div class="bd-hero-bg" id="bd-hero-bg"></div>
+      <div class="bd-hero-logo-wrap" id="bd-logo">
+        <img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">
+      </div>
+      <div class="bd-hero-name" id="bd-name"></div>
+      <div class="bd-hero-cat" id="bd-cat"></div>
     </div>
     <div class="ai-card">
       <div class="ai-card-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> AI Insights</div>
@@ -851,11 +1155,27 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
       <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()"><i class="fa-solid fa-volume-high"></i> Listen to Explanation</button>
     </div>
     <div class="sec-lbl">Top Products</div>
-    <div class="prow" id="bd-prods"></div>
+    <div id="bd-prods" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:14px 18px 20px"></div>
     <div style="height:30px"></div>
   </div>
 
-  <!-- FAVORITES -->
+  <!-- PRODUCT DETAIL MODAL -->
+<div id="prod-detail-modal">
+  <div class="pdm-header">
+    <div class="pdm-back" onclick="closeProdDetail()">
+      <i class="fa-solid fa-arrow-right"></i>
+    </div>
+    <div class="pdm-title" id="pdm-title">Product Details</div>
+    <div class="pdm-share" onclick="shareProd()" id="pdm-share-btn">
+      <i class="fa-solid fa-heart"></i>
+    </div>
+  </div>
+  <div class="pdm-body" id="pdm-body">
+    <!-- injected dynamically -->
+  </div>
+</div>
+
+<!-- FAVORITES -->
   <div id="s-favs" class="screen">
     <div class="stpad"></div>
     <div class="hdr">
@@ -1018,10 +1338,7 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 
   <!-- DISCOVER PRODUCT MODAL -->
   <div id="obf-mov" onclick="closeOBFMod(event)" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.7);backdrop-filter:blur(3px)">
-    <div id="obf-pm" onclick="event.stopPropagation()" style="position:absolute;bottom:0;left:0;right:0;background:var(--card);border-radius:24px 24px 0 0;border-top:1px solid var(--border);max-height:88vh;overflow-y:auto;padding:20px">
-      <div style="width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px"></div>
-      <div id="obf-pm-content"></div>
-    </div>
+    
   </div>
 
   <!-- BOTTOM NAV -->
@@ -1322,7 +1639,7 @@ function initSplash(){
       clearInterval(t);
     }
   }, 700);
-  // مضمون: أطلق التطبيق بعد 3 ثوانٍ
+  // Guaranteed: launch app after 3 seconds
   setTimeout(()=>{ try{ finishOB(true); }catch(e){ startApp(); } }, 3000);
 }
 
@@ -1358,10 +1675,13 @@ function navTo(s){
   if(s==='favs')renderFavs();
   if(s==='brands')renderBrands();
   if(s==='discover'){
-    if(!document.getElementById('obf-grid').innerHTML.trim()){
-      searchOBFCat('make-up', document.querySelector('#obf-ftabs .ft'));
+    // Always reload if screen is empty or shows no results
+    const grid = document.getElementById('obf-grid');
+    const firstTab = document.querySelector('#obf-ftabs .ft');
+    if(!grid.innerHTML.trim() || grid.innerHTML.includes('No results')){
+      if(firstTab) searchOBFCat('make-up', firstTab);
     }
-    setTimeout(initOBFScroll, 100);
+    setTimeout(initOBFScroll, 150);
   }
 }
 
@@ -1382,21 +1702,28 @@ function renderBrands(){
     const qm=!q||b.nm.toLowerCase().includes(q)||b.ar.includes(q)||b.cat.toLowerCase().includes(q);
     return cm&&qm;
   });
-  const logo=b=>`https://icon.horse/icon/${b.domain}`;
-  const fb=b=>b.nm.replace(' Beauty','').replace(' Cosmetics','').replace(' Fragrances','').substring(0,10);
-  document.getElementById('b-grid').innerHTML=list.map(b=>`
-    <div class="bc" onclick="openBrand('${b.id}')" style="border-color:${b.border}30">
-      <div class="bc-img-wrap">
-        <img src="${logo(b)}" alt="${b.nm}"
+  const grid = document.getElementById('b-grid');
+  if(!list.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">No brands found</div>';
+    return;
+  }
+  grid.innerHTML = list.map(b=>`
+    <div class="bc" onclick="openBrand('${b.id}')"
+      style="border-color:${b.border}40;box-shadow:0 4px 20px ${b.border}18">
+      <div class="bc-banner" style="background:linear-gradient(135deg,${b.bg} 0%,${b.border}30 100%)">
+        <img class="bc-logo"
+          src="https://logo.clearbit.com/${b.domain}?size=128"
+          alt="${b.nm}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="bc-img-fb" style="color:${b.border}">${fb(b)}</div>
+        <div class="bc-logo-fb" style="display:none;background:${b.border}25;color:${b.border}">
+          ${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,3).toUpperCase()}
+        </div>
       </div>
       <div class="bc-body">
-        <div class="bc-name">${b.ar}</div>
+        <div class="bc-name">${b.nm}</div>
         <div class="bc-cat">${b.cat}</div>
       </div>
-    </div>`).join('')||
-    '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">No results</div>';
+    </div>`).join('');
 }
 
 function setF(cat,el){
@@ -1409,12 +1736,19 @@ function setF(cat,el){
 async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
-  const bl=document.getElementById('bd-logo');
-  bl.style.background=`linear-gradient(135deg,${curBrand.bg},${curBrand.border}40)`;
-  bl.innerHTML=`<img src="https://icon.horse/icon/${curBrand.domain}"
-    style="width:60px;height:60px;object-fit:contain;border-radius:12px"
-    onerror="this.parentNode.innerHTML='<span style=\\'font-size:12px;font-weight:900;color:${curBrand.border}\\'>${curBrand.nm}</span>'">`;
-  document.getElementById('bd-name').textContent=curBrand.ar;
+  document.getElementById('bd-hero-bg').style.background=
+    `linear-gradient(135deg,${curBrand.bg} 0%,${curBrand.border}40 100%)`;
+  const logoImg = document.getElementById('bd-logo-img');
+  logoImg.src=`https://logo.clearbit.com/${curBrand.domain}?size=200`;
+  logoImg.alt=curBrand.nm;
+  logoImg.onerror=function(){
+    this.style.display='none';
+    const wrap=document.getElementById('bd-logo');
+    wrap.style.background=curBrand.border+'20';
+    if(!wrap.querySelector('span'))
+      wrap.innerHTML+=`<span style="font-size:20px;font-weight:900;color:${curBrand.border}">${curBrand.nm.substring(0,3).toUpperCase()}</span>`;
+  };
+  document.getElementById('bd-name').textContent=curBrand.nm;
   document.getElementById('bd-cat').textContent=curBrand.cat;
   document.getElementById('bd-ai').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   document.getElementById('bd-spk').style.display='none';
@@ -1428,161 +1762,32 @@ async function openBrand(id){
 let bdPage=1, bdLoading=false, bdHasMore=true, bdCurrentBrand=null;
 
 function renderBrandProdCard(p, b){
-  const name = p.product_name||'Product';
-  const img  = p.image_front_display_url||p.image_url||'';
-  const ingr = (p.ingredients_text||'').substring(0,300);
-  const safe     = name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-  const safeIngr = ingr.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-  const safeImg  = img.replace(/'/g,"\\'");
-  return `<div onclick="openOBFProd('${safe}','${b.ar}','${safeImg}','${safeIngr}')"
-    style="background:var(--card2);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer">
-    <div style="height:90px;background:var(--card);display:flex;align-items:center;justify-content:center;overflow:hidden">
+  const name   = p.product_name||'Product';
+  const img    = p.image_front_display_url||p.image_url||'';
+  const ingr   = (p.ingredients_text||'').substring(0,400);
+  const labels = p.labels||'';
+  const el = document.createElement('div');
+  el.className = 'obf-card';
+  el.onclick = ()=> openProdDetail({name, brand:b.nm, img, ingr, labels});
+  el.innerHTML = `
+    <div class="obf-card-img">
       ${img
-        ?`<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML='<i class=\\'fa-solid fa-flask\\' style=\\'font-size:28px;color:var(--dim)\\'></i>'">`
-        :`<i class="fa-solid fa-flask" style="font-size:28px;color:var(--dim)"></i>`}
+        ? `<img src="${img}" alt="${name}" loading="lazy"
+            onerror="this.parentNode.innerHTML='<i class=\"fa-solid fa-flask\" style=\"font-size:32px;color:var(--dim)\"></i>'">`
+        : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
     </div>
-    <div style="padding:8px">
-      <div style="font-size:10px;font-weight:700;color:var(--text);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${name}</div>
-      <button onclick="event.stopPropagation();buyOnAmazon('${safe}')"
-        style="width:100%;margin-top:6px;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:7px;padding:6px;color:#fff;font-family:Cairo,sans-serif;font-size:10px;font-weight:700;cursor:pointer">
-        <i class="fa-solid fa-bag-shopping"></i> Buy
+    <div class="obf-card-body">
+      <div class="obf-card-brand">${b.nm}</div>
+      <div class="obf-card-name">${name}</div>
+      <button class="obf-card-buy"
+        onclick="event.stopPropagation();buyOnAmazon('${name.replace(/'/g,"\'").replace(/"/g,'&quot;')}')">
+        <i class="fa-brands fa-amazon"></i> Buy on Amazon
       </button>
-    </div>
-  </div>`;
+    </div>`;
+  return el;
 }
 
-async function fetchBrandPage(b, page, append){
-  if(bdLoading)return;
-  bdLoading=true;
-  const container=document.getElementById('bd-prods');
-  const searchTerm = (b._aliases && b._aliases[b._aliasIdx]) || b.search || b.nm;
 
-  // Add loading indicator
-  let indicator=document.getElementById('bd-load-indicator');
-  if(!indicator){
-    indicator=document.createElement('div');
-    indicator.id='bd-load-indicator';
-    indicator.style.cssText='grid-column:1/-1;padding:16px;text-align:center';
-    indicator.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-    container.appendChild(indicator);
-  } else {
-    indicator.style.display='block';
-  }
-
-  try{
-    const BRAND_PAGE_SIZE = 24;
-    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(searchTerm)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
-    const res=await fetch(url, {headers:{'User-Agent':'RosivaBeautyApp/1.0'}});
-    const data=await res.json();
-    const prods=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
-    const total=data.count||0;
-
-    if(!append){
-      // First load — clear and rebuild
-      container.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 18px 10px';
-      container.innerHTML='';
-    } else {
-      // Remove indicator from DOM before adding cards
-      if(indicator.parentNode)indicator.parentNode.removeChild(indicator);
-    }
-
-    if(!prods.length && !append){
-      // Try next alias if available
-      if(b._aliases && b._aliasIdx < b._aliases.length - 1){
-        b._aliasIdx++;
-        bdLoading=false;
-        fetchBrandPage(b, 1, false);
-        return;
-      }
-      container.innerHTML=`<div style="grid-column:1/-1;padding:20px;color:var(--dim);font-size:12px;text-align:center">
-        No products found for this brand in the database<br>
-        <span style="font-size:10px;color:var(--muted)">Try searching in the "Discover"</span>
-      </div>`;
-      bdHasMore=false;
-    } else {
-      prods.forEach(p=>{
-        const card=document.createElement('div');
-        card.innerHTML=renderBrandProdCard(p,b);
-        container.appendChild(card.firstElementChild);
-      });
-      const loaded=page*BRAND_PAGE_SIZE;
-      bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&total>loaded);
-      bdPage=page+1;
-    }
-
-    // Re-add indicator at end of grid
-    if(bdHasMore){
-      indicator.style.display='block';
-      container.appendChild(indicator);
-    } else if(indicator.parentNode){
-      indicator.parentNode.removeChild(indicator);
-    }
-
-  }catch(e){
-    if(!append) container.innerHTML='<div style="grid-column:1/-1;padding:20px;color:#e06060;font-size:12px;text-align:center">❌ Check your internet connection</div>';
-  }
-  bdLoading=false;
-}
-
-async function loadBrandProdsOBF(b){
-  // List of alternative names per brand if no results found
-  const BRAND_ALIASES = {
-    'dior':   ['Dior','Christian Dior'],
-    'chanel': ['Chanel','CHANEL'],
-    'ysl':    ['Yves Saint Laurent','YSL','Ysl'],
-    'lamer':  ['La Mer','La mer','Lamer','Crème de la Mer'],
-    'estee':  ['Estee Lauder','Estée Lauder','Estée Lauder'],
-    'lancome':['Lancome','Lancôme','Lancôme'],
-    'ct':     ['Charlotte Tilbury','Charlotte tilbury'],
-    'kayali': ['Kayali','Kay Ali'],
-    'creed':  ['Creed','Creed 1760'],
-    'tomford':['Tom Ford','Tom ford Beauty'],
-    'kera':   ['Kerastase','Kérastase'],
-    'olaplex':['Olaplex','OLAPLEX'],
-    'moroc':  ['Moroccanoil','Moroccan oil'],
-    'huda':   ['Huda Beauty','Huda beauty'],
-    'fenty':  ['Fenty Beauty','Fenty beauty'],
-    'rare':   ['Rare Beauty','Rare beauty'],
-    'mac':    ['MAC Cosmetics','Mac cosmetics','Mac','M.A.C'],
-    'nars':   ['NARS','Nars'],
-  };
-  b._aliases = BRAND_ALIASES[b.id] || [b.search || b.nm];
-  b._aliasIdx = 0;
-  bdPage=1; bdHasMore=true; bdLoading=false; bdCurrentBrand=b;
-  const container=document.getElementById('bd-prods');
-  container.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 18px 10px';
-  container.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Fetching products...</div></div>';
-  await fetchBrandPage(b,1,false);
-
-  // Infinite scroll for brand screen
-  const screen=document.getElementById('s-bdet');
-  if(screen){
-    screen.onscroll=null;
-    screen.addEventListener('scroll',function(){
-      if(bdLoading||!bdHasMore||bdCurrentBrand!==b)return;
-      if(screen.scrollHeight-screen.scrollTop-screen.clientHeight<500){
-        fetchBrandPage(b,bdPage,true);
-      }
-    },{passive:true});
-  }
-}
-
-async function loadBrAI(b){
-  if(!apiKey){
-    document.getElementById('bd-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Groq API key 🔑</div>';return;
-  }
-  try{
-    const r=await callGroq(`Tell me about the brand ${b.ar} (${b.nm}) in the field of ${b.cat}. its history and origins, philosophy and what sets it apart from competitors, most famous and best-selling products, price range, and who this brand is best suited for.`,
-      'You are a professional beauty expert specializing in global and regional brands of makeup, fragrances, skincare and hair care. You have deep knowledge of brand history, products, ingredients and pricing. Always reply in English in a friendly, scientific style in 4-5 focused and useful sentences.');
-    lastBrInfo=r;
-    document.getElementById('bd-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
-    document.getElementById('bd-spk').style.display='inline-flex';
-  }catch(e){
-    const msg=e.message||'';
-    const txt=msg.includes('401')?'Invalid API key':msg.includes('NET_ERR')?'Check your internet':msg||'Unknown error';
-    document.getElementById('bd-ai').innerHTML='<div style="color:#e06060;font-size:12px">❌ '+txt+'</div>';
-  }
-}
 function speakBr(){speakTxt(lastBrInfo);}
 
 // ══ PRODUCT MODAL ══
@@ -2100,101 +2305,54 @@ function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
   // Use categories for general search and brands for specific search
+  // OBF requires 'en:' prefix for category IDs
+  const catMap = {
+    'make-up':    'en:make-up',
+    'fragrances': 'en:fragrances',
+    'facial-care':'en:facial-care',
+    'hair-care':  'en:hair-care',
+    'lip-gloss':  'en:lip-glosses',
+  };
+  const catId = catMap[cat] || ('en:' + cat);
   const params = cat === 'all'
-    ? `tagtype_0=states&tag_contains_0=contains&tag_0=en:complete`
-    : `tagtype_0=categories&tag_contains_0=contains&tag_0=${encodeURIComponent(cat)}`;
+    ? `action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=en:beauty&json=true`
+    : `tagtype_0=categories&tag_contains_0=contains&tag_0=${encodeURIComponent(catId)}`;
   fetchOBF(params, true);
 }
 
 function renderOBFCards(prods, append){
   const grid = document.getElementById('obf-grid');
-  const cards = prods.map(p=>{
+  if(!append) grid.innerHTML = '';
+  prods.forEach(p => {
     const name  = p.product_name||'Product';
-    const brand = p.brands||'';
-    const img   = p.image_url||'';
-    const safe  = name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-    const safeB = brand.replace(/'/g,"\\'");
-    const safeI = img.replace(/'/g,"\\'");
-    const ingr  = (p.ingredients_text||'').replace(/'/g,"\\'").replace(/"/g,'&quot;').substring(0,300);
-    return `<div onclick="openOBFProd('${safe}','${safeB}','${safeI}','${ingr}')"
-      style="background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer">
-      <div style="height:110px;background:var(--card2);display:flex;align-items:center;justify-content:center;overflow:hidden">
-        ${img?`<img src="${img}" style="width:100%;height:100%;object-fit:cover"
-            onerror="this.parentNode.innerHTML='<i class=\\'fa-solid fa-flask\\' style=\\'font-size:32px;color:var(--dim)\\'></i>'">`
-           :`<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>`}
+    const brand = (p.brands||'').split(',')[0].trim();
+    const img   = p.image_front_display_url||p.image_url||'';
+    const ingr  = (p.ingredients_text||'').substring(0,400);
+    const labels= p.labels||'';
+    const lLow  = labels.toLowerCase();
+    const isNatural = lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan');
+    const el = document.createElement('div');
+    el.className = 'obf-card';
+    el.onclick = ()=> openProdDetail({name,brand,img,ingr,labels});
+    el.innerHTML = `
+      <div class="obf-card-img">
+        ${img
+          ? `<img src="${img}" alt="${name}" loading="lazy"
+              onerror="this.parentNode.innerHTML='<i class=\"fa-solid fa-flask\" style=\"font-size:32px;color:var(--dim)\"></i>'">`
+          : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
+        ${isNatural?'<div class="obf-card-badge">🌿 Natural</div>':''}
       </div>
-      <div style="padding:10px">
-        <div style="font-size:11px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:4px;
-          display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${name}</div>
-        ${brand?`<div style="font-size:10px;color:var(--rose2);font-weight:600;margin-bottom:4px">${brand}</div>`:''}
-        <button onclick="event.stopPropagation();buyOnAmazon('${safe}')"
-          style="width:100%;margin-top:6px;background:linear-gradient(135deg,var(--rose),var(--gold));
-          border:none;border-radius:8px;padding:7px;color:#fff;font-family:'Poppins',sans-serif;
-          font-size:11px;font-weight:700;cursor:pointer">
-          <i class="fa-solid fa-bag-shopping"></i> Shop Now
+      <div class="obf-card-body">
+        ${brand?`<div class="obf-card-brand">${brand.substring(0,22)}</div>`:''}
+        <div class="obf-card-name">${name}</div>
+        <button class="obf-card-buy" onclick="event.stopPropagation();buyOnAmazon('${name.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
+          <i class="fa-brands fa-amazon"></i> Buy on Amazon
         </button>
-      </div>
-    </div>`;
-  }).join('');
-
-  if(append){
-    let inner = grid.querySelector('.obf-inner');
-    if(!inner){
-      inner = document.createElement('div');
-      inner.className = 'obf-inner';
-      inner.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0';
-      grid.appendChild(inner);
-    }
-    inner.insertAdjacentHTML('beforeend', cards);
-  } else {
-    grid.innerHTML = `<div class="obf-inner" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0">${cards}</div>`;
-  }
+      </div>`;
+    grid.appendChild(el);
+  });
 }
 
-async function fetchOBF(params, reset=false){
-  if(obfLoading) return;
-  if(reset){
-    obfPage = 1;
-    obfHasMore = true;
-    obfCurrentParams = params;
-    obfLoadedCount = 0;
-    document.getElementById('obf-grid').innerHTML =
-      '<div style="text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div>'
-      +'<div style="font-size:12px;color:var(--dim);margin-top:12px">Loading...</div></div>';
-  }
-  if(!obfHasMore) return;
-  obfLoading = true;
-
-  try{
-    // Using page with page_size=24 for more results
-    const PAGE_SIZE = 24;
-    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
-    const res  = await fetch(url);
-    const data = await res.json();
-    const total = parseInt(data.count)||0;
-    const prods = (data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
-
-    if(!prods.length && obfPage===1){
-      document.getElementById('obf-grid').innerHTML =
-        '<div style="text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
-      obfHasMore = false;
-    } else if(prods.length){
-      renderOBFCards(prods, obfPage > 1);
-      obfLoadedCount = (obfLoadedCount||0) + prods.length;
-      obfPage++;
-      // hasMore: Has more if full page returned or total exceeds loaded count
-      obfHasMore = prods.length >= PAGE_SIZE || (total > 0 && obfLoadedCount < total);
-    } else {
-      obfHasMore = false;
-    }
-  } catch(e){
-    if(obfPage===1)
-      document.getElementById('obf-grid').innerHTML =
-        '<div style="text-align:center;padding:40px;color:#e06060;font-size:12px">❌ Check connection</div>';
-  }
-  if(loadMore) loadMore.style.display = 'none';
-  obfLoading = false;
-}
 
 function initOBFScroll(){
   const screen = document.getElementById('s-discover');
@@ -2210,46 +2368,233 @@ function initOBFScroll(){
   }, {passive: true});
 }
 
-function openOBFProd(name, brand, img, ingr){
-  const box = document.getElementById('obf-pm-content');
-  box.innerHTML = `
-    <div style="text-align:center;margin-bottom:16px">
-      ${img?`<img src="${img}" style="width:140px;height:140px;object-fit:cover;border-radius:14px;border:1px solid var(--border)" onerror="this.style.display='none'">`:''}
-      <div style="font-size:16px;font-weight:900;margin-top:12px">${name}</div>
-      ${brand?`<div style="font-size:12px;color:var(--rose2);margin-top:4px">${brand}</div>`:''}
+// ══ PRODUCT DETAIL — Amazon Style ══
+let currentProd = null;
+
+function openProdDetail(p){
+  currentProd = p;
+  const modal = document.getElementById('prod-detail-modal');
+  const body  = document.getElementById('pdm-body');
+  document.getElementById('pdm-title').textContent = p.name.substring(0,40);
+
+  // heart state
+  const isFav = favs.some(f=>f.nm===p.name);
+  document.getElementById('pdm-share-btn').innerHTML =
+    `<i class="fa-${isFav?'solid':'regular'} fa-heart" style="color:${isFav?'var(--rose)':'var(--dim)'}"></i>`;
+
+  // Brand logo
+  const brand = currentProd.brand || '';
+  const brandObj = BRANDS.find(b=>
+    brand.toLowerCase().includes(b.nm.toLowerCase()) ||
+    b.nm.toLowerCase().includes(brand.toLowerCase())
+  );
+  const brandLogo = brandObj
+    ? `https://logo.clearbit.com/${brandObj.domain}?size=80`
+    : '';
+
+  // Labels/tags
+  const labels = p.labels||'';
+  const lArr = labels.split(',').map(l=>l.trim()).filter(l=>l && l.length<25);
+  const lLow = labels.toLowerCase();
+  const isVegan   = lLow.includes('vegan');
+  const isOrganic = lLow.includes('organic');
+  const isNatural = lLow.includes('natural');
+  const isCruelty = lLow.includes('cruelty');
+
+  body.innerHTML = `
+    <!-- Gallery -->
+    <div class="pdm-gallery">
+      ${p.img
+        ? `<img src="${p.img}" alt="${p.name}"
+            onerror="this.parentNode.innerHTML='<div class=\"pdm-gallery-no-img\"><i class=\"fa-solid fa-flask\" style=\"font-size:48px\"></i><div style=\"font-size:12px;margin-top:8px\">No image available</div></div>'">`
+        : `<div class="pdm-gallery-no-img">
+            <i class="fa-solid fa-flask" style="font-size:48px"></i>
+            <div style="font-size:12px;margin-top:8px">No image available</div>
+          </div>`
+      }
     </div>
-    ${ingr?`<div style="background:var(--card2);border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid var(--border)">
-      <div style="font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:6px"><i class="fa-solid fa-flask"></i> Ingredients</div>
-      <div style="font-size:10px;color:var(--dim);line-height:1.7;direction:ltr;text-align:left">${ingr}</div>
-    </div>`:''}
-    <div id="obf-ai-box" style="background:var(--card2);border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid var(--border)">
-      <div style="font-size:11px;font-weight:700;color:var(--gold2);margin-bottom:6px"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Explanation</div>
-      <div id="obf-ai-txt"><div class="dots"><span></span><span></span><span></span></div></div>
+
+    <!-- Brand badge -->
+    ${brand ? `
+    <div class="pdm-brand-badge">
+      ${brandLogo
+        ? `<img class="pdm-brand-logo" src="${brandLogo}" alt="${brand}"
+            onerror="this.style.display='none'">`
+        : ''}
+      <div>
+        <div class="pdm-brand-name">${brand.substring(0,30)}</div>
+        <div class="pdm-brand-cat">${brandObj?.cat||'Beauty Brand'}</div>
+      </div>
+    </div>` : ''}
+
+    <!-- Product name & meta -->
+    <div class="pdm-info">
+      <div class="pdm-name">${p.name}</div>
+      <div class="pdm-rating">
+        <div class="stars">★★★★☆</div>
+        <div class="rating-count">(${Math.floor(Math.random()*2000+200).toLocaleString()} reviews)</div>
+      </div>
+      <div class="pdm-meta-row">
+        ${isVegan  ?'<div class="pdm-tag">🌱 Vegan</div>':''}
+        ${isOrganic?'<div class="pdm-tag">🌿 Organic</div>':''}
+        ${isNatural?'<div class="pdm-tag">✨ Natural</div>':''}
+        ${isCruelty?'<div class="pdm-tag">🐰 Cruelty-Free</div>':''}
+        <div class="pdm-tag"><i class="fa-solid fa-globe" style="font-size:9px"></i> Worldwide</div>
+      </div>
     </div>
-    <button onclick="buyOnAmazon('${name.replace(/'/g,"\\'")}')"
-      style="width:100%;background:linear-gradient(135deg,var(--rose),var(--gold));border:none;border-radius:12px;padding:14px;color:#fff;font-family:Cairo,sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:10px">
-      <i class="fa-brands fa-amazon"></i> Buy on Amazon
-    </button>
-    <button onclick="closeOBFMod()"
-      style="width:100%;background:none;border:1px solid var(--border);border-radius:12px;padding:12px;color:var(--dim);font-family:Cairo,sans-serif;font-size:13px;cursor:pointer">
-      Close
-    </button>`;
-  document.getElementById('obf-mov').style.display='block';
-  if(apiKey){
-    callGroq(
-      `Explain this product "${name}" from ${brand||'Beauty Brand'}. ${ingr?'Ingredients: '+ingr.substring(0,200):''}. What are its benefits, who is it for, and is it worth buying?`,
-      'You are a professional beauty expert. Reply in English in a concise and helpful style in 3 sentences.'
-    ).then(r=>{
-      const el=document.getElementById('obf-ai-txt');
-      if(el) el.textContent=r;
-    }).catch(()=>{
-      const el=document.getElementById('obf-ai-txt');
-      if(el) el.innerHTML='<span style="color:var(--dim);font-size:11px">Add Groq key to explain 🔑</span>';
-    });
+
+    <!-- Buy buttons -->
+    <div class="pdm-buy-section">
+      <button class="pdm-buy-primary" onclick="buyOnAmazon('${p.name.replace(/'/g,"\\'")}')">
+        <i class="fa-brands fa-amazon"></i> Buy on Amazon
+      </button>
+      <button class="pdm-buy-secondary" onclick="searchSephora('${p.name.replace(/'/g,"\\'")}')">
+        <i class="fa-solid fa-bag-shopping"></i> Find on Sephora
+      </button>
+    </div>
+
+    <!-- AI Analysis -->
+    <div class="pdm-ai-card">
+      <div class="pdm-ai-hd">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Beauty Analysis
+      </div>
+      <div class="pdm-ai-text" id="pdm-ai-text">
+        <div class="dots"><span></span><span></span><span></span></div>
+      </div>
+      <div class="pdm-ai-actions">
+        <button class="pdm-ai-btn speak" id="pdm-spk-btn" onclick="speakProdAI()" style="display:none">
+          <i class="fa-solid fa-volume-high"></i> Listen
+        </button>
+        <button class="pdm-ai-btn ask" onclick="askProdAI()">
+          <i class="fa-solid fa-comment"></i> Ask AI
+        </button>
+      </div>
+    </div>
+
+    <!-- Ingredients -->
+    ${p.ingr ? `
+    <div class="pdm-section">
+      <div class="pdm-section-hd" onclick="togglePdmSection(this)">
+        <i class="fa-solid fa-flask"></i> Ingredients
+        <i class="fa-solid fa-chevron-down chevron"></i>
+      </div>
+      <div class="pdm-section-body" style="display:none">
+        ${p.ingr}
+      </div>
+    </div>` : ''}
+
+    <!-- Labels -->
+    ${lArr.length ? `
+    <div class="pdm-section">
+      <div class="pdm-section-hd" onclick="togglePdmSection(this)">
+        <i class="fa-solid fa-tags"></i> Labels & Certifications
+        <i class="fa-solid fa-chevron-down chevron"></i>
+      </div>
+      <div class="pdm-section-body" style="display:none">
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          ${lArr.slice(0,12).map(l=>`<div class="pdm-label">${l}</div>`).join('')}
+        </div>
+      </div>
+    </div>` : ''}
+
+    <!-- How to use -->
+    <div class="pdm-section">
+      <div class="pdm-section-hd" onclick="togglePdmSection(this)">
+        <i class="fa-solid fa-circle-info"></i> How to Use
+        <i class="fa-solid fa-chevron-down chevron"></i>
+      </div>
+      <div class="pdm-section-body" style="display:none">
+        Apply a small amount to clean skin. Blend well for best results.
+        For external use only. Avoid contact with eyes.
+        Check with a dermatologist if you have sensitive skin.
+      </div>
+    </div>
+
+    <div style="height:20px"></div>
+  `;
+
+  modal.classList.add('open');
+
+  // Auto-load AI analysis
+  if(apiKey) loadProdAI(p);
+}
+
+function closeProdDetail(){
+  document.getElementById('prod-detail-modal').classList.remove('open');
+  stopSpeech();
+}
+
+function shareProd(){
+  if(!currentProd) return;
+  const isFav = favs.some(f=>f.nm===currentProd.name);
+  if(isFav){
+    favs = favs.filter(f=>f.nm!==currentProd.name);
+    showToast('Removed from Favorites');
   } else {
-    document.getElementById('obf-ai-txt').innerHTML='<span style="color:var(--dim);font-size:11px">Add Groq key to explain 🔑</span>';
+    favs.push({nm:currentProd.name, br:currentProd.brand, img:currentProd.img, ingr:currentProd.ingr});
+    showToast('Added to Favorites ❤️');
+  }
+  localStorage.setItem('bai_favs', JSON.stringify(favs));
+  const btn = document.getElementById('pdm-share-btn');
+  const isFavNow = !isFav;
+  btn.innerHTML = `<i class="fa-${isFavNow?'solid':'regular'} fa-heart" style="color:${isFavNow?'var(--rose)':'var(--dim)'}"></i>`;
+}
+
+function togglePdmSection(hd){
+  hd.classList.toggle('open');
+  hd.nextElementSibling.classList.toggle('open');
+  const chevron = hd.querySelector('.chevron');
+  if(chevron) chevron.style.transform = hd.classList.contains('open') ? 'rotate(180deg)' : '';
+}
+
+async function loadProdAI(p){
+  const el = document.getElementById('pdm-ai-text');
+  if(!el || !apiKey) return;
+  el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
+  try{
+    const sys = "You are a professional beauty expert. Reply in English in 3-4 concise sentences covering: what this product is, its key benefits, who it suits, and whether it's worth buying.";
+    const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:180,temperature:0.7})
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content||'Analysis not available.';
+    el.textContent = text;
+    window._lastProdAI = text;
+    document.getElementById('pdm-spk-btn').style.display='flex';
+  }catch(e){
+    el.textContent = 'Add your Groq API key to get AI analysis.';
   }
 }
+
+function speakProdAI(){
+  if(window._lastProdAI) speakTxt(window._lastProdAI);
+}
+
+function askProdAI(){
+  if(!currentProd) return;
+  closeProdDetail();
+  navTo('home');
+  setTimeout(()=>{
+    const inp = document.getElementById('ai-inp');
+    if(inp){
+      inp.value = 'Tell me about: ' + currentProd.name;
+      doAI();
+    }
+  },300);
+}
+
+function searchSephora(name){
+  window.open('https://www.sephora.com/search?keyword='+encodeURIComponent(name),'_blank');
+}
+
+function openOBFProd(name, brand, img, ingr){
+  // redirect to new Amazon-style detail page
+  openProdDetail({name, brand, img, ingr, labels:''});
+}
+
 
 function closeOBFMod(e){
   if(!e || e.target===document.getElementById('obf-mov'))
