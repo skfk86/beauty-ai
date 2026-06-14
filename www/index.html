@@ -1357,6 +1357,33 @@ body.light-mode .obf-card:active{box-shadow:none}
 /* ── Nav bar label trim ── */
 #ni-brands .ni-lb{font-size:8.5px}
 
+
+/* Card image fixes */
+.obf-card-img-el{
+  width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity .3s;
+  position:absolute;inset:0;
+}
+.obf-card-img-el[style*="opacity:1"],.obf-card-img-el{opacity:1}
+.obf-card-img{position:relative}
+.obf-card-img-fb{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--card2);
+}
+/* Gallery image */
+.pdm-gallery-img{
+  max-width:220px;max-height:220px;
+  object-fit:contain;border-radius:16px;
+}
+/* pdm LTR */
+.pdm-info,.pdm-name,.pdm-brand-name,.pdm-brand-cat{
+  text-align:left;direction:ltr;
+}
+.pdm-meta-row,.pdm-rating{
+  justify-content:flex-start;direction:ltr;
+}
+
 </style>
 </head>
 <body>
@@ -1407,7 +1434,7 @@ body.light-mode .obf-card:active{box-shadow:none}
     <div class="greet">
       <div class="greet-sub" style="font-size:12px;color:var(--dim);margin-bottom:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase">Your Beauty Assistant</div>
       <div class="greet-title" style="font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1.15">
-        How can I help<br>you today ✨
+        How can I help you today ✨
       </div>
     </div>
 
@@ -2172,24 +2199,9 @@ function renderBrandProdCard(p, b){
   const img    = p.image_front_display_url||p.image_url||'';
   const ingr   = (p.ingredients_text||'').substring(0,400);
   const labels = p.labels||'';
-  const el = document.createElement('div');
-  el.className = 'obf-card';
+  const el = makeProductCard(name, b.nm, img, ingr, labels);
+  // override onclick لإضافة brand
   el.onclick = ()=> openProdDetail({name, brand:b.nm, img, ingr, labels});
-  el.innerHTML = `
-    <div class="obf-card-img">
-      ${img
-        ? `<img src="${img}" alt="${name}" loading="lazy"
-            onerror="this.parentNode.innerHTML='<i class=\"fa-solid fa-flask\" style=\"font-size:32px;color:var(--dim)\"></i>'">`
-        : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
-    </div>
-    <div class="obf-card-body">
-      <div class="obf-card-brand">${b.nm}</div>
-      <div class="obf-card-name">${name}</div>
-      <button class="obf-card-buy"
-        onclick="event.stopPropagation();buyOnAmazon('${name.replace(/'/g,"\'").replace(/"/g,'&quot;')}')">
-        <i class="fa-brands fa-amazon"></i> Buy on Amazon
-      </button>
-    </div>`;
   return el;
 }
 
@@ -2707,6 +2719,85 @@ function searchOBF(){
   fetchOBF(`search_terms=${encodeURIComponent(q)}`, true);
 }
 
+// ══ PRODUCT CARD FACTORY ══
+function makeProductCard(name, brand, img, ingr, labels){
+  const el = document.createElement('div');
+  el.className = 'obf-card';
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'obf-card-img';
+  if(img){
+    const imgEl = document.createElement('img');
+    imgEl.src = img; imgEl.alt = name; imgEl.loading = 'lazy';
+    const fb = document.createElement('div');
+    fb.className = 'obf-card-img-fb';
+    fb.style.display = 'none';
+    fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
+    imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; };
+    imgWrap.appendChild(imgEl);
+    imgWrap.appendChild(fb);
+  } else {
+    const fb = document.createElement('div');
+    fb.className = 'obf-card-img-fb';
+    fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
+    imgWrap.appendChild(fb);
+  }
+  const lLow = (labels||'').toLowerCase();
+  if(lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan')){
+    const badge = document.createElement('div');
+    badge.className = 'obf-card-badge';
+    badge.textContent = '🌿 Natural';
+    imgWrap.appendChild(badge);
+  }
+  el.appendChild(imgWrap);
+  const body = document.createElement('div');
+  body.className = 'obf-card-body';
+  if(brand){
+    const br = document.createElement('div');
+    br.className = 'obf-card-brand';
+    br.textContent = brand.substring(0,22);
+    body.appendChild(br);
+  }
+  const nm = document.createElement('div');
+  nm.className = 'obf-card-name';
+  nm.textContent = name;
+  body.appendChild(nm);
+  const btn = document.createElement('button');
+  btn.className = 'obf-card-buy';
+  btn.innerHTML = '<i class="fa-brands fa-amazon"></i> Buy on Amazon';
+  btn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name); };
+  body.appendChild(btn);
+  el.appendChild(body);
+  el.onclick = ()=> openProdDetail({name,brand,img,ingr,labels});
+  return el;
+}
+
+function renderOBFCards(prods, append){
+  const grid = document.getElementById('obf-grid');
+  if(!append) grid.innerHTML = '';
+  prods.forEach(p=>{
+    const name  = p.product_name||'Product';
+    const brand = (p.brands||'').split(',')[0].trim();
+    const img   = p.image_front_display_url||p.image_url||'';
+    const ingr  = (p.ingredients_text||'').substring(0,400);
+    const labels= p.labels||'';
+    grid.appendChild(makeProductCard(name,brand,img,ingr,labels));
+  });
+}
+
+function searchOBFCat(cat, el){
+  document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
+  el.classList.add('on');
+  const catTerms = {
+    'make-up':    'foundation',
+    'fragrances': 'perfume',
+    'facial-care':'moisturizer',
+    'hair-care':  'shampoo',
+    'lip-gloss':  'lipstick',
+  };
+  const term = catTerms[cat] || cat.replace('-',' ');
+  fetchOBF(`search_terms=${encodeURIComponent(term)}`, true);
+}
+
 // ══ OBF DISCOVER ══
 const PAGE_SIZE=24;
 
@@ -2714,6 +2805,7 @@ async function fetchOBF(params, reset=false){
   if(obfLoading) return;
   if(reset){
     obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0;
+
     document.getElementById('obf-grid').innerHTML=
       '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
   }
@@ -2753,20 +2845,16 @@ async function fetchBrandPage(b, page, append){
   if(bdLoading) return;
   bdLoading=true;
   const container=document.getElementById('bd-prods');
-  const searchTerm=(b._aliases&&b._aliases[b._aliasIdx])||b.search||b.nm;
+  // search_terms فقط — الطريقة الوحيدة المضمونة
+  const term = b.search || b.nm;
+  const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
   try{
-    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(searchTerm)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
-    const res=await fetch(url, {headers:{'User-Agent':'RosivaBeautyApp/1.0'}});
+    const res=await fetch(url);
     const data=await res.json();
     const total=parseInt(data.count)||0;
     const prods=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
     if(!prods.length && !append){
-      // try next alias if available
-      if(b._aliases && b._aliasIdx<b._aliases.length-1){
-        b._aliasIdx++; bdLoading=false;
-        fetchBrandPage(b,1,false); return;
-      }
-      container.innerHTML='<div style="grid-column:1/-1;padding:20px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand.<br><span style="font-size:10px">Try searching in the Discover screen</span></div>';
+      container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand</div>';
       bdHasMore=false;
     } else {
       if(!append) container.innerHTML='';
@@ -2775,37 +2863,16 @@ async function fetchBrandPage(b, page, append){
       bdPage=page+1;
     }
   }catch(e){
-    if(!append) container.innerHTML='<div style="grid-column:1/-1;padding:20px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
+    if(!append) container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
   }
   bdLoading=false;
 }
 
+
 async function loadBrandProdsOBF(b){
-  const BRAND_ALIASES={
-    'dior':   ['Dior','Christian Dior'],
-    'chanel': ['Chanel','CHANEL'],
-    'ysl':    ['Yves Saint Laurent','YSL'],
-    'lamer':  ['La Mer','Creme de la Mer'],
-    'estee':  ['Estee Lauder'],
-    'lancome':['Lancome','Lancôme'],
-    'ct':     ['Charlotte Tilbury'],
-    'kayali': ['Kayali','Kay Ali'],
-    'creed':  ['Creed'],
-    'tomford':['Tom Ford'],
-    'kera':   ['Kerastase','Kérastase'],
-    'olaplex':['Olaplex'],
-    'moroc':  ['Moroccanoil'],
-    'huda':   ['Huda Beauty'],
-    'fenty':  ['Fenty Beauty'],
-    'rare':   ['Rare Beauty'],
-    'mac':    ['MAC Cosmetics','MAC','M.A.C'],
-    'nars':   ['NARS'],
-  };
-  b._aliases=BRAND_ALIASES[b.id]||[b.search||b.nm];
-  b._aliasIdx=0;
   bdPage=1; bdHasMore=true; bdLoading=false; bdCurrentBrand=b;
   const container=document.getElementById('bd-prods');
-  container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Fetching products...</div></div>';
+  container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Fetching products...</div></div>';
   await fetchBrandPage(b,1,false);
   // Infinite scroll
   const screen=document.getElementById('s-bdet');
@@ -2819,72 +2886,6 @@ async function loadBrandProdsOBF(b){
   }
 }
 
-function searchOBFCat(cat, el){
-  document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
-  el.classList.add('on');
-  // Use categories for general search and brands for specific search
-  // OBF requires 'en:' prefix for category IDs
-  const catMap = {
-    'make-up':    'en:make-up',
-    'fragrances': 'en:fragrances',
-    'facial-care':'en:facial-care',
-    'hair-care':  'en:hair-care',
-    'lip-gloss':  'en:lip-glosses',
-  };
-  const catId = catMap[cat] || ('en:' + cat);
-  const params = cat === 'all'
-    ? `action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=en:beauty&json=true`
-    : `tagtype_0=categories&tag_contains_0=contains&tag_0=${encodeURIComponent(catId)}`;
-  fetchOBF(params, true);
-}
-
-function renderOBFCards(prods, append){
-  const grid = document.getElementById('obf-grid');
-  if(!append) grid.innerHTML = '';
-  prods.forEach(p => {
-    const name  = p.product_name||'Product';
-    const brand = (p.brands||'').split(',')[0].trim();
-    const img   = p.image_front_display_url||p.image_url||'';
-    const ingr  = (p.ingredients_text||'').substring(0,400);
-    const labels= p.labels||'';
-    const lLow  = labels.toLowerCase();
-    const isNatural = lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan');
-    const el = document.createElement('div');
-    el.className = 'obf-card';
-    el.onclick = ()=> openProdDetail({name,brand,img,ingr,labels});
-    el.innerHTML = `
-      <div class="obf-card-img">
-        ${img
-          ? `<img src="${img}" alt="${name}" loading="lazy"
-              onerror="this.parentNode.innerHTML='<i class=\"fa-solid fa-flask\" style=\"font-size:32px;color:var(--dim)\"></i>'">`
-          : '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>'}
-        ${isNatural?'<div class="obf-card-badge">🌿 Natural</div>':''}
-      </div>
-      <div class="obf-card-body">
-        ${brand?`<div class="obf-card-brand">${brand.substring(0,22)}</div>`:''}
-        <div class="obf-card-name">${name}</div>
-        <button class="obf-card-buy" onclick="event.stopPropagation();buyOnAmazon('${name.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
-          <i class="fa-brands fa-amazon"></i> Buy on Amazon
-        </button>
-      </div>`;
-    grid.appendChild(el);
-  });
-}
-
-
-function initOBFScroll(){
-  const screen = document.getElementById('s-discover');
-  if(!screen) return;
-  // Remove old listener to avoid duplicates
-  screen.onscroll = null;
-  screen.addEventListener('scroll', function(){
-    if(obfLoading || !obfHasMore) return;
-    const remaining = screen.scrollHeight - screen.scrollTop - screen.clientHeight;
-    if(remaining < 700){
-      fetchOBF(obfCurrentParams, false);
-    }
-  }, {passive: true});
-}
 
 // ══ PRODUCT DETAIL — Amazon Style ══
 let currentProd = null;
@@ -2922,14 +2923,12 @@ function openProdDetail(p){
   body.innerHTML = `
     <!-- Gallery -->
     <div class="pdm-gallery">
-      ${p.img
-        ? `<img src="${p.img}" alt="${p.name}"
-            onerror="this.parentNode.innerHTML='<div class=\"pdm-gallery-no-img\"><i class=\"fa-solid fa-flask\" style=\"font-size:48px\"></i><div style=\"font-size:12px;margin-top:8px\">No image available</div></div>'">`
-        : `<div class="pdm-gallery-no-img">
-            <i class="fa-solid fa-flask" style="font-size:48px"></i>
-            <div style="font-size:12px;margin-top:8px">No image available</div>
-          </div>`
-      }
+      ${p.img ? `<img src="${p.img}" alt="${p.name}" class="pdm-gallery-img"
+          onerror="this.style.display='none';document.getElementById('pdm-no-img').style.display='flex'">` : ''}
+      <div id="pdm-no-img" class="pdm-gallery-no-img" style="display:${p.img?'none':'flex'}">
+        <i class="fa-solid fa-flask" style="font-size:48px;color:var(--dim)"></i>
+        <div style="font-size:12px;margin-top:8px;color:var(--dim)">No image available</div>
+      </div>
     </div>
 
     <!-- Brand badge -->
@@ -2946,11 +2945,11 @@ function openProdDetail(p){
     </div>` : ''}
 
     <!-- Product name & meta -->
-    <div class="pdm-info">
+    <div class="pdm-info" dir="ltr">
       <div class="pdm-name">${p.name}</div>
       <div class="pdm-rating">
         <div class="stars">★★★★☆</div>
-        <div class="rating-count">(${Math.floor(Math.random()*2000+200).toLocaleString()} reviews)</div>
+        <div class="rating-count">(${Math.floor(Math.random()*2000+200).toLocaleString('en-US')} reviews)</div>
       </div>
       <div class="pdm-meta-row">
         ${isVegan  ?'<div class="pdm-tag">🌱 Vegan</div>':''}
