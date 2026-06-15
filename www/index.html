@@ -881,15 +881,15 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 .pdm-gallery{
   background:var(--card2);
   display:flex;align-items:center;justify-content:center;
-  padding:30px 20px;position:relative;min-height:280px;
+  position:relative;min-height:320px;overflow:hidden;
+  border-bottom:1px solid var(--border);
 }
 .pdm-gallery img{
-  max-width:220px;max-height:220px;
-  object-fit:contain;border-radius:16px;
+  width:100%;height:320px;object-fit:cover;
 }
 .pdm-gallery-no-img{
   display:flex;flex-direction:column;align-items:center;gap:12px;
-  color:var(--dim);
+  color:var(--dim);min-height:180px;justify-content:center;
 }
 
 /* Brand badge */
@@ -1368,13 +1368,19 @@ body.light-mode .obf-card:active{box-shadow:none}
 .obf-card-img{position:relative}
 .obf-card-img-fb{
   position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--card2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--card2),var(--card));
+  gap:8px;
+}
+.obf-card-img-fb i{
+  font-size:36px;
+  color:var(--border);
+  opacity:.6;
 }
 /* Gallery image */
 .pdm-gallery-img{
-  max-width:220px;max-height:220px;
-  object-fit:contain;border-radius:16px;
+  width:100%;height:320px;
+  object-fit:cover;
 }
 /* pdm LTR */
 .pdm-info,.pdm-name,.pdm-brand-name,.pdm-brand-cat{
@@ -1384,6 +1390,65 @@ body.light-mode .obf-card:active{box-shadow:none}
   justify-content:flex-start;direction:ltr;
 }
 
+
+body.light-mode .pdm-ai-card{
+  background:linear-gradient(135deg,rgba(192,48,94,.08),rgba(154,92,40,.06));
+  border:1px solid rgba(192,48,94,.2);
+}
+body.light-mode .pdm-ai-hd{color:var(--gold2)}
+body.light-mode .pdm-ai-text{color:var(--text)}
+body.light-mode .pdm-ai-btn.speak{
+  background:var(--card2);color:var(--gold2);border:1px solid var(--border);
+}
+body.light-mode .pdm-ai-btn.ask{
+  background:rgba(192,48,94,.1);color:var(--rose);
+}
+body.light-mode .pdm-section{
+  background:var(--card);
+  border-color:var(--border);
+}
+body.light-mode .pdm-section-hd{
+  background:var(--card2);color:var(--text);
+}
+body.light-mode .pdm-section-body{
+  color:var(--dim);background:var(--card);
+}
+body.light-mode .pdm-buy-primary{
+  background:linear-gradient(135deg,#e47911,#ff9900);
+}
+body.light-mode .pdm-buy-secondary{
+  background:rgba(192,48,94,.06);
+  border-color:var(--rose);color:var(--rose);
+}
+body.light-mode .pdm-brand-badge{
+  background:var(--card2);border-bottom:1px solid var(--border);
+}
+body.light-mode .pdm-info{background:var(--bg)}
+body.light-mode .pdm-name{color:var(--text)}
+body.light-mode .pdm-tag{
+  background:var(--card2);color:var(--dim);border-color:var(--border);
+}
+
+.pdm-fav-btn{
+  width:44px;height:44px;border-radius:22px;
+  background:var(--rose-d);border:1.5px solid rgba(208,66,114,.3);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:var(--rose2);font-size:18px;
+  transition:all .2s;flex-shrink:0;
+}
+.pdm-fav-btn.saved{
+  background:var(--rose);border-color:var(--rose);
+  color:#fff;
+  box-shadow:0 0 0 4px rgba(214,61,110,.2);
+}
+.pdm-fav-btn:active{transform:scale(.9)}
+body.light-mode .pdm-fav-btn{
+  background:rgba(192,48,94,.1);
+  border-color:rgba(192,48,94,.3);
+}
+body.light-mode .pdm-fav-btn.saved{
+  background:var(--rose);color:#fff;
+}
 </style>
 </head>
 <body>
@@ -1579,9 +1644,9 @@ body.light-mode .obf-card:active{box-shadow:none}
       <i class="fa-solid fa-arrow-right"></i>
     </div>
     <div class="pdm-title" id="pdm-title">Product Details</div>
-    <div class="pdm-share" onclick="shareProd()" id="pdm-share-btn">
-      <i class="fa-solid fa-heart"></i>
-    </div>
+    <button class="pdm-fav-btn" onclick="shareProd()" id="pdm-share-btn">
+      <i class="fa-regular fa-heart" id="pdm-heart-icon"></i>
+    </button>
   </div>
   <div class="pdm-body" id="pdm-body">
     <!-- injected dynamically -->
@@ -1596,7 +1661,11 @@ body.light-mode .obf-card:active{box-shadow:none}
       <div class="hdr-title"><div class="ht-main">My Favorites ❤️</div></div>
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
-    <div id="fav-content"></div>
+    <div id="fav-summary" style="padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between">
+      <div id="fav-count" style="font-size:12px;color:var(--dim);font-weight:600"></div>
+      <button onclick="clearFavs()" id="fav-clear-btn" style="display:none;font-size:11px;color:var(--dim);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:8px;border:1px solid var(--border)">Clear All</button>
+    </div>
+    <div id="fav-content" style="padding:4px 0 20px"></div>
   </div>
 
   <!-- PROFILE -->
@@ -2401,11 +2470,24 @@ function closePMDirect(){
 // ══ FAVORITES ══
 function renderFavs(){
   const c=document.getElementById('fav-content');
+  const countEl=document.getElementById('fav-count');
+  const clearBtn=document.getElementById('fav-clear-btn');
   if(!favs.length){
-    c.innerHTML='<div class="empty-st"><div style="font-size:56px">🤍</div><div style="font-size:16px;font-weight:800;margin-top:8px">No favorites yet</div><div style="font-size:12px;color:var(--dim);margin-top:4px">Explore products and add what you love</div></div>';
+    if(countEl) countEl.textContent='';
+    if(clearBtn) clearBtn.style.display='none';
+    c.innerHTML=`<div style="text-align:center;padding:60px 20px">
+      <div style="font-size:64px;margin-bottom:16px">🤍</div>
+      <div style="font-size:18px;font-weight:900;color:var(--text);margin-bottom:8px">No favorites yet</div>
+      <div style="font-size:13px;color:var(--dim);line-height:1.6">Explore products and tap the<br>heart icon to save them here</div>
+    </div>`;
     return;
   }
+  if(countEl) countEl.textContent = favs.length + ' saved product' + (favs.length>1?'s':'');
+  if(clearBtn) clearBtn.style.display='block';
   c.innerHTML='';
+  const grid=document.createElement('div');
+  grid.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 18px 80px';
+  c.appendChild(grid);
   favs.forEach((fav,i)=>{
     // دعم كلا الـ formats القديم والجديد
     const name = fav.nm || fav.name || 'Product';
@@ -2427,7 +2509,7 @@ function renderFavs(){
     };
     card.style.position='relative';
     card.appendChild(rmBtn);
-    c.appendChild(card);
+    grid.appendChild(card);
   });
 }
 
@@ -2958,11 +3040,30 @@ async function loadBrandProdsOBF(b){
   const screen=document.getElementById('s-bdet');
   if(screen){
     screen.onscroll=null;
-    screen.addEventListener('scroll',function(){
+    // استخدم sentinel element لضمان عمل infinite scroll
+    let sentinel = document.getElementById('bd-sentinel');
+    if(!sentinel){
+      sentinel = document.createElement('div');
+      sentinel.id = 'bd-sentinel';
+      sentinel.style.height = '1px';
+    }
+    // أضف sentinel في نهاية الـ container بعد تحميل المنتجات
+    const addSentinel = ()=>{
+      const container=document.getElementById('bd-prods');
+      if(container && !container.contains(sentinel)){
+        container.parentNode.insertBefore(sentinel, container.nextSibling);
+      }
+    };
+    setTimeout(addSentinel, 500);
+    // Scroll listener
+    const onScroll = function(){
       if(bdLoading||!bdHasMore||bdCurrentBrand!==b) return;
-      if(screen.scrollHeight-screen.scrollTop-screen.clientHeight<500)
-        fetchBrandPage(b,bdPage,true);
-    },{passive:true});
+      const r = sentinel.getBoundingClientRect();
+      if(r.top < window.innerHeight + 300) fetchBrandPage(b,bdPage,true);
+    };
+    screen.addEventListener('scroll',onScroll,{passive:true});
+    // also check immediately after loading
+    setTimeout(onScroll,1000);
   }
 }
 
@@ -2978,8 +3079,10 @@ function openProdDetail(p){
 
   // heart state
   const isFav = favs.some(f=>f.nm===p.name);
-  document.getElementById('pdm-share-btn').innerHTML =
-    `<i class="fa-${isFav?'solid':'regular'} fa-heart" style="color:${isFav?'var(--rose)':'var(--dim)'}"></i>`;
+  const favBtn = document.getElementById('pdm-share-btn');
+  favBtn.classList.toggle('saved', isFav);
+  const heartIcon = document.getElementById('pdm-heart-icon');
+  if(heartIcon) heartIcon.className = isFav?'fa-solid fa-heart':'fa-regular fa-heart';
 
   // Brand logo
   const brand = currentProd.brand || '';
@@ -3132,7 +3235,9 @@ function shareProd(){
   localStorage.setItem('bai_favs', JSON.stringify(favs));
   const btn = document.getElementById('pdm-share-btn');
   const isFavNow = !isFav;
-  btn.innerHTML = `<i class="fa-${isFavNow?'solid':'regular'} fa-heart" style="color:${isFavNow?'var(--rose)':'var(--dim)'}"></i>`;
+  btn.classList.toggle('saved', isFavNow);
+  const icon = document.getElementById('pdm-heart-icon');
+  if(icon){ icon.className = isFavNow?'fa-solid fa-heart':'fa-regular fa-heart'; }
 }
 
 function togglePdmSection(hd){
