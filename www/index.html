@@ -2412,7 +2412,7 @@ async function loadBrAI(b){
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -2747,7 +2747,7 @@ function stopAISpeaking(){
 // ══ GROQ ══
 async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
   const body = {
     contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
     generationConfig:{maxOutputTokens:500, temperature:0.7}
@@ -2868,7 +2868,7 @@ function checkKeyFormat(val){
   const dot = document.getElementById('key-status-dot');
   if(!dot) return;
   if(!val){ dot.textContent=''; return; }
-  if((val.startsWith('AIza') || val.startsWith('AQ.')) && val.length > 20){
+  if(val.length > 15){
     dot.innerHTML='<span style="color:#4caf50">✅ Valid format</span>';
   } else {
     dot.innerHTML='<span style="color:#e06060">⚠️ Should start with AIza</span>';
@@ -2894,7 +2894,7 @@ async function testKeyFromProfile(){
   if(!k){ if(st) st.innerHTML='<span style="color:var(--gold2)">Enter your key first</span>'; return; }
   if(st) st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const r = await fetch(url,{
       method:'POST',
       headers:{'Content-Type':'application/json','x-goog-api-key':k},
@@ -2912,7 +2912,7 @@ async function testKeyFromProfile(){
 function saveKey(){
   const k=document.getElementById('pr-key').value.trim();
   if(!k){ showToast('Enter your Gemini API key first'); return; }
-  if(!k.startsWith('AIza') && !k.startsWith('AQ.')){ showToast('⚠️ Key format not recognized'); return; }
+  // Accept any key format
   localStorage.setItem('bai_key',k);
   apiKey=k;
   showToast('✅ Gemini key saved!');
@@ -2935,7 +2935,7 @@ async function testAPI(){
   if(!k){ st.innerHTML='<span style="color:var(--gold2)">Enter API key first</span>'; return; }
   st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const r = await fetch(url,{
       method:'POST',
       headers:{'Content-Type':'application/json','x-goog-api-key':k},
@@ -3113,7 +3113,7 @@ async function fetchOBF(params, reset=false){
     const data=await res.json();
     const total=parseInt(data.count)||0;
 
-    const BAD=['static.openfoodfacts','maps.google','placeholder','no-img','icon','thumb'];
+    const BAD=['static.openfoodfacts','maps.google','placeholder','no-img','icon','thumb','maps.gstatic','googleapis.com/maps','streetview'];
     const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
     const withImg=allP.filter(p=>{
       const img=p.image_front_display_url||p.image_url||'';
@@ -3153,7 +3153,10 @@ async function fetchBrandPage(b, page, append){
   const term = b.search || b.nm;
   const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
   try{
-    const res=await fetch(url);
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 10000);
+    const res=await fetch(url, {signal: controller.signal});
+    clearTimeout(timer);
     const data=await res.json();
     const total=parseInt(data.count)||0;
     const searchTerm = (b.search || b.nm).toLowerCase();
@@ -3425,7 +3428,7 @@ async function loadProdAI(p){
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
-    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
