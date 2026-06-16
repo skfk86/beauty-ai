@@ -1449,6 +1449,63 @@ body.light-mode .pdm-fav-btn{
 body.light-mode .pdm-fav-btn.saved{
   background:var(--rose);color:#fff;
 }
+
+/* ── Light mode: ALL input fields ── */
+body.light-mode .txt-row{
+  background:#ffffff !important;
+  border-color:#e8d4e8 !important;
+  box-shadow:0 2px 8px rgba(80,0,40,.06);
+}
+body.light-mode .txt-row input{
+  color:#160818 !important;
+  background:transparent !important;
+}
+body.light-mode .txt-row input::placeholder{color:#c0a0b8 !important}
+body.light-mode .txt-send{color:var(--rose) !important}
+
+body.light-mode .key-inp{
+  background:#f8f0f8 !important;
+  border-color:#e0cce0 !important;
+  color:#160818 !important;
+}
+body.light-mode .key-inp::placeholder{color:#b090a8 !important}
+body.light-mode .key-inp:focus{border-color:var(--rose) !important}
+body.light-mode .key-box{
+  background:#ffffff !important;
+  border-color:#e8d4e8 !important;
+}
+
+body.light-mode .srch-box,
+body.light-mode .srch{
+  background:#ffffff !important;
+  border-color:#e8d4e8 !important;
+}
+body.light-mode .srch-box input,
+body.light-mode #obf-srch,
+body.light-mode #b-srch,
+body.light-mode #txt-in{
+  color:#160818 !important;
+  background:transparent !important;
+}
+body.light-mode #obf-srch::placeholder,
+body.light-mode #b-srch::placeholder,
+body.light-mode #txt-in::placeholder{color:#b090a8 !important}
+
+body.light-mode .sb-key-inp{
+  color:#160818 !important;
+  background:#f8f0f8 !important;
+}
+body.light-mode .sb-key-inp::placeholder{color:#b090a8 !important}
+body.light-mode .sb-key-row{
+  background:#f0e8f0 !important;
+  border:1.5px solid #e0cce0 !important;
+  border-radius:12px;
+}
+body.light-mode input,
+body.light-mode textarea{
+  color:#160818 !important;
+}
+
 </style>
 </head>
 <body>
@@ -1498,7 +1555,7 @@ body.light-mode .pdm-fav-btn.saved{
     </div>
     <div class="greet">
       <div class="greet-sub" style="font-size:12px;color:var(--dim);margin-bottom:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase">Your Beauty Assistant</div>
-      <div class="greet-title" style="font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1.15">
+      <div class="greet-title" style="font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.25;white-space:nowrap">
         How can I help you today ✨
       </div>
     </div>
@@ -1684,10 +1741,54 @@ body.light-mode .pdm-fav-btn.saved{
       <div style="font-size:11px;color:var(--dim);margin-top:3px">Your Privacy is Our Priority 🔒</div>
     </div>
     <div class="key-box">
-      <div class="key-lbl"><i class="fa-solid fa-key" style="color:var(--gold2)"></i> Groq API Key</div>
-      <input class="key-inp" type="password" id="pr-key" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" dir="ltr">
-      <button class="save-btn" onclick="saveKey()"><i class="fa-solid fa-floppy-disk"></i> Save Key</button>
-      <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px">Get a free key from console.groq.com</div>
+      <div class="key-lbl">
+        <i class="fa-solid fa-robot" style="color:var(--gold2)"></i>
+        Gemini AI Key
+        <span id="key-status-dot" style="float:right;font-size:10px;margin-top:2px"></span>
+      </div>
+
+      <!-- Step indicator -->
+      <div style="display:flex;gap:6px;margin-bottom:12px">
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--rose-d);border-radius:10px;border:1px solid rgba(214,61,110,.2)">
+          <div style="font-size:16px">1️⃣</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Open</div>
+          <div style="font-size:8px;color:var(--rose2);font-weight:700">aistudio.google.com</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--gold-d);border-radius:10px;border:1px solid rgba(200,144,74,.2)">
+          <div style="font-size:16px">2️⃣</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Click</div>
+          <div style="font-size:8px;color:var(--gold2);font-weight:700">Create API Key</div>
+        </div>
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--card2);border-radius:10px;border:1px solid var(--border)">
+          <div style="font-size:16px">3️⃣</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Paste</div>
+          <div style="font-size:8px;color:var(--dim);font-weight:700">AIza... below</div>
+        </div>
+      </div>
+
+      <!-- Key input -->
+      <div style="position:relative;margin-bottom:10px">
+        <input class="key-inp" type="password" id="pr-key"
+          placeholder="AIza... or AQ.Ab8..." dir="ltr"
+          style="font-family:monospace;font-size:13px;padding-right:44px"
+          oninput="checkKeyFormat(this.value)">
+        <button onclick="toggleKeyVis()" id="key-vis-btn"
+          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px">
+          <i class="fa-regular fa-eye" id="key-vis-icon"></i>
+        </button>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display:flex;gap:8px">
+        <button class="save-btn" onclick="saveKey()" style="flex:2">
+          <i class="fa-solid fa-floppy-disk"></i> Save Key
+        </button>
+        <button onclick="testKeyFromProfile()" style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:10px;color:var(--dim);font-size:11px;font-weight:700;cursor:pointer">
+          <i class="fa-solid fa-vials"></i> Test
+        </button>
+      </div>
+
+      <div id="pr-key-status" style="font-size:11px;text-align:center;margin-top:8px;min-height:16px"></div>
     </div>
     <div class="plist">
       <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Llama 3.3 70B</div></div>
@@ -1909,10 +2010,22 @@ body.light-mode .pdm-fav-btn.saved{
           <div class="sb-logo-sub">Your Smart Beauty Assistant</div>
         </div>
       </div>
-      <div class="sb-key-row">
-        <i class="fa-solid fa-key"></i>
-        <input class="sb-key-inp" type="password" id="sb-key" placeholder="Groq API Key" dir="ltr">
-        <button class="sb-key-save" onclick="saveSBKey()">Save</button>
+      <div style="padding:14px 16px 0">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold2);text-transform:uppercase;margin-bottom:8px">
+          <i class="fa-solid fa-key"></i> Gemini API Key
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input class="sb-key-inp" type="password" id="sb-key"
+            placeholder="AIza... or AQ.Ab8..." dir="ltr"
+            style="flex:1;font-size:12px;font-family:monospace">
+          <button class="sb-key-save" onclick="saveSBKey()">
+            <i class="fa-solid fa-check"></i> Save
+          </button>
+        </div>
+        <div style="font-size:9px;color:var(--muted);margin-top:6px;text-align:center">
+          Get free key → <span style="color:var(--rose2);font-weight:700">aistudio.google.com</span>
+        </div>
+        <div id="api-status" style="font-size:11px;text-align:center;margin-top:6px;min-height:16px"></div>
       </div>
       <button onclick="testAPI()" style="width:100%;background:none;border:1px solid var(--border);border-radius:9px;padding:8px;color:var(--dim);font-family:Cairo,sans-serif;font-size:11px;cursor:pointer;margin-top:8px">
         <i class="fa-solid fa-circle-check"></i> Test Connection
@@ -1964,7 +2077,7 @@ body.light-mode .pdm-fav-btn.saved{
       </div>
     </div>
     <div class="sb-foot">
-      <div class="sb-version">Beauty AI v1.0 • Powered by Groq</div>
+      <div class="sb-version">Beauty AI v1.0 • Powered by Gemini</div>
     </div>
   </div>
 
@@ -2299,17 +2412,17 @@ async function loadBrAI(b){
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        messages:[{role:'system',content:sys},{role:'user',content:prompt}],
-        max_tokens:200, temperature:0.7
+        contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
+        generationConfig:{maxOutputTokens:200,temperature:0.7}
       })
     });
     const data = await res.json();
-    const text = data.choices?.[0]?.message?.content || 'لا يوجد تحليل.';
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد تحليل.';
     el.textContent = text;
     lastBrInfo = text;
     if(spkBtn) spkBtn.style.display='inline-flex';
@@ -2399,7 +2512,7 @@ function openProd(brandId,prodId){
 
 async function loadPrAI(p,b){
   if(!apiKey){
-    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Groq API key 🔑</div>';return;
+    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Gemini API key 🔑</div>';return;
   }
   try{
     const r=await callGroq(
@@ -2561,7 +2674,7 @@ async function sendTxt(){
 }
 
 async function doAI(text){
-  if(!apiKey){showToast('Add your Groq API key first 🔑');return;}
+  if(!apiKey){showToast('Add your Gemini API key first 🔑');return;}
   const box=document.getElementById('ai-box');
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
@@ -2581,7 +2694,7 @@ async function doAI(text){
   }catch(e){
     const msg = e.message || '';
     if(msg==='NO_KEY'){
-      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 Add your Groq API key from the sidebar</span>';
+      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 Add your Gemini API key from the sidebar</span>';
     } else if(msg.includes('401')){
       document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">❌ Invalid API key</span>';
     } else if(msg.includes('429')){
@@ -2632,39 +2745,39 @@ function stopAISpeaking(){
 }
 
 // ══ GROQ ══
-async function callGroq(msg,sys=''){
+async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  
+  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+  const body = {
+    contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
+    generationConfig:{maxOutputTokens:500, temperature:0.7}
+  };
   let r;
   try{
-    r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    r = await fetch(GEMINI_URL,{
       method:'POST',
       headers:{
-        'Authorization':'Bearer '+apiKey,
-        'Content-Type':'application/json'
+        'Content-Type':'application/json',
+        'x-goog-api-key': apiKey
       },
-      body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
-        max_tokens:900,
-        temperature:0.7
-      })
+      body:JSON.stringify(body)
     });
-  } catch(netErr){
-    throw new Error('NET_ERR: ' + netErr.message);
+  }catch(netErr){
+    throw new Error('NET_ERR');
   }
-  
   if(!r.ok){
-    let errMsg = '';
-    try{ const e = await r.json(); errMsg = e.error?.message || ''; }catch{}
-    throw new Error('HTTP_' + r.status + (errMsg ? ': ' + errMsg : ''));
+    if(r.status===400||r.status===403) throw new Error('INVALID_KEY');
+    if(r.status===429) throw new Error('RATE_LIMIT');
+    throw new Error('API_ERR_'+r.status);
   }
-  
-  const data = await r.json();
-  return data.choices[0].message.content;
+  const d = await r.json();
+  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
 }
 
-// ══ TTS ══
+// Alias للتوافق مع الكود القديم
+async function callGroq(msg,sys=''){
+  return callGemini(msg,sys);
+}// ══ TTS ══
 let ttsTimer=null;
 let currentAudio=null;
 
@@ -2750,10 +2863,61 @@ function stopSpeech(){
 }
 
 // ══ PROFILE ══
+
+function checkKeyFormat(val){
+  const dot = document.getElementById('key-status-dot');
+  if(!dot) return;
+  if(!val){ dot.textContent=''; return; }
+  if((val.startsWith('AIza') || val.startsWith('AQ.')) && val.length > 20){
+    dot.innerHTML='<span style="color:#4caf50">✅ Valid format</span>';
+  } else {
+    dot.innerHTML='<span style="color:#e06060">⚠️ Should start with AIza</span>';
+  }
+}
+
+function toggleKeyVis(){
+  const inp = document.getElementById('pr-key');
+  const icon = document.getElementById('key-vis-icon');
+  if(!inp) return;
+  if(inp.type==='password'){
+    inp.type='text';
+    if(icon) icon.className='fa-regular fa-eye-slash';
+  } else {
+    inp.type='password';
+    if(icon) icon.className='fa-regular fa-eye';
+  }
+}
+
+async function testKeyFromProfile(){
+  const k = document.getElementById('pr-key').value.trim() || apiKey;
+  const st = document.getElementById('pr-key-status');
+  if(!k){ if(st) st.innerHTML='<span style="color:var(--gold2)">Enter your key first</span>'; return; }
+  if(st) st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  try{
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const r = await fetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-goog-api-key':k},
+      body:JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}})
+    });
+    if(r.ok){
+      if(st) st.innerHTML='<span style="color:#4caf50">✅ Key is working perfectly!</span>';
+    } else {
+      if(st) st.innerHTML='<span style="color:#e06060">❌ Invalid key — check and retry</span>';
+    }
+  }catch(e){
+    if(st) st.innerHTML='<span style="color:#e06060">❌ Connection error</span>';
+  }
+}
 function saveKey(){
   const k=document.getElementById('pr-key').value.trim();
-  localStorage.setItem('bai_key',k);apiKey=k;
-  showToast('Key saved ✅');
+  if(!k){ showToast('Enter your Gemini API key first'); return; }
+  if(!k.startsWith('AIza') && !k.startsWith('AQ.')){ showToast('⚠️ Key format not recognized'); return; }
+  localStorage.setItem('bai_key',k);
+  apiKey=k;
+  showToast('✅ Gemini key saved!');
+  const st=document.getElementById('pr-key-status');
+  if(st) st.innerHTML='<span style="color:#4caf50">✅ Saved! Tap Test to verify</span>';
 }
 
 // ══ UTILS ══
@@ -2768,27 +2932,21 @@ function showToast(msg){
 async function testAPI(){
   const k = document.getElementById('sb-key').value.trim() || apiKey;
   const st = document.getElementById('api-status');
-  if(!k){ st.innerHTML='<span style="color:var(--gold2)">Please enter your key first</span>'; return; }
-  st.innerHTML='<span style="color:var(--dim)">Testing...</span>';
+  if(!k){ st.innerHTML='<span style="color:var(--gold2)">Enter API key first</span>'; return; }
+  st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const r = await fetch(url,{
       method:'POST',
-      headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'hi'}],max_tokens:5})
+      headers:{'Content-Type':'application/json','x-goog-api-key':k},
+      body:JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}})
     });
-    if(r.ok){
-      st.innerHTML='<span style="color:#4caf7d">✅ Connection successful!</span>';
-      localStorage.setItem('bai_key',k); apiKey=k;
-      document.getElementById('pr-key').value=k;
-    } else {
-      const d=await r.json().catch(()=>({}));
-      st.innerHTML='<span style="color:#e06060">❌ '+r.status+': '+(d.error?.message||'Error')+'</span>';
-    }
-  } catch(e){
-    st.innerHTML='<span style="color:#e06060">📵 '+e.message+'</span>';
+    if(r.ok) st.innerHTML='<span style="color:#4caf50">✅ Gemini connected!</span>';
+    else st.innerHTML='<span style="color:#e06060">❌ Invalid API key</span>';
+  }catch(e){
+    st.innerHTML='<span style="color:#e06060">❌ Check your internet</span>';
   }
-}
-function openSB(){
+}function openSB(){
   document.getElementById('sb').classList.add('open');
   document.getElementById('sb-ov').classList.add('open');
   document.getElementById('sb-key').value = apiKey;
@@ -2943,26 +3101,30 @@ async function fetchOBF(params, reset=false){
   if(obfLoading) return;
   if(reset){
     obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0;
-
     document.getElementById('obf-grid').innerHTML=
       '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
   }
   if(!obfHasMore) return;
   obfLoading=true;
   try{
-    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+    const PAGE_FETCH = PAGE_SIZE * 2; // نجلب ضعف العدد لنفلتر الصور السيئة
+    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_FETCH}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
     const res=await fetch(url);
     const data=await res.json();
     const total=parseInt(data.count)||0;
-    const searchTerm = (b.search || b.nm).toLowerCase();
-    const prods=(data.products||[]).filter(p=>{
-      if(!p.product_name || !p.product_name.trim()) return false;
-      // أبقِ فقط المنتجات التي تنتمي لهذا البراند فعلاً
-      const brandField = (p.brands||'').toLowerCase();
-      const nameField  = (p.product_name||'').toLowerCase();
-      const terms = searchTerm.split(' ');
-      return terms.some(t => t.length>2 && (brandField.includes(t) || nameField.includes(t)));
+
+    const BAD=['static.openfoodfacts','maps.google','placeholder','no-img','icon','thumb'];
+    const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
+    const withImg=allP.filter(p=>{
+      const img=p.image_front_display_url||p.image_url||'';
+      return img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
     });
+    const noImg=allP.filter(p=>{
+      const img=p.image_front_display_url||p.image_url||'';
+      return !img||!img.startsWith('http')||BAD.some(b=>img.includes(b));
+    });
+    const prods=[...withImg,...noImg].slice(0,PAGE_SIZE);
+
     if(!prods.length && obfPage===1){
       document.getElementById('obf-grid').innerHTML=
         '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
@@ -2981,10 +3143,6 @@ async function fetchOBF(params, reset=false){
   }
   obfLoading=false;
 }
-
-// ══ BRAND PRODUCTS ══
-const BRAND_PAGE_SIZE=24;
-
 
 
 async function fetchBrandPage(b, page, append){
@@ -3025,7 +3183,17 @@ async function fetchBrandPage(b, page, append){
       bdPage=page+1;
     }
   }catch(e){
-    if(!append) container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
+    if(!append){
+      // Retry once after 2 seconds
+      if(!b._retried){
+        b._retried=true;
+        bdLoading=false;
+        container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Retrying...</div></div>';
+        setTimeout(()=>fetchBrandPage(b,1,false), 2000);
+        return;
+      }
+      container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
+    }
   }
   bdLoading=false;
 }
@@ -3203,8 +3371,11 @@ function openProdDetail(p){
         <i class="fa-solid fa-circle-info"></i> How to Use
         <i class="fa-solid fa-chevron-down chevron" style="transform:rotate(180deg)"></i>
       </div>
-      <div class="pdm-section-body open">
-        Apply a small amount to clean skin and blend well. For external use only — avoid contact with eyes. Patch test recommended for sensitive skin. Store in a cool, dry place.
+      <div class="pdm-section-body open" dir="ltr" style="text-align:left">
+        Apply a small amount to clean skin and blend well.<br>
+        For external use only — avoid contact with eyes.<br>
+        Patch test recommended for sensitive skin.<br>
+        Store in a cool, dry place away from heat.
       </div>
     </div>
 
@@ -3254,10 +3425,11 @@ async function loadProdAI(p){
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`;
+    const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:180,temperature:0.7})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'gemini-2.0-flash',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:180,temperature:0.7})
     });
     const data = await res.json();
     const text = data.choices?.[0]?.message?.content||'التحليل غير متاح حالياً.';
