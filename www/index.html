@@ -2417,20 +2417,9 @@ async function loadBrAI(b){
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.5-flash');
-    const res = await fetch(GEMINI_BR_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
-        generationConfig:{maxOutputTokens:200,temperature:0.7}
-      })
-    });
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error('API_ERR_'+res.status+': '+(e?.error?.message||''));}
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد تحليل.';
-    el.textContent = text;
-    lastBrInfo = text;
+    const r = await callGemini(prompt, sys);
+    el.textContent = r;
+    lastBrInfo = r;
     if(spkBtn) spkBtn.style.display='inline-flex';
   }catch(e){
     el.innerHTML='<div style="font-size:11px;color:var(--dim)">تعذّر تحميل التحليل</div>';
@@ -2521,7 +2510,7 @@ async function loadPrAI(p,b){
     document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Gemini API key 🔑</div>';return;
   }
   try{
-    const r=await callGroq(
+    const r=await callGemini(
       `Explain this product "${p.ar}" (${p.nm}) from the ${b.nm} brand in the ${b.cat} category. Product type and function, key ingredients or scent elements, optimal usage, who it suits (skin type or occasion), price range, pros and cons.`,
       'أنتِ Rosiva AI، خبيرة جمال ومستشارة منتجات محترفة. لديكِ معرفة دقيقة بمكونات منتجات الجمال وفوائدها الحقيقية وكيفية استخدامها ومن تناسب. أجيبي باللغة العربية بأسلوب ودي وعلمي في 4-5 جمل مفيدة.'
     );
@@ -2557,7 +2546,7 @@ async function askMoreModal(){
   const question=prompt('Ask about this product:','What are cheaper alternatives?');
   if(!question)return;
   try{
-    const r=await callGroq(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). لديكِ معرفة شاملة بالبدائل والأسعار والمكونات ومقارنات المنتجات وطرق الاستخدام والمناسبات. أجيبي باللغة العربية بأسلوب مباشر وعملي ومفيد.`);
+    const r=await callGemini(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). لديكِ معرفة شاملة بالبدائل والأسعار والمكونات ومقارنات المنتجات وطرق الاستخدام والمناسبات. أجيبي باللغة العربية بأسلوب مباشر وعملي ومفيد.`);
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
     lastPrInfo=r;
   }catch{showToast('Connection error');}
@@ -2961,6 +2950,13 @@ async function sendTxt(){
 
 async function doAI(text){
   if(!apiKey){showToast('Add your Gemini API key first 🔑');return;}
+  // إذا الـ Live session مفتوح — أرسل النص عبره
+  if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
+    liveWS.send(JSON.stringify({realtimeInput:{text}}));
+    document.getElementById('ai-box').classList.add('vis');
+    document.getElementById('ai-txt').textContent='...';
+    return;
+  }
   const box=document.getElementById('ai-box');
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
@@ -3563,7 +3559,12 @@ async function fetchBrandPage(b, page, append){
   const container=document.getElementById('bd-prods');
   // search_terms فقط — الطريقة الوحيدة المضمونة
   const term = b.search || b.nm;
-  const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+  // استخدم brand tag endpoint إذا وُجد، وإلا search_terms
+  const brandSlug = term.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const useTagEndpoint = /^[a-z0-9-]+$/.test(brandSlug) && brandSlug.length > 1;
+  const url = useTagEndpoint
+    ? `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlug)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&page_size=${BRAND_PAGE_SIZE}`
+    : `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
   try{
     const controller = new AbortController();
     const timer = setTimeout(()=>controller.abort(), 10000);
@@ -3571,15 +3572,7 @@ async function fetchBrandPage(b, page, append){
     clearTimeout(timer);
     const data=await res.json();
     const total=parseInt(data.count)||0;
-    const searchTerm = (b.search || b.nm).toLowerCase();
-    const prods=(data.products||[]).filter(p=>{
-      if(!p.product_name || !p.product_name.trim()) return false;
-      // أبقِ فقط المنتجات التي تنتمي لهذا البراند فعلاً
-      const brandField = (p.brands||'').toLowerCase();
-      const nameField  = (p.product_name||'').toLowerCase();
-      const terms = searchTerm.split(' ');
-      return terms.some(t => t.length>2 && (brandField.includes(t) || nameField.includes(t)));
-    });
+    const prods=(data.products||[]).filter(p=>p.product_name && p.product_name.trim());
     if(!prods.length && !append){
       container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand</div>';
       bdHasMore=false;
@@ -3840,18 +3833,7 @@ async function loadProdAI(p){
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
-    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.5-flash');
-    const res = await fetch(GEMINI_BR_URL,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
-        generationConfig:{maxOutputTokens:180,temperature:0.7}
-      })
-    });
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error('API_ERR_'+res.status+': '+(e?.error?.message||''));}
-    const data = await res.json();
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text||'التحليل غير متاح حالياً.';
+    const text = await callGemini(prompt, sys);
     el.textContent = text;
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
