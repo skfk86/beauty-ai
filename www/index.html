@@ -2790,7 +2790,7 @@ async function _openLiveSession(){
       // الرسالة الأولى: الإعداد
       ws.send(JSON.stringify({
         setup:{
-          model:'models/gemini-2.5-flash-preview-native-audio-dialog',
+          model:'models/gemini-3.1-flash-live-preview',
           generationConfig:{
             responseModalities:['AUDIO'],
             speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}}
@@ -2812,21 +2812,35 @@ async function _openLiveSession(){
         }
 
         // صوت قادم من Gemini
+        // Audio data from Gemini Live
         const parts = msg.serverContent?.modelTurn?.parts;
         if(parts){
           parts.forEach(p=>{
-            if(p.inlineData?.mimeType?.includes('audio')){
-              const f32 = _pcm16ToFloat32(p.inlineData.data);
-              _scheduleLiveAudio(f32);
-              _updateLiveUI('speaking');
+            if(p.inlineData?.data){
+              const mime = p.inlineData.mimeType||'';
+              // PCM audio — play it
+              if(mime.includes('audio') || mime.includes('pcm') || mime.includes('L16')){
+                const f32 = _pcm16ToFloat32(p.inlineData.data);
+                _scheduleLiveAudio(f32, 24000);
+                _updateLiveUI('speaking');
+              }
             }
-            // نص للعرض (transcript)
+            // transcript text
             if(p.text){
               lastResp = (lastResp||'') + p.text;
-              document.getElementById('ai-txt').textContent = lastResp;
-              document.getElementById('ai-box').classList.add('vis');
+              const el = document.getElementById('ai-txt');
+              if(el) el.textContent = lastResp;
+              document.getElementById('ai-box')?.classList.add('vis');
             }
           });
+        }
+        // Also handle outputTranscription (Gemini 3.1)
+        const transcript = msg.serverContent?.outputTranscription?.text;
+        if(transcript){
+          lastResp = (lastResp||'') + transcript;
+          const el = document.getElementById('ai-txt');
+          if(el) el.textContent = lastResp;
+          document.getElementById('ai-box')?.classList.add('vis');
         }
 
         // انتهى دور Gemini
@@ -2846,10 +2860,21 @@ async function _openLiveSession(){
       }catch(e){console.warn('Live msg parse error',e);}
     };
 
-    ws.onerror = () => {
+    ws.onerror = (e) => {
+      console.error('Live WS error:', e);
       _updateLiveUI('error');
       liveSessionActive = false;
       resolve(false);
+    };
+
+    ws.onclose = (e) => {
+      console.log('Live WS closed:', e.code, e.reason);
+      liveSessionActive = false;
+      _stopMicStreaming();
+      if(isRec){
+        isRec=false;
+        _updateLiveUI('ready');
+      }
     };
 
     ws.onclose = () => {
@@ -2866,10 +2891,10 @@ async function _openLiveSession(){
       if(!liveSessionActive){
         ws.close();
         resolve(false);
-        showToast('فشل الاتصال بـ Gemini Live');
+        showToast('فشل الاتصال — تحقق من المفتاح والإنترنت');
         _updateLiveUI('error');
       }
-    },8000);
+    },12000);
   });
 }
 
