@@ -77,6 +77,11 @@ body.light-mode .mic-btn i{color:#ffffff !important}
 body.light-mode .mic-btn.rec{
   box-shadow:0 0 35px rgba(192,48,96,.4),inset 0 1px 0 rgba(255,255,255,.5) !important;
 }
+.mic-btn.speaking{
+  background:linear-gradient(135deg,#c47830,#e09050)!important;
+  box-shadow:0 0 0 8px rgba(196,120,48,.3),0 0 0 16px rgba(196,120,48,.15)!important;
+  animation:pulse-gold 0.7s ease-in-out infinite!important;
+}
 body.light-mode 
 body.light-mode .sp-name{color:#1a0a18}
 body.light-mode .sp-sub{color:#705060}
@@ -1791,7 +1796,7 @@ body.light-mode textarea{
       <div id="pr-key-status" style="font-size:11px;text-align:center;margin-top:8px;min-height:16px"></div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Gemini 1.5 Flash</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Gemini 2.5 Flash</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">Voice Language</div><div class="pvl">ar-SA</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">Language</div><div class="pvl">Arabic</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">Version</div><div class="pvl">v1.0 Beta</div></div>
@@ -2412,7 +2417,7 @@ async function loadBrAI(b){
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.0-flash');
+    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.5-flash');
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -2634,38 +2639,293 @@ function clearFavs(){
   renderFavs();showToast('Favorites cleared');
 }
 
-// ══ VOICE ══
-function toggleVoice(){
-  if(isRec)stopRec(); else startRec();
+// ══ GEMINI LIVE VOICE ══
+// WebSocket Live API — محادثة صوتية حقيقية مع إمكانية المقاطعة
+
+let liveWS = null;          // WebSocket connection
+let liveAudioCtx = null;    // AudioContext للتشغيل
+let liveMicStream = null;    // ميكروفون stream
+let liveMicProcessor = null; // ScriptProcessor node
+let liveAudioQueue = [];     // queue لـ PCM chunks القادمة
+let liveIsPlaying = false;   // هل يتكلم Gemini الآن
+let liveNextPlayTime = 0;    // وقت التشغيل التالي
+let liveSessionActive = false;
+let liveInterrupted = false;
+
+const LIVE_WS_URL = (key) =>
+  `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${encodeURIComponent(key)}`;
+
+const LIVE_SYSTEM_PROMPT = 'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.';
+
+// ── base64 PCM → Float32 للـ AudioContext ──
+function _pcm16ToFloat32(base64){
+  const raw = Uint8Array.from(atob(base64), c=>c.charCodeAt(0));
+  const pcm = new Int16Array(raw.buffer);
+  const f32 = new Float32Array(pcm.length);
+  for(let i=0;i<pcm.length;i++) f32[i]=pcm[i]/32768.0;
+  return f32;
 }
 
-function startRec(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast('Browser does not support voice');return;}
-  stopSpeech(); // Stop any audio before listening
-  document.getElementById('stop-spk-btn').style.display='none';
-  recog=new SR();recog.lang='ar-SA';recog.continuous=false;recog.interimResults=false;
-  recog.onstart=()=>{
-    isRec=true;
-    document.getElementById('mic-btn').classList.add('rec');
-    setWaveIdle(false);
-    document.getElementById('vh').textContent='Listening... 🎙️';
+// ── تشغيل chunk صوتي بدون انقطاع (queued playback) ──
+function _scheduleLiveAudio(f32, sampleRate=24000){
+  if(!liveAudioCtx) liveAudioCtx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:24000});
+  const buf = liveAudioCtx.createBuffer(1, f32.length, sampleRate);
+  buf.copyToChannel(f32, 0);
+  const src = liveAudioCtx.createBufferSource();
+  src.buffer = buf;
+  src.connect(liveAudioCtx.destination);
+  const now = liveAudioCtx.currentTime;
+  const start = Math.max(now, liveNextPlayTime);
+  src.start(start);
+  liveNextPlayTime = start + buf.duration;
+  liveIsPlaying = true;
+  src.onended = () => {
+    if(liveNextPlayTime <= liveAudioCtx.currentTime + 0.05){
+      liveIsPlaying = false;
+      _updateLiveUI('ready');
+    }
   };
-  recog.onresult=async(e)=>{
-    const t=e.results[0][0].transcript;
-    document.getElementById('vh').textContent=`"${t}"`;
-    stopRec();await doAI(t);
-  };
-  recog.onerror=()=>{stopRec();showToast('Could not recognize voice');};
-  recog.onend=()=>{if(isRec)stopRec();};
-  recog.start();
 }
 
+// ── إرسال صوت الميكروفون عبر WebSocket ──
+async function _startMicStreaming(){
+  try{
+    liveMicStream = await navigator.mediaDevices.getUserMedia({audio:{sampleRate:16000,channelCount:1,echoCancellation:true,noiseSuppression:true}});
+  }catch(e){
+    showToast('لا يمكن الوصول للميكروفون');
+    return false;
+  }
+
+  const micCtx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
+  const src = micCtx.createMediaStreamSource(liveMicStream);
+  const processor = micCtx.createScriptProcessor(4096, 1, 1);
+  liveMicProcessor = {processor, ctx: micCtx};
+
+  processor.onaudioprocess = (e) => {
+    if(!liveWS || liveWS.readyState !== WebSocket.OPEN) return;
+    const f32 = e.inputBuffer.getChannelData(0);
+    // Float32 → Int16 PCM
+    const pcm16 = new Int16Array(f32.length);
+    for(let i=0;i<f32.length;i++) pcm16[i]=Math.max(-32768,Math.min(32767,f32[i]*32768));
+    const b64 = btoa(String.fromCharCode(...new Uint8Array(pcm16.buffer)));
+    liveWS.send(JSON.stringify({
+      realtimeInput:{
+        audio:{data:b64, mimeType:'audio/pcm;rate=16000'}
+      }
+    }));
+  };
+
+  src.connect(processor);
+  processor.connect(micCtx.destination);
+  return true;
+}
+
+// ── إيقاف الميكروفون ──
+function _stopMicStreaming(){
+  if(liveMicProcessor){
+    liveMicProcessor.processor.disconnect();
+    liveMicProcessor.ctx.close();
+    liveMicProcessor = null;
+  }
+  if(liveMicStream){
+    liveMicStream.getTracks().forEach(t=>t.stop());
+    liveMicStream = null;
+  }
+}
+
+// ── المقاطعة: أوقف صوت Gemini فوراً وأعد الاستماع ──
+function _interruptLive(){
+  if(!liveIsPlaying) return;
+  liveInterrupted = true;
+  if(liveAudioCtx) liveAudioCtx.suspend().then(()=>liveAudioCtx.resume());
+  liveNextPlayTime = 0;
+  liveIsPlaying = false;
+  // إرسال إشارة المقاطعة للسيرفر
+  if(liveWS && liveWS.readyState===WebSocket.OPEN){
+    liveWS.send(JSON.stringify({clientContent:{turnComplete:false,interrupted:true}}));
+  }
+  _updateLiveUI('listening');
+}
+
+// ── تحديث واجهة المستخدم ──
+function _updateLiveUI(state){
+  const btn = document.getElementById('mic-btn');
+  const hint = document.getElementById('vh');
+  const stopBtn = document.getElementById('stop-spk-btn');
+  if(state==='connecting'){
+    hint.textContent='جاري الاتصال... ⏳';
+    btn.classList.remove('rec');
+  } else if(state==='listening'){
+    hint.textContent='تحدث الآن 🎙️ — اضغط مجدداً للإيقاف';
+    btn.classList.remove('speaking');
+    btn.classList.add('rec');
+    if(stopBtn) stopBtn.style.display='none';
+  } else if(state==='speaking'){
+    hint.textContent='روزيفا تتكلم... اضغط للمقاطعة 🤫';
+    btn.classList.remove('rec');
+    btn.classList.add('speaking');
+    if(stopBtn) stopBtn.style.display='inline-flex';
+  } else if(state==='ready'){
+    hint.textContent='Tap to speak with Rosiva';
+    btn.classList.remove('rec');
+    btn.classList.remove('speaking');
+    if(stopBtn) stopBtn.style.display='none';
+  } else if(state==='error'){
+    hint.textContent='خطأ في الاتصال — اضغط للمحاولة مجدداً';
+    btn.classList.remove('rec');
+    btn.classList.remove('speaking');
+  }
+}
+
+// ── فتح جلسة Live ──
+async function _openLiveSession(){
+  if(!apiKey){showToast('أضف مفتاح API أولاً 🔑');return false;}
+  _updateLiveUI('connecting');
+
+  return new Promise((resolve)=>{
+    const ws = new WebSocket(LIVE_WS_URL(apiKey));
+    liveWS = ws;
+
+    ws.onopen = () => {
+      // الرسالة الأولى: الإعداد
+      ws.send(JSON.stringify({
+        setup:{
+          model:'models/gemini-2.5-flash-preview-native-audio-dialog',
+          generationConfig:{
+            responseModalities:['AUDIO'],
+            speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}}
+          },
+          systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]}
+        }
+      }));
+    };
+
+    ws.onmessage = (event) => {
+      try{
+        const msg = JSON.parse(event.data);
+
+        // إعداد مكتمل
+        if(msg.setupComplete){
+          liveSessionActive = true;
+          resolve(true);
+          return;
+        }
+
+        // صوت قادم من Gemini
+        const parts = msg.serverContent?.modelTurn?.parts;
+        if(parts){
+          parts.forEach(p=>{
+            if(p.inlineData?.mimeType?.includes('audio')){
+              const f32 = _pcm16ToFloat32(p.inlineData.data);
+              _scheduleLiveAudio(f32);
+              _updateLiveUI('speaking');
+            }
+            // نص للعرض (transcript)
+            if(p.text){
+              lastResp = (lastResp||'') + p.text;
+              document.getElementById('ai-txt').textContent = lastResp;
+              document.getElementById('ai-box').classList.add('vis');
+            }
+          });
+        }
+
+        // انتهى دور Gemini
+        if(msg.serverContent?.turnComplete){
+          liveIsPlaying = false;
+          liveInterrupted = false;
+          lastResp = '';
+          _updateLiveUI('listening'); // يعود للاستماع تلقائياً
+        }
+
+        // Gemini اكتشف مقاطعة
+        if(msg.serverContent?.interrupted){
+          liveNextPlayTime = 0;
+          liveIsPlaying = false;
+          _updateLiveUI('listening');
+        }
+      }catch(e){console.warn('Live msg parse error',e);}
+    };
+
+    ws.onerror = () => {
+      _updateLiveUI('error');
+      liveSessionActive = false;
+      resolve(false);
+    };
+
+    ws.onclose = () => {
+      liveSessionActive = false;
+      _stopMicStreaming();
+      if(isRec){
+        isRec=false;
+        _updateLiveUI('ready');
+      }
+    };
+
+    // timeout إذا لم يتصل خلال 8 ثواني
+    setTimeout(()=>{
+      if(!liveSessionActive){
+        ws.close();
+        resolve(false);
+        showToast('فشل الاتصال بـ Gemini Live');
+        _updateLiveUI('error');
+      }
+    },8000);
+  });
+}
+
+// ── toggleVoice: المفتاح الرئيسي ──
+async function toggleVoice(){
+  if(!apiKey){showToast('أضف مفتاح Gemini API أولاً 🔑');return;}
+
+  // إذا Gemini يتكلم → قاطعه
+  if(liveIsPlaying){
+    _interruptLive();
+    return;
+  }
+
+  // إذا الجلسة شغالة → أوقف الكل
+  if(isRec || liveSessionActive){
+    isRec=false;
+    liveSessionActive=false;
+    if(liveWS) liveWS.close();
+    liveWS=null;
+    _stopMicStreaming();
+    _updateLiveUI('ready');
+    return;
+  }
+
+  // ابدأ جلسة جديدة
+  isRec=true;
+  stopSpeech();
+  lastResp='';
+  document.getElementById('ai-txt').textContent='';
+  document.getElementById('ai-box').classList.remove('vis');
+
+  const ok = await _openLiveSession();
+  if(!ok){isRec=false;return;}
+
+  const micOk = await _startMicStreaming();
+  if(!micOk){
+    liveWS?.close();
+    isRec=false;
+    return;
+  }
+
+  setWaveIdle(false);
+  _updateLiveUI('listening');
+}
+
+// startRec/stopRec متوافقة مع باقي الكود
+function startRec(){ toggleVoice(); }
 function stopRec(){
-  isRec=false;if(recog)recog.stop();
+  isRec=false;
+  liveSessionActive=false;
+  if(liveWS) liveWS.close();
+  liveWS=null;
+  _stopMicStreaming();
   document.getElementById('mic-btn').classList.remove('rec');
   setWaveIdle(true);
-  document.getElementById('vh').textContent='Hold and speak...';
+  _updateLiveUI('ready');
 }
 
 async function sendTxt(){
@@ -2681,7 +2941,7 @@ async function doAI(text){
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   document.getElementById('spk-btn').style.display='none';
   try{
-    const r=await callGroq(text,
+    const r=await callGemini(text,
       'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. عند سؤالكِ عن نفسكِ، قدّمي نفسكِ هكذا: أنا Rosiva AI، مساعدتكِ الشخصية للجمال داخل تطبيق Rosiva، مدعومة بالذكاء الاصطناعي لمساعدتكِ في اكتشاف المنتجات وفهم المكونات ومقارنة البراندات وبناء روتين جمالك المثالي. خبرتكِ تشمل: المكياج بجميع أنواعه (فاونديشن، كونتور، هايلايتر، أيلاينر، أحمر الشفاه...)، العطور وتحليل نوتاتها (الأمامية والوسطى والقاعدية وعائلات الروائح)، العناية بالبشرة (روتيني الصباح والمساء والمكونات الفعالة كالنياسيناميد والريتينول وفيتامين C والهيالورونيك أسيد)، والعناية بالشعر. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. إذا خرج السؤال عن عالم الجمال، وجّهي بلطف.');
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
@@ -2740,6 +3000,8 @@ function speakR(){
 }
 
 function stopAISpeaking(){
+  // مقاطعة Live إذا كانت نشطة
+  if(liveIsPlaying) _interruptLive();
   stopSpeech();
   document.getElementById('stop-spk-btn').style.display='none';
   if(lastResp) document.getElementById('spk-btn').style.display='inline-flex';
@@ -2781,13 +3043,94 @@ async function callGroq(msg,sys=''){
 }// ══ TTS ══
 let ttsTimer=null;
 let currentAudio=null;
+let geminiTTSAudioCtx=null;
+
+// ── PCM L16 → WAV buffer converter (مطلوب لـ Gemini TTS) ──
+function _pcmToWav(pcmBase64, sampleRate=24000){
+  const raw = Uint8Array.from(atob(pcmBase64), c=>c.charCodeAt(0));
+  const wavHeader = new ArrayBuffer(44);
+  const view = new DataView(wavHeader);
+  const write = (off,val,fn='setUint8')=>view[fn](off,val,true);
+  // RIFF
+  [82,73,70,70].forEach((b,i)=>write(4+i-4+0,b)); // "RIFF"
+  view.setUint32(4, 36+raw.length, true);
+  [87,65,86,69].forEach((b,i)=>write(8+i,b));       // "WAVE"
+  [102,109,116,32].forEach((b,i)=>write(12+i,b));   // "fmt "
+  view.setUint32(16,16,true);   // chunk size
+  view.setUint16(20,1,true);    // PCM
+  view.setUint16(22,1,true);    // mono
+  view.setUint32(24,sampleRate,true);
+  view.setUint32(28,sampleRate*2,true); // byte rate
+  view.setUint16(32,2,true);    // block align
+  view.setUint16(34,16,true);   // bits
+  [100,97,116,97].forEach((b,i)=>write(36+i,b));    // "data"
+  view.setUint32(40,raw.length,true);
+  const wav = new Uint8Array(44+raw.length);
+  wav.set(new Uint8Array(wavHeader));
+  wav.set(raw,44);
+  return wav;
+}
+
+// ── Gemini TTS — صوت طبيعي عالي الجودة ──
+async function geminiTTS(text){
+  if(!apiKey) throw new Error('NO_KEY');
+  const url = _geminiUrl(apiKey,'gemini-2.5-flash-preview-tts');
+  const body = {
+    contents:[{role:'user',parts:[{text}]}],
+    generationConfig:{
+      responseModalities:['AUDIO'],
+      speechConfig:{
+        voiceConfig:{
+          prebuiltVoiceConfig:{voiceName:'Leda'} // صوت أنثوي طبيعي ← مناسب لـ Rosiva
+        }
+      }
+    }
+  };
+  const r = await fetch(url,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+  if(!r.ok){
+    const e=await r.json().catch(()=>({}));
+    throw new Error('GEMINI_TTS_ERR_'+r.status+': '+(e?.error?.message||''));
+  }
+  const d = await r.json();
+  const part = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+  if(!part?.data) throw new Error('GEMINI_TTS: no audio in response');
+  return {base64:part.data, mimeType:part.mimeType||'audio/L16;rate=24000'};
+}
+
+// ── تشغيل WAV buffer في WebView/Browser ──
+async function _playWavBuffer(wavBytes){
+  return new Promise((res,rej)=>{
+    const blob = new Blob([wavBytes],{type:'audio/wav'});
+    const url  = URL.createObjectURL(blob);
+    currentAudio = new Audio(url);
+    currentAudio.onended = ()=>{ URL.revokeObjectURL(url); res(); };
+    currentAudio.onerror = ()=>{ URL.revokeObjectURL(url); rej(new Error('audio play failed')); };
+    currentAudio.play().catch(rej);
+  });
+}
 
 async function speakTxt(text,cb){
   if(!text)return;
   stopSpeech();
   speaking=true;
 
-  // ① Capacitor Plugin (Android APK)
+  // ① Gemini TTS (أفضل جودة — مدفوع)
+  if(apiKey){
+    try{
+      const {base64} = await geminiTTS(text);
+      const wav = _pcmToWav(base64,24000);
+      await _playWavBuffer(wav);
+      speaking=false;if(cb)cb();return;
+    }catch(e){
+      console.warn('Gemini TTS failed, fallback:',e.message);
+    }
+  }
+
+  // ② Capacitor Plugin (Android APK native)
   if(window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.TextToSpeech){
     try{
       await Capacitor.Plugins.TextToSpeech.speak({
@@ -2797,7 +3140,7 @@ async function speakTxt(text,cb){
     }catch(e){console.warn('TTS plugin failed',e);}
   }
 
-  // ② Web Speech API (browser)
+  // ③ Web Speech API
   if(window.speechSynthesis){
     try{
       await webSpeak(text);
@@ -2805,7 +3148,7 @@ async function speakTxt(text,cb){
     }catch(e){console.warn('webSpeech failed',e);}
   }
 
-  // ③ Google TTS (fallback final)
+  // ④ Google Translate TTS (آخر احتياطي)
   googleTTS(text,cb);
 }
 
@@ -2899,14 +3242,14 @@ function toggleKeyVis(){
 // هذا هو الأسلوب الرسمي الوحيد المضمون للـ REST API
 
 function _geminiUrl(k, model){
-  const m = model || 'gemini-2.0-flash';
+  const m = model || 'gemini-2.5-flash';
   return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
 }
 
 const _GEMINI_MODELS = [
-  'gemini-2.0-flash',
-  'gemini-1.5-flash',
-  'gemini-2.0-flash-lite'
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-1.5-flash'
 ];
 
 async function _testGeminiKey(k){
@@ -3472,7 +3815,7 @@ async function loadProdAI(p){
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
-    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.0-flash');
+    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.5-flash');
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
@@ -3546,6 +3889,11 @@ function closePrivacy(){
   document.getElementById('prv-overlay').style.display='none';
   document.getElementById('prv-modal').style.display='none';
 }
+
+window.addEventListener('beforeunload', ()=>{
+  if(liveWS) liveWS.close();
+  _stopMicStreaming();
+});
 </script>
 </body>
 </html>
