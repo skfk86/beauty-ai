@@ -2411,13 +2411,19 @@ async function loadBrAI(b){
   el.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   if(spkBtn) spkBtn.style.display='none';
   if(!apiKey){
-    el.innerHTML='<div style="font-size:11px;color:var(--dim);text-align:center;padding:4px">Add your Groq API key to get AI insights</div>';
+    el.innerHTML='<div style="font-size:11px;color:var(--dim);text-align:center;padding:4px">Add your Gemini API key to get AI insights</div>';
     return;
   }
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const r = await callGemini(prompt, sys);
+    let r = await callGemini(prompt, sys);
+    // Gemini أحياناً يقطع الرد بسبب فلتر recitation عند ذكر براندات تجارية معروفة —
+    // إعادة محاولة بصياغة أبسط بدل عرض نص ناقص للمستخدم
+    if(!r || r.trim().length < 30){
+      r = await callGemini(`اكتبي 3 جمل عامة ومفيدة عن منتجات ${b.cat} ولمن تناسب، دون تكرار اسم البراند كثيراً.`, sys);
+    }
+    if(!r || r.trim().length < 15) throw new Error('EMPTY');
     el.textContent = r;
     lastBrInfo = r;
     if(spkBtn) spkBtn.style.display='inline-flex';
@@ -2769,6 +2775,7 @@ function _updateLiveUI(state){
 // ── فتح جلسة Live ──
 async function _openLiveSession(){
   if(!apiKey){showToast('أضف مفتاح API أولاً 🔑');return false;}
+  apiKey = (apiKey||'').trim();
   _updateLiveUI('connecting');
 
   return new Promise((resolve)=>{
@@ -2858,24 +2865,22 @@ async function _openLiveSession(){
 
     ws.onclose = (e) => {
       console.log('Live WS closed:', e.code, e.reason);
+      const wasActive = liveSessionActive;
       liveSessionActive = false;
       _stopMicStreaming();
+      // كود 1000 = إغلاق طبيعي، غير ذلك يعني فشل فعلي — أظهر السبب الحقيقي
+      if(e.code && e.code!==1000){
+        const reasonTxt = e.reason ? (' — ' + e.reason) : '';
+        showToast('فشل اتصال Rosiva AI (كود ' + e.code + ')' + reasonTxt);
+        if(!wasActive) _updateLiveUI('error');
+      }
       if(isRec){
         isRec=false;
         _updateLiveUI('ready');
       }
     };
 
-    ws.onclose = () => {
-      liveSessionActive = false;
-      _stopMicStreaming();
-      if(isRec){
-        isRec=false;
-        _updateLiveUI('ready');
-      }
-    };
-
-    // timeout إذا لم يتصل خلال 8 ثواني
+    // timeout إذا لم يتصل خلال 20 ثانية (مهم على شبكات بطيئة/VPN)
     setTimeout(()=>{
       if(!liveSessionActive){
         ws.close();
@@ -2883,7 +2888,7 @@ async function _openLiveSession(){
         showToast('فشل الاتصال — تحقق من المفتاح والإنترنت');
         _updateLiveUI('error');
       }
-    },12000);
+    },20000);
   });
 }
 
@@ -3524,39 +3529,42 @@ async function fetchOBF(params, reset=false){
   }
   if(!obfHasMore) return;
   obfLoading=true;
+  const isFirst = reset;
+  // نفس قائمة الفلترة المستخدمة في makeProductCard — لازم تتطابق
+  const BAD=['static.openfoodfacts','maps.google','placeholder','default','no-img',
+             'translate.google','gstatic.com','ggpht','maps.gstatic','maps.googleapis',
+             'icon','thumb','streetview','map','street'];
+  const collected=[];
   try{
-    const PAGE_FETCH = PAGE_SIZE * 2; // نجلب ضعف العدد لنفلتر الصور السيئة
-    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_FETCH}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
-    const res=await fetch(url);
-    const data=await res.json();
-    const total=parseInt(data.count)||0;
+    // نجلب صفحات متتالية (بحد أقصى 6 محاولات) حتى نجمع عدد كافٍ من المنتجات
+    // اللي عندها صورة حقيقية فعلاً — بدل تعبئة الناقص بمنتجات بدون صورة
+    for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
+      const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
+      const res=await fetch(url);
+      const data=await res.json();
+      const total=parseInt(data.count)||0;
+      const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
+      const withImg=allP.filter(p=>{
+        const img=(p.image_front_display_url||p.image_url||'').toLowerCase();
+        return img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
+      });
+      collected.push(...withImg);
+      obfLoadedCount=(obfLoadedCount||0)+allP.length;
+      obfPage++;
+      // وقف لو رجعت صفحة غير مكتملة (يعني آخر صفحة) أو تجاوزنا العدد الكلي المتاح
+      if(allP.length<PAGE_SIZE || (total>0 && obfLoadedCount>=total)) obfHasMore=false;
+    }
 
-    const BAD=['static.openfoodfacts','maps.google','placeholder','no-img','icon','thumb','maps.gstatic','googleapis.com/maps','streetview'];
-    const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
-    const withImg=allP.filter(p=>{
-      const img=p.image_front_display_url||p.image_url||'';
-      return img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
-    });
-    const noImg=allP.filter(p=>{
-      const img=p.image_front_display_url||p.image_url||'';
-      return !img||!img.startsWith('http')||BAD.some(b=>img.includes(b));
-    });
-    const prods=[...withImg,...noImg].slice(0,PAGE_SIZE);
+    const prods=collected.slice(0,PAGE_SIZE);
 
-    if(!prods.length && obfPage===1){
+    if(!prods.length && isFirst){
       document.getElementById('obf-grid').innerHTML=
         '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
-      obfHasMore=false;
     } else if(prods.length){
-      renderOBFCards(prods, obfPage>1);
-      obfLoadedCount=(obfLoadedCount||0)+prods.length;
-      obfPage++;
-      obfHasMore=prods.length>=PAGE_SIZE||(total>0&&obfLoadedCount<total);
-    } else {
-      obfHasMore=false;
+      renderOBFCards(prods, !isFirst);
     }
   }catch(e){
-    if(obfPage===1) document.getElementById('obf-grid').innerHTML=
+    if(isFirst) document.getElementById('obf-grid').innerHTML=
       '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:12px">❌ Check your internet connection</div>';
   }
   obfLoading=false;
