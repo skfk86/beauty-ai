@@ -2412,10 +2412,10 @@ async function loadBrAI(b){
   try{
     const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
     const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
-    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.0-flash');
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:_geminiHeaders(apiKey),
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
         generationConfig:{maxOutputTokens:200,temperature:0.7}
@@ -2748,17 +2748,16 @@ function stopAISpeaking(){
 // ══ GROQ ══
 async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const headers = _geminiHeaders(apiKey);
+  const headers = {'Content-Type':'application/json'};
   const body = {
     contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
     generationConfig:{maxOutputTokens:500, temperature:0.7}
   };
-
   let lastErr = '';
-  for(const url of _GEMINI_URLS){
+  for(const model of _GEMINI_MODELS){
     let r;
     try{
-      r = await fetch(url,{method:'POST',headers,body:JSON.stringify(body)});
+      r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
     }catch(netErr){
       lastErr='NET_ERR: '+netErr.message;
       continue;
@@ -2770,10 +2769,10 @@ async function callGemini(msg, sys=''){
     let errMsg='API_ERR_'+r.status;
     try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
     lastErr=errMsg;
-    if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+    if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
     if(r.status===429) throw new Error('RATE_LIMIT');
   }
-  throw new Error(lastErr || 'API_ERR: All endpoints failed');
+  throw new Error(lastErr || 'API_ERR: All models failed');
 }
 
 // Alias للتوافق مع الكود القديم
@@ -2895,40 +2894,40 @@ function toggleKeyVis(){
   }
 }
 
-// ── Gemini Auth Helper — يكتشف نوع المفتاح تلقائياً ──
-function _geminiHeaders(k){
-  // AQ. = OAuth2 auth key → يحتاج Bearer فقط
-  // AIza = Standard API key → يحتاج x-goog-api-key
-  const isAQ = k.startsWith('AQ.');
-  const base = {'Content-Type':'application/json'};
-  if(isAQ){
-    return {...base, 'Authorization':'Bearer '+k};
-  }
-  return {...base, 'x-goog-api-key':k};
+// ── Gemini Helper — وثائق Google الرسمية ──
+// المفاتيح AQ. و AIza كلاهما يعملان عبر ?key= في الـ URL
+// هذا هو الأسلوب الرسمي الوحيد المضمون للـ REST API
+
+function _geminiUrl(k, model){
+  const m = model || 'gemini-2.0-flash';
+  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
 }
 
-const _GEMINI_URLS = [
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-  'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent',
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
-  'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent'
+const _GEMINI_MODELS = [
+  'gemini-2.0-flash',
+  'gemini-1.5-flash',
+  'gemini-2.0-flash-lite'
 ];
 
 async function _testGeminiKey(k){
-  const headers = _geminiHeaders(k);
-  const body = JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}});
+  const body = JSON.stringify({
+    contents:[{role:'user',parts:[{text:'hi'}]}],
+    generationConfig:{maxOutputTokens:5}
+  });
+  const headers = {'Content-Type':'application/json'};
   let lastStatus=0; let lastMsg='';
-  for(const url of _GEMINI_URLS){
+  for(const model of _GEMINI_MODELS){
     try{
-      const r = await fetch(url,{method:'POST',headers,body});
-      if(r.ok) return {ok:true,url,headers};
+      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers,body});
+      if(r.ok) return {ok:true,model};
       lastStatus=r.status;
       try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
-      if(r.status===401||r.status===403) return {ok:false,status:r.status,msg:'Unauthorized — check key'};
+      if(r.status===400) return {ok:false,status:400,msg:'Invalid key format'};
+      if(r.status===401||r.status===403) return {ok:false,status:r.status,msg:'Unauthorized — invalid key'};
       if(r.status===429) return {ok:false,status:429,msg:'Rate limit — try later'};
     }catch(e){lastMsg=e.message||'network error';}
   }
-  return {ok:false,status:lastStatus,msg:lastMsg||'All endpoints failed'};
+  return {ok:false,status:lastStatus,msg:lastMsg||'All models failed'};
 }
 
 async function testKeyFromProfile(){
@@ -3473,10 +3472,10 @@ async function loadProdAI(p){
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
-    const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+    const GEMINI_BR_URL=_geminiUrl(apiKey,'gemini-2.0-flash');
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:_geminiHeaders(apiKey),
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
         generationConfig:{maxOutputTokens:180,temperature:0.7}
