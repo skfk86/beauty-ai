@@ -2395,8 +2395,8 @@ let bdPage=1, bdLoading=false, bdHasMore=true, bdCurrentBrand=null;
 function renderBrandProdCard(p, b){
   const name   = p.product_name||'Product';
   const img    = p.image_front_display_url||p.image_url||'';
-  const ingr   = (p.ingredients_text||'').substring(0,400);
-  const labels = p.labels||'';
+  const ingr   = (p.ingredients_text||p.ingredients_text_en||'').substring(0,800);
+  const labels = p.labels||(p.labels_tags||[]).join(', ')||'';
   const el = makeProductCard(name, b.nm, img, ingr, labels);
   // override onclick لإضافة brand
   el.onclick = ()=> openProdDetail({name, brand:b.nm, img, ingr, labels});
@@ -2602,7 +2602,7 @@ function renderFavs(){
     const brand= fav.br || fav.brand || '';
     const img  = fav.img || '';
     const ingr = fav.ingr || '';
-    const labels= fav.labels || '';
+    const labels= fav.labels||(fav.labels_tags||[]).join(', ')||'';
     const card = makeProductCard(name, brand, img, ingr, labels);
     // أضف زر إزالة
     const rmBtn = document.createElement('button');
@@ -3419,11 +3419,20 @@ function searchOBF(){
 
 // ══ PRODUCT CARD FACTORY ══
 function makeProductCard(name, brand, img, ingr, labels){
-  // فلتر الصور السيئة: خرائط، thumbnails صغيرة، صور غير لائقة
-  const badImgPatterns = ['static.openfoodfacts','maps.google','placeholder','default','no-img'];
-  const isGoodImg = img && !badImgPatterns.some(p=>img.includes(p)) && img.startsWith('http');
-  const cleanImg = isGoodImg ? img : '';
-  img = cleanImg;
+  // فلتر الصور السيئة
+  const badImgPatterns = [
+    'static.openfoodfacts','maps.google','placeholder','default',
+    'no-img','translate.google','gstatic.com','ggpht','Street View',
+    'maps.gstatic','maps.googleapis'
+  ];
+  const isGoodImg = img
+    && img.startsWith('http')
+    && !badImgPatterns.some(p=>img.toLowerCase().includes(p.toLowerCase()))
+    && !img.includes('map')
+    && !img.includes('street');
+  img = isGoodImg ? img : '';
+  // إخفاء البطاقة كلياً إذا لا صورة
+  if(!img) return null;
 
   const el = document.createElement('div');
   el.className = 'obf-card';
@@ -3478,13 +3487,14 @@ function makeProductCard(name, brand, img, ingr, labels){
 function renderOBFCards(prods, append){
   const grid = document.getElementById('obf-grid');
   if(!append) grid.innerHTML = '';
+  // تخطى البطاقات التي بدون صورة (null)
   prods.forEach(p=>{
     const name  = p.product_name||'Product';
     const brand = (p.brands||'').split(',')[0].trim();
     const img   = p.image_front_display_url||p.image_url||'';
-    const ingr  = (p.ingredients_text||'').substring(0,400);
-    const labels= p.labels||'';
-    grid.appendChild(makeProductCard(name,brand,img,ingr,labels));
+    const ingr  = (p.ingredients_text||p.ingredients_text_en||'').substring(0,800);
+    const labels= p.labels||(p.labels_tags||[]).join(', ')||'';
+    const c=makeProductCard(name,brand,img,ingr,labels); if(c) grid.appendChild(c);
   });
 }
 
@@ -3516,7 +3526,7 @@ async function fetchOBF(params, reset=false){
   obfLoading=true;
   try{
     const PAGE_FETCH = PAGE_SIZE * 2; // نجلب ضعف العدد لنفلتر الصور السيئة
-    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_FETCH}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+    const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_FETCH}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
     const res=await fetch(url);
     const data=await res.json();
     const total=parseInt(data.count)||0;
@@ -3563,8 +3573,8 @@ async function fetchBrandPage(b, page, append){
   const brandSlug = term.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   const useTagEndpoint = /^[a-z0-9-]+$/.test(brandSlug) && brandSlug.length > 1;
   const url = useTagEndpoint
-    ? `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlug)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&page_size=${BRAND_PAGE_SIZE}`
-    : `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,labels&nocache=1`;
+    ? `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlug)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags,ecoscore_grade&page_size=${BRAND_PAGE_SIZE}`
+    : `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
   try{
     const controller = new AbortController();
     const timer = setTimeout(()=>controller.abort(), 10000);
@@ -3585,7 +3595,7 @@ async function fetchBrandPage(b, page, append){
           p.image_front_display_url='';
         if(p.image_url && badP.some(x=>p.image_url.includes(x)))
           p.image_url='';
-        container.appendChild(renderBrandProdCard(p,b));
+        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
       });
       bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
       bdPage=page+1;
@@ -3671,7 +3681,7 @@ function openProdDetail(p){
     : '';
 
   // Labels/tags
-  const labels = p.labels||'';
+  const labels = p.labels||(p.labels_tags||[]).join(', ')||'';
   const lArr = labels.split(',').map(l=>l.trim()).filter(l=>l && l.length<25);
   const lLow = labels.toLowerCase();
   const isVegan   = lLow.includes('vegan');
@@ -3748,16 +3758,18 @@ function openProdDetail(p){
     </div>
 
     <!-- Ingredients -->
-    ${p.ingr ? `
     <div class="pdm-section">
       <div class="pdm-section-hd" onclick="togglePdmSection(this)">
+        <i class="fa-solid fa-chevron-up chevron" style="margin-right:4px"></i>
         <i class="fa-solid fa-flask"></i> Ingredients
-        <i class="fa-solid fa-chevron-down chevron"></i>
       </div>
-      <div class="pdm-section-body" style="display:none">
-        ${p.ingr}
+      <div class="pdm-section-body" style="display:block">
+        ${p.ingr
+          ? p.ingr
+          : '<span style="color:var(--dim);font-size:11px">No ingredient data available for this product.</span>'
+        }
       </div>
-    </div>` : ''}
+    </div>
 
     <!-- Labels -->
     ${lArr.length ? `
