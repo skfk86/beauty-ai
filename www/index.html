@@ -1762,7 +1762,7 @@ body.light-mode textarea{
         <div style="flex:1;text-align:center;padding:8px 4px;background:var(--card2);border-radius:10px;border:1px solid var(--border)">
           <div style="font-size:16px">3️⃣</div>
           <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Paste</div>
-          <div style="font-size:8px;color:var(--dim);font-weight:700">AIza... below</div>
+          <div style="font-size:8px;color:var(--dim);font-weight:700">AIzaSy... or AQ. below</div>
         </div>
       </div>
 
@@ -2415,12 +2415,13 @@ async function loadBrAI(b){
     const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
         generationConfig:{maxOutputTokens:200,temperature:0.7}
       })
     });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error('API_ERR_'+res.status+': '+(e?.error?.message||''));}
     const data = await res.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'لا يوجد تحليل.';
     el.textContent = text;
@@ -2766,9 +2767,13 @@ async function callGemini(msg, sys=''){
     throw new Error('NET_ERR');
   }
   if(!r.ok){
-    if(r.status===400||r.status===403) throw new Error('INVALID_KEY');
+    let errMsg='API_ERR_'+r.status;
+    try{const ej=await r.json();errMsg='API_ERR_'+r.status+': '+(ej?.error?.message||'');}catch(e){}
+    if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+    if(r.status===400) throw new Error('INVALID_KEY: '+errMsg);
+    if(r.status===404) throw new Error('API_ERR_404: model not found or wrong path');
     if(r.status===429) throw new Error('RATE_LIMIT');
-    throw new Error('API_ERR_'+r.status);
+    throw new Error(errMsg);
   }
   const d = await r.json();
   return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
@@ -2867,11 +2872,16 @@ function stopSpeech(){
 function checkKeyFormat(val){
   const dot = document.getElementById('key-status-dot');
   if(!dot) return;
-  if(!val){ dot.textContent=''; return; }
-  if(val.length > 15){
+  if(!val||val.trim()===''){ dot.textContent=''; return; }
+  const t=val.trim();
+  const isAIza=/^AIza[A-Za-z0-9_-]{35,}$/.test(t);
+  const isAQ=/^AQ\.[A-Za-z0-9_\-\.]{10,}$/.test(t);
+  if(isAIza||isAQ){
     dot.innerHTML='<span style="color:#4caf50">✅ Valid format</span>';
+  } else if(t.length>8){
+    dot.innerHTML='<span style="color:#FFA500">⚠️ Format may not be valid</span>';
   } else {
-    dot.innerHTML='<span style="color:#e06060">⚠️ Should start with AIza</span>';
+    dot.innerHTML='<span style="color:#e06060">⚠️ Key too short</span>';
   }
 }
 
@@ -2903,10 +2913,16 @@ async function testKeyFromProfile(){
     if(r.ok){
       if(st) st.innerHTML='<span style="color:#4caf50">✅ Key is working perfectly!</span>';
     } else {
-      if(st) st.innerHTML='<span style="color:#e06060">❌ Invalid key — check and retry</span>';
+      let errDetail='Invalid key';
+      try{const ej=await r.clone().json();errDetail=ej?.error?.message||'Invalid key';}catch(e){}
+      if(r.status===401||r.status===403) errDetail='Unauthorized — check your key';
+      if(r.status===404) errDetail='Model not found (404)';
+      if(st) st.innerHTML='<span style="color:#e06060">❌ '+errDetail+'</span>';
     }
   }catch(e){
-    if(st) st.innerHTML='<span style="color:#e06060">❌ Connection error</span>';
+    const m=e.message||'';
+    const friendly=m.includes('Failed to fetch')||m.includes('NetworkError')?'Connection error — check internet':'Error: '+m.slice(0,80);
+    if(st) st.innerHTML='<span style="color:#e06060">❌ '+friendly+'</span>';
   }
 }
 function saveKey(){
@@ -2941,10 +2957,19 @@ async function testAPI(){
       headers:{'Content-Type':'application/json','x-goog-api-key':k},
       body:JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}})
     });
-    if(r.ok) st.innerHTML='<span style="color:#4caf50">✅ Gemini connected!</span>';
-    else st.innerHTML='<span style="color:#e06060">❌ Invalid API key</span>';
+    if(r.ok){
+      st.innerHTML='<span style="color:#4caf50">✅ Gemini connected!</span>';
+    }else{
+      let errDetail='Invalid key';
+      try{const ej=await r.clone().json();errDetail=ej?.error?.message||'Invalid key';}catch(e){}
+      if(r.status===401||r.status===403) errDetail='Unauthorized — check your key';
+      if(r.status===404) errDetail='Model not found (404)';
+      st.innerHTML='<span style="color:#e06060">❌ '+errDetail+'</span>';
+    }
   }catch(e){
-    st.innerHTML='<span style="color:#e06060">❌ Check your internet</span>';
+    const m=e.message||'';
+    const friendly=m.includes('Failed to fetch')||m.includes('NetworkError')?'Connection error — check internet':'Error: '+m.slice(0,80);
+    st.innerHTML='<span style="color:#e06060">❌ '+friendly+'</span>';
   }
 }function openSB(){
   document.getElementById('sb').classList.add('open');
@@ -3431,11 +3456,15 @@ async function loadProdAI(p){
     const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'gemini-2.0-flash',messages:[{role:'system',content:sys},{role:'user',content:prompt}],max_tokens:180,temperature:0.7})
+      headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
+      body:JSON.stringify({
+        contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
+        generationConfig:{maxOutputTokens:180,temperature:0.7}
+      })
     });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error('API_ERR_'+res.status+': '+(e?.error?.message||''));}
     const data = await res.json();
-    const text = data.choices?.[0]?.message?.content||'التحليل غير متاح حالياً.';
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text||'التحليل غير متاح حالياً.';
     el.textContent = text;
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
