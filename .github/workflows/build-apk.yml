@@ -38,7 +38,8 @@ jobs:
 
       - name: Add Android platform
         run: |
-          if [ ! -d "android" ]; then
+          if [ ! -f "android/app/src/main/AndroidManifest.xml" ]; then
+            rm -rf android
             npx cap add android
           fi
           npx cap sync android
