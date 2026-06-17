@@ -1791,7 +1791,7 @@ body.light-mode textarea{
       <div id="pr-key-status" style="font-size:11px;text-align:center;margin-top:8px;min-height:16px"></div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Llama 3.3 70B</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Gemini 1.5 Flash</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">Voice Language</div><div class="pvl">ar-SA</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">Language</div><div class="pvl">Arabic</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">Version</div><div class="pvl">v1.0 Beta</div></div>
@@ -2415,7 +2415,7 @@ async function loadBrAI(b){
     const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
+      headers:_geminiHeaders(apiKey),
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
         generationConfig:{maxOutputTokens:200,temperature:0.7}
@@ -2748,35 +2748,32 @@ function stopAISpeaking(){
 // ══ GROQ ══
 async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
+  const headers = _geminiHeaders(apiKey);
   const body = {
     contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
     generationConfig:{maxOutputTokens:500, temperature:0.7}
   };
-  let r;
-  try{
-    r = await fetch(GEMINI_URL,{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'x-goog-api-key': apiKey
-      },
-      body:JSON.stringify(body)
-    });
-  }catch(netErr){
-    throw new Error('NET_ERR');
-  }
-  if(!r.ok){
+
+  let lastErr = '';
+  for(const url of _GEMINI_URLS){
+    let r;
+    try{
+      r = await fetch(url,{method:'POST',headers,body:JSON.stringify(body)});
+    }catch(netErr){
+      lastErr='NET_ERR: '+netErr.message;
+      continue;
+    }
+    if(r.ok){
+      const d = await r.json();
+      return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    }
     let errMsg='API_ERR_'+r.status;
-    try{const ej=await r.json();errMsg='API_ERR_'+r.status+': '+(ej?.error?.message||'');}catch(e){}
+    try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
+    lastErr=errMsg;
     if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
-    if(r.status===400) throw new Error('INVALID_KEY: '+errMsg);
-    if(r.status===404) throw new Error('API_ERR_404: model not found or wrong path');
     if(r.status===429) throw new Error('RATE_LIMIT');
-    throw new Error(errMsg);
   }
-  const d = await r.json();
-  return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  throw new Error(lastErr || 'API_ERR: All endpoints failed');
 }
 
 // Alias للتوافق مع الكود القديم
@@ -2898,26 +2895,56 @@ function toggleKeyVis(){
   }
 }
 
+// ── Gemini Auth Helper — يكتشف نوع المفتاح تلقائياً ──
+function _geminiHeaders(k){
+  // AQ. = OAuth2 auth key → يحتاج Bearer فقط
+  // AIza = Standard API key → يحتاج x-goog-api-key
+  const isAQ = k.startsWith('AQ.');
+  const base = {'Content-Type':'application/json'};
+  if(isAQ){
+    return {...base, 'Authorization':'Bearer '+k};
+  }
+  return {...base, 'x-goog-api-key':k};
+}
+
+const _GEMINI_URLS = [
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+  'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent',
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
+  'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent'
+];
+
+async function _testGeminiKey(k){
+  const headers = _geminiHeaders(k);
+  const body = JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}});
+  let lastStatus=0; let lastMsg='';
+  for(const url of _GEMINI_URLS){
+    try{
+      const r = await fetch(url,{method:'POST',headers,body});
+      if(r.ok) return {ok:true,url,headers};
+      lastStatus=r.status;
+      try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
+      if(r.status===401||r.status===403) return {ok:false,status:r.status,msg:'Unauthorized — check key'};
+      if(r.status===429) return {ok:false,status:429,msg:'Rate limit — try later'};
+    }catch(e){lastMsg=e.message||'network error';}
+  }
+  return {ok:false,status:lastStatus,msg:lastMsg||'All endpoints failed'};
+}
+
 async function testKeyFromProfile(){
   const k = document.getElementById('pr-key').value.trim() || apiKey;
   const st = document.getElementById('pr-key-status');
   if(!k){ if(st) st.innerHTML='<span style="color:var(--gold2)">Enter your key first</span>'; return; }
   if(st) st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-    const r = await fetch(url,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-goog-api-key':k},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}})
-    });
-    if(r.ok){
+    const res = await _testGeminiKey(k);
+    if(res.ok){
+      // Save working config globally
+      window._geminiWorkingUrl = res.url;
+      window._geminiWorkingHeaders = res.headers;
       if(st) st.innerHTML='<span style="color:#4caf50">✅ Key is working perfectly!</span>';
     } else {
-      let errDetail='Invalid key';
-      try{const ej=await r.clone().json();errDetail=ej?.error?.message||'Invalid key';}catch(e){}
-      if(r.status===401||r.status===403) errDetail='Unauthorized — check your key';
-      if(r.status===404) errDetail='Model not found (404)';
-      if(st) st.innerHTML='<span style="color:#e06060">❌ '+errDetail+'</span>';
+      if(st) st.innerHTML='<span style="color:#e06060">❌ '+res.msg+'</span>';
     }
   }catch(e){
     const m=e.message||'';
@@ -2951,20 +2978,13 @@ async function testAPI(){
   if(!k){ st.innerHTML='<span style="color:var(--gold2)">Enter API key first</span>'; return; }
   st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const url=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
-    const r = await fetch(url,{
-      method:'POST',
-      headers:{'Content-Type':'application/json','x-goog-api-key':k},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:'hi'}]}],generationConfig:{maxOutputTokens:5}})
-    });
-    if(r.ok){
+    const res = await _testGeminiKey(k);
+    if(res.ok){
+      window._geminiWorkingUrl = res.url;
+      window._geminiWorkingHeaders = res.headers;
       st.innerHTML='<span style="color:#4caf50">✅ Gemini connected!</span>';
     }else{
-      let errDetail='Invalid key';
-      try{const ej=await r.clone().json();errDetail=ej?.error?.message||'Invalid key';}catch(e){}
-      if(r.status===401||r.status===403) errDetail='Unauthorized — check your key';
-      if(r.status===404) errDetail='Model not found (404)';
-      st.innerHTML='<span style="color:#e06060">❌ '+errDetail+'</span>';
+      st.innerHTML='<span style="color:#e06060">❌ '+res.msg+'</span>';
     }
   }catch(e){
     const m=e.message||'';
@@ -3456,7 +3476,7 @@ async function loadProdAI(p){
     const GEMINI_BR_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent`;
     const res = await fetch(GEMINI_BR_URL,{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-goog-api-key':apiKey},
+      headers:_geminiHeaders(apiKey),
       body:JSON.stringify({
         contents:[{role:'user',parts:[{text:sys+'\n\n'+prompt}]}],
         generationConfig:{maxOutputTokens:180,temperature:0.7}
