@@ -37,7 +37,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Add Android platform
-        run: npx cap add android
+        run: npx cap sync android || npx cap add android
 
       - name: Patch AndroidManifest
         run: |
