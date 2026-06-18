@@ -3052,7 +3052,15 @@ async function callGemini(msg, sys=''){
     }
     if(r.ok){
       const d = await r.json();
-      return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      const parts = d.candidates?.[0]?.content?.parts || [];
+      // نجمع كل أجزاء النص — Gemini أحياناً يقسّم الرد على أكثر من part
+      // (مثلاً جزء "thought" تمهيدي ثم الإجابة الفعلية)، فقراءة parts[0] فقط
+      // كانت تقطع الرد عند أول جزء قصير دائمًا
+      const text = parts.filter(p=>!p.thought && p.text).map(p=>p.text).join('').trim();
+      if(text) return text;
+      // رد فاضي/محجوب — جرّب الموديل التالي بدل ما نرجّع نص ناقص للمستخدم
+      lastErr = 'EMPTY_RESPONSE (finishReason: '+(d.candidates?.[0]?.finishReason||'unknown')+')';
+      continue;
     }
     let errMsg='API_ERR_'+r.status;
     try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
@@ -3858,7 +3866,7 @@ async function loadProdAI(p){
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
   }catch(e){
-    el.textContent = 'أضيفي مفتاح Groq API للحصول على تحليل الذكاء الاصطناعي.';
+    el.textContent = 'أضيفي مفتاح Gemini API للحصول على تحليل الذكاء الاصطناعي.';
   }
 }
 
