@@ -2822,10 +2822,18 @@ async function _openLiveSession(){
       _vlog('تم إرسال setup');
     };
 
-    ws.onmessage = (event) => {
-      _vlog('📩 onmessage: '+String(event.data).substring(0,120));
+    ws.onmessage = async (event) => {
+      // WebView يوصّل الرسائل الثنائية كـ Blob لا كنص — لازم نحوّلها أولاً
+      let raw = event.data;
+      if(typeof Blob !== 'undefined' && raw instanceof Blob){
+        try{ raw = await raw.text(); }
+        catch(e){ _vlog('❌ فشل قراءة Blob: '+e.message); return; }
+      } else if(raw instanceof ArrayBuffer){
+        raw = new TextDecoder('utf-8').decode(raw);
+      }
+      _vlog('📩 onmessage('+(typeof event.data)+'): '+String(raw).substring(0,120));
       try{
-        const msg = JSON.parse(event.data);
+        const msg = JSON.parse(raw);
 
         // إعداد مكتمل
         if(msg.setupComplete){
@@ -2881,7 +2889,7 @@ async function _openLiveSession(){
           liveIsPlaying = false;
           _updateLiveUI('listening');
         }
-      }catch(e){console.warn('Live msg parse error',e);}
+      }catch(e){ console.warn('Live msg parse error',e); _vlog('⚠️ parse error: '+e.message); }
     };
 
     ws.onerror = (e) => {
