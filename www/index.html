@@ -1576,6 +1576,7 @@ body.light-mode textarea{
       <div class="wave-side right" id="wr"></div>
     </div>
     <div class="voice-hint" id="vh" style="font-size:12px;color:var(--dim);text-align:center;margin-top:10px;letter-spacing:.3px;font-weight:500">Tap to speak with Rosiva</div>
+    <div id="vh-debug" style="display:none;font-size:10px;color:#9ca3af;text-align:left;direction:ltr;margin:10px 16px;padding:10px;background:rgba(255,255,255,.04);border-radius:8px;max-height:140px;overflow-y:auto;white-space:pre-wrap;font-family:monospace"></div>
 
     <div class="ai-box" id="ai-box">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -2184,6 +2185,13 @@ const PRODS={
 let curScreen='home',prevScreen='home',curFilter='All';
 let curBrand=null,curProd=null;
 let favs=JSON.parse(localStorage.getItem('bai_favs')||'[]');
+// منتجات محظورة يدوياً (صور محتواها خاطئ ما تكتشفها فلترة الرابط) — تُخزّن بالباركود
+let blockedProducts = new Set(JSON.parse(localStorage.getItem('bai_blocked')||'[]'));
+function blockProduct(code){
+  blockedProducts.add(code);
+  localStorage.setItem('bai_blocked', JSON.stringify([...blockedProducts]));
+  showToast('تم إخفاء المنتج ✓');
+}
 let apiKey=localStorage.getItem('bai_key')||'';
 let isRec=false,recog=null,speaking=false;
 let lastResp='',lastBrInfo='',lastPrInfo='';
@@ -2772,17 +2780,34 @@ function _updateLiveUI(state){
   }
 }
 
+// ── سجل تشخيص مرئي على الشاشة (لمن لا يملك كمبيوتر لفتح console) ──
+let _vlogStart = 0;
+function _vlog(msg){
+  const box = document.getElementById('vh-debug');
+  if(!box) return;
+  box.style.display = 'block';
+  const t = _vlogStart ? (Date.now()-_vlogStart)+'ms' : '0ms';
+  box.textContent += `[${t}] ${msg}\n`;
+  box.scrollTop = box.scrollHeight;
+}
+
 // ── فتح جلسة Live ──
 async function _openLiveSession(){
   if(!apiKey){showToast('أضف مفتاح API أولاً 🔑');return false;}
   apiKey = (apiKey||'').trim();
   _updateLiveUI('connecting');
+  _vlogStart = Date.now();
+  const dbg = document.getElementById('vh-debug');
+  if(dbg) dbg.textContent = '';
+  _vlog('بدء الاتصال بـ: '+LIVE_WS_URL(apiKey).replace(apiKey,'***KEY***'));
 
   return new Promise((resolve)=>{
     const ws = new WebSocket(LIVE_WS_URL(apiKey));
     liveWS = ws;
+    _vlog('WebSocket object created, readyState='+ws.readyState);
 
     ws.onopen = () => {
+      _vlog('✅ onopen — إرسال setup الآن...');
       // الرسالة الأولى: الإعداد
       ws.send(JSON.stringify({
         setup:{
@@ -2794,14 +2819,17 @@ async function _openLiveSession(){
           systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]}
         }
       }));
+      _vlog('تم إرسال setup');
     };
 
     ws.onmessage = (event) => {
+      _vlog('📩 onmessage: '+String(event.data).substring(0,120));
       try{
         const msg = JSON.parse(event.data);
 
         // إعداد مكتمل
         if(msg.setupComplete){
+          _vlog('🎉 setupComplete — الجلسة نشطة!');
           liveSessionActive = true;
           resolve(true);
           return;
@@ -2857,6 +2885,7 @@ async function _openLiveSession(){
     };
 
     ws.onerror = (e) => {
+      _vlog('❌ onerror: '+(e?.message||'(no message — typical for WebSocket Event)'));
       console.error('Live WS error:', e);
       _updateLiveUI('error');
       liveSessionActive = false;
@@ -2864,6 +2893,7 @@ async function _openLiveSession(){
     };
 
     ws.onclose = (e) => {
+      _vlog('🔌 onclose — code='+e.code+' reason='+(e.reason||'(none)')+' wasClean='+e.wasClean);
       console.log('Live WS closed:', e.code, e.reason);
       const wasActive = liveSessionActive;
       liveSessionActive = false;
@@ -2883,6 +2913,7 @@ async function _openLiveSession(){
     // timeout إذا لم يتصل خلال 20 ثانية (مهم على شبكات بطيئة/VPN)
     setTimeout(()=>{
       if(!liveSessionActive){
+        _vlog('⏱ TIMEOUT بعد 20s — readyState النهائي='+ws.readyState);
         ws.close();
         resolve(false);
         showToast('فشل الاتصال — تحقق من المفتاح والإنترنت');
@@ -3074,7 +3105,45 @@ async function callGemini(msg, sys=''){
 // Alias للتوافق مع الكود القديم
 async function callGroq(msg,sys=''){
   return callGemini(msg,sys);
-}// ══ TTS ══
+}
+
+// ── فحص ديناميكي بالذكاء الاصطناعي: هل الصورة فعلاً منتج تجميل؟ ──
+// يُستخدم لاكتشاف صور خاطئة المحتوى (خرائط، شاشات سوق...) رفعها مساهمون بالغلط على OBF
+// نتيجة كل منتج تُخزّن دائماً بالباركود — يُفحص مرة واحدة فقط مدى الحياة (لا تكلفة مكررة)
+async function validateProductImageAI(imgUrl, code){
+  if(!apiKey || !code || !imgUrl) return true; // بدون مفتاح أو باركود: لا نحظر بدون تأكيد
+  const cacheKey = 'bai_imgchk_'+code;
+  const cached = localStorage.getItem(cacheKey);
+  if(cached !== null) return cached === '1';
+  try{
+    const imgRes = await fetch(imgUrl);
+    if(!imgRes.ok) return true;
+    const blob = await imgRes.blob();
+    const base64 = await new Promise((res,rej)=>{
+      const r = new FileReader();
+      r.onloadend = ()=>res(String(r.result).split(',')[1]||'');
+      r.onerror = rej;
+      r.readAsDataURL(blob);
+    });
+    const body = {
+      contents:[{role:'user', parts:[
+        {inline_data:{mime_type: blob.type||'image/jpeg', data: base64}},
+        {text:'هل هذه صورة منتج تجميل/عناية حقيقية (عبوة، أنبوب، زجاجة، علبة مستحضر)؟ أجيبي بكلمة واحدة فقط: yes أو no.'}
+      ]}],
+      generationConfig:{maxOutputTokens:5}
+    };
+    const r = await fetch(_geminiUrl(apiKey, _GEMINI_MODELS[0]),{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+    });
+    if(!r.ok) return true; // فشل الفحص نفسه — لا نحظر بدون تأكيد
+    const d = await r.json();
+    const txt=(d.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('').toLowerCase().trim();
+    const isValid = !txt.startsWith('no');
+    localStorage.setItem(cacheKey, isValid?'1':'0');
+    return isValid;
+  }catch(e){ return true; } // أي خطأ شبكة/فحص — لا نحظر صورة بالغلط
+}
+// ══ TTS ══
 let ttsTimer=null;
 let currentAudio=null;
 let geminiTTSAudioCtx=null;
@@ -3431,7 +3500,7 @@ function searchOBF(){
 }
 
 // ══ PRODUCT CARD FACTORY ══
-function makeProductCard(name, brand, img, ingr, labels){
+function makeProductCard(name, brand, img, ingr, labels, code){
   // فلتر الصور السيئة
   const badImgPatterns = [
     'static.openfoodfacts','maps.google','placeholder','default',
@@ -3446,9 +3515,12 @@ function makeProductCard(name, brand, img, ingr, labels){
   img = isGoodImg ? img : '';
   // إخفاء البطاقة كلياً إذا لا صورة
   if(!img) return null;
+  // إخفاء البطاقات اللي المستخدم حظرها يدوياً (صورة محتواها خاطئ مثلاً)
+  if(code && blockedProducts.has(code)) return null;
 
   const el = document.createElement('div');
   el.className = 'obf-card';
+  el.style.position = 'relative';
   const imgWrap = document.createElement('div');
   imgWrap.className = 'obf-card-img';
   if(img){
@@ -3467,6 +3539,17 @@ function makeProductCard(name, brand, img, ingr, labels){
     fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
     imgWrap.appendChild(fb);
   }
+  // زر إخفاء يدوي — لصورة خاطئة المحتوى (خرائط، شاشة سوق...) ما تقدر فلترة الرابط تكتشفها
+  const hideBtn = document.createElement('button');
+  hideBtn.innerHTML = '✕';
+  hideBtn.title = 'إخفاء هذا المنتج';
+  hideBtn.style.cssText = 'position:absolute;top:6px;left:6px;z-index:5;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:12px;line-height:1;cursor:pointer';
+  hideBtn.onclick = (e)=>{
+    e.stopPropagation();
+    if(code) blockProduct(code);
+    el.remove();
+  };
+  imgWrap.appendChild(hideBtn);
   const lLow = (labels||'').toLowerCase();
   if(lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan')){
     const badge = document.createElement('div');
@@ -3507,7 +3590,7 @@ function renderOBFCards(prods, append){
     const img   = p.image_front_display_url||p.image_url||'';
     const ingr  = (p.ingredients_text||p.ingredients_text_en||'').substring(0,800);
     const labels= p.labels||(p.labels_tags||[]).join(', ')||'';
-    const c=makeProductCard(name,brand,img,ingr,labels); if(c) grid.appendChild(c);
+    const c=makeProductCard(name,brand,img,ingr,labels,p.code); if(c) grid.appendChild(c);
   });
 }
 
@@ -3547,14 +3630,15 @@ async function fetchOBF(params, reset=false){
     // نجلب صفحات متتالية (بحد أقصى 6 محاولات) حتى نجمع عدد كافٍ من المنتجات
     // اللي عندها صورة حقيقية فعلاً — بدل تعبئة الناقص بمنتجات بدون صورة
     for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
-      const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
+      const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
       const res=await fetch(url);
       const data=await res.json();
       const total=parseInt(data.count)||0;
       const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
       const withImg=allP.filter(p=>{
         const img=(p.image_front_display_url||p.image_url||'').toLowerCase();
-        return img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
+        const notBlocked = !p.code || !blockedProducts.has(p.code);
+        return notBlocked && img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
       });
       collected.push(...withImg);
       obfLoadedCount=(obfLoadedCount||0)+allP.length;
