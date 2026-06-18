@@ -220,9 +220,10 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
 .wave-side.right{flex-direction:row-reverse}
 .wb{width:3px;border-radius:3px;
   background:linear-gradient(to top,var(--rose),var(--gold2));
-  transition:height .3s;flex-shrink:0}
+  transition:height .09s ease-out;flex-shrink:0}
 .wb.idle{opacity:.3}
 .wb.a{animation:wa 1.2s ease-in-out infinite}
+.wb.speaking-mode{background:linear-gradient(to top,var(--gold2),var(--gold))}
 @keyframes wa{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
 
 .mic-wrap{position:relative;flex-shrink:0;margin:0 10px}
@@ -2649,6 +2650,9 @@ let liveWS = null;          // WebSocket connection
 let liveAudioCtx = null;    // AudioContext للتشغيل
 let liveMicStream = null;    // ميكروفون stream
 let liveMicProcessor = null; // ScriptProcessor node
+let liveMicAnalyser = null;  // لقياس مستوى صوت الميكروفون الحقيقي
+let livePlaybackAnalyser = null; // لقياس مستوى صوت تشغيل Gemini الحقيقي
+let _waveRAF = null;         // requestAnimationFrame loop للموجة المرئية
 let liveAudioQueue = [];     // queue لـ PCM chunks القادمة
 let liveIsPlaying = false;   // هل يتكلم Gemini الآن
 let liveNextPlayTime = 0;    // وقت التشغيل التالي
@@ -2672,11 +2676,17 @@ function _pcm16ToFloat32(base64){
 // ── تشغيل chunk صوتي بدون انقطاع (queued playback) ──
 function _scheduleLiveAudio(f32, sampleRate=24000){
   if(!liveAudioCtx) liveAudioCtx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:24000});
+  if(!livePlaybackAnalyser){
+    livePlaybackAnalyser = liveAudioCtx.createAnalyser();
+    livePlaybackAnalyser.fftSize = 64;
+    livePlaybackAnalyser.smoothingTimeConstant = 0.55;
+    livePlaybackAnalyser.connect(liveAudioCtx.destination);
+  }
   const buf = liveAudioCtx.createBuffer(1, f32.length, sampleRate);
   buf.copyToChannel(f32, 0);
   const src = liveAudioCtx.createBufferSource();
   src.buffer = buf;
-  src.connect(liveAudioCtx.destination);
+  src.connect(livePlaybackAnalyser);
   const now = liveAudioCtx.currentTime;
   const start = Math.max(now, liveNextPlayTime);
   src.start(start);
@@ -2693,7 +2703,10 @@ function _scheduleLiveAudio(f32, sampleRate=24000){
 // ── إرسال صوت الميكروفون عبر WebSocket ──
 async function _startMicStreaming(){
   try{
-    liveMicStream = await navigator.mediaDevices.getUserMedia({audio:{sampleRate:16000,channelCount:1,echoCancellation:true,noiseSuppression:true}});
+    liveMicStream = await navigator.mediaDevices.getUserMedia({audio:{
+      sampleRate:16000,channelCount:1,
+      echoCancellation:true,noiseSuppression:true,autoGainControl:true
+    }});
   }catch(e){
     showToast('لا يمكن الوصول للميكروفون');
     return false;
@@ -2703,6 +2716,12 @@ async function _startMicStreaming(){
   const src = micCtx.createMediaStreamSource(liveMicStream);
   const processor = micCtx.createScriptProcessor(4096, 1, 1);
   liveMicProcessor = {processor, ctx: micCtx};
+
+  // Analyser حقيقي لقياس مستوى صوت الميكروفون الفعلي (للموجة المرئية)
+  liveMicAnalyser = micCtx.createAnalyser();
+  liveMicAnalyser.fftSize = 64;
+  liveMicAnalyser.smoothingTimeConstant = 0.55;
+  src.connect(liveMicAnalyser);
 
   processor.onaudioprocess = (e) => {
     if(!liveWS || liveWS.readyState !== WebSocket.OPEN) return;
@@ -2734,6 +2753,7 @@ function _stopMicStreaming(){
     liveMicStream.getTracks().forEach(t=>t.stop());
     liveMicStream = null;
   }
+  liveMicAnalyser = null;
 }
 
 // ── المقاطعة: أوقف صوت Gemini فوراً وأعد الاستماع ──
@@ -2750,7 +2770,42 @@ function _interruptLive(){
   _updateLiveUI('listening');
 }
 
-// ── تحديث واجهة المستخدم ──
+// ── موجة مرئية حقيقية: تتحرك بناءً على الصوت الفعلي (ميكروفون أو تشغيل) ──
+function _startWaveAnimation(mode){ // mode: 'listening' | 'speaking'
+  cancelAnimationFrame(_waveRAF);
+  const bars = [...document.querySelectorAll('.wb')];
+  const analyser = mode==='listening' ? liveMicAnalyser : livePlaybackAnalyser;
+  bars.forEach(b=>{
+    b.classList.remove('idle','a'); // نوقف أنيميشن CSS الوهمي — الحركة الآن حقيقية من الصوت
+    b.classList.toggle('speaking-mode', mode==='speaking');
+  });
+  if(!analyser || !bars.length) return;
+  const data = new Uint8Array(analyser.frequencyBinCount);
+  const minH = 6, maxH = 46;
+  function tick(){
+    analyser.getByteFrequencyData(data);
+    bars.forEach((bar,i)=>{
+      // كل شريط ياخذ عينة تردد مختلفة بدل قيمة واحدة موحّدة — إحساس طبيعي بدل التزامن الآلي
+      const idx = Math.floor((i/bars.length)*data.length);
+      const v = data[idx]/255;
+      const h = minH + v*(maxH-minH);
+      bar.style.height = h.toFixed(1)+'px';
+    });
+    _waveRAF = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function _stopWaveAnimation(){
+  cancelAnimationFrame(_waveRAF);
+  _waveRAF = null;
+  document.querySelectorAll('.wb').forEach((bar,i)=>{
+    bar.classList.add('idle','a');
+    bar.classList.remove('speaking-mode');
+    bar.style.height = WH[i % WH.length]+'px';
+  });
+}
+
 function _updateLiveUI(state){
   const btn = document.getElementById('mic-btn');
   const hint = document.getElementById('vh');
@@ -2758,25 +2813,30 @@ function _updateLiveUI(state){
   if(state==='connecting'){
     hint.textContent='جاري الاتصال... ⏳';
     btn.classList.remove('rec');
+    _stopWaveAnimation();
   } else if(state==='listening'){
     hint.textContent='تحدث الآن 🎙️ — اضغط مجدداً للإيقاف';
     btn.classList.remove('speaking');
     btn.classList.add('rec');
     if(stopBtn) stopBtn.style.display='none';
+    _startWaveAnimation('listening');
   } else if(state==='speaking'){
     hint.textContent='روزيفا تتكلم... اضغط للمقاطعة 🤫';
     btn.classList.remove('rec');
     btn.classList.add('speaking');
     if(stopBtn) stopBtn.style.display='inline-flex';
+    _startWaveAnimation('speaking');
   } else if(state==='ready'){
     hint.textContent='Tap to speak with Rosiva';
     btn.classList.remove('rec');
     btn.classList.remove('speaking');
     if(stopBtn) stopBtn.style.display='none';
+    _stopWaveAnimation();
   } else if(state==='error'){
     hint.textContent='خطأ في الاتصال — اضغط للمحاولة مجدداً';
     btn.classList.remove('rec');
     btn.classList.remove('speaking');
+    _stopWaveAnimation();
   }
 }
 
