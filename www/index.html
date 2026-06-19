@@ -211,30 +211,34 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
 @keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .stpad{height:calc(env(safe-area-inset-top,0px) + 8px);min-height:8px}
 
-/* ─── HEADER ─── */
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 8px}
-.hdr-menu{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.05);
+/* ─── HEADER — Premium Glass ─── */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px}
+.hdr-menu{width:38px;height:38px;border-radius:var(--r-sm);
+  background:rgba(255,255,255,.04);
   border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:4px;cursor:pointer;flex-shrink:0}
+  justify-content:center;gap:4px;cursor:pointer;flex-shrink:0;
+  transition:background var(--dur-fast)}
+.hdr-menu:active{background:rgba(255,255,255,.09)}
 .hdr-menu span{display:block;width:18px;height:1.5px;background:var(--text);border-radius:2px}
-.hdr-title{font-size:16px;font-weight:800;color:var(--text);text-align:center;flex:1;
-  display:flex;flex-direction:column;align-items:center}
-.hdr-title .ht-main{font-size:17px;font-weight:900}
+.hdr-title{font-size:16px;font-weight:900;color:var(--text);text-align:center;flex:1;
+  display:flex;flex-direction:column;align-items:center;letter-spacing:-.3px}
+.hdr-title .ht-main{font-size:17px;font-weight:900;letter-spacing:-.4px}
 .hdr-vip{background:linear-gradient(135deg,#2a1510,#3a2010);
-  border:1px solid var(--gold);color:var(--gold2);
-  padding:7px 12px;border-radius:18px;font-size:12px;font-weight:800;
-  font-family:'Cairo',sans-serif;cursor:pointer;display:flex;align-items:center;gap:4px;
-  opacity:.75;flex-shrink:0}
+  border:1px solid rgba(200,144,74,.6);color:var(--gold2);
+  padding:6px 12px;border-radius:var(--r-full);font-size:12px;font-weight:800;
+  font-family:'Cairo',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;
+  flex-shrink:0;box-shadow:0 0 12px rgba(200,144,74,.1);
+  transition:transform var(--dur-fast)}
+.hdr-vip:active{transform:scale(.95)}
 
-/* ─── HOME ─── */
-.greet{text-align:center;padding:8px 20px 4px}
-.greet-heart{font-size:20px;margin-bottom:4px}
-.greet-title{font-size:26px;font-weight:900;color:var(--text)}
-.greet-sub{font-size:13px;color:var(--dim);margin-top:3px}
+/* ─── HOME — Premium Layout ─── */
+.greet{text-align:center;padding:4px 20px 2px}
+.greet-title{font-size:24px;font-weight:900;color:var(--text);letter-spacing:-.5px;line-height:1.2}
+.greet-sub{font-size:11px;color:var(--dim);margin-top:2px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
 
-/* WAVEFORM + MIC */
+/* VOICE WAVEFORM — Real Physics */
 .voice-row{display:flex;align-items:center;justify-content:center;
-  padding:20px 10px;position:relative;width:100%}
+  padding:14px 10px;position:relative;width:100%}
 .wave-side{display:flex;align-items:center;gap:2.5px;flex:1}
 .wave-side.right{flex-direction:row-reverse}
 .wb{width:3px;border-radius:3px;
@@ -245,97 +249,118 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
 .wb.speaking-mode{background:linear-gradient(to top,var(--gold2),var(--gold))}
 @keyframes wa{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
 
+/* MIC BUTTON — Premium Glow */
 .mic-wrap{position:relative;flex-shrink:0;margin:0 10px}
-.mic-outer{width:82px;height:82px;border-radius:50%;
-  border:1.5px solid rgba(208,66,114,.4);
+.mic-outer{width:86px;height:86px;border-radius:50%;
+  border:1.5px solid rgba(208,66,114,.35);
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 30px rgba(208,66,114,.2)}
+  box-shadow:0 0 28px rgba(208,66,114,.18),0 0 56px rgba(208,66,114,.06)}
 .mic-btn i{color:var(--rose2);font-size:26px}
-.mic-btn{width:70px;height:70px;border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#3a1228,#1a0818);
-  border:1.5px solid var(--rose);cursor:pointer;
+.mic-btn{width:72px;height:72px;border-radius:50%;
+  background:radial-gradient(circle at 40% 35%,#3d1530,#1a0818);
+  border:1.5px solid rgba(214,61,110,.6);cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 20px rgba(208,66,114,.35),inset 0 1px 0 rgba(255,255,255,.08);
-  transition:transform .15s,box-shadow .15s;font-size:26px}
+  box-shadow:0 0 24px rgba(208,66,114,.4),inset 0 1px 0 rgba(255,255,255,.1);
+  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
 .mic-btn:active{transform:scale(.93)}
 .mic-btn.rec{animation:mr .9s ease-in-out infinite;
-  box-shadow:0 0 35px rgba(208,66,114,.6),inset 0 1px 0 rgba(255,255,255,.08)}
-@keyframes mr{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+  box-shadow:0 0 40px rgba(208,66,114,.7),inset 0 1px 0 rgba(255,255,255,.1)}
+.mic-btn.speaking{background:radial-gradient(circle at 40% 35%,#2a1508,#1a0e04);
+  border-color:rgba(200,144,74,.7);
+  box-shadow:0 0 30px rgba(196,136,96,.5),inset 0 1px 0 rgba(255,255,255,.08)}
+@keyframes mr{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(208,66,114,.5)}
+  50%{transform:scale(1.08);box-shadow:0 0 50px rgba(208,66,114,.8)}}
 
-.voice-hint{text-align:center;font-size:13px;color:var(--dim);
-  padding:0 0 10px;letter-spacing:.5px}
+.voice-hint{text-align:center;font-size:12px;color:var(--dim);
+  padding:0 0 8px;letter-spacing:.4px;font-weight:500;min-height:20px;
+  transition:color var(--dur-base);line-height:1.6}
 
-/* AI RESPONSE */
-.ai-box{margin:0 18px;background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:14px;display:none}
-.ai-box.vis{display:block}
-.ai-hd{font-size:12px;font-weight:700;color:var(--gold2);margin-bottom:7px;
-  display:flex;align-items:center;gap:6px}
-.ai-txt{font-size:13px;line-height:1.9;color:var(--text)}
+/* AI RESPONSE BOX — Elevated Premium */
+.ai-box{margin:0 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:14px 16px;display:none;
+  box-shadow:var(--shadow-sm)}
+.ai-box.vis{display:block;animation:cardIn var(--dur-slow) var(--ease-out)}
+.ai-hd{font-size:12px;font-weight:800;color:var(--gold2);margin-bottom:7px;
+  display:flex;align-items:center;gap:6px;letter-spacing:.3px}
+.ai-txt{font-size:13px;line-height:1.95;color:var(--text)}
 .spk-btn i{color:var(--rose2)}
 .spk-btn{display:inline-flex;align-items:center;gap:5px;background:var(--rose-d);
-  color:var(--rose2);border:1px solid rgba(208,66,114,.4);border-radius:18px;
-  padding:5px 13px;font-size:11px;font-family:'Cairo',sans-serif;cursor:pointer;margin-top:9px}
+  color:var(--rose2);border:1px solid rgba(208,66,114,.35);border-radius:var(--r-full);
+  padding:5px 14px;font-size:11px;font-family:'Cairo',sans-serif;cursor:pointer;margin-top:8px;
+  transition:all var(--dur-fast)}
+.spk-btn:active{opacity:.75}
 
-/* TEXT INPUT */
+/* TEXT INPUT — Premium Floating */
 .txt-row{display:flex;align-items:center;gap:9px;
-  margin:14px 18px 6px;background:var(--card);border:1px solid var(--border);
-  border-radius:28px;padding:10px 14px}
+  margin:12px 16px 6px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-full);padding:9px 14px;
+  transition:border-color var(--dur-fast);box-shadow:var(--shadow-sm)}
+.txt-row:focus-within{border-color:rgba(214,61,110,.5)}
 .txt-row input{background:none;border:none;outline:none;color:var(--text);
   font-size:13px;font-family:'Cairo',sans-serif;flex:1;text-align:right}
 .txt-row input::placeholder{color:var(--muted)}
-.txt-send{background:none;border:none;font-size:17px;cursor:pointer;color:var(--rose2)}
+.txt-send{background:none;border:none;font-size:17px;cursor:pointer;color:var(--rose2);
+  transition:transform var(--dur-fast);padding:0 2px}
+.txt-send:active{transform:scale(.88)}
 
-/* CATEGORIES */
-.sec-lbl{padding:14px 18px 9px;font-size:14px;font-weight:700;color:var(--gold2)}
-.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px;margin-bottom:16px}
-.cat-btn{background:var(--card);border:1px solid var(--border);border-radius:13px;
-  padding:13px 12px;display:flex;align-items:center;gap:10px;
-  cursor:pointer;transition:all .18s}
-.cat-btn:active{background:var(--card2);transform:scale(.96)}
-.cat-ic{width:36px;height:36px;border-radius:10px;flex-shrink:0;
+/* CATEGORY GRID — Premium Cards */
+.sec-lbl{padding:14px 18px 8px;font-size:13px;font-weight:800;color:var(--gold2);
+  letter-spacing:.8px;text-transform:uppercase}
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px;margin-bottom:14px}
+.cat-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:14px 12px;display:flex;align-items:center;gap:10px;
+  cursor:pointer;transition:all var(--dur-fast) var(--ease-out);box-shadow:var(--shadow-sm);
+  animation:cardIn var(--dur-slow) var(--ease-out) backwards}
+.cat-btn:active{transform:scale(.95);box-shadow:none}
+.cat-ic{width:38px;height:38px;border-radius:var(--r-sm);flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:18px}
-.cat-nm{font-size:13px;font-weight:700;color:var(--text)}
-.cat-sb{font-size:10px;color:var(--dim);margin-top:1px}
+.cat-nm{font-size:13px;font-weight:800;color:var(--text);letter-spacing:-.2px}
+.cat-sb{font-size:10px;color:var(--dim);margin-top:2px;font-weight:600}
 
-/* ─── BRANDS ─── */
-.b-hdr{padding:0 18px 0}
-.b-title{font-size:16px;font-weight:900;color:var(--text)}
-.b-sub{font-size:11px;color:var(--dim);margin-top:3px}
-.srch{display:flex;align-items:center;gap:9px;margin:12px 18px;
-  background:var(--card);border:1px solid var(--border);border-radius:24px;padding:10px 14px}
+/* ─── BRANDS — Premium Discovery ─── */
+.srch{display:flex;align-items:center;gap:9px;margin:12px 16px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-full);
+  padding:10px 14px;box-shadow:var(--shadow-sm)}
 .srch input{background:none;border:none;outline:none;color:var(--text);
   font-size:13px;font-family:'Cairo',sans-serif;flex:1;text-align:right}
 .srch input::placeholder{color:var(--muted)}
 .srch-ic i{color:var(--muted)}
 .srch-ic{color:var(--muted);font-size:14px}
-.ftabs{display:flex;gap:7px;padding:0 18px 12px;overflow-x:auto;
+.ftabs{display:flex;gap:7px;padding:0 16px 12px;overflow-x:auto;
   scrollbar-width:none;flex-direction:row-reverse}
 .ftabs::-webkit-scrollbar{display:none}
-.ft{padding:6px 16px;border-radius:18px;font-size:12px;font-weight:700;
-  font-family:'Cairo',sans-serif;cursor:pointer;white-space:nowrap;
-  background:var(--card);border:1px solid var(--border);color:var(--dim);transition:all .18s}
-.ft.on{background:var(--rose-d);border-color:var(--rose);color:var(--rose2)}
-.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px}
-.bc{background:var(--card);border:1px solid var(--border);border-radius:16px;
-  cursor:pointer;transition:transform .15s,box-shadow .15s;overflow:hidden;text-align:center}
-.bc:active{transform:scale(.96)}
-.bc-img-wrap{height:88px;display:flex;align-items:center;justify-content:center;
-  background:var(--card2);border-bottom:1px solid var(--border);overflow:hidden;
-  padding:12px}
-.bc-img-wrap img{width:60px;height:60px;object-fit:contain;border-radius:10px}
+.ft{padding:6px 16px;border-radius:var(--r-full);font-size:12px;font-weight:700;
+  font-family:'Cairo',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;
+  background:var(--card);border:1px solid var(--border);color:var(--dim);
+  transition:all var(--dur-fast)}
+.ft.on{background:var(--rose-d);border-color:rgba(214,61,110,.5);color:var(--rose2)}
+.ft:active{opacity:.75}
+
+/* BRAND GRID — Premium 2-col */
+.brands-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 16px}
+.bc{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);
+  cursor:pointer;transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+  overflow:hidden;text-align:center;box-shadow:var(--shadow-sm);
+  animation:cardIn var(--dur-slow) var(--ease-out) backwards}
+.bc:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.bc:active{transform:scale(.96);box-shadow:none}
+.bc-img-wrap{height:92px;display:flex;align-items:center;justify-content:center;
+  background:var(--card2);border-bottom:1px solid var(--border);overflow:hidden;padding:12px}
+.bc-img-wrap img{width:62px;height:62px;object-fit:contain;border-radius:var(--r-sm)}
 .bc-img-fb{display:none;align-items:center;justify-content:center;
-  width:60px;height:60px;border-radius:10px;
+  width:62px;height:62px;border-radius:var(--r-sm);
   font-size:11px;font-weight:900;letter-spacing:.5px;line-height:1.3;
   text-align:center;padding:4px;
   background:var(--bg2);border:1px solid var(--border);color:var(--text)}
-.bc-body{padding:10px 8px}
-.bc-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:5px}
-.bc-cat{font-size:9px;color:var(--gold);background:var(--gold-d);
-  border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:8px;display:inline-block}
-.view-all{margin:14px 18px 20px;background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:13px;display:flex;align-items:center;justify-content:center;
-  gap:8px;font-size:13px;font-weight:700;color:var(--dim);cursor:pointer}
+.bc-body{padding:10px 8px 12px}
+.bc-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:6px;letter-spacing:-.1px}
+.bc-cat{font-size:9px;color:var(--gold2);background:var(--gold-d);
+  border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:var(--r-full);
+  display:inline-block;font-weight:700;letter-spacing:.3px}
+.view-all{margin:14px 16px 20px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-md);padding:14px;display:flex;align-items:center;justify-content:center;
+  gap:8px;font-size:13px;font-weight:700;color:var(--dim);cursor:pointer;
+  transition:all var(--dur-fast)}
 .view-all:active{background:var(--card2)}
 
 /* ─── BRAND DETAIL ─── */
@@ -456,51 +481,75 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
 .ask-mini{background:none;border:1px solid var(--border);border-radius:9px;
   padding:5px 11px;font-size:11px;color:var(--dim);font-family:'Cairo',sans-serif;cursor:pointer;flex-shrink:0}
 
-/* ─── FAVORITES ─── */
+/* ─── FAVORITES — Premium Empty State ─── */
 .empty-st{display:flex;flex-direction:column;align-items:center;
-  justify-content:center;gap:11px;padding:60px 20px;text-align:center}
-.fav-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px}
+  justify-content:center;gap:14px;padding:60px 24px;text-align:center}
+.empty-st-icon{font-size:52px;opacity:.6;margin-bottom:4px}
+.empty-st-title{font-size:18px;font-weight:900;color:var(--text);letter-spacing:-.3px}
+.empty-st-sub{font-size:13px;color:var(--dim);line-height:1.7;max-width:240px}
+.empty-st-btn{margin-top:6px;background:linear-gradient(135deg,var(--rose),var(--gold));
+  color:#fff;border:none;border-radius:var(--r-full);
+  padding:12px 28px;font-size:14px;font-weight:800;cursor:pointer;
+  font-family:'Cairo',sans-serif;box-shadow:var(--shadow-md);
+  transition:transform var(--dur-fast)}
+.empty-st-btn:active{transform:scale(.96)}
+.fav-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px}
 
-/* ─── PROFILE ─── */
+/* ─── PROFILE — Premium Layout ─── */
 .prof-top{text-align:center;padding:14px 18px 22px}
 .prof-av{width:74px;height:74px;border-radius:50%;
   background:linear-gradient(135deg,var(--rose),var(--gold));
-  margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:28px}
-.key-box{margin:0 18px 16px;background:var(--card);border:1px solid var(--border);border-radius:13px;padding:15px}
-.key-lbl{font-size:12px;font-weight:700;color:var(--gold2);margin-bottom:9px}
-.key-inp{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  margin:0 auto 10px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;box-shadow:var(--shadow-glow)}
+.key-box{margin:0 16px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow-sm)}
+.key-lbl{font-size:12px;font-weight:800;color:var(--gold2);margin-bottom:10px;
+  letter-spacing:.4px;text-transform:uppercase}
+.key-inp{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);
   padding:11px 13px;color:var(--text);font-family:'Cairo',sans-serif;font-size:12px;
-  outline:none;text-align:left;margin-bottom:9px}
-.key-inp:focus{border-color:var(--rose)}
+  outline:none;text-align:left;margin-bottom:10px;transition:border-color var(--dur-fast)}
+.key-inp:focus{border-color:rgba(214,61,110,.5)}
 .save-btn{width:100%;background:linear-gradient(135deg,var(--rose),var(--gold));
-  border:none;border-radius:11px;padding:12px;color:#fff;
-  font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
-.plist{margin:0 18px 16px;background:var(--card);border:1px solid var(--border);border-radius:13px;overflow:hidden}
-.pitem{display:flex;align-items:center;gap:10px;padding:13px;border-bottom:1px solid var(--border)}
+  border:none;border-radius:var(--r-md);padding:12px;color:#fff;
+  font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;
+  box-shadow:var(--shadow-sm);transition:transform var(--dur-fast)}
+.save-btn:active{transform:scale(.97)}
+.plist{margin:0 16px 16px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.pitem{display:flex;align-items:center;gap:10px;padding:13px;
+  border-bottom:1px solid var(--border)}
 .pitem:last-child{border-bottom:none}
 .pic i{color:var(--rose2)}
-.pic{width:32px;height:32px;border-radius:9px;background:var(--rose-d);
+.pic{width:32px;height:32px;border-radius:var(--r-sm);background:var(--rose-d);
   display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 .plb{flex:1;font-size:13px;font-weight:700}
 .pvl{font-size:11px;color:var(--dim)}
-.danger-btn{width:100%;background:none;margin-bottom:20px;border:1px solid var(--border);border-radius:11px;
-  padding:12px;color:var(--dim);font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;margin:0 18px 18px;width:calc(100% - 36px)}
+.danger-btn{width:calc(100% - 32px);margin:0 16px 18px;background:none;
+  border:1px solid var(--border);border-radius:var(--r-md);
+  padding:12px;color:var(--dim);font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;
+  display:block;transition:all var(--dur-fast)}
+.danger-btn:active{border-color:var(--error);color:var(--error)}
 
-/* ─── BOTTOM NAV ─── */
+/* ─── BOTTOM NAV — Premium ─── */
 .bnav{position:fixed;bottom:0;left:0;right:0;
-  background:rgba(var(--bnav-bg,8,2,10),.97);backdrop-filter:blur(20px);
-  border-top:1px solid var(--border);display:flex;
-  padding-bottom:env(safe-area-inset-bottom,0px);z-index:200}
+  background:rgba(7,1,10,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid rgba(61,21,53,.8);display:flex;
+  padding-bottom:env(safe-area-inset-bottom,0px);z-index:200;
+  box-shadow:0 -4px 20px rgba(0,0,0,.4)}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;
-  padding:8px 2px 6px;cursor:pointer;transition:all .2s;gap:2px}
-.ni-ic{font-size:20px;transition:transform .2s;display:flex;align-items:center;justify-content:center}
-.ni-ic i{font-size:18px;color:var(--muted)}
+  padding:9px 2px 7px;cursor:pointer;gap:3px;
+  transition:opacity var(--dur-fast);position:relative}
+.ni:active{opacity:.7}
+.ni-ic{font-size:20px;transition:transform var(--dur-base) var(--ease-out);
+  display:flex;align-items:center;justify-content:center;height:22px}
+.ni-ic i{font-size:19px;color:var(--muted);transition:color var(--dur-base)}
 .ni.on .ni-ic i{color:var(--rose2)}
-.ni-lb{font-size:9px;color:var(--muted);font-weight:700;transition:color .2s}
+.ni-lb{font-size:9px;color:var(--muted);font-weight:800;
+  transition:color var(--dur-base);letter-spacing:.2px}
 .ni.on .ni-lb{color:var(--rose2)}
-.ni.on .ni-ic{transform:scale(1.1)}
+.ni.on .ni-ic{transform:scale(1.12) translateY(-1px)}
 .ni-dot{width:4px;height:4px;border-radius:50%;background:var(--rose);
-  margin-top:1px;display:none}
+  position:absolute;bottom:6px;display:none}
 .ni.on .ni-dot{display:block}
 
 
@@ -744,83 +793,95 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
   animation:sp-up .4s ease forwards .9s;opacity:0;
 }
 
-/* ══ BRAND CARDS — Premium Grid ══ */
+/* ══ BRAND CARDS — Premium Discovery Grid ══ */
 #b-grid{
   display:grid;grid-template-columns:repeat(2,1fr);
-  gap:14px;padding:14px 18px 20px;
+  gap:12px;padding:12px 16px 20px;
 }
 .bc{
   background:var(--card);border:1px solid var(--border);
-  border-radius:20px;cursor:pointer;overflow:hidden;
-  transition:transform .2s,box-shadow .2s;
-  position:relative;
+  border-radius:var(--r-lg);cursor:pointer;overflow:hidden;
+  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
+  position:relative;box-shadow:var(--shadow-sm);
+  animation:cardIn var(--dur-slow) var(--ease-out) backwards;
 }
-.bc:active{transform:scale(.96)}
+.bc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.bc:active{transform:scale(.96);box-shadow:none}
 .bc-banner{
-  height:110px;display:flex;align-items:center;
+  height:100px;display:flex;align-items:center;
   justify-content:center;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--card2),var(--bg));
 }
 .bc-banner::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.5));
+  background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.6));
 }
 .bc-logo{
-  width:72px;height:72px;border-radius:16px;
+  width:68px;height:68px;border-radius:var(--r-md);
   object-fit:contain;background:#fff;padding:6px;
   position:relative;z-index:1;
-  box-shadow:0 4px 16px rgba(0,0,0,.3);
+  box-shadow:0 4px 16px rgba(0,0,0,.35);
 }
 .bc-logo-fb{
-  width:72px;height:72px;border-radius:16px;
+  width:68px;height:68px;border-radius:var(--r-md);
   display:flex;align-items:center;justify-content:center;
   font-size:22px;font-weight:900;letter-spacing:-1px;
   position:relative;z-index:1;
+  background:var(--card2);border:1px solid var(--border);
 }
-.bc-body{padding:12px 12px 14px}
+.bc-body{padding:11px 12px 13px}
 .bc-name{
-  font-size:14px;font-weight:800;color:var(--text);
-  margin-bottom:4px;letter-spacing:-.3px;
+  font-size:13px;font-weight:900;color:var(--text);
+  margin-bottom:5px;letter-spacing:-.3px;
 }
 .bc-cat{
   display:inline-flex;align-items:center;gap:4px;
   font-size:9px;font-weight:700;letter-spacing:.8px;
-  text-transform:uppercase;padding:3px 10px;border-radius:20px;
+  text-transform:uppercase;padding:3px 10px;border-radius:var(--r-full);
   background:var(--rose-d);color:var(--rose2);
   border:1px solid rgba(208,66,114,.2);
 }
 
-/* ══ BRAND DETAIL — Hero Redesign ══ */
+/* ══ BRAND DETAIL — Luxury Hero ══ */
 .bd-hero-new{
   position:relative;overflow:hidden;
-  min-height:220px;display:flex;flex-direction:column;
+  min-height:240px;display:flex;flex-direction:column;
   align-items:center;justify-content:flex-end;
-  padding-bottom:24px;
+  padding-bottom:28px;
 }
 .bd-hero-bg{
   position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--card2),var(--bg));
+  background:linear-gradient(160deg,#1a0820 0%,#0a0312 60%,#07010a 100%);
 }
 .bd-hero-bg-img{
   position:absolute;inset:0;object-fit:cover;width:100%;height:100%;
-  opacity:.08;filter:blur(2px);
+  opacity:.07;filter:blur(3px);
+}
+/* توهّج خلفي ناعم خلف اللوغو */
+.bd-hero-glow{
+  position:absolute;inset:0;z-index:1;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(214,61,110,.12) 0%,transparent 70%);
 }
 .bd-hero-logo-wrap{
   position:relative;z-index:2;
-  width:100px;height:100px;border-radius:24px;overflow:hidden;
+  width:96px;height:96px;border-radius:var(--r-xl);overflow:hidden;
   background:#fff;padding:8px;
-  box-shadow:0 8px 32px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.1);
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.08),var(--shadow-glow);
   margin-bottom:16px;
 }
 .bd-hero-logo-wrap img{width:100%;height:100%;object-fit:contain}
 .bd-hero-name{
   position:relative;z-index:2;
-  font-size:26px;font-weight:900;color:var(--text);
+  font-size:28px;font-weight:900;color:var(--text);
   letter-spacing:-1px;text-align:center;margin-bottom:6px;
+  text-shadow:0 2px 12px rgba(0,0,0,.5);
 }
 .bd-hero-cat{
   position:relative;z-index:2;
-  font-size:10px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--dim);
+  font-size:9px;font-weight:800;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--gold2);
+  padding:4px 14px;background:var(--gold-d);border-radius:var(--r-full);
+  border:1px solid rgba(196,136,96,.2);
 }
 
 /* ══ PRODUCT CARDS — Discover Grid ══ */
@@ -849,31 +910,37 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 .obf-card:active .obf-card-img img{transform:scale(1.05)}
 .obf-card-badge{
   position:absolute;top:8px;left:8px;
-  background:rgba(208,66,114,.9);color:#fff;
+  background:rgba(208,66,114,.92);color:#fff;
   font-size:8px;font-weight:800;letter-spacing:.5px;
-  padding:3px 8px;border-radius:10px;text-transform:uppercase;
-  backdrop-filter:blur(4px);
+  padding:3px 8px;border-radius:var(--r-full);text-transform:uppercase;
+  backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);
 }
-.obf-card-body{padding:10px 12px 14px}
+.obf-card-body{padding:10px 11px 13px}
 .obf-card-brand{
-  font-size:9px;font-weight:700;letter-spacing:1px;
-  text-transform:uppercase;color:var(--rose2);margin-bottom:4px;
+  font-size:9px;font-weight:800;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--rose2);margin-bottom:3px;
+  display:flex;align-items:center;gap:4px;
 }
 .obf-card-name{
-  font-size:12px;font-weight:700;color:var(--text);
-  line-height:1.4;display:-webkit-box;
+  font-size:12px;font-weight:800;color:var(--text);
+  line-height:1.45;display:-webkit-box;
   -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  margin-bottom:10px;
+  margin-bottom:9px;letter-spacing:-.1px;
 }
 .obf-card-buy{
-  width:100%;border:none;border-radius:10px;padding:8px;
+  width:100%;border:none;border-radius:var(--r-sm);padding:8px;
   background:linear-gradient(135deg,var(--rose),var(--gold));
   color:#fff;font-size:10px;font-weight:800;
   font-family:'Cairo',sans-serif;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:5px;
+  box-shadow:0 2px 8px rgba(208,66,114,.2);
+  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
 }
+.obf-card-buy:active{transform:scale(.95);box-shadow:none}
+/* OBF grid discover container */
+#obf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:10px 16px 20px}
 
-/* ══ PRODUCT DETAIL MODAL — Amazon Style ══ */
+/* ══ PRODUCT DETAIL MODAL — Premium Full-screen ══ */
 #prod-detail-modal{
   position:fixed;inset:0;z-index:800;
   display:none;flex-direction:column;
@@ -882,170 +949,192 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 #prod-detail-modal.open{display:flex}
 .pdm-header{
   display:flex;align-items:center;gap:12px;
-  padding:12px 18px;padding-top:calc(12px + env(safe-area-inset-top,0px));
-  background:var(--bg);border-bottom:1px solid var(--border);
-  position:sticky;top:0;z-index:10;
+  padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top,0px));
+  background:rgba(7,1,10,.95);border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);
 }
 .pdm-back{
-  width:36px;height:36px;border-radius:10px;
+  width:36px;height:36px;border-radius:var(--r-sm);
   background:var(--card2);border:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--text);font-size:14px;
-  flex-shrink:0;
+  cursor:pointer;color:var(--text);font-size:14px;flex-shrink:0;
+  transition:all var(--dur-fast);
 }
+.pdm-back:active{transform:scale(.9)}
 .pdm-title{
-  flex:1;font-size:13px;font-weight:700;color:var(--text);
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  flex:1;font-size:13px;font-weight:800;color:var(--text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center;
 }
-.pdm-share{
-  width:36px;height:36px;border-radius:10px;
-  background:var(--card2);border:1px solid var(--border);
+.pdm-fav-btn{
+  width:36px;height:36px;border-radius:var(--r-sm);
+  background:var(--rose-d);border:1px solid rgba(214,61,110,.3);
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--dim);font-size:14px;flex-shrink:0;
+  cursor:pointer;font-size:16px;flex-shrink:0;
+  transition:all var(--dur-fast);
 }
-.pdm-body{flex:1;overflow-y:auto;padding-bottom:40px}
+.pdm-fav-btn:active{transform:scale(.9)}
+.pdm-fav-btn.saved{background:var(--rose);border-color:var(--rose)}
+.pdm-body{flex:1;overflow-y:auto;padding-bottom:40px;scrollbar-width:none}
+.pdm-body::-webkit-scrollbar{display:none}
 
-/* Image gallery */
+/* Image Gallery */
 .pdm-gallery{
   background:var(--card2);
   display:flex;align-items:center;justify-content:center;
-  position:relative;min-height:320px;overflow:hidden;
+  position:relative;min-height:280px;overflow:hidden;
   border-bottom:1px solid var(--border);
 }
 .pdm-gallery img{
-  width:100%;height:320px;object-fit:cover;
+  width:100%;height:280px;object-fit:cover;
 }
 .pdm-gallery-no-img{
   display:flex;flex-direction:column;align-items:center;gap:12px;
   color:var(--dim);min-height:180px;justify-content:center;
 }
+/* تدرّج أسفل الصورة لتمزجها مع الخلفية */
+.pdm-gallery::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:60px;
+  background:linear-gradient(to bottom,transparent,var(--bg));
+  pointer-events:none;
+}
 
-/* Brand badge */
+/* Brand Badge */
 .pdm-brand-badge{
   display:flex;align-items:center;gap:10px;
-  padding:14px 18px;border-bottom:1px solid var(--border);
+  padding:12px 16px;border-bottom:1px solid var(--border);
 }
 .pdm-brand-logo{
-  width:40px;height:40px;border-radius:10px;
+  width:38px;height:38px;border-radius:var(--r-sm);
   background:#fff;padding:4px;object-fit:contain;
   border:1px solid var(--border);
 }
 .pdm-brand-name{
-  font-size:11px;font-weight:700;letter-spacing:.5px;
+  font-size:10px;font-weight:800;letter-spacing:.8px;
   text-transform:uppercase;color:var(--rose2);
 }
 .pdm-brand-cat{font-size:10px;color:var(--dim);margin-top:1px}
 
-/* Product name & meta */
-.pdm-info{padding:16px 18px}
+/* Product Info */
+.pdm-info{padding:14px 16px}
 .pdm-name{
   font-size:18px;font-weight:900;color:var(--text);
   line-height:1.35;margin-bottom:10px;letter-spacing:-.4px;
 }
 .pdm-meta-row{
-  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;
 }
 .pdm-tag{
   display:inline-flex;align-items:center;gap:4px;
   background:var(--card2);border:1px solid var(--border);
-  border-radius:20px;padding:5px 12px;
+  border-radius:var(--r-full);padding:4px 12px;
   font-size:10px;font-weight:600;color:var(--dim);
 }
 
-/* Buy buttons */
+/* Buy Buttons — Premium CTA */
 .pdm-buy-section{
-  padding:0 18px 16px;display:flex;flex-direction:column;gap:10px;
+  padding:0 16px 16px;display:flex;flex-direction:column;gap:10px;
 }
 .pdm-buy-primary{
-  width:100%;border:none;border-radius:14px;padding:14px;
-  background:linear-gradient(135deg,#ff9900,#e47911);
+  width:100%;border:none;border-radius:var(--r-md);padding:14px;
+  background:linear-gradient(135deg,#f0a030,#e47911);
   color:#fff;font-size:14px;font-weight:800;
   font-family:'Cairo',sans-serif;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:8px;
-  box-shadow:0 4px 16px rgba(255,153,0,.35);
+  box-shadow:0 4px 20px rgba(228,121,17,.35);
+  transition:transform var(--dur-fast);
 }
+.pdm-buy-primary:active{transform:scale(.97)}
 .pdm-buy-secondary{
-  width:100%;border:1.5px solid var(--rose);border-radius:14px;padding:13px;
-  background:var(--rose-d);
-  color:var(--rose2);font-size:13px;font-weight:700;
+  width:100%;border:1.5px solid rgba(214,61,110,.5);border-radius:var(--r-md);padding:13px;
+  background:var(--rose-d);color:var(--rose2);font-size:13px;font-weight:800;
   font-family:'Cairo',sans-serif;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform var(--dur-fast);
 }
+.pdm-buy-secondary:active{transform:scale(.97)}
 
-/* Ingredients section */
+/* Sections (Ingredients/Labels/How to Use) */
 .pdm-section{
-  margin:0 18px 16px;border-radius:16px;
+  margin:0 16px 12px;border-radius:var(--r-lg);
   border:1px solid var(--border);overflow:hidden;
+  box-shadow:var(--shadow-sm);
 }
 .pdm-section-hd{
-  display:flex;align-items:center;gap:8px;
-  padding:14px 16px;background:var(--card2);
-  border-bottom:1px solid var(--border);
-  font-size:12px;font-weight:800;color:var(--text);
-  cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;background:var(--card);
+  font-size:13px;font-weight:800;color:var(--text);
+  cursor:pointer;transition:background var(--dur-fast);
 }
-.pdm-section-hd i{color:var(--gold2)}
+.pdm-section-hd:active{background:var(--card2)}
+.pdm-section-icon{width:28px;height:28px;border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .pdm-section-hd .chevron{
-  margin-left:auto;color:var(--dim);font-size:11px;
-  transition:transform .2s;
+  margin-right:auto;color:var(--dim);font-size:11px;
+  transition:transform var(--dur-base);
 }
 .pdm-section-hd.open .chevron{transform:rotate(180deg)}
 .pdm-section-body{
-  padding:14px 16px;font-size:11px;color:var(--dim);
-  line-height:1.7;display:none;
+  padding:14px 16px;font-size:12px;color:var(--dim);
+  line-height:1.85;display:none;border-top:1px solid var(--border);
 }
 .pdm-section-body.open{display:block}
 
-/* AI Card */
+/* AI Analysis Card — Premium Signature */
 .pdm-ai-card{
-  margin:0 18px 16px;border-radius:16px;
-  background:linear-gradient(135deg,var(--rose-d),var(--gold-d));
-  border:1px solid rgba(208,66,114,.2);padding:16px;
+  margin:0 16px 16px;border-radius:var(--r-xl);
+  background:linear-gradient(135deg,rgba(24,14,26,.98),rgba(34,19,38,.95));
+  border:1px solid rgba(208,66,114,.2);padding:18px;
+  box-shadow:0 0 28px rgba(214,61,110,.06),var(--shadow-md);
 }
 .pdm-ai-hd{
   display:flex;align-items:center;gap:8px;margin-bottom:12px;
-  font-size:12px;font-weight:800;color:var(--gold2);
 }
-.pdm-ai-text{font-size:12px;color:var(--text);line-height:1.7}
+.pdm-ai-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--gold-d);border:1px solid rgba(196,136,96,.2);
+  border-radius:var(--r-full);padding:3px 10px;
+  font-size:10px;font-weight:800;color:var(--gold2);letter-spacing:.5px;
+}
+.pdm-ai-text{font-size:13px;color:var(--text);line-height:2}
 .pdm-ai-actions{
-  display:flex;gap:8px;margin-top:12px;
+  display:flex;gap:8px;margin-top:14px;
 }
 .pdm-ai-btn{
-  flex:1;border:none;border-radius:10px;padding:9px;
-  font-size:10px;font-weight:700;cursor:pointer;
+  flex:1;border:none;border-radius:var(--r-md);padding:10px;
+  font-size:11px;font-weight:800;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:5px;
-  font-family:'Cairo',sans-serif;
+  font-family:'Cairo',sans-serif;transition:transform var(--dur-fast);
 }
+.pdm-ai-btn:active{transform:scale(.96)}
 .pdm-ai-btn.speak{background:var(--card);color:var(--gold2);border:1px solid var(--border)}
 .pdm-ai-btn.ask{background:var(--rose-d);color:var(--rose2);border:1px solid rgba(208,66,114,.2)}
 
-/* Rating stars */
-.pdm-rating{
-  display:flex;align-items:center;gap:6px;margin-bottom:4px;
-}
+/* Stars & Rating */
+.pdm-rating{display:flex;align-items:center;gap:6px;margin-bottom:4px}
 .stars{color:#f5c518;font-size:13px;letter-spacing:1px}
 .rating-count{font-size:11px;color:var(--dim)}
 
-/* Nutrient/label badges */
+/* Labels */
 .pdm-labels{
   display:flex;gap:6px;flex-wrap:wrap;
-  padding:12px 18px;border-bottom:1px solid var(--border);
+  padding:12px 16px;border-bottom:1px solid var(--border);
 }
 .pdm-label{
   display:inline-flex;align-items:center;gap:4px;
   background:var(--card2);border:1px solid var(--border);
-  border-radius:20px;padding:5px 10px;
+  border-radius:var(--r-full);padding:5px 10px;
   font-size:9px;font-weight:700;color:var(--dim);letter-spacing:.5px;
   text-transform:uppercase;
 }
-.pdm-label.green{background:rgba(76,175,61,.1);color:#4caf3d;border-color:rgba(76,175,61,.2)}
-.pdm-label.blue{background:rgba(96,192,208,.1);color:#60c0d0;border-color:rgba(96,192,208,.2)}
+.pdm-label.green{background:var(--success-d);color:var(--success);border-color:rgba(76,175,80,.2)}
+.pdm-label.blue{background:var(--info-d);color:var(--info);border-color:rgba(96,192,208,.2)}
 
-/* Light mode overrides for new elements */
+/* Light mode */
 body.light-mode .obf-card,
 body.light-mode .bc{background:#fff}
 body.light-mode .pdm-gallery{background:#f8f0f8}
 body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
+body.light-mode .pdm-header{background:rgba(255,248,255,.96)}
 
 
 /* ════════════════════════════════════
@@ -1577,146 +1666,149 @@ body.light-mode textarea{
   <div id="s-home" class="screen">
     <div class="stpad"></div>
     <div class="hdr">
-      <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">Rosiva</div></div>
-      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
-    </div>
-    <div class="greet">
-      <div class="greet-sub" style="font-size:12px;color:var(--dim);margin-bottom:4px;font-weight:600;letter-spacing:.5px;text-transform:uppercase">Your Beauty Assistant</div>
-      <div class="greet-title" style="font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.25;white-space:nowrap">
-        How can I help you today ✨
+      <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
+      <div class="hdr-title">
+        <div class="ht-main" style="font-size:20px;background:linear-gradient(135deg,var(--text) 0%,var(--rose2) 50%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Rosiva</div>
       </div>
+      <button class="hdr-vip" onclick="navTo('prof')"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
 
-    <!-- WAVEFORM + MIC -->
-    <div class="voice-row" id="vrow">
-      <div class="wave-side" id="wl"></div>
-      <div class="mic-wrap">
-        <div class="mic-outer">
-          <button class="mic-btn" id="mic-btn" aria-label="تحدثي مع روزيفا" onclick="toggleVoice()"><i class="fa-solid fa-microphone"></i></button>
+    <!-- مرحباً + وصف مختصر -->
+    <div class="greet" style="padding:6px 20px 10px">
+      <div class="greet-sub">مساعدة الجمال الذكية</div>
+      <div class="greet-title">كيف أساعدكِ اليوم؟ ✨</div>
+    </div>
+
+    <!-- VOICE SECTION — مصغّر لتقليل الهيمنة -->
+    <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px">
+      <div class="voice-row" id="vrow" style="padding:4px 0;flex:1">
+        <div class="wave-side" id="wl"></div>
+        <div class="mic-wrap">
+          <div class="mic-outer" style="width:72px;height:72px">
+            <button class="mic-btn" id="mic-btn" aria-label="تحدثي مع روزيفا" onclick="toggleVoice()"
+              style="width:60px;height:60px"><i class="fa-solid fa-microphone"></i></button>
+          </div>
         </div>
+        <div class="wave-side right" id="wr"></div>
       </div>
-      <div class="wave-side right" id="wr"></div>
     </div>
-    <div class="voice-hint" id="vh" style="font-size:12px;color:var(--dim);text-align:center;margin-top:10px;letter-spacing:.3px;font-weight:500">Tap to speak with Rosiva</div>
-    <div id="vh-debug" style="display:none;font-size:10px;color:#9ca3af;text-align:left;direction:ltr;margin:10px 16px;padding:10px;background:rgba(255,255,255,.04);border-radius:8px;max-height:140px;overflow-y:auto;white-space:pre-wrap;font-family:monospace"></div>
+    <div class="voice-hint" id="vh" style="margin-top:4px">اضغطي للتحدث مع روزيفا</div>
+    <div id="vh-debug" style="display:none;font-size:10px;color:#9ca3af;text-align:left;direction:ltr;margin:6px 16px;padding:10px;background:rgba(255,255,255,.04);border-radius:8px;max-height:130px;overflow-y:auto;white-space:pre-wrap;font-family:monospace"></div>
 
+    <!-- AI Response Box -->
     <div class="ai-box" id="ai-box">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div class="ai-hd" style="margin-bottom:0;font-size:13px;font-weight:800;display:flex;align-items:center;gap:6px"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
+        <div class="ai-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
         <div style="display:flex;gap:6px" id="ai-actions">
-          <button onclick="copyAIText()" title="Copy"
-            style="background:var(--card2);border:1px solid var(--border);border-radius:8px;
-            width:30px;height:30px;display:flex;align-items:center;justify-content:center;
-            cursor:pointer;color:var(--dim);font-size:12px;transition:all .15s"
-            onmouseenter="this.style.color='var(--gold2)'" onmouseleave="this.style.color='var(--dim)'">
+          <button onclick="copyAIText()" aria-label="نسخ"
+            style="background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);
+            width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+            cursor:pointer;color:var(--dim);font-size:11px;transition:color var(--dur-fast)">
             <i class="fa-regular fa-copy"></i>
           </button>
-          <button onclick="clearAIText()" title="Clear"
-            style="background:var(--card2);border:1px solid var(--border);border-radius:8px;
-            width:30px;height:30px;display:flex;align-items:center;justify-content:center;
-            cursor:pointer;color:var(--dim);font-size:12px;transition:all .15s"
-            onmouseenter="this.style.color='#e06060'" onmouseleave="this.style.color='var(--dim)'">
+          <button onclick="clearAIText()" aria-label="مسح"
+            style="background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);
+            width:28px;height:28px;display:flex;align-items:center;justify-content:center;
+            cursor:pointer;color:var(--dim);font-size:11px;transition:color var(--dur-fast)">
             <i class="fa-regular fa-trash-can"></i>
           </button>
         </div>
       </div>
       <div class="ai-txt" id="ai-txt"></div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button id="stop-spk-btn" onclick="stopAISpeaking()" style="display:none;align-items:center;gap:6px;background:rgba(196,136,96,.15);color:var(--gold2);border:1.5px solid rgba(196,136,96,.5);border-radius:20px;padding:7px 16px;font-size:12px;font-family:'Cairo',sans-serif;font-weight:600;cursor:pointer;animation:pulse-gold .9s ease-in-out infinite">
-          <i class="fa-solid fa-stop"></i> Stop
+        <button id="stop-spk-btn" onclick="stopAISpeaking()" style="display:none;align-items:center;gap:6px;background:var(--gold-d);color:var(--gold2);border:1.5px solid rgba(196,136,96,.4);border-radius:var(--r-full);padding:6px 14px;font-size:12px;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer">
+          <i class="fa-solid fa-stop"></i> إيقاف
         </button>
-        <button class="spk-btn" id="spk-btn" onclick="speakR()" style="display:none"><i class="fa-solid fa-volume-high"></i> Listen</button>
+        <button class="spk-btn" id="spk-btn" onclick="speakR()" style="display:none"><i class="fa-solid fa-volume-high"></i> استمعي</button>
       </div>
     </div>
 
+    <!-- Text Input -->
     <div class="txt-row">
-      <span class="srch-ic"><i class="fa-regular fa-comment-dots"></i></span>
-      <input type="text" id="txt-in" placeholder="Type your question here..."
+      <span class="srch-ic" style="color:var(--rose2)"><i class="fa-solid fa-paper-plane"></i></span>
+      <input type="text" id="txt-in" placeholder="اكتبي سؤالك هنا..." dir="rtl"
+        style="text-align:right"
         onkeydown="if(event.key==='Enter')sendTxt()">
-      <button class="txt-send" onclick="sendTxt()"><i class="fa-solid fa-paper-plane"></i></button>
+      <button class="txt-send" onclick="sendTxt()" aria-label="إرسال"><i class="fa-solid fa-arrow-left"></i></button>
     </div>
 
-    <div class="sec-lbl" style="margin-top:18px">✨ مميّز اليوم</div>
+    <!-- Hero Card — براند مميّز -->
+    <div class="sec-lbl" style="margin-top:12px">✨ مميّز اليوم</div>
     <div id="hero-card" onclick="heroCardClick()"
-      style="margin:0 18px 20px;border-radius:var(--r-xl);overflow:hidden;position:relative;
-             height:160px;cursor:pointer;box-shadow:var(--shadow-glow);
-             animation:cardIn var(--dur-slow) var(--ease-out) backwards;
-             background:linear-gradient(135deg,var(--card) 0%,var(--muted) 100%)">
+      style="margin:0 16px 16px;border-radius:var(--r-xl);overflow:hidden;position:relative;
+             height:150px;cursor:pointer;box-shadow:var(--shadow-glow);
+             animation:cardIn var(--dur-slow) var(--ease-out) backwards .1s;
+             background:linear-gradient(135deg,#1a0820,#0e0512)">
       <img id="hero-img" src="" alt="Featured Brand"
-        style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .5s">
-      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(7,1,10,.1) 0%,rgba(7,1,10,.75) 100%)"></div>
-      <div style="position:absolute;bottom:16px;right:18px;text-align:right">
-        <div id="hero-badge" style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
-        <div id="hero-name" style="font-size:22px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1">Rosiva</div>
-        <div id="hero-cat" style="font-size:11px;color:rgba(248,237,244,.65);margin-top:2px">Beauty & Fragrance</div>
+        style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .6s">
+      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(7,1,10,.05) 0%,rgba(7,1,10,.8) 100%)"></div>
+      <div style="position:absolute;bottom:14px;right:16px;text-align:right">
+        <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
+        <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1">Rosiva</div>
+        <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
       </div>
-      <div style="position:absolute;bottom:16px;left:18px">
-        <div style="background:var(--rose);color:#fff;font-size:11px;font-weight:700;
-                    padding:5px 12px;border-radius:var(--r-full);letter-spacing:.3px">
-          اكتشفي →
-        </div>
+      <div style="position:absolute;bottom:14px;left:16px">
+        <div style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;
+                    padding:5px 12px;border-radius:var(--r-full)">اكتشفي →</div>
       </div>
     </div>
 
+    <!-- Category Grid -->
     <div class="sec-lbl">اكتشفي عالم الجمال</div>
     <div class="cat-grid">
-      <div class="cat-btn" onclick="goF('Makeup')">
+      <div class="cat-btn" onclick="goF('Makeup')" style="animation-delay:.05s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.35),rgba(180,40,90,.15))"><i class="fa-solid fa-palette" style="color:var(--rose2)"></i></div>
         <div><div class="cat-nm">ماكياج</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
-      <div class="cat-btn" onclick="goF('Fragrances')">
+      <div class="cat-btn" onclick="goF('Fragrances')" style="animation-delay:.09s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(196,136,96,.35),rgba(212,175,55,.15))"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
         <div><div class="cat-nm">عطور</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
-      <div class="cat-btn" onclick="goF('Skincare')">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))"><i class="fa-solid fa-droplet" style="color:#60c0d0"></i></div>
+      <div class="cat-btn" onclick="goF('Skincare')" style="animation-delay:.13s">
+        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))"><i class="fa-solid fa-droplet" style="color:var(--info)"></i></div>
         <div><div class="cat-nm">عناية بالبشرة</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
-      <div class="cat-btn" onclick="goF('Hair')">
+      <div class="cat-btn" onclick="goF('Hair')" style="animation-delay:.17s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(130,90,200,.3),rgba(190,90,160,.15))"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
         <div><div class="cat-nm">عناية بالشعر</div><div class="cat-sb">براندات ومنتجات</div></div>
       </div>
-      <div class="cat-btn" onclick="navTo('brands')">
+      <div class="cat-btn" onclick="navTo('brands')" style="animation-delay:.21s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.2),rgba(196,136,96,.15))"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
         <div><div class="cat-nm">براندات عالمية</div><div class="cat-sb">جميع البراندات</div></div>
       </div>
-      <div class="cat-btn" onclick="navTo('favs')">
+      <div class="cat-btn" onclick="navTo('favs')" style="animation-delay:.25s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.28),rgba(255,120,130,.1))"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
         <div><div class="cat-nm">مفضلتي</div><div class="cat-sb">المحفوظات</div></div>
       </div>
     </div>
-    <div style="height:30px"></div>
-    <div style="height:30px"></div>
-</div>
+    <div style="height:70px"></div>
+  </div>
 
   <!-- BRANDS -->
   <div id="s-brands" class="screen">
     <div class="stpad"></div>
     <div class="hdr">
-      <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">Global Brands</div></div>
-      <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
-    </div>
-    <div style="padding:0 18px 10px">
-      <div style="font-size:11px;color:var(--dim)">Explore top makeup, fragrance & skincare brands</div>
+      <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
+      <div class="hdr-title"><div class="ht-main">البراندات 🛍️</div></div>
+      <button class="hdr-vip" onclick="navTo('prof')"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="srch">
-      <span class="srch-ic"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input type="text" id="b-srch" placeholder="Search brands or products..." oninput="renderBrands()">
+      <span class="srch-ic" style="color:var(--muted)"><i class="fa-solid fa-magnifying-glass"></i></span>
+      <input type="text" id="b-srch" placeholder="ابحثي عن براند..." dir="rtl"
+        style="text-align:right" oninput="renderBrands()">
     </div>
     <div class="ftabs" id="ftabs">
-      <div class="ft on" onclick="setF('All',this)">All</div>
-      <div class="ft" onclick="setF('Makeup',this)">💄 Makeup</div>
-      <div class="ft" onclick="setF('Fragrances',this)">🌸 Fragrance</div>
-      <div class="ft" onclick="setF('Skincare',this)">✨ Skincare</div>
-      <div class="ft" onclick="setF('Hair',this)">💇 Hair</div>
+      <div class="ft on" onclick="setF('All',this)">الكل ✦</div>
+      <div class="ft" onclick="setF('Makeup',this)">💄 ماكياج</div>
+      <div class="ft" onclick="setF('Fragrances',this)">🌸 عطور</div>
+      <div class="ft" onclick="setF('Skincare',this)">✨ بشرة</div>
+      <div class="ft" onclick="setF('Hair',this)">💇 شعر</div>
     </div>
     <div class="brands-grid" id="b-grid"></div>
-    <div class="view-all" id="view-all-btn">
-      <span><i class="fa-solid fa-grip"></i></span><span>View All Brands</span>
+    <div class="view-all" id="view-all-btn" onclick="showAllBrands()">
+      <span style="font-size:14px">✦</span><span>عرض جميع البراندات</span>
     </div>
-    <div style="height:40px"></div>
+    <div style="height:70px"></div>
   </div>
 
   <!-- BRAND DETAIL -->
@@ -1724,24 +1816,40 @@ body.light-mode textarea{
     <div class="stpad"></div>
     <div class="bk-bar">
       <div class="bk-btn" onclick="back()"><i class="fa-solid fa-arrow-right"></i></div>
-      <div style="flex:1;text-align:center;font-size:14px;font-weight:800">Brand Details</div>
+      <div style="flex:1;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.3px">تفاصيل البراند</div>
       <div style="width:34px"></div>
     </div>
     <div class="bd-hero-new" id="bd-hero">
       <div class="bd-hero-bg" id="bd-hero-bg"></div>
+      <div class="bd-hero-glow"></div>
       <div class="bd-hero-logo-wrap" id="bd-logo">
         <img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">
       </div>
       <div class="bd-hero-name" id="bd-name"></div>
       <div class="bd-hero-cat" id="bd-cat"></div>
     </div>
-    <div class="ai-card">
-      <div class="ai-card-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> AI Insights</div>
-      <div id="bd-ai"><div class="dots"><span></span><span></span><span></span></div></div>
-      <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()"><i class="fa-solid fa-volume-high"></i> Listen to Explanation</button>
+
+    <!-- AI Insights — Elevated Premium Card -->
+    <div style="margin:16px 16px 0;background:linear-gradient(135deg,rgba(24,14,26,.95),rgba(34,19,38,.95));
+      border:1px solid rgba(214,61,110,.2);border-radius:var(--r-xl);padding:18px;
+      box-shadow:0 0 30px rgba(214,61,110,.06),var(--shadow-md)">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
+        <div style="width:28px;height:28px;border-radius:var(--r-sm);background:var(--rose-d);
+          display:flex;align-items:center;justify-content:center">
+          <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2);font-size:12px"></i>
+        </div>
+        <div style="font-size:11px;font-weight:800;color:var(--gold2);letter-spacing:.8px;text-transform:uppercase">AI Insights</div>
+      </div>
+      <div id="bd-ai" style="font-size:13px;line-height:2;color:var(--text)">
+        <div class="dots"><span></span><span></span><span></span></div>
+      </div>
+      <button class="spk-btn" id="bd-spk" style="display:none;margin-top:12px" onclick="speakBr()">
+        <i class="fa-solid fa-volume-high"></i> استمعي للشرح
+      </button>
     </div>
-    <div class="sec-lbl">Top Products</div>
-    <div id="bd-prods" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:14px 18px 20px"></div>
+
+    <div class="sec-lbl" style="margin-top:8px">أبرز المنتجات</div>
+    <div id="bd-prods" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:4px 16px 20px"></div>
     <div style="height:30px"></div>
   </div>
 
@@ -1766,12 +1874,12 @@ body.light-mode textarea{
     <div class="stpad"></div>
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">My Favorites ❤️</div></div>
+      <div class="hdr-title"><div class="ht-main">مفضلتي ❤️</div></div>
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
-    <div id="fav-summary" style="padding:12px 20px 0;display:flex;align-items:center;justify-content:space-between">
-      <div id="fav-count" style="font-size:12px;color:var(--dim);font-weight:600"></div>
-      <button onclick="clearFavs()" id="fav-clear-btn" style="display:none;font-size:11px;color:var(--dim);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:8px;border:1px solid var(--border)">Clear All</button>
+    <div id="fav-summary" style="padding:12px 18px 0;display:flex;align-items:center;justify-content:space-between">
+      <div id="fav-count" style="font-size:12px;color:var(--dim);font-weight:700;letter-spacing:.3px"></div>
+      <button onclick="clearFavs()" id="fav-clear-btn" style="display:none;font-size:11px;color:var(--error);background:var(--error-d);border:1px solid rgba(224,96,96,.25);cursor:pointer;padding:5px 10px;border-radius:var(--r-sm);font-family:'Cairo',sans-serif;font-weight:700">حذف الكل</button>
     </div>
     <div id="fav-content" style="padding:4px 0 20px"></div>
   </div>
@@ -1780,75 +1888,71 @@ body.light-mode textarea{
   <div id="s-prof" class="screen">
     <div class="stpad"></div>
     <div class="hdr">
-      <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">My Account</div></div>
+      <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
+      <div class="hdr-title"><div class="ht-main">حسابي 👤</div></div>
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="prof-top">
-      <div class="prof-av" style="background:linear-gradient(135deg,var(--rose),var(--gold));width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px var(--rose-d),var(--shadow-md)">
-        <i class="fa-solid fa-user" style="color:#fff;font-size:30px"></i>
+      <div class="prof-av">
+        <i class="fa-solid fa-user" style="color:#fff;font-size:28px"></i>
       </div>
-      <div style="font-size:16px;font-weight:900">Rosiva User</div>
-      <div style="font-size:11px;color:var(--dim);margin-top:3px">Your Privacy is Our Priority 🔒</div>
+      <div style="font-size:16px;font-weight:900">مستخدمة روزيفا</div>
+      <div style="font-size:11px;color:var(--dim);margin-top:3px">خصوصيتكِ هي أولويتنا 🔒</div>
     </div>
     <div class="key-box">
       <div class="key-lbl">
         <i class="fa-solid fa-robot" style="color:var(--gold2)"></i>
-        Gemini AI Key
-        <span id="key-status-dot" style="float:right;font-size:10px;margin-top:2px"></span>
+        مفتاح Gemini AI
+        <span id="key-status-dot" style="float:left;font-size:10px;margin-top:2px"></span>
       </div>
-
-      <!-- Step indicator -->
+      <!-- خطوات الحصول على المفتاح -->
       <div style="display:flex;gap:6px;margin-bottom:12px">
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--rose-d);border-radius:10px;border:1px solid rgba(214,61,110,.2)">
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--rose-d);border-radius:var(--r-sm);border:1px solid rgba(214,61,110,.2)">
           <div style="font-size:16px">1️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Open</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">افتحي</div>
           <div style="font-size:8px;color:var(--rose2);font-weight:700">aistudio.google.com</div>
         </div>
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--gold-d);border-radius:10px;border:1px solid rgba(200,144,74,.2)">
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--gold-d);border-radius:var(--r-sm);border:1px solid rgba(200,144,74,.2)">
           <div style="font-size:16px">2️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Click</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">اضغطي</div>
           <div style="font-size:8px;color:var(--gold2);font-weight:700">Create API Key</div>
         </div>
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--card2);border-radius:10px;border:1px solid var(--border)">
+        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--card2);border-radius:var(--r-sm);border:1px solid var(--border)">
           <div style="font-size:16px">3️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">Paste</div>
+          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">الصقي</div>
           <div style="font-size:8px;color:var(--dim);font-weight:700">AIzaSy... or AQ. below</div>
         </div>
       </div>
-
-      <!-- Key input -->
+      <!-- إدخال المفتاح -->
       <div style="position:relative;margin-bottom:10px">
         <input class="key-inp" type="password" id="pr-key"
           placeholder="AIza... or AQ.Ab8..." dir="ltr"
-          style="font-family:monospace;font-size:13px;padding-right:44px"
+          style="font-family:monospace;font-size:13px;padding-left:44px"
           oninput="checkKeyFormat(this.value)">
-        <button onclick="toggleKeyVis()" id="key-vis-btn"
-          style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px">
+        <button onclick="toggleKeyVis()" id="key-vis-btn" aria-label="إظهار/إخفاء المفتاح"
+          style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px">
           <i class="fa-regular fa-eye" id="key-vis-icon"></i>
         </button>
       </div>
-
-      <!-- Action buttons -->
+      <!-- أزرار الحفظ والاختبار -->
       <div style="display:flex;gap:8px">
         <button class="save-btn" onclick="saveKey()" style="flex:2">
-          <i class="fa-solid fa-floppy-disk"></i> Save Key
+          <i class="fa-solid fa-floppy-disk"></i> حفظ المفتاح
         </button>
-        <button onclick="testKeyFromProfile()" style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:10px;color:var(--dim);font-size:11px;font-weight:700;cursor:pointer">
-          <i class="fa-solid fa-vials"></i> Test
+        <button onclick="testKeyFromProfile()" style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;color:var(--dim);font-size:11px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all var(--dur-fast)">
+          <i class="fa-solid fa-vials"></i> اختبار
         </button>
       </div>
-
       <div id="pr-key-status" style="font-size:11px;text-align:center;margin-top:8px;min-height:16px"></div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">AI Model</div><div class="pvl">Gemini 2.5 Flash</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">Voice Language</div><div class="pvl">ar-SA</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">Language</div><div class="pvl">Arabic</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">Version</div><div class="pvl">v1.0 Beta</div></div>
-      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb">Display Mode</div><div class="pvl" id="theme-lbl">Dark / Light</div></div>
-      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">Privacy</div><div class="pvl">No photo analysis, ever</div></div>
-      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:rgba(208,66,114,.18)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:700">Privacy Policy</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Gemini 2.5 Flash</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
+      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb">وضع العرض</div><div class="pvl" id="theme-lbl">داكن / فاتح</div></div>
+      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل للصور</div></div>
+      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
     <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> Clear All Favorites</button>
     <div style="height:30px"></div>
@@ -1947,57 +2051,69 @@ body.light-mode textarea{
     <div class="stpad"></div>
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">🔍 Discover Products</div></div>
+      <div class="hdr-title">
+        <div class="ht-main">اكتشفي 🔍</div>
+      </div>
       <div style="width:40px"></div>
     </div>
-    <div style="padding:0 18px 12px">
-      <div style="font-size:11px;color:var(--dim)">Millions of real products from Open Beauty Facts</div>
+    <!-- Search Bar -->
+    <div style="padding:4px 16px 10px">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-full);
+        display:flex;align-items:center;gap:9px;padding:10px 14px;box-shadow:var(--shadow-sm);
+        transition:border-color var(--dur-fast)" id="obf-srch-wrap">
+        <span onclick="searchOBF()" style="cursor:pointer;color:var(--muted);font-size:14px;flex-shrink:0">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
+        <input type="text" id="obf-srch" placeholder="ابحثي عن أي منتج..." dir="rtl"
+          style="background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'Cairo',sans-serif;flex:1;text-align:right"
+          onfocus="document.getElementById('obf-srch-wrap').style.borderColor='rgba(214,61,110,.5)'"
+          onblur="document.getElementById('obf-srch-wrap').style.borderColor='var(--border)'"
+          onkeydown="if(event.key==='Enter')searchOBF()">
+        <span id="obf-srch-clear" onclick="document.getElementById('obf-srch').value='';this.style.display='none'"
+          style="display:none;cursor:pointer;color:var(--muted);font-size:12px;padding:2px 4px">✕</span>
+      </div>
     </div>
-    <div class="srch" style="margin:0 18px 12px">
-      <span class="srch-ic" onclick="searchOBF()" style="cursor:pointer"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input type="text" id="obf-srch" placeholder="ابحثي عن أي منتج..." dir="rtl"
-        onkeydown="if(event.key==='Enter')searchOBF()">
-    </div>
+    <!-- Category Pills -->
     <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('make-up',this)">💄 Makeup</div>
-      <div class="ft" onclick="searchOBFCat('fragrances',this)">🌸 Fragrance</div>
-      <div class="ft" onclick="searchOBFCat('facial-care',this)">✨ Skincare</div>
-      <div class="ft" onclick="searchOBFCat('hair-care',this)">💇 Hair</div>
-      <div class="ft" onclick="searchOBFCat('lip-gloss',this)">💋 Lips</div>
+      <div class="ft on" onclick="searchOBFCat('make-up',this)">💄 ماكياج</div>
+      <div class="ft" onclick="searchOBFCat('fragrances',this)">🌸 عطور</div>
+      <div class="ft" onclick="searchOBFCat('facial-care',this)">✨ بشرة</div>
+      <div class="ft" onclick="searchOBFCat('hair-care',this)">💇 شعر</div>
+      <div class="ft" onclick="searchOBFCat('lip-gloss',this)">💋 شفاه</div>
+      <div class="ft" onclick="searchOBFCat('nail-polish',this)">💅 أظافر</div>
     </div>
-    <div id="obf-grid" style="padding:0 18px"></div>
+    <!-- Products Grid -->
+    <div id="obf-grid"></div>
     <div id="obf-load-more" style="display:none;text-align:center;padding:20px">
       <div class="dots"><span></span><span></span><span></span></div>
     </div>
-    <div style="height:60px"></div>
+    <div style="height:70px"></div>
   </div>
 
   <!-- DISCOVER PRODUCT MODAL -->
-  <div id="obf-mov" onclick="closeOBFMod(event)" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.7);backdrop-filter:blur(3px)">
-    
-  </div>
+  <div id="obf-mov" onclick="closeOBFMod(event)" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.75);backdrop-filter:blur(4px)"></div>
 
   <!-- BOTTOM NAV -->
-  <nav class="bnav">
-    <div class="ni on" id="ni-home" onclick="navTo('home')">
+  <nav class="bnav" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="ni on" id="ni-home" onclick="navTo('home')" role="button" aria-label="الرئيسية">
       <div class="ni-ic"><i class="fa-solid fa-house"></i></div>
-      <div class="ni-lb">Home</div><div class="ni-dot"></div>
+      <div class="ni-lb">الرئيسية</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-favs" onclick="navTo('favs')">
-      <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
-      <div class="ni-lb">Favorites</div><div class="ni-dot"></div>
-    </div>
-    <div class="ni" id="ni-brands" onclick="navTo('brands')">
-      <div class="ni-ic"><i class="fa-solid fa-store"></i></div>
-      <div class="ni-lb">Brands</div><div class="ni-dot"></div>
-    </div>
-    <div class="ni" id="ni-gifts" onclick="navTo('discover')">
+    <div class="ni" id="ni-gifts" onclick="navTo('discover')" role="button" aria-label="اكتشفي">
       <div class="ni-ic"><i class="fa-solid fa-compass"></i></div>
-      <div class="ni-lb">Discover</div><div class="ni-dot"></div>
+      <div class="ni-lb">اكتشفي</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-prof" onclick="navTo('prof')">
+    <div class="ni" id="ni-brands" onclick="navTo('brands')" role="button" aria-label="براندات">
+      <div class="ni-ic"><i class="fa-solid fa-store"></i></div>
+      <div class="ni-lb">براندات</div><div class="ni-dot"></div>
+    </div>
+    <div class="ni" id="ni-favs" onclick="navTo('favs')" role="button" aria-label="مفضلتي">
+      <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
+      <div class="ni-lb">مفضلتي</div><div class="ni-dot"></div>
+    </div>
+    <div class="ni" id="ni-prof" onclick="navTo('prof')" role="button" aria-label="حسابي">
       <div class="ni-ic"><i class="fa-solid fa-user-circle"></i></div>
-      <div class="ni-lb">Account</div><div class="ni-dot"></div>
+      <div class="ni-lb">حسابي</div><div class="ni-dot"></div>
     </div>
   </nav>
 
@@ -2121,7 +2237,7 @@ body.light-mode textarea{
         <div class="sb-item-ic"><i class="fa-solid fa-user" style="color:var(--dim)"></i></div>
         <div class="sb-item-lb">My Account</div>
       </div>
-      <div class="sb-item" onclick="showToast('Coming Soon 👑')">
+      <div class="sb-item" onclick="showToast('قريباً 👑')">
         <div class="sb-item-ic"><i class="fa-solid fa-crown" style="color:var(--gold2)"></i></div>
         <div class="sb-item-lb">VIP Subscription</div>
         <span class="sb-item-badge">Coming Soon</span>
@@ -2352,7 +2468,7 @@ function navTo(s){
   if(el){el.classList.add('on');el.scrollTop=0;}
   curScreen=s;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts','bdet':'ni-brands'};
+  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts','bdet':'ni-brands','acct':'ni-prof'};
   const ni=document.getElementById(map[s]);
   if(ni)ni.classList.add('on');
   if(s==='favs')renderFavs();
@@ -2389,7 +2505,7 @@ function goF(cat){
 function back(){navTo(prevScreen==='bdet'?'brands':prevScreen);}
 
 // ══ BRANDS ══
-function renderBrands(){
+function renderBrands(showAll=false){
   const q=(document.getElementById('b-srch')?.value||'').toLowerCase();
   const list=BRANDS.filter(b=>{
     const cm=curFilter==='All'||b.cat===curFilter;
@@ -2397,14 +2513,18 @@ function renderBrands(){
     return cm&&qm;
   });
   const grid = document.getElementById('b-grid');
+  const viewAllBtn = document.getElementById('view-all-btn');
   if(!list.length){
-    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">No brands found</div>';
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">لم يُعثر على براندات</div>';
+    if(viewAllBtn) viewAllBtn.style.display='none';
     return;
   }
-  grid.innerHTML = list.map(b=>`
+  // عرض 8 براندات افتراضياً، ثم الكل بزر "عرض الجميع"
+  const display = (showAll || q) ? list : list.slice(0,8);
+  grid.innerHTML = display.map((b,i)=>`
     <div class="bc" onclick="openBrand('${b.id}')"
-      style="border-color:${b.border}40;box-shadow:0 4px 20px ${b.border}18">
-      <div class="bc-banner" style="background:linear-gradient(135deg,${b.bg} 0%,${b.border}30 100%)">
+      style="border-color:${b.border}40;box-shadow:0 4px 20px ${b.border}15;animation-delay:${i*45}ms">
+      <div class="bc-banner" style="background:linear-gradient(135deg,${b.bg} 0%,${b.border}25 100%)">
         <img class="bc-logo"
           src="https://logo.clearbit.com/${b.domain}?size=128"
           alt="${b.nm}"
@@ -2418,6 +2538,18 @@ function renderBrands(){
         <div class="bc-cat">${b.cat}</div>
       </div>
     </div>`).join('');
+  if(viewAllBtn){
+    if(!showAll && !q && list.length>8){
+      viewAllBtn.style.display='flex';
+      viewAllBtn.innerHTML=`<span style="font-size:14px">✦</span><span>عرض جميع البراندات (${list.length})</span>`;
+    } else {
+      viewAllBtn.style.display='none';
+    }
+  }
+}
+
+function showAllBrands(){
+  renderBrands(true);
 }
 
 function setF(cat,el){
@@ -2579,7 +2711,7 @@ function openProd(brandId,prodId){
             <div class="sim-br">${sb?.ar||''}</div>
             <div class="sim-rt">${'★'.repeat(Math.round(s.rt))} ${s.rt}</div>
           </div>
-          <button class="ask-mini" onclick="event.stopPropagation();showToast('Ask AI about ${s.nm}')">Ask AI</button>
+          <button class="ask-mini" onclick="event.stopPropagation();showToast('Ask AI about ${s.nm}')">اسألي AI</button>
         </div>`;}).join('')}
     </div>`:''
 
@@ -2606,7 +2738,7 @@ async function loadPrAI(p,b){
 }
 
 function playExp(){
-  if(!lastPrInfo){showToast('Please wait for loading to finish...');return;}
+  if(!lastPrInfo){showToast('يرجى الانتظار حتى ينتهي التحميل...');return;}
   if(speaking){
     speechSynthesis.cancel();speaking=false;
     document.getElementById('vp-play').textContent='▶';
@@ -2619,11 +2751,11 @@ function playExp(){
   });
 }
 
-function prevTrack(){showToast('Previous Product');}
-function nextTrack(){showToast('Next Product');}
+function prevTrack(){showToast('المنتج السابق');}
+function nextTrack(){showToast('المنتج التالي');}
 
 async function askMoreModal(){
-  if(!apiKey){showToast('Add API key first');return;}
+  if(!apiKey){showToast('أضيفي مفتاح API أولاً 🔑');return;}
   if(!curProd)return;
   const question=prompt('Ask about this product:','What are cheaper alternatives?');
   if(!question)return;
@@ -2631,7 +2763,7 @@ async function askMoreModal(){
     const r=await callGemini(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). لديكِ معرفة شاملة بالبدائل والأسعار والمكونات ومقارنات المنتجات وطرق الاستخدام والمناسبات. أجيبي باللغة العربية بأسلوب مباشر وعملي ومفيد.`);
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
     lastPrInfo=r;
-  }catch{showToast('Connection error');}
+  }catch{showToast('خطأ في الاتصال');}
 }
 
 function toggleFav(){
@@ -2641,7 +2773,7 @@ function toggleFav(){
   if(isFav){
     favs=favs.filter(f => (typeof f==='string' ? f!==id : f.id!==id));
     document.getElementById('pm-fav').textContent='🤍';
-    showToast('Removed from Favorites');
+    showToast('تم الإزالة من المفضلة');
   } else {
     // نفس شكل الكائن المستخدم بصفحة تفاصيل المنتج (OBF) — لتوحيد البنية عبر التطبيق
     favs.push({id, nm:curProd.ar||curProd.name||'Product', br:(curProd.brand&&curProd.brand.ar)||'', img:'', ingr:'', labels:''});
@@ -2667,41 +2799,46 @@ function renderFavs(){
   if(!favs.length){
     if(countEl) countEl.textContent='';
     if(clearBtn) clearBtn.style.display='none';
-    c.innerHTML=`<div style="text-align:center;padding:60px 20px">
-      <div style="font-size:64px;margin-bottom:16px">🤍</div>
-      <div style="font-size:18px;font-weight:900;color:var(--text);margin-bottom:8px">No favorites yet</div>
-      <div style="font-size:13px;color:var(--dim);line-height:1.6">Explore products and tap the<br>heart icon to save them here</div>
-    </div>`;
+    c.innerHTML=`
+      <div class="empty-st">
+        <div class="empty-st-icon">🤍</div>
+        <div class="empty-st-title">لا توجد مفضّلة بعد</div>
+        <div class="empty-st-sub">تصفّحي المنتجات واضغطي على قلب أي منتج لحفظه هنا</div>
+        <button class="empty-st-btn" onclick="navTo('discover')">اكتشفي المنتجات ✨</button>
+      </div>
+      <div style="margin:0 16px 8px">
+        <div class="sec-lbl" style="padding:0 0 10px">منتجات قد تعجبكِ</div>
+        <div id="fav-trending" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
+      </div>`;
+    _loadFavTrending();
     return;
   }
-  if(countEl) countEl.textContent = favs.length + ' saved product' + (favs.length>1?'s':'');
+  const total=favs.length;
+  if(countEl) countEl.textContent=total+' منتج محفوظ'+(total>1?'':'');
   if(clearBtn) clearBtn.style.display='block';
   c.innerHTML='';
   const grid=document.createElement('div');
-  grid.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 18px 80px';
+  grid.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 16px 80px';
   c.appendChild(grid);
   favs.forEach((fav,i)=>{
-    // دعم كلا الـ formats القديم والجديد
     const name = fav.nm || fav.name || 'Product';
     const brand= fav.br || fav.brand || '';
     const img  = fav.img || '';
     const ingr = fav.ingr || '';
     const labels= fav.labels||(fav.labels_tags||[]).join(', ')||'';
     const card = makeProductCard(name, brand, img, ingr, labels);
-    if(!card){
-      // عنصر مفضّل من النظام القديم (بلا صورة حقيقية) — تخطّه بأمان بدل تعطيل الشاشة كاملة
-      return;
-    }
-    // أضف زر إزالة
-    const rmBtn = document.createElement('button');
-    rmBtn.style.cssText='position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:28px;height:28px;font-size:14px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center';
+    if(!card) return;
+    card.style.animationDelay=(i*40)+'ms';
+    const rmBtn=document.createElement('button');
     rmBtn.innerHTML='✕';
+    rmBtn.title='إزالة من المفضلة';
+    rmBtn.style.cssText='position:absolute;top:8px;left:8px;z-index:5;width:24px;height:24px;border-radius:50%;background:rgba(224,96,96,.85);color:#fff;border:none;font-size:11px;line-height:1;cursor:pointer;font-weight:800;backdrop-filter:blur(4px)';
     rmBtn.onclick=(e)=>{
       e.stopPropagation();
       favs.splice(i,1);
       localStorage.setItem('bai_favs',JSON.stringify(favs));
       renderFavs();
-      showToast('Removed from Favorites');
+      showToast('تم الإزالة من المفضلة');
     };
     card.style.position='relative';
     card.appendChild(rmBtn);
@@ -2709,11 +2846,35 @@ function renderFavs(){
   });
 }
 
+async function _loadFavTrending(){
+  const box=document.getElementById('fav-trending');
+  if(!box)return;
+  box.innerHTML=Array(4).fill(0).map((_,i)=>`
+    <div class="obf-card" style="animation:none;pointer-events:none">
+      <div class="obf-card-img" style="background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.15}s"></div>
+      <div style="padding:10px 12px"><div style="height:9px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.2}s;width:70%;margin-bottom:6px"></div><div style="height:8px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.25}s;width:45%"></div></div>
+    </div>`).join('');
+  try{
+    const res=await fetch('https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=make-up&json=true&page=1&page_size=8&fields=code,product_name,brands,image_front_display_url&nocache=1');
+    const data=await res.json();
+    const BAD=['maps.google','static.openfoodfacts','placeholder','map','street','gstatic'];
+    const prods=(data.products||[]).filter(p=>{
+      const img=(p.image_front_display_url||'').toLowerCase();
+      return p.product_name&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
+    }).slice(0,4);
+    box.innerHTML='';
+    prods.forEach((p,i)=>{
+      const c=makeProductCard(p.product_name,(p.brands||'').split(',')[0],p.image_front_display_url,'','',p.code);
+      if(c){c.style.animationDelay=(i*50)+'ms';box.appendChild(c);}
+    });
+    if(!box.children.length)box.parentElement.style.display='none';
+  }catch(e){box.parentElement.style.display='none';}
+}
 
 function clearFavs(){
-  if(!confirm('Clear All Favorites؟'))return;
+  if(!confirm('حذف جميع المفضلة؟'))return;
   favs=[];localStorage.setItem('bai_favs','[]');
-  renderFavs();showToast('Favorites cleared');
+  renderFavs();showToast('تم حذف المفضلة');
 }
 
 // ══ GEMINI LIVE VOICE ══
@@ -3126,7 +3287,7 @@ async function sendTxt(){
 }
 
 async function doAI(text){
-  if(!apiKey){showToast('Add your Gemini API key first 🔑');return;}
+  if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
   // إذا الـ Live session مفتوح — أرسل النص عبره
   if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
     liveWS.send(JSON.stringify({realtimeInput:{text}}));
@@ -3166,7 +3327,7 @@ async function doAI(text){
   }
 }
 function copyAIText(){
-  if(!lastResp){showToast('Nothing to copy');return;}
+  if(!lastResp){showToast('لا يوجد شيء للنسخ');return;}
   navigator.clipboard?.writeText(lastResp).then(()=>{
     showToast('Copied ✅');
   }).catch(()=>{
@@ -3435,7 +3596,7 @@ function googleTTS(text,cb){
     currentAudio=new Audio(url);
     currentAudio.onended=()=>{i++;next();};
     currentAudio.onerror=()=>{i++;next();};
-    currentAudio.play().catch(()=>{speaking=false;showToast('Voice not available on this device');if(cb)cb();});
+    currentAudio.play().catch(()=>{speaking=false;showToast('الصوت غير متاح على هذا الجهاز');if(cb)cb();});
   }
   next();
 }
@@ -3540,11 +3701,11 @@ async function testKeyFromProfile(){
 }
 function saveKey(){
   const k=document.getElementById('pr-key').value.trim();
-  if(!k){ showToast('Enter your Gemini API key first'); return; }
+  if(!k){ showToast('أدخلي مفتاح Gemini أولاً 🔑'); return; }
   // Accept any key format
   localStorage.setItem('bai_key',k);
   apiKey=k;
-  showToast('✅ Gemini key saved!');
+  showToast('✅ تم حفظ المفتاح!');
   const st=document.getElementById('pr-key-status');
   if(st) st.innerHTML='<span style="color:#4caf50">✅ Saved! Tap Test to verify</span>';
 }
@@ -3598,11 +3759,11 @@ function sbNav(screen, filter){
 }
 function saveSBKey(){
   const k = document.getElementById('sb-key').value.trim();
-  if(!k){ showToast('Please enter your key first'); return; }
+  if(!k){ showToast('أدخلي المفتاح أولاً'); return; }
   localStorage.setItem('bai_key', k);
   apiKey = k;
   document.getElementById('pr-key').value = k;
-  showToast('Key saved ✅');
+  showToast('تم حفظ المفتاح ✅');
 }
 
 function applyTheme(){
@@ -4087,7 +4248,7 @@ function shareProd(){
   const isFav = favs.some(f=>f.nm===currentProd.name);
   if(isFav){
     favs = favs.filter(f=>f.nm!==currentProd.name);
-    showToast('Removed from Favorites');
+    showToast('تم الإزالة من المفضلة');
   } else {
     favs.push({nm:currentProd.name, br:currentProd.brand, img:currentProd.img, ingr:currentProd.ingr, labels:currentProd.labels||''});
     showToast('Added to Favorites ❤️');
