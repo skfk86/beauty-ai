@@ -1703,14 +1703,20 @@ body.light-mode textarea{
       style="margin:0 16px 16px;border-radius:var(--r-xl);overflow:hidden;position:relative;
              height:150px;cursor:pointer;box-shadow:var(--shadow-glow);
              animation:cardIn var(--dur-slow) var(--ease-out) backwards .1s;
-             background:linear-gradient(135deg,#1a0820,#0e0512)">
-      <img id="hero-img" src="" alt="Featured Brand"
-        style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .6s">
-      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(7,1,10,.05) 0%,rgba(7,1,10,.8) 100%)"></div>
-      <div style="position:absolute;bottom:14px;right:16px;text-align:right">
-        <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
-        <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1">Rosiva</div>
-        <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
+             background:linear-gradient(135deg,#2a0f30 0%,#1a0820 50%,#0e0512 100%)">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 25% 50%,rgba(214,61,110,.18) 0%,transparent 70%)"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 18px;gap:14px">
+        <div id="hero-logo-wrap" style="flex:0 0 auto;width:64px;height:64px;border-radius:18px;
+             background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;
+             overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.3)">
+          <img id="hero-img" src="" alt="Featured Brand"
+            style="width:78%;height:78%;object-fit:contain;opacity:0;transition:opacity .6s">
+        </div>
+        <div style="text-align:right;flex:1 1 auto;min-width:0">
+          <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
+          <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rosiva</div>
+          <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
+        </div>
       </div>
       <div style="position:absolute;bottom:14px;left:16px">
         <div style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;
@@ -2397,7 +2403,11 @@ function initHeroCard(){
   if(brand.logo){
     const img = document.getElementById('hero-img');
     img.src = brand.logo;
-    img.onload = ()=>{ img.style.opacity='0.55'; };
+    img.onload = ()=>{ img.style.opacity='1'; };
+    img.onerror = ()=>{
+      const wrap = document.getElementById('hero-logo-wrap');
+      if(wrap) wrap.innerHTML = `<div style="font-size:20px;font-weight:900;color:var(--gold2)">${(brand.ar||brand.nm||'R').substring(0,2).toUpperCase()}</div>`;
+    };
   }
   _heroBrandId = brand.id;
 }
