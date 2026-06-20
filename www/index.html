@@ -1588,6 +1588,37 @@ body.light-mode textarea{
   color:#160818 !important;
 }
 
+/* ══ PRODUCT CARD REDESIGN — cart action instead of price/rating ══ */
+.obf-card-fav{
+  position:absolute;top:6px;right:6px;z-index:5;
+  width:26px;height:26px;border-radius:50%;
+  background:rgba(10,3,12,.55);backdrop-filter:blur(4px);
+  border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:12px;cursor:pointer;
+}
+.obf-card-fav.on{color:var(--rose2)}
+.obf-card-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;margin-top:9px;
+}
+.obf-card-avail{
+  font-size:9px;font-weight:700;color:var(--dim);
+  display:flex;align-items:center;gap:4px;letter-spacing:.2px;
+}
+.obf-card-avail i{color:#4fbf7a;font-size:8px}
+.obf-card-cart{
+  width:30px;height:30px;flex-shrink:0;border:none;border-radius:50%;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 2px 8px rgba(208,66,110,.3);
+  transition:transform var(--dur-fast);
+}
+.obf-card-cart:active{transform:scale(.88)}
+
+/* بطاقة المنتج بدون سعر/تقييم وهمي — استبدال بزر سلة فعلي */
+.pdm-rating{display:none !important}
+
 </style>
 </head>
 <body>
@@ -2352,6 +2383,122 @@ function blockProduct(code){
   localStorage.setItem('bai_blocked', JSON.stringify([...blockedProducts]));
   showToast('تم إخفاء المنتج ✓');
 }
+// ══ QUALITY & DEDUP ENGINE — Multi-Stage Scoring Pipeline ══
+// بوابة 1: اكتمال البيانات | بوابة 2: جودة الصورة | بوابة 3: كشف التكرار الذكي | بوابة 4: الدرجة النهائية
+function qNormalize(s){
+  return (s||'').toLowerCase()
+    .replace(/[\u064B-\u065F]/g,'')
+    .replace(/[^\u0600-\u06FFa-z0-9 ]/g,' ')
+    .replace(/(\d+)\s?(ml|g|gr|gm|kg|l|oz)\b/g,'$1$2')
+    .replace(/\s+/g,' ').trim();
+}
+function qLevenshtein(a,b){
+  const m=a.length,n=b.length;
+  if(!m) return n; if(!n) return m;
+  let prev=new Array(n+1); for(let j=0;j<=n;j++) prev[j]=j;
+  for(let i=1;i<=m;i++){
+    const cur=[i];
+    for(let j=1;j<=n;j++){
+      cur[j]=a[i-1]===b[j-1]?prev[j-1]:1+Math.min(prev[j-1],prev[j],cur[j-1]);
+    }
+    prev=cur;
+  }
+  return prev[n];
+}
+function qTokenSortRatio(a,b){
+  const sa=qNormalize(a).split(' ').filter(Boolean).sort().join(' ');
+  const sb=qNormalize(b).split(' ').filter(Boolean).sort().join(' ');
+  if(!sa && !sb) return 100;
+  const dist=qLevenshtein(sa,sb);
+  const maxLen=Math.max(sa.length,sb.length,1);
+  return Math.round((1-dist/maxLen)*100);
+}
+// بوابة التكرار: مقارنة المنتج الجديد بكل ما جُمع في الجلسة الحالية (اسم+براند مطبّع)
+function qIsDuplicate(name, brand, seenSet){
+  const norm = qNormalize(name+' '+brand);
+  if(!norm) return false;
+  for(const seenNorm of seenSet){
+    if(qTokenSortRatio(norm, seenNorm) >= 90) return true;
+  }
+  return false;
+}
+// بوابة الصورة: نسبة الأبعاد + تباين السطوع + تباين الحواف (نسخة JS مبسطة من Laplacian Variance)
+function qCheckImage(url){
+  return new Promise(resolve=>{
+    if(!url) return resolve(0);
+    const img=new Image();
+    img.crossOrigin='anonymous';
+    let done=false;
+    const finish=v=>{ if(!done){done=true; resolve(v);} };
+    const timer=setTimeout(()=>finish(55), 3000);
+    img.onload=()=>{
+      clearTimeout(timer);
+      try{
+        const w=img.naturalWidth, h=img.naturalHeight;
+        if(!w||!h) return finish(0);
+        const ratio=w/h;
+        if(ratio<0.4||ratio>2.6) return finish(20);
+        const size=32;
+        const canvas=document.createElement('canvas');
+        canvas.width=size; canvas.height=size;
+        const ctx=canvas.getContext('2d');
+        ctx.drawImage(img,0,0,size,size);
+        const data=ctx.getImageData(0,0,size,size).data;
+        const n=size*size, gray=new Float32Array(n);
+        let sum=0;
+        for(let i=0;i<n;i++){
+          const v=0.299*data[i*4]+0.587*data[i*4+1]+0.114*data[i*4+2];
+          gray[i]=v; sum+=v;
+        }
+        const mean=sum/n;
+        let sumSq=0;
+        for(let i=0;i<n;i++) sumSq+=(gray[i]-mean)*(gray[i]-mean);
+        const variance=sumSq/n;
+        let edgeSum=0,edgeCount=0;
+        for(let y=1;y<size-1;y++){
+          for(let x=1;x<size-1;x++){
+            const idx=y*size+x;
+            edgeSum+=Math.abs(4*gray[idx]-gray[idx-1]-gray[idx+1]-gray[idx-size]-gray[idx+size]);
+            edgeCount++;
+          }
+        }
+        const edgeVar=edgeSum/edgeCount;
+        let score=100;
+        if(variance<60) score-=35;
+        if(edgeVar<3) score-=40; else if(edgeVar<6) score-=15;
+        return finish(Math.max(0,Math.min(100,score)));
+      }catch(e){
+        return finish(60); // canvas محجوب بسبب CORS — لا يمكن الفحص، نقبلها بدرجة متوسطة
+      }
+    };
+    img.onerror=()=>finish(0);
+    img.src=url;
+  });
+}
+// المعالج الرئيسي: يمرر كل منتج عبر البوابات الأربعة ويرجع فقط ما يستحق العرض
+async function qFilterProducts(list, seenSet, minScore){
+  minScore = minScore||55;
+  const out=[];
+  for(const p of list){
+    const name=(p.product_name||'').trim();
+    const brand=(p.brands||'').split(',')[0].trim();
+    const code=p.code||'';
+    if(!name) continue;
+    if(code && blockedProducts.has(code)) continue;
+    if(qIsDuplicate(name, brand, seenSet)) continue;
+    const img=p.image_front_display_url||p.image_url||'';
+    const imageScore=await qCheckImage(img);
+    if(imageScore<35) continue;
+    const ingrLen=(p.ingredients_text||p.ingredients_text_en||'').length;
+    const dataScore = !name?0 : (ingrLen>50?100:(ingrLen>0?70:45));
+    const finalScore = Math.round(0.5*dataScore + 0.5*imageScore);
+    if(finalScore<minScore) continue;
+    seenSet.add(qNormalize(name+' '+brand));
+    out.push(p);
+  }
+  return out;
+}
+
 let apiKey=localStorage.getItem('bai_key')||'';
 let isRec=false,recog=null,speaking=false;
 let lastResp='',lastBrInfo='',lastPrInfo='';
@@ -2622,6 +2769,7 @@ async function openBrand(id){
 
 // ── Brand products pagination state ──
 let bdPage=1, bdLoading=false, bdHasMore=true, bdCurrentBrand=null;
+let bdSeenSet=new Set();
 
 function renderBrandProdCard(p, b){
   const name   = p.product_name||'Product';
@@ -3816,6 +3964,7 @@ let obfPage = 1;
 let obfHasMore = true;
 let obfCurrentParams = '';
 let obfLoadedCount = 0;
+let obfSeenSet = new Set();
 
 async function searchOBF(){
   const raw = document.getElementById('obf-srch').value.trim();
@@ -3889,6 +4038,29 @@ function makeProductCard(name, brand, img, ingr, labels, code){
     el.remove();
   };
   imgWrap.appendChild(hideBtn);
+  // زر مفضلة (heart) — بديل عرض السعر/التقييم غير المتوفر
+  const favBtn = document.createElement('button');
+  favBtn.className = 'obf-card-fav';
+  const isFavNow = favs.some(f=>f.nm===name);
+  favBtn.innerHTML = `<i class="fa-${isFavNow?'solid':'regular'} fa-heart"></i>`;
+  if(isFavNow) favBtn.classList.add('on');
+  favBtn.onclick = (e)=>{
+    e.stopPropagation();
+    const already = favs.some(f=>f.nm===name);
+    if(already){
+      favs = favs.filter(f=>f.nm!==name);
+      favBtn.classList.remove('on');
+      favBtn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+      showToast('تم الإزالة من المفضلة');
+    } else {
+      favs.push({nm:name, br:brand, img, ingr, labels:labels||''});
+      favBtn.classList.add('on');
+      favBtn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+      showToast('Added to Favorites ❤️');
+    }
+    localStorage.setItem('bai_favs', JSON.stringify(favs));
+  };
+  imgWrap.appendChild(favBtn);
   const lLow = (labels||'').toLowerCase();
   if(lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan')){
     const badge = document.createElement('div');
@@ -3909,11 +4081,20 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   nm.className = 'obf-card-name';
   nm.textContent = name;
   body.appendChild(nm);
-  const btn = document.createElement('button');
-  btn.className = 'obf-card-buy';
-  btn.innerHTML = '<i class="fa-brands fa-amazon"></i> Buy on Amazon';
-  btn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name); };
-  body.appendChild(btn);
+  // صف سفلي: لا سعر ولا تقييم (غير متوفر) — فقط حالة التوفر وزر سلة/شراء
+  const footer = document.createElement('div');
+  footer.className = 'obf-card-footer';
+  const avail = document.createElement('span');
+  avail.className = 'obf-card-avail';
+  avail.innerHTML = '<i class="fa-solid fa-circle"></i> متوفر';
+  const cartBtn = document.createElement('button');
+  cartBtn.className = 'obf-card-cart';
+  cartBtn.title = 'شراء';
+  cartBtn.innerHTML = '<i class="fa-solid fa-cart-shopping"></i>';
+  cartBtn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name); };
+  footer.appendChild(avail);
+  footer.appendChild(cartBtn);
+  body.appendChild(footer);
   el.appendChild(body);
   el.onclick = ()=> openProdDetail({name,brand,img,ingr,labels});
   return el;
@@ -3959,7 +4140,7 @@ const PAGE_SIZE=24;
 async function fetchOBF(params, reset=false){
   if(obfLoading) return;
   if(reset){
-    obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0;
+    obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
     document.getElementById('obf-grid').innerHTML=
       '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
   }
@@ -3985,7 +4166,9 @@ async function fetchOBF(params, reset=false){
         const notBlocked = !p.code || !blockedProducts.has(p.code);
         return notBlocked && img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
       });
-      collected.push(...withImg);
+      // بوابات الجودة والتكرار: نفحص فقط المرشحين اللي نجحوا بالفلتر الأولي (أسرع)
+      const passed = await qFilterProducts(withImg, obfSeenSet, 55);
+      collected.push(...passed);
       obfLoadedCount=(obfLoadedCount||0)+allP.length;
       obfPage++;
       // وقف لو رجعت صفحة غير مكتملة (يعني آخر صفحة) أو تجاوزنا العدد الكلي المتاح
@@ -4035,11 +4218,15 @@ async function fetchBrandPage(b, page, append){
       if(!append) container.innerHTML='';
       const badP = ['static.openfoodfacts','maps.google','placeholder','no-img'];
       prods.forEach(p=>{
-        // فلتر الصور السيئة
+        // فلتر الصور السيئة (روابط معروفة)
         if(p.image_front_display_url && badP.some(x=>p.image_front_display_url.includes(x)))
           p.image_front_display_url='';
         if(p.image_url && badP.some(x=>p.image_url.includes(x)))
           p.image_url='';
+      });
+      // بوابات الجودة والتكرار: صورة مشوهة/فاسدة أو منتج مكرر بالاسم يتم استبعاده
+      const filtered = await qFilterProducts(prods, bdSeenSet, 55);
+      filtered.forEach(p=>{
         const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
       });
       bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
@@ -4063,7 +4250,7 @@ async function fetchBrandPage(b, page, append){
 
 
 async function loadBrandProdsOBF(b){
-  bdPage=1; bdHasMore=true; bdLoading=false; bdCurrentBrand=b;
+  bdPage=1; bdHasMore=true; bdLoading=false; bdCurrentBrand=b; bdSeenSet=new Set();
   const container=document.getElementById('bd-prods');
   container.innerHTML=Array(4).fill(0).map((_,i)=>`
     <div class="obf-card" style="animation:none;pointer-events:none;animation-delay:${i*60}ms">
@@ -4169,10 +4356,6 @@ function openProdDetail(p){
     <!-- Product name & meta -->
     <div class="pdm-info" dir="ltr">
       <div class="pdm-name">${p.name}</div>
-      <div class="pdm-rating">
-        <div class="stars">★★★★☆</div>
-        <div class="rating-count">(${Math.floor(Math.random()*2000+200).toLocaleString('en-US')} reviews)</div>
-      </div>
       <div class="pdm-meta-row">
         ${isVegan  ?'<div class="pdm-tag">🌱 Vegan</div>':''}
         ${isOrganic?'<div class="pdm-tag">🌿 Organic</div>':''}
