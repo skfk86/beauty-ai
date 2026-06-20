@@ -2424,9 +2424,11 @@ function qIsDuplicate(name, brand, seenSet){
 }
 // فلتر مشترك لروابط الصور السيئة (خرائط، أيقونات، placeholder...)
 const _BAD_IMG_PATTERNS=[
-  'maps.google','maps.gstatic','maps.googleapis','gstatic.com','ggpht',
-  'streetview','street-view','market','locator','static.openfoodfacts',
-  'placeholder','no-img','translate.google','icon','thumb','default','map','street'
+  'maps.google.com','maps.gstatic.com','maps.googleapis.com','gstatic.com/mapfiles',
+  'streetviewpixels','cbk0.google','earth.google',
+  'static.openfoodfacts.org/images/misc',
+  'placeholder','no-img','translate.google',
+  '/icons/','/thumbs/default'
 ];
 function qIsGoodImgUrl(url){
   if(!url||!url.startsWith('http')) return false;
@@ -2488,7 +2490,7 @@ function qCheckImage(url){
   });
 }
 // المعالج الرئيسي: يمرر كل منتج عبر البوابات الأربعة ويرجع فقط ما يستحق العرض
-async function qFilterProducts(list, seenSet, minScore){
+async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   minScore = minScore||55;
   const out=[];
   for(const p of list){
@@ -2499,12 +2501,17 @@ async function qFilterProducts(list, seenSet, minScore){
     if(code && blockedProducts.has(code)) continue;
     if(qIsDuplicate(name, brand, seenSet)) continue;
     const img=p.image_front_display_url||p.image_url||'';
-    const imageScore=await qCheckImage(img);
-    if(imageScore<35) continue;
-    const ingrLen=(p.ingredients_text||p.ingredients_text_en||'').length;
-    const dataScore = !name?0 : (ingrLen>50?100:(ingrLen>0?70:45));
-    const finalScore = Math.round(0.5*dataScore + 0.5*imageScore);
-    if(finalScore<minScore) continue;
+    if(skipImageCheck){
+      // وضع البراندات: نقبل أي صورة مرّت فلتر الرابط، بدون تحليل canvas
+      if(!img||!qIsGoodImgUrl(img)) continue;
+    } else {
+      const imageScore=await qCheckImage(img);
+      if(imageScore<35) continue;
+      const ingrLen=(p.ingredients_text||p.ingredients_text_en||'').length;
+      const dataScore = !name?0 : (ingrLen>50?100:(ingrLen>0?70:45));
+      const finalScore = Math.round(0.5*dataScore + 0.5*imageScore);
+      if(finalScore<minScore) continue;
+    }
     seenSet.add(qNormalize(name+' '+brand));
     out.push(p);
   }
@@ -4208,18 +4215,12 @@ async function fetchBrandPage(b, page, append){
       bdHasMore=false;
     } else {
       if(!append) container.innerHTML='';
-      const badP = [
-        'static.openfoodfacts','maps.google','placeholder','no-img',
-        'translate.google','gstatic.com','ggpht','maps.gstatic','maps.googleapis',
-        'map','street','icon','thumb','streetview','default','market','locator'
-      ];
       prods.forEach(p=>{
         if(!qIsGoodImgUrl(p.image_front_display_url)) p.image_front_display_url='';
         if(!qIsGoodImgUrl(p.image_url)) p.image_url='';
       });
-      const prodsWithImg=prods.filter(p=>p.image_front_display_url||p.image_url);
-      // بوابات الجودة والتكرار: صورة مشوهة/فاسدة أو منتج مكرر بالاسم يتم استبعاده
-      const filtered = await qFilterProducts(prodsWithImg, bdSeenSet, 55);
+      // بوابات الجودة والتكرار (بدون تحليل canvas — نكتفي بفلتر الرابط)
+      const filtered = await qFilterProducts(prods, bdSeenSet, 40, true);
       filtered.forEach(p=>{
         const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
       });
