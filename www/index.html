@@ -1772,7 +1772,7 @@ body.light-mode textarea{
 
     <!-- Hero Card روزيفا — يظهر فقط في وضع "الكل" -->
     <div id="brands-hero" style="margin:0 14px 12px;border-radius:var(--r-xl);overflow:hidden;
-      cursor:pointer;position:relative;height:150px;
+      cursor:pointer;position:relative;height:175px;
       background:linear-gradient(135deg,#1a0c1e 0%,#0e0512 60%,#120818 100%);
       box-shadow:0 0 40px rgba(214,61,110,.12),var(--shadow-lg);
       animation:cardIn var(--dur-slow) var(--ease-out) backwards"
@@ -1783,8 +1783,8 @@ body.light-mode textarea{
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;
         align-items:center;justify-content:center;gap:4px">
         <img src="assets/rosiva-logo.jpg" alt="Rosiva"
-          style="width:62px;height:62px;border-radius:16px;object-fit:cover;
-          box-shadow:0 6px 22px rgba(214,61,110,.35);margin-bottom:2px">
+          style="width:96px;height:96px;border-radius:22px;object-fit:cover;
+          box-shadow:0 8px 28px rgba(214,61,110,.4);margin-bottom:4px">
         <div style="font-size:9px;letter-spacing:3px;color:rgba(200,160,180,.6);
           text-transform:uppercase;font-weight:700">Beauty Assistant</div>
       </div>
@@ -2527,7 +2527,7 @@ function renderBrands(showAll=false){
     grid.innerHTML=list.map((b,i)=>`
       <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*20}ms">
         <div class="bc-banner">
-          <img class="bc-logo" src="https://logo.clearbit.com/${b.domain}?size=80" alt="${b.nm}"
+          <img class="bc-logo" src="https://unavatar.io/${b.domain}?size=80" alt="${b.nm}"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
         </div>
@@ -2542,7 +2542,7 @@ function renderBrands(showAll=false){
   grid.innerHTML=display.map((b,i)=>`
     <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*35}ms">
       <div class="bc-banner">
-        <img class="bc-logo" src="https://logo.clearbit.com/${b.domain}?size=128" alt="${b.nm}"
+        <img class="bc-logo" src="https://unavatar.io/${b.domain}?size=128" alt="${b.nm}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
       </div>
@@ -2598,7 +2598,7 @@ async function openBrand(id){
   logoImg.style.display='block';
   logoImg.alt=curBrand.nm;
   tryLogo([
-    `https://logo.clearbit.com/${curBrand.domain}?size=200`,
+    `https://unavatar.io/${curBrand.domain}?size=200`,
     `https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=128`,
   ], 0);
   document.getElementById('bd-name').textContent=curBrand.nm;
@@ -4121,7 +4121,7 @@ function openProdDetail(p){
     b.nm.toLowerCase().includes(brand.toLowerCase())
   );
   const brandLogo = brandObj
-    ? `https://logo.clearbit.com/${brandObj.domain}?size=80`
+    ? `https://unavatar.io/${brandObj.domain}?size=80`
     : '';
 
   // Labels/tags
