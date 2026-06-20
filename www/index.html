@@ -2422,10 +2422,22 @@ function qIsDuplicate(name, brand, seenSet){
   }
   return false;
 }
+// فلتر مشترك لروابط الصور السيئة (خرائط، أيقونات، placeholder...)
+const _BAD_IMG_PATTERNS=[
+  'maps.google','maps.gstatic','maps.googleapis','gstatic.com','ggpht',
+  'streetview','street-view','market','locator','static.openfoodfacts',
+  'placeholder','no-img','translate.google','icon','thumb','default','map','street'
+];
+function qIsGoodImgUrl(url){
+  if(!url||!url.startsWith('http')) return false;
+  const low=url.toLowerCase();
+  return !_BAD_IMG_PATTERNS.some(p=>low.includes(p));
+}
 // بوابة الصورة: نسبة الأبعاد + تباين السطوع + تباين الحواف (نسخة JS مبسطة من Laplacian Variance)
 function qCheckImage(url){
   return new Promise(resolve=>{
     if(!url) return resolve(0);
+    if(!qIsGoodImgUrl(url)) return resolve(0);
     const img=new Image();
     img.crossOrigin='anonymous';
     let done=false;
@@ -3989,18 +4001,8 @@ async function searchOBF(){
 
 // ══ PRODUCT CARD FACTORY ══
 function makeProductCard(name, brand, img, ingr, labels, code){
-  // فلتر الصور السيئة
-  const badImgPatterns = [
-    'static.openfoodfacts','maps.google','placeholder','default',
-    'no-img','translate.google','gstatic.com','ggpht','Street View',
-    'maps.gstatic','maps.googleapis'
-  ];
-  const isGoodImg = img
-    && img.startsWith('http')
-    && !badImgPatterns.some(p=>img.toLowerCase().includes(p.toLowerCase()))
-    && !img.includes('map')
-    && !img.includes('street');
-  img = isGoodImg ? img : '';
+  // فلتر الصور السيئة — استخدام الفلتر المشترك
+  img = qIsGoodImgUrl(img) ? img : '';
   // إخفاء البطاقة كلياً إذا لا صورة
   if(!img) return null;
   // إخفاء البطاقات اللي المستخدم حظرها يدوياً (صورة محتواها خاطئ مثلاً)
@@ -4027,17 +4029,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
     fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
     imgWrap.appendChild(fb);
   }
-  // زر إخفاء يدوي — لصورة خاطئة المحتوى (خرائط، شاشة سوق...) ما تقدر فلترة الرابط تكتشفها
-  const hideBtn = document.createElement('button');
-  hideBtn.innerHTML = '✕';
-  hideBtn.title = 'إخفاء هذا المنتج';
-  hideBtn.style.cssText = 'position:absolute;top:6px;left:6px;z-index:5;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:none;font-size:12px;line-height:1;cursor:pointer';
-  hideBtn.onclick = (e)=>{
-    e.stopPropagation();
-    if(code) blockProduct(code);
-    el.remove();
-  };
-  imgWrap.appendChild(hideBtn);
+
   // زر مفضلة (heart) — بديل عرض السعر/التقييم غير المتوفر
   const favBtn = document.createElement('button');
   favBtn.className = 'obf-card-fav';
@@ -4216,16 +4208,18 @@ async function fetchBrandPage(b, page, append){
       bdHasMore=false;
     } else {
       if(!append) container.innerHTML='';
-      const badP = ['static.openfoodfacts','maps.google','placeholder','no-img'];
+      const badP = [
+        'static.openfoodfacts','maps.google','placeholder','no-img',
+        'translate.google','gstatic.com','ggpht','maps.gstatic','maps.googleapis',
+        'map','street','icon','thumb','streetview','default','market','locator'
+      ];
       prods.forEach(p=>{
-        // فلتر الصور السيئة (روابط معروفة)
-        if(p.image_front_display_url && badP.some(x=>p.image_front_display_url.includes(x)))
-          p.image_front_display_url='';
-        if(p.image_url && badP.some(x=>p.image_url.includes(x)))
-          p.image_url='';
+        if(!qIsGoodImgUrl(p.image_front_display_url)) p.image_front_display_url='';
+        if(!qIsGoodImgUrl(p.image_url)) p.image_url='';
       });
+      const prodsWithImg=prods.filter(p=>p.image_front_display_url||p.image_url);
       // بوابات الجودة والتكرار: صورة مشوهة/فاسدة أو منتج مكرر بالاسم يتم استبعاده
-      const filtered = await qFilterProducts(prods, bdSeenSet, 55);
+      const filtered = await qFilterProducts(prodsWithImg, bdSeenSet, 55);
       filtered.forEach(p=>{
         const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
       });
