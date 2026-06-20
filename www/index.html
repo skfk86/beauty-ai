@@ -822,7 +822,7 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 }
 .bc-logo{
   width:100%;height:100%;object-fit:contain;
-  padding:14px;filter:brightness(.95);
+  padding:6px;filter:brightness(.95);
   transition:filter var(--dur-base);
 }
 .bc:active .bc-logo{filter:brightness(1.05)}
@@ -834,7 +834,7 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 }
 /* وضع 5 أعمدة — بدون نص تحت الصورة */
 #b-grid.full-view .bc-banner{height:56px}
-#b-grid.full-view .bc-logo{padding:8px}
+#b-grid.full-view .bc-logo{padding:4px}
 #b-grid.full-view .bc-logo-fb{font-size:8px}
 #b-grid.full-view .bc-body{display:none}
 .bc-body{padding:8px 10px 10px}
@@ -1710,7 +1710,7 @@ body.light-mode textarea{
              background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;
              overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.3)">
           <img id="hero-img" src="" alt="Featured Brand"
-            style="width:78%;height:78%;object-fit:contain;opacity:0;transition:opacity .6s">
+            style="width:85%;height:85%;object-fit:contain;opacity:0;transition:opacity .6s">
         </div>
         <div style="text-align:right;flex:1 1 auto;min-width:0">
           <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
@@ -2400,9 +2400,9 @@ function initHeroCard(){
   if(!brand)return;
   document.getElementById('hero-name').textContent = brand.ar||brand.nm||'Rosiva';
   document.getElementById('hero-cat').textContent = brand.cat||'Beauty';
-  if(brand.logo){
+  if(brand.domain){
     const img = document.getElementById('hero-img');
-    img.src = brand.logo;
+    img.src = `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=256`;
     img.onload = ()=>{ img.style.opacity='1'; };
     img.onerror = ()=>{
       const wrap = document.getElementById('hero-logo-wrap');
@@ -2537,7 +2537,7 @@ function renderBrands(showAll=false){
     grid.innerHTML=list.map((b,i)=>`
       <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*20}ms">
         <div class="bc-banner">
-          <img class="bc-logo" src="https://unavatar.io/${b.domain}?size=80" alt="${b.nm}"
+          <img class="bc-logo" src="https://www.google.com/s2/favicons?domain=${b.domain}&sz=256" alt="${b.nm}"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
         </div>
@@ -2552,7 +2552,7 @@ function renderBrands(showAll=false){
   grid.innerHTML=display.map((b,i)=>`
     <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*35}ms">
       <div class="bc-banner">
-        <img class="bc-logo" src="https://unavatar.io/${b.domain}?size=128" alt="${b.nm}"
+        <img class="bc-logo" src="https://www.google.com/s2/favicons?domain=${b.domain}&sz=256" alt="${b.nm}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
       </div>
@@ -2608,8 +2608,7 @@ async function openBrand(id){
   logoImg.style.display='block';
   logoImg.alt=curBrand.nm;
   tryLogo([
-    `https://unavatar.io/${curBrand.domain}?size=200`,
-    `https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=128`,
+    `https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=256`,
   ], 0);
   document.getElementById('bd-name').textContent=curBrand.nm;
   document.getElementById('bd-cat').textContent=curBrand.cat;
@@ -4131,7 +4130,7 @@ function openProdDetail(p){
     b.nm.toLowerCase().includes(brand.toLowerCase())
   );
   const brandLogo = brandObj
-    ? `https://unavatar.io/${brandObj.domain}?size=80`
+    ? `https://www.google.com/s2/favicons?domain=${brandObj.domain}&sz=256`
     : '';
 
   // Labels/tags
