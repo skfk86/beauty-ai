@@ -2451,7 +2451,9 @@ function qCheckImage(url){
         const w=img.naturalWidth, h=img.naturalHeight;
         if(!w||!h) return finish(0);
         const ratio=w/h;
-        if(ratio<0.4||ratio>2.6) return finish(20);
+        // صور landscape (عرض > ارتفاع) غالباً خرائط أو screenshots — استبعاد
+        if(ratio>1.2) return finish(10);
+        if(ratio<0.4) return finish(20);
         const size=32;
         const canvas=document.createElement('canvas');
         canvas.width=size; canvas.height=size;
@@ -2459,12 +2461,18 @@ function qCheckImage(url){
         ctx.drawImage(img,0,0,size,size);
         const data=ctx.getImageData(0,0,size,size).data;
         const n=size*size, gray=new Float32Array(n);
-        let sum=0;
+        let sum=0, lightPixels=0;
         for(let i=0;i<n;i++){
-          const v=0.299*data[i*4]+0.587*data[i*4+1]+0.114*data[i*4+2];
+          const r=data[i*4],g=data[i*4+1],b=data[i*4+2];
+          const v=0.299*r+0.587*g+0.114*b;
           gray[i]=v; sum+=v;
+          if(v>200) lightPixels++;
         }
+        // صورة فيها أكثر من 60% بكسلات فاتحة → خريطة أو خلفية بيضاء → استبعاد
+        if(lightPixels/n>0.60) return finish(10);
         const mean=sum/n;
+        // صورة متوسط سطوعها عالي جداً → فاتحة جداً مثل الخرائط
+        if(mean>185) return finish(10);
         let sumSq=0;
         for(let i=0;i<n;i++) sumSq+=(gray[i]-mean)*(gray[i]-mean);
         const variance=sumSq/n;
@@ -2482,7 +2490,9 @@ function qCheckImage(url){
         if(edgeVar<3) score-=40; else if(edgeVar<6) score-=15;
         return finish(Math.max(0,Math.min(100,score)));
       }catch(e){
-        return finish(60); // canvas محجوب بسبب CORS — لا يمكن الفحص، نقبلها بدرجة متوسطة
+        // CORS — لا يمكن قراءة pixels، نقبل الصورة بشرط أن نسبة الأبعاد portrait
+        const ratio=img.naturalWidth/img.naturalHeight;
+        return finish(ratio<=1.2 ? 60 : 10);
       }
     };
     img.onerror=()=>finish(0);
@@ -3047,10 +3057,9 @@ async function _loadFavTrending(){
   try{
     const res=await fetch('https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=make-up&json=true&page=1&page_size=8&fields=code,product_name,brands,image_front_display_url&nocache=1');
     const data=await res.json();
-    const BAD=['maps.google','static.openfoodfacts','placeholder','map','street','gstatic'];
     const prods=(data.products||[]).filter(p=>{
-      const img=(p.image_front_display_url||'').toLowerCase();
-      return p.product_name&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
+      const img=(p.image_front_display_url||'');
+      return p.product_name && qIsGoodImgUrl(img);
     }).slice(0,4);
     box.innerHTML='';
     prods.forEach((p,i)=>{
@@ -4135,6 +4144,7 @@ function searchOBFCat(cat, el){
 
 // ══ OBF DISCOVER ══
 const PAGE_SIZE=24;
+const BRAND_PAGE_SIZE=20;
 
 async function fetchOBF(params, reset=false){
   if(obfLoading) return;
@@ -4146,14 +4156,8 @@ async function fetchOBF(params, reset=false){
   if(!obfHasMore) return;
   obfLoading=true;
   const isFirst = reset;
-  // نفس قائمة الفلترة المستخدمة في makeProductCard — لازم تتطابق
-  const BAD=['static.openfoodfacts','maps.google','placeholder','default','no-img',
-             'translate.google','gstatic.com','ggpht','maps.gstatic','maps.googleapis',
-             'icon','thumb','streetview','map','street'];
   const collected=[];
   try{
-    // نجلب صفحات متتالية (بحد أقصى 6 محاولات) حتى نجمع عدد كافٍ من المنتجات
-    // اللي عندها صورة حقيقية فعلاً — بدل تعبئة الناقص بمنتجات بدون صورة
     for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
       const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
       const res=await fetch(url);
@@ -4161,9 +4165,9 @@ async function fetchOBF(params, reset=false){
       const total=parseInt(data.count)||0;
       const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
       const withImg=allP.filter(p=>{
-        const img=(p.image_front_display_url||p.image_url||'').toLowerCase();
+        const img=(p.image_front_display_url||p.image_url||'');
         const notBlocked = !p.code || !blockedProducts.has(p.code);
-        return notBlocked && img&&img.startsWith('http')&&!BAD.some(b=>img.includes(b));
+        return notBlocked && qIsGoodImgUrl(img);
       });
       // بوابات الجودة والتكرار: نفحص فقط المرشحين اللي نجحوا بالفلتر الأولي (أسرع)
       const passed = await qFilterProducts(withImg, obfSeenSet, 55);
