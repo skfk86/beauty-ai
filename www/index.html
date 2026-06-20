@@ -794,52 +794,57 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
 }
 
 /* ══ BRAND CARDS — Premium Discovery Grid ══ */
+/* ══ BRANDS GRID — 3-col default / 5-col full view ══ */
 #b-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:12px;padding:12px 16px 20px;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;padding:10px 14px 20px;
+}
+#b-grid.full-view{
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;padding:10px 12px 20px;
 }
 .bc{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r-lg);cursor:pointer;overflow:hidden;
+  background:#0e0814;border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--r-md);cursor:pointer;overflow:hidden;
   transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
-  position:relative;box-shadow:var(--shadow-sm);
+  position:relative;
   animation:cardIn var(--dur-slow) var(--ease-out) backwards;
 }
-.bc:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
-.bc:active{transform:scale(.96);box-shadow:none}
+.bc:active{transform:scale(.94)}
+
+/* البطاقة الكبيرة (3 أعمدة) */
 .bc-banner{
-  height:100px;display:flex;align-items:center;
+  height:90px;display:flex;align-items:center;
   justify-content:center;position:relative;overflow:hidden;
-  background:linear-gradient(135deg,var(--card2),var(--bg));
-}
-.bc-banner::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 30%,rgba(0,0,0,.6));
+  background:#0a0610;
 }
 .bc-logo{
-  width:68px;height:68px;border-radius:var(--r-md);
-  object-fit:contain;background:#fff;padding:6px;
-  position:relative;z-index:1;
-  box-shadow:0 4px 16px rgba(0,0,0,.35);
+  width:100%;height:100%;object-fit:contain;
+  padding:14px;filter:brightness(.95);
+  transition:filter var(--dur-base);
 }
+.bc:active .bc-logo{filter:brightness(1.05)}
 .bc-logo-fb{
-  width:68px;height:68px;border-radius:var(--r-md);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;font-weight:900;letter-spacing:-1px;
-  position:relative;z-index:1;
-  background:var(--card2);border:1px solid var(--border);
+  width:100%;height:100%;display:flex;align-items:center;
+  justify-content:center;font-size:13px;font-weight:900;
+  letter-spacing:-.5px;color:rgba(255,255,255,.7);
+  padding:10px;text-align:center;line-height:1.3;
 }
-.bc-body{padding:11px 12px 13px}
+/* وضع 5 أعمدة — بدون نص تحت الصورة */
+#b-grid.full-view .bc-banner{height:56px}
+#b-grid.full-view .bc-logo{padding:8px}
+#b-grid.full-view .bc-logo-fb{font-size:8px}
+#b-grid.full-view .bc-body{display:none}
+.bc-body{padding:8px 10px 10px}
 .bc-name{
-  font-size:13px;font-weight:900;color:var(--text);
-  margin-bottom:5px;letter-spacing:-.3px;
+  font-size:11px;font-weight:800;color:rgba(255,255,255,.85);
+  letter-spacing:-.1px;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 .bc-cat{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:9px;font-weight:700;letter-spacing:.8px;
-  text-transform:uppercase;padding:3px 10px;border-radius:var(--r-full);
-  background:var(--rose-d);color:var(--rose2);
-  border:1px solid rgba(208,66,114,.2);
+  font-size:8px;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.35);
+  margin-top:3px;
 }
 
 /* ══ BRAND DETAIL — Luxury Hero ══ */
@@ -1286,48 +1291,6 @@ body.light-mode .bnav{
 body.light-mode .ft{background:var(--card);color:var(--dim);border-color:var(--border)}
 body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose)}
 
-/* ── Brand Grid ── */
-#b-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);
-  gap:14px;padding:14px 18px 20px;
-}
-.bc{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:22px;cursor:pointer;overflow:hidden;
-  transition:transform .18s,box-shadow .18s;
-  box-shadow:var(--shadow-sm);
-}
-.bc:active{transform:scale(.95);box-shadow:none}
-.bc-banner{
-  height:120px;display:flex;align-items:center;
-  justify-content:center;position:relative;overflow:hidden;
-}
-.bc-logo{
-  width:80px;height:80px;border-radius:18px;
-  object-fit:contain;background:#fff;padding:8px;
-  box-shadow:0 4px 16px rgba(0,0,0,.3);
-  position:relative;z-index:1;
-}
-.bc-logo-fb{
-  width:80px;height:80px;border-radius:18px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;font-weight:900;
-  position:relative;z-index:1;
-  box-shadow:0 4px 16px rgba(0,0,0,.2);
-}
-.bc-body{padding:12px 14px 16px}
-.bc-name{
-  font-size:14px;font-weight:800;color:var(--text);
-  margin-bottom:6px;letter-spacing:-.3px;
-}
-.bc-cat{
-  display:inline-flex;align-items:center;gap:4px;
-  font-size:9px;font-weight:700;letter-spacing:1px;
-  text-transform:uppercase;padding:4px 10px;border-radius:20px;
-  background:var(--rose-d);color:var(--rose2);
-  border:1px solid rgba(214,61,110,.2);
-}
-
 /* ── Product Cards ── */
 #obf-grid,#bd-prods{
   display:grid;grid-template-columns:repeat(2,1fr);
@@ -1737,16 +1700,15 @@ body.light-mode textarea{
     <div id="hero-card" onclick="heroCardClick()"
       style="margin:0 16px 16px;border-radius:var(--r-xl);overflow:hidden;position:relative;
              height:150px;cursor:pointer;box-shadow:var(--shadow-glow);
-             animation:cardIn var(--dur-slow) var(--ease-out) backwards .1s">
-      <div id="hero-bg" style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0820,#0e0512);transition:background .5s"></div>
-      <div id="hero-watermark" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none">
-        <div id="hero-logo-text" style="font-size:54px;font-weight:900;letter-spacing:3px;white-space:pre;text-align:center;line-height:.95;transform:rotate(-6deg) scale(1.25);font-family:Georgia,serif"></div>
-      </div>
-      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(7,1,10,.1) 0%,rgba(7,1,10,.85) 100%)"></div>
+             animation:cardIn var(--dur-slow) var(--ease-out) backwards .1s;
+             background:linear-gradient(135deg,#1a0820,#0e0512)">
+      <img id="hero-img" src="" alt="Featured Brand"
+        style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .6s">
+      <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(7,1,10,.05) 0%,rgba(7,1,10,.8) 100%)"></div>
       <div style="position:absolute;bottom:14px;right:16px;text-align:right">
-        <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:#eaaa60;text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
-        <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:#f8edf4;line-height:1.1">Rosiva</div>
-        <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.65);margin-top:2px">Beauty & Fragrance</div>
+        <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
+        <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1">Rosiva</div>
+        <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
       </div>
       <div style="position:absolute;bottom:14px;left:16px">
         <div style="background:var(--rose);color:#fff;font-size:10px;font-weight:800;
@@ -1805,6 +1767,33 @@ body.light-mode textarea{
       <div class="ft" onclick="setF('Skincare',this)">✨ بشرة</div>
       <div class="ft" onclick="setF('Hair',this)">💇 شعر</div>
     </div>
+
+    <!-- Hero Card روزيفا — يظهر فقط في وضع "الكل" -->
+    <div id="brands-hero" style="margin:0 14px 12px;border-radius:var(--r-xl);overflow:hidden;
+      cursor:pointer;position:relative;height:140px;
+      background:linear-gradient(135deg,#1a0c1e 0%,#0e0512 60%,#120818 100%);
+      box-shadow:0 0 40px rgba(214,61,110,.12),var(--shadow-lg);
+      animation:cardIn var(--dur-slow) var(--ease-out) backwards"
+      onclick="navTo('home')">
+      <!-- خلفية نجوم خفيفة -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(214,61,110,.08) 0%,transparent 70%)"></div>
+      <!-- نص -->
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;
+        align-items:center;justify-content:center;gap:6px">
+        <div style="font-size:32px;font-weight:900;letter-spacing:-1px;
+          background:linear-gradient(135deg,#e8b4c8 0%,#c8904a 50%,#e8c4a0 100%);
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          text-shadow:none;line-height:1">ROSIVA</div>
+        <div style="font-size:10px;letter-spacing:3px;color:rgba(200,160,180,.6);
+          text-transform:uppercase;font-weight:700">Beauty Assistant</div>
+      </div>
+      <!-- شارة NEW -->
+      <div style="position:absolute;top:12px;left:14px;
+        background:rgba(196,136,74,.15);border:1px solid rgba(196,136,74,.3);
+        border-radius:var(--r-full);padding:3px 10px;
+        font-size:9px;font-weight:800;color:var(--gold2);letter-spacing:1.5px">NEW</div>
+    </div>
+
     <div class="brands-grid" id="b-grid"></div>
     <div class="view-all" id="view-all-btn" onclick="showAllBrands()">
       <span style="font-size:14px">✦</span><span>عرض جميع البراندات</span>
@@ -2402,19 +2391,10 @@ function initHeroCard(){
   if(!brand)return;
   document.getElementById('hero-name').textContent = brand.ar||brand.nm||'Rosiva';
   document.getElementById('hero-cat').textContent = brand.cat||'Beauty';
-  const bgEl = document.getElementById('hero-bg');
-  if(bgEl){
-    const base = brand.bg||'#1a0820';
-    const accent = brand.border||'#0e0512';
-    bgEl.style.background =
-      `radial-gradient(circle at 75% 15%, ${accent}66, transparent 55%),` +
-      `radial-gradient(circle at 10% 90%, ${accent}33, transparent 60%),` +
-      `linear-gradient(135deg, ${base}, #0e0512 75%)`;
-  }
-  const wm = document.getElementById('hero-logo-text');
-  if(wm){
-    wm.textContent = brand.logo || brand.nm || '';
-    wm.style.color = (brand.lc||'#ffffff') + '20';
+  if(brand.logo){
+    const img = document.getElementById('hero-img');
+    img.src = brand.logo;
+    img.onload = ()=>{ img.style.opacity='0.55'; };
   }
   _heroBrandId = brand.id;
 }
@@ -2522,36 +2502,57 @@ function renderBrands(showAll=false){
     const qm=!q||b.nm.toLowerCase().includes(q)||b.ar.includes(q)||b.cat.toLowerCase().includes(q);
     return cm&&qm;
   });
-  const grid = document.getElementById('b-grid');
-  const viewAllBtn = document.getElementById('view-all-btn');
+  const grid=document.getElementById('b-grid');
+  const viewAllBtn=document.getElementById('view-all-btn');
+
+  // Hero Card روزيفا — تظهر فقط في وضع "الكل" بدون فلتر أو بحث
+  const heroBox=document.getElementById('brands-hero');
+  if(heroBox){
+    heroBox.style.display=(curFilter==='All'&&!q&&!showAll)?'block':'none';
+  }
+
   if(!list.length){
     grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--dim);font-size:13px">لم يُعثر على براندات</div>';
+    grid.classList.remove('full-view');
     if(viewAllBtn) viewAllBtn.style.display='none';
     return;
   }
-  // عرض 8 براندات افتراضياً، ثم الكل بزر "عرض الجميع"
-  const display = (showAll || q) ? list : list.slice(0,8);
-  grid.innerHTML = display.map((b,i)=>`
-    <div class="bc" onclick="openBrand('${b.id}')"
-      style="border-color:${b.border}40;box-shadow:0 4px 20px ${b.border}15;animation-delay:${i*45}ms">
-      <div class="bc-banner" style="background:linear-gradient(135deg,${b.bg} 0%,${b.border}25 100%)">
-        <img class="bc-logo"
-          src="https://logo.clearbit.com/${b.domain}?size=128"
-          alt="${b.nm}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="bc-logo-fb" style="display:none;background:${b.border}25;color:${b.border}">
-          ${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,3).toUpperCase()}
+
+  if(showAll){
+    // وضع 5 أعمدة — شبكة كثيفة سريعة المسح
+    grid.classList.add('full-view');
+    grid.innerHTML=list.map((b,i)=>`
+      <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*20}ms">
+        <div class="bc-banner">
+          <img class="bc-logo" src="https://logo.clearbit.com/${b.domain}?size=80" alt="${b.nm}"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
         </div>
+      </div>`).join('');
+    if(viewAllBtn) viewAllBtn.style.display='none';
+    return;
+  }
+
+  // وضع 3 أعمدة — العرض الافتراضي الفاخر
+  grid.classList.remove('full-view');
+  const display=q?list:list.slice(0,12);
+  grid.innerHTML=display.map((b,i)=>`
+    <div class="bc" onclick="openBrand('${b.id}')" style="animation-delay:${i*35}ms">
+      <div class="bc-banner">
+        <img class="bc-logo" src="https://logo.clearbit.com/${b.domain}?size=128" alt="${b.nm}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
       </div>
       <div class="bc-body">
         <div class="bc-name">${b.nm}</div>
         <div class="bc-cat">${b.cat}</div>
       </div>
     </div>`).join('');
+
   if(viewAllBtn){
-    if(!showAll && !q && list.length>8){
+    if(!q&&list.length>12){
       viewAllBtn.style.display='flex';
-      viewAllBtn.innerHTML=`<span style="font-size:14px">✦</span><span>عرض جميع البراندات (${list.length})</span>`;
+      viewAllBtn.innerHTML=`<span>⊞</span><span>عرض جميع البراندات (${list.length})</span>`;
     } else {
       viewAllBtn.style.display='none';
     }
