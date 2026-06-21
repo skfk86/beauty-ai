@@ -1862,6 +1862,37 @@ body.light-mode .pdm-ic-float{
 .bdv-viewall:active{transform:scale(.97)}
 .bdv-viewall i{font-size:11px}
 
+/* ══════════════════════════════════════════════════
+   REDESIGN v5 — Favorites page cards (نفس تصميم بطاقات قسم البراندات)
+   ══════════════════════════════════════════════════ */
+#fav-grid,#fav-trending{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;
+}
+#fav-grid .obf-card,#fav-trending .obf-card{
+  display:flex;flex-direction:column;align-items:stretch;
+  position:relative;border-radius:16px;overflow:hidden;padding:0;
+  background:var(--card);border:1px solid var(--border);gap:0;
+}
+#fav-grid .obf-card-img,#fav-trending .obf-card-img{
+  width:100%;height:150px;min-width:0;border-radius:0;
+}
+#fav-grid .obf-card-fav,#fav-trending .obf-card-fav{
+  position:absolute;top:8px;right:8px;z-index:3;
+  background:rgba(10,3,12,.45);border-radius:50%;width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;color:#fff;
+}
+#fav-grid .obf-card-fav.on,#fav-trending .obf-card-fav.on{color:var(--rose)}
+#fav-grid .obf-card-body,#fav-trending .obf-card-body{padding:10px 12px 12px}
+#fav-grid .obf-card-name,#fav-trending .obf-card-name{font-size:12.5px;-webkit-line-clamp:2;margin-bottom:3px}
+#fav-grid .obf-card-brand,#fav-trending .obf-card-brand{font-size:10.5px;color:var(--dim);margin-bottom:8px}
+#fav-grid .obf-card-sub,#fav-trending .obf-card-sub{display:none}
+#fav-grid .obf-card-footer,#fav-trending .obf-card-footer{margin-top:0;justify-content:flex-start}
+#fav-grid .obf-card-link,#fav-trending .obf-card-link{display:none}
+#fav-grid .obf-card-cart,#fav-trending .obf-card-cart{
+  width:32px;height:32px;border-radius:10px;background:transparent;
+  border:1.5px solid var(--rose);color:var(--rose2);box-shadow:none;margin-right:0;
+}
+
 
 </style>
 </head>
@@ -2395,6 +2426,7 @@ body.light-mode .pdm-ic-float{
     </div>
     <!-- Products Grid -->
     <div id="obf-grid"></div>
+    <div id="obf-sentinel" style="height:1px"></div>
     <div id="obf-load-more" style="display:none;text-align:center;padding:20px">
       <div class="dots"><span></span><span></span><span></span></div>
     </div>
@@ -2976,19 +3008,33 @@ function navTo(s){
     if(!grid.innerHTML.trim() || grid.innerHTML.includes('No results')){
       if(firstTab) searchOBFCat('make-up', firstTab);
     }
-    // Infinite scroll for Discover
-  (function setupDiscoverScroll(){
-    const screen = document.getElementById('s-discover');
-    if(!screen) return;
-    screen.removeEventListener('scroll', screen._obfScroll);
-    screen._obfScroll = function(){
-      if(obfLoading || !obfHasMore) return;
-      if(screen.scrollHeight - screen.scrollTop - screen.clientHeight < 600)
-        fetchOBF(obfCurrentParams, false);
-    };
-    screen.addEventListener('scroll', screen._obfScroll, {passive:true});
-  })();
+    // Infinite scroll for Discover — IntersectionObserver (أكثر استقراراً من حساب موضع السكرول)
+    setupDiscoverInfiniteScroll();
   }
+}
+
+let _obfObserver = null;
+function setupDiscoverInfiniteScroll(){
+  const sentinel = document.getElementById('obf-sentinel');
+  const screen   = document.getElementById('s-discover');
+  if(!sentinel || !screen) return;
+  if(_obfObserver) _obfObserver.disconnect();
+  _obfObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting && !obfLoading && obfHasMore){
+        fetchOBF(obfCurrentParams, false);
+      }
+    });
+  }, { root: screen, rootMargin: '0px 0px 400px 0px', threshold: 0 });
+  _obfObserver.observe(sentinel);
+  // احتياط: لو IntersectionObserver فشل لأي سبب (متصفحات قديمة)، نضيف فحص سكرول تقليدي كنسخة احتياطية
+  screen.removeEventListener('scroll', screen._obfScroll);
+  screen._obfScroll = function(){
+    if(obfLoading || !obfHasMore) return;
+    if(screen.scrollHeight - screen.scrollTop - screen.clientHeight < 500)
+      fetchOBF(obfCurrentParams, false);
+  };
+  screen.addEventListener('scroll', screen._obfScroll, {passive:true});
 }
 
 function goF(cat){
@@ -3408,7 +3454,8 @@ function renderFavs(){
   if(clearBtn) clearBtn.style.display='block';
   c.innerHTML='';
   const grid=document.createElement('div');
-  grid.style.cssText='display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px 16px 80px';
+  grid.id='fav-grid';
+  grid.style.cssText='padding:12px 16px 80px';
   c.appendChild(grid);
   favs.forEach((fav,i)=>{
     const name = fav.nm || fav.name || 'Product';
@@ -4855,6 +4902,8 @@ async function fetchOBF(params, reset=false){
   if(!obfHasMore) return;
   obfLoading=true;
   const isFirst = reset;
+  const loadMoreEl = document.getElementById('obf-load-more');
+  if(!isFirst && loadMoreEl) loadMoreEl.style.display='block';
   const collected=[];
   try{
     for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
@@ -4900,6 +4949,7 @@ async function fetchOBF(params, reset=false){
     if(isFirst) document.getElementById('obf-grid').innerHTML=
       '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:12px">❌ Check your internet connection</div>';
   }
+  if(loadMoreEl) loadMoreEl.style.display='none';
   obfLoading=false;
 }
 
