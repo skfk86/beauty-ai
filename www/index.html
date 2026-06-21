@@ -1621,6 +1621,142 @@ body.light-mode textarea{
 /* بطاقة المنتج بدون سعر/تقييم وهمي — استبدال بزر سلة فعلي */
 .pdm-rating{display:none !important}
 
+/* ══════════════════════════════════════════════════
+   REDESIGN v3 — Discover list cards + Product detail
+   ══════════════════════════════════════════════════ */
+
+/* ── Discover: list-style cards (matches reference) ── */
+#obf-grid{
+  display:flex !important;flex-direction:column;
+  grid-template-columns:none !important;
+  gap:12px;padding:6px 16px 20px;
+}
+#obf-grid .obf-card{
+  display:flex;flex-direction:row-reverse;align-items:center;
+  gap:12px;padding:10px;border-radius:18px;
+  background:var(--card);border:1px solid var(--border);
+  position:relative;overflow:visible;
+}
+#obf-grid .obf-card-img{
+  width:78px;height:78px;min-width:78px;flex-shrink:0;
+  border-radius:14px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+#obf-grid .obf-card-img img{width:100%;height:100%;object-fit:cover}
+#obf-grid .obf-card-badge{display:none}
+#obf-grid .obf-card-body{flex:1;padding:0;min-width:0}
+#obf-grid .obf-card-name{
+  font-size:13.5px;font-weight:800;color:var(--text);
+  margin-bottom:4px;min-height:0;-webkit-line-clamp:2;
+}
+#obf-grid .obf-card-brand{
+  font-size:11px;font-weight:600;color:var(--dim);
+  text-transform:none;letter-spacing:0;margin-bottom:2px;
+}
+#obf-grid .obf-card-sub{
+  font-size:10.5px;color:var(--muted);margin-bottom:6px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+#obf-grid .obf-card-footer{margin-top:2px;justify-content:flex-start}
+#obf-grid .obf-card-link{
+  font-size:11.5px;font-weight:700;color:var(--rose2);
+  display:flex;align-items:center;gap:5px;cursor:pointer;
+}
+#obf-grid .obf-card-fav{
+  position:absolute;top:8px;left:8px;
+  background:transparent;border:none;color:var(--dim);
+  width:22px;height:22px;backdrop-filter:none;
+}
+#obf-grid .obf-card-fav.on{color:var(--rose)}
+#obf-grid .obf-card-cart{
+  width:34px;height:34px;margin-right:auto;
+  background:var(--rose);box-shadow:0 3px 10px rgba(214,61,110,.35);
+}
+body.light-mode #obf-grid .obf-card{background:#fff;border-color:var(--border)}
+
+/* ── Product detail v2: floating header ── */
+.pdm-header-v2{
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  background:transparent;border-bottom:none;backdrop-filter:none;
+  box-shadow:none;
+}
+.pdm-ic-float{
+  background:rgba(10,3,12,.45);backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.14);color:#fff;
+}
+.pdm-ic-float.saved{background:var(--rose);border-color:var(--rose)}
+body.light-mode .pdm-ic-float{
+  background:rgba(0,0,0,.35) !important;border-color:rgba(255,255,255,.2) !important;color:#fff !important;
+}
+
+/* ── Gallery v2 ── */
+.pdm-gallery-v2{
+  min-height:340px;background:radial-gradient(circle at 50% 35%,rgba(214,61,110,.10),transparent 60%),var(--bg);
+  border-bottom:none;display:flex;align-items:center;justify-content:center;padding-top:10px;
+}
+.pdm-gallery-v2 .pdm-gallery-img{
+  width:auto;max-width:62%;height:300px;object-fit:contain;
+  filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));
+}
+.pdm-thumbs{
+  position:absolute;left:14px;top:70px;display:flex;flex-direction:column;gap:8px;
+}
+.pdm-thumb{
+  width:46px;height:46px;border-radius:12px;background:#fff;
+  border:2px solid transparent;overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.pdm-thumb.on{border-color:var(--rose)}
+.pdm-thumb img{width:100%;height:100%;object-fit:cover}
+
+/* ── Info v2 ── */
+.pdm-info-v2{padding:18px 18px 4px;text-align:right}
+.pdm-name-v2{font-size:19px;font-weight:900;color:var(--text);line-height:1.4;letter-spacing:-.3px}
+.pdm-cat-v2{font-size:12px;color:var(--dim);margin-top:6px;font-weight:600}
+.pdm-desc-v2{font-size:12.5px;color:var(--dim);line-height:1.95;margin-top:12px}
+
+/* ── Ingredients block v2 ── */
+.pdm-ingr-block{margin:18px 18px 0;padding-bottom:6px}
+.pdm-ingr-hd{
+  display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;
+  color:var(--text);margin-bottom:12px;
+}
+.pdm-ingr-bar{width:3px;height:16px;border-radius:2px;background:var(--rose)}
+.pdm-ingr-chips{display:flex;gap:8px;flex-wrap:wrap}
+.pdm-ingr-chip{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-full);
+  padding:7px 14px;font-size:11.5px;font-weight:600;color:var(--text);
+}
+.pdm-ingr-toggle{
+  margin-top:12px;font-size:12px;font-weight:700;color:var(--dim);
+  display:flex;align-items:center;gap:6px;cursor:pointer;
+}
+.pdm-ingr-toggle .chevron{font-size:10px;transition:transform .2s}
+.pdm-ingr-toggle.open .chevron{transform:rotate(180deg)}
+
+/* ── Bottom sticky CTA bar ── */
+#prod-detail-modal.open ~ .bnav{display:none}
+.pdm-cta-bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:15;
+  display:flex;gap:10px;padding:12px 16px;
+  padding-bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  background:linear-gradient(180deg,transparent,var(--bg) 35%);
+}
+.pdm-cta-bag{
+  width:52px;height:52px;flex-shrink:0;border-radius:16px;
+  background:var(--card);border:1.5px solid var(--border);color:var(--text);
+  display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;
+}
+.pdm-cta-bag:active{transform:scale(.94)}
+.pdm-cta-main{
+  flex:1;border:none;border-radius:16px;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  color:#fff;font-size:14px;font-weight:800;font-family:'Cairo',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+  box-shadow:0 8px 24px rgba(214,61,110,.35);
+}
+.pdm-cta-main:active{transform:scale(.97)}
+.pdm-body{padding-bottom:94px}
+
 </style>
 </head>
 <body>
@@ -1871,17 +2007,31 @@ body.light-mode textarea{
 
   <!-- PRODUCT DETAIL MODAL -->
 <div id="prod-detail-modal">
-  <div class="pdm-header">
-    <div class="pdm-back" onclick="closeProdDetail()">
-      <i class="fa-solid fa-arrow-right"></i>
+  <div class="pdm-header pdm-header-v2">
+    <div class="pdm-back pdm-ic-float" onclick="closeProdDetail()" aria-label="رجوع">
+      <i class="fa-solid fa-chevron-right"></i>
     </div>
-    <div class="pdm-title" id="pdm-title">Product Details</div>
-    <button class="pdm-fav-btn" onclick="shareProd()" id="pdm-share-btn" aria-label="حفظ في المفضلة">
-      <i class="fa-regular fa-heart" id="pdm-heart-icon"></i>
-    </button>
+    <div class="pdm-title" id="pdm-title" style="display:none">Product Details</div>
+    <div style="display:flex;gap:10px;margin-right:0">
+      <button class="pdm-fav-btn pdm-ic-float" onclick="shareProd()" id="pdm-share-btn" aria-label="حفظ في المفضلة">
+        <i class="fa-regular fa-heart" id="pdm-heart-icon"></i>
+      </button>
+      <button class="pdm-fav-btn pdm-ic-float" onclick="shareProdLink()" aria-label="مشاركة المنتج">
+        <i class="fa-solid fa-share-nodes"></i>
+      </button>
+    </div>
   </div>
   <div class="pdm-body" id="pdm-body">
     <!-- injected dynamically -->
+  </div>
+  <div class="pdm-cta-bar" id="pdm-cta-bar">
+    <button class="pdm-cta-bag" id="pdm-cta-bag" aria-label="متجر بديل">
+      <i class="fa-solid fa-bag-shopping"></i>
+    </button>
+    <button class="pdm-cta-main" id="pdm-cta-main">
+      <span>عرض المنتج في المتجر</span>
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </button>
   </div>
 </div>
 
@@ -4113,26 +4263,22 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   const el = document.createElement('div');
   el.className = 'obf-card';
   el.style.position = 'relative';
+
+  // صورة المنتج (مصغّرة، جانبية)
   const imgWrap = document.createElement('div');
   imgWrap.className = 'obf-card-img';
-  if(img){
-    const imgEl = document.createElement('img');
-    imgEl.src = img; imgEl.alt = name; imgEl.loading = 'lazy';
-    const fb = document.createElement('div');
-    fb.className = 'obf-card-img-fb';
-    fb.style.display = 'none';
-    fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
-    imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; };
-    imgWrap.appendChild(imgEl);
-    imgWrap.appendChild(fb);
-  } else {
-    const fb = document.createElement('div');
-    fb.className = 'obf-card-img-fb';
-    fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:32px;color:var(--dim)"></i>';
-    imgWrap.appendChild(fb);
-  }
+  const imgEl = document.createElement('img');
+  imgEl.src = img; imgEl.alt = name; imgEl.loading = 'lazy';
+  const fb = document.createElement('div');
+  fb.className = 'obf-card-img-fb';
+  fb.style.display = 'none';
+  fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:22px;color:var(--dim)"></i>';
+  imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; };
+  imgWrap.appendChild(imgEl);
+  imgWrap.appendChild(fb);
+  el.appendChild(imgWrap);
 
-  // زر مفضلة (heart) — بديل عرض السعر/التقييم غير المتوفر
+  // زر مفضلة (heart) — أعلى يمين البطاقة كاملة
   const favBtn = document.createElement('button');
   favBtn.className = 'obf-card-fav';
   const isFavNow = favs.some(f=>f.nm===name);
@@ -4150,43 +4296,46 @@ function makeProductCard(name, brand, img, ingr, labels, code){
       favs.push({nm:name, br:brand, img, ingr, labels:labels||''});
       favBtn.classList.add('on');
       favBtn.innerHTML = '<i class="fa-solid fa-heart"></i>';
-      showToast('Added to Favorites ❤️');
+      showToast('تمت الإضافة للمفضلة ❤️');
     }
     localStorage.setItem('bai_favs', JSON.stringify(favs));
   };
-  imgWrap.appendChild(favBtn);
-  const lLow = (labels||'').toLowerCase();
-  if(lLow.includes('natural')||lLow.includes('organic')||lLow.includes('vegan')){
-    const badge = document.createElement('div');
-    badge.className = 'obf-card-badge';
-    badge.textContent = '🌿 Natural';
-    imgWrap.appendChild(badge);
-  }
-  el.appendChild(imgWrap);
+  el.appendChild(favBtn);
+
+  // محتوى البطاقة (اسم + تصنيف + مكونات + رابط التفاصيل)
+  const {cat} = guessArabicDesc(name, labels);
+  const chips = parseIngrChips(ingr);
+
   const body = document.createElement('div');
   body.className = 'obf-card-body';
-  if(brand){
-    const br = document.createElement('div');
-    br.className = 'obf-card-brand';
-    br.textContent = brand.substring(0,22);
-    body.appendChild(br);
-  }
+
   const nm = document.createElement('div');
   nm.className = 'obf-card-name';
   nm.textContent = name;
   body.appendChild(nm);
-  // صف سفلي: لا سعر ولا تقييم (غير متوفر) — فقط حالة التوفر وزر سلة/شراء
+
+  const br = document.createElement('div');
+  br.className = 'obf-card-brand';
+  br.textContent = cat;
+  body.appendChild(br);
+
+  const sub = document.createElement('div');
+  sub.className = 'obf-card-sub';
+  sub.textContent = chips.length ? chips.join(' · ') : 'مكونات طبيعية خفيفة';
+  body.appendChild(sub);
+
+  // صف سفلي: رابط "عرض التفاصيل" + زر سلة/شراء
   const footer = document.createElement('div');
   footer.className = 'obf-card-footer';
-  const avail = document.createElement('span');
-  avail.className = 'obf-card-avail';
-  avail.innerHTML = '<i class="fa-solid fa-circle"></i> متوفر';
+  const link = document.createElement('span');
+  link.className = 'obf-card-link';
+  link.innerHTML = '<i class="fa-solid fa-arrow-left"></i> عرض التفاصيل';
   const cartBtn = document.createElement('button');
   cartBtn.className = 'obf-card-cart';
   cartBtn.title = 'شراء';
   cartBtn.innerHTML = '<i class="fa-solid fa-cart-shopping"></i>';
   cartBtn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name); };
-  footer.appendChild(avail);
+  footer.appendChild(link);
   footer.appendChild(cartBtn);
   body.appendChild(footer);
   el.appendChild(body);
@@ -4678,56 +4827,49 @@ function openProdDetail(p){
   const isNatural = lLow.includes('natural');
   const isCruelty = lLow.includes('cruelty');
 
+  const {cat, desc, extra} = guessArabicDesc(p.name, labels);
+  const chips = parseIngrChips(p.ingr);
+
   body.innerHTML = `
     <!-- Gallery -->
-    <div class="pdm-gallery">
+    <div class="pdm-gallery pdm-gallery-v2">
       ${p.img ? `<img src="${p.img}" alt="${p.name}" class="pdm-gallery-img"
           onerror="this.style.display='none';document.getElementById('pdm-no-img').style.display='flex'">` : ''}
       <div id="pdm-no-img" class="pdm-gallery-no-img" style="display:${p.img?'none':'flex'}">
         <i class="fa-solid fa-flask" style="font-size:48px;color:var(--dim)"></i>
-        <div style="font-size:12px;margin-top:8px;color:var(--dim)">No image available</div>
+        <div style="font-size:12px;margin-top:8px;color:var(--dim)">لا توجد صورة لهذا المنتج</div>
       </div>
+      ${p.img ? `
+      <div class="pdm-thumbs">
+        <div class="pdm-thumb on"><img src="${p.img}" alt=""></div>
+      </div>` : ''}
     </div>
 
-    <!-- Brand badge -->
-    ${brand ? `
-    <div class="pdm-brand-badge">
-      ${brandLogo
-        ? `<img class="pdm-brand-logo" src="${brandLogo}" alt="${brand}"
-            onerror="this.style.display='none'">`
-        : ''}
-      <div>
-        <div class="pdm-brand-name">${brand.substring(0,30)}</div>
-        <div class="pdm-brand-cat">${brandObj?.cat||'Beauty Brand'}</div>
-      </div>
-    </div>` : ''}
-
-    <!-- Product name & meta -->
-    <div class="pdm-info" dir="ltr">
-      <div class="pdm-name">${p.name}</div>
-      <div class="pdm-meta-row">
-        ${isVegan  ?'<div class="pdm-tag">🌱 Vegan</div>':''}
-        ${isOrganic?'<div class="pdm-tag">🌿 Organic</div>':''}
-        ${isNatural?'<div class="pdm-tag">✨ Natural</div>':''}
-        ${isCruelty?'<div class="pdm-tag">🐰 Cruelty-Free</div>':''}
-        <div class="pdm-tag"><i class="fa-solid fa-globe" style="font-size:9px"></i> Worldwide</div>
-      </div>
+    <!-- Product name & subtitle -->
+    <div class="pdm-info-v2">
+      <div class="pdm-name-v2">${p.name}</div>
+      <div class="pdm-cat-v2">${cat}${brand?' · '+brand.substring(0,24):''}</div>
+      <div class="pdm-desc-v2">${desc}</div>
     </div>
 
-    <!-- Buy buttons -->
-    <div class="pdm-buy-section">
-      <button class="pdm-buy-primary" onclick="buyOnAmazon('${p.name.replace(/'/g,"\\'")}')">
-        <i class="fa-brands fa-amazon"></i> Buy on Amazon
-      </button>
-      <button class="pdm-buy-secondary" onclick="searchSephora('${p.name.replace(/'/g,"\\'")}')">
-        <i class="fa-solid fa-bag-shopping"></i> Find on Sephora
-      </button>
+    <!-- Ingredients -->
+    <div class="pdm-ingr-block">
+      <div class="pdm-ingr-hd"><span class="pdm-ingr-bar"></span>المكونات</div>
+      <div class="pdm-ingr-chips">
+        ${chips.length ? chips.map(c=>`<span class="pdm-ingr-chip">🌿 ${c}</span>`).join('')
+          : extra.map(e=>`<span class="pdm-ingr-chip">${e}</span>`).join('') || `<span class="pdm-ingr-chip">✨ تركيبة عالية الجودة</span>`}
+      </div>
+      ${p.ingr ? `
+      <div class="pdm-ingr-toggle" onclick="togglePdmSection(this)">
+        عرض جميع المكونات <i class="fa-solid fa-chevron-down chevron"></i>
+      </div>
+      <div class="pdm-section-body">${p.ingr}</div>` : ''}
     </div>
 
     <!-- AI Analysis -->
     <div class="pdm-ai-card">
       <div class="pdm-ai-hd">
-        <i class="fa-solid fa-wand-magic-sparkles"></i> AI Beauty Analysis
+        <span class="pdm-ai-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> تحليل بالذكاء الاصطناعي</span>
       </div>
       <div class="pdm-ai-text" id="pdm-ai-text">
         <span style="color:var(--dim);font-size:12px">اضغطي "تحليل المنتج" لتحصلي على تحليل ذكاء اصطناعي لهذا المنتج.</span>
@@ -4737,25 +4879,11 @@ function openProdDetail(p){
           <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل المنتج
         </button>
         <button class="pdm-ai-btn speak" id="pdm-spk-btn" onclick="speakProdAI()" style="display:none">
-          <i class="fa-solid fa-volume-high"></i> Listen
+          <i class="fa-solid fa-volume-high"></i> استماع
         </button>
         <button class="pdm-ai-btn ask" onclick="askProdAI()">
-          <i class="fa-solid fa-comment"></i> Ask AI
+          <i class="fa-solid fa-comment"></i> اسأليني
         </button>
-      </div>
-    </div>
-
-    <!-- Ingredients -->
-    <div class="pdm-section">
-      <div class="pdm-section-hd" onclick="togglePdmSection(this)">
-        <i class="fa-solid fa-chevron-up chevron" style="margin-right:4px"></i>
-        <i class="fa-solid fa-flask"></i> Ingredients
-      </div>
-      <div class="pdm-section-body" style="display:block">
-        ${p.ingr
-          ? p.ingr
-          : '<span style="color:var(--dim);font-size:11px">No ingredient data available for this product.</span>'
-        }
       </div>
     </div>
 
@@ -4763,7 +4891,7 @@ function openProdDetail(p){
     ${lArr.length ? `
     <div class="pdm-section">
       <div class="pdm-section-hd" onclick="togglePdmSection(this)">
-        <i class="fa-solid fa-tags"></i> Labels & Certifications
+        <i class="fa-solid fa-tags"></i> الشهادات والملصقات
         <i class="fa-solid fa-chevron-down chevron"></i>
       </div>
       <div class="pdm-section-body" style="display:none">
@@ -4775,20 +4903,25 @@ function openProdDetail(p){
 
     <!-- How to use -->
     <div class="pdm-section">
-      <div class="pdm-section-hd open" onclick="togglePdmSection(this)">
-        <i class="fa-solid fa-circle-info"></i> How to Use
-        <i class="fa-solid fa-chevron-down chevron" style="transform:rotate(180deg)"></i>
+      <div class="pdm-section-hd" onclick="togglePdmSection(this)">
+        <i class="fa-solid fa-circle-info"></i> طريقة الاستخدام
+        <i class="fa-solid fa-chevron-down chevron"></i>
       </div>
-      <div class="pdm-section-body open" dir="ltr" style="text-align:left">
-        Apply a small amount to clean skin and blend well.<br>
-        For external use only — avoid contact with eyes.<br>
-        Patch test recommended for sensitive skin.<br>
-        Store in a cool, dry place away from heat.
+      <div class="pdm-section-body">
+        تُستخدم كمية صغيرة على بشرة نظيفة ويتم توزيعها برفق.<br>
+        للاستخدام الخارجي فقط — يُجنّب التلامس مع العينين.<br>
+        يُفضّل إجراء اختبار حساسية للبشرة الحساسة.<br>
+        يُحفظ في مكان بارد وجاف بعيداً عن الحرارة المباشرة.
       </div>
     </div>
 
-    <div style="height:20px"></div>
+    <div style="height:16px"></div>
   `;
+
+  // ربط شريط الإجراء السفلي الثابت
+  const safeName = p.name.replace(/'/g,"\\'");
+  document.getElementById('pdm-cta-main').onclick = ()=> buyOnAmazon(p.name);
+  document.getElementById('pdm-cta-bag').onclick  = ()=> searchSephora(p.name);
 
   modal.classList.add('open');
 }
@@ -4814,6 +4947,57 @@ function shareProd(){
   btn.classList.toggle('saved', isFavNow);
   const icon = document.getElementById('pdm-heart-icon');
   if(icon){ icon.className = isFavNow?'fa-solid fa-heart':'fa-regular fa-heart'; }
+}
+
+function shareProdLink(){
+  if(!currentProd) return;
+  const text = currentProd.name + (currentProd.brand?' — '+currentProd.brand:'');
+  if(navigator.share){
+    navigator.share({title:currentProd.name, text}).catch(()=>{});
+  } else {
+    showToast('تم نسخ اسم المنتج 📋');
+    if(navigator.clipboard) navigator.clipboard.writeText(text).catch(()=>{});
+  }
+}
+
+// تخمين وصف عربي قصير للمنتج بحسب اسمه/تصنيفاته (لا تتوفر أوصاف من OBF غالباً)
+function guessArabicDesc(name, labels){
+  const n = (name||'').toLowerCase();
+  const l = (labels||'').toLowerCase();
+  let cat = 'مكياج', desc = 'منتج تجميل مختار بعناية ضمن تشكيلة Rosiva لإطلالة طبيعية ومتقنة.';
+  if(/foundation|fond de teint/.test(n)){
+    cat='كريم أساس'; desc='كريم أساس يوحّد لون البشرة ويغطي العيوب بدرجة تغطية متوسطة إلى كاملة، مع لمسة نهائية مطفية تدوم طويلاً.';
+  } else if(/concealer/.test(n)){
+    cat='كونسيلر'; desc='كونسيلر خفيف يغطي الهالات والعيوب الصغيرة دون أن يثقل البشرة، بتركيبة قابلة للمزج بسهولة.';
+  } else if(/powder/.test(n)){
+    cat='بودرة'; desc='بودرة تثبيت تمنح لمسة نهائية مطفية وتقلل من ظهور المسام طوال اليوم.';
+  } else if(/lipstick|lip\s?gloss|lip\b/.test(n)){
+    cat='شفاه'; desc='منتج عناية وتجميل للشفاه بتركيبة مرطبة وألوان نابضة بالحياة تدوم طويلاً.';
+  } else if(/mascara|eyeliner|eyeshadow/.test(n)){
+    cat='مكياج عيون'; desc='منتج مكياج عيون بتركيبة سهلة الاستخدام يمنح إطلالة معبّرة تدوم طوال اليوم.';
+  } else if(/serum/.test(n)){
+    cat='سيروم'; desc='سيروم مركّز للعناية بالبشرة يساعد على ترطيبها وتحسين نضارتها مع الاستخدام المنتظم.';
+  } else if(/cream|moisturi[sz]er/.test(n)){
+    cat='كريم عناية'; desc='كريم عناية يومي يرطب البشرة بعمق ويحميها من العوامل الخارجية.';
+  } else if(/perfume|parfum|fragrance|eau de/.test(n)){
+    cat='عطر'; desc='عطر فاخر بتركيبة متوازنة من العطريات تمنحك حضوراً مميزاً يدوم طويلاً.';
+  } else if(/shampoo|hair/.test(n)){
+    cat='عناية بالشعر'; desc='منتج عناية بالشعر يساعد على تنظيفه وتغذيته ليبدو صحياً وناعماً.';
+  } else if(/nail/.test(n)){
+    cat='أظافر'; desc='منتج عناية بالأظافر بتركيبة سهلة التطبيق ولمسة نهائية أنيقة.';
+  }
+  const extra = [];
+  if(l.includes('vegan')) extra.push('نباتي 🌱');
+  if(l.includes('organic')) extra.push('عضوي 🌿');
+  if(l.includes('natural')) extra.push('مكونات طبيعية ✨');
+  if(l.includes('cruelty')) extra.push('غير مجرّب على الحيوانات 🐰');
+  return {cat, desc, extra};
+}
+
+// استخراج أول عدة مكونات كـ "chips" من نص المكونات الكامل
+function parseIngrChips(ingrText){
+  if(!ingrText) return [];
+  return ingrText.split(',').map(s=>s.trim()).filter(s=>s && s.length<28).slice(0,3);
 }
 
 function togglePdmSection(hd){
