@@ -1757,6 +1757,112 @@ body.light-mode .pdm-ic-float{
 .pdm-cta-main:active{transform:scale(.97)}
 .pdm-body{padding-bottom:94px}
 
+/* ══════════════════════════════════════════════════
+   REDESIGN v4 — Brand detail page
+   ══════════════════════════════════════════════════ */
+.bdv-hero{display:flex;align-items:center;gap:14px;padding:8px 18px 0}
+.bdv-logo{
+  width:96px;height:96px;min-width:96px;border-radius:22px;background:#fff;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.3);
+}
+.bdv-info{flex:1;min-width:0}
+.bdv-name{font-size:21px;font-weight:900;color:var(--text);letter-spacing:-.4px;display:flex;align-items:center;gap:8px}
+.bdv-name span{font-size:18px}
+.bdv-pill{
+  display:inline-block;margin-top:8px;padding:5px 14px;border-radius:var(--r-full);
+  background:var(--card2);color:var(--dim);font-size:10.5px;font-weight:800;
+  letter-spacing:.6px;
+}
+.bdv-desc{padding:14px 18px 0;font-size:12.5px;line-height:1.95;color:var(--dim)}
+.bdv-meta{display:flex;gap:10px;padding:16px 18px 0}
+.bdv-meta-item{
+  flex:1;display:flex;align-items:center;gap:9px;background:var(--card);
+  border:1px solid var(--border);border-radius:14px;padding:10px 12px;
+}
+.bdv-meta-item i{color:var(--rose2);font-size:14px}
+.bdv-meta-val{font-size:12.5px;font-weight:800;color:var(--text)}
+.bdv-meta-lb{font-size:9.5px;color:var(--dim);margin-top:1px}
+
+.bdv-ai-card{
+  margin:18px 18px 0;background:linear-gradient(135deg,rgba(24,14,26,.95),rgba(34,19,38,.95));
+  border:1px solid rgba(214,61,110,.2);border-radius:var(--r-xl);padding:16px;
+  display:flex;align-items:center;gap:14px;box-shadow:0 0 30px rgba(214,61,110,.06),var(--shadow-md);
+}
+.bdv-ai-left{flex:1;min-width:0}
+.bdv-ai-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.bdv-ai-ic{
+  width:24px;height:24px;border-radius:8px;background:var(--rose-d);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.bdv-ai-ic i{color:var(--gold2);font-size:11px}
+.bdv-ai-hd span{font-size:10.5px;font-weight:800;color:var(--gold2);letter-spacing:.8px}
+.bdv-ai-text{font-size:11.5px;line-height:1.85;color:var(--text)}
+.bdv-ai-btn{
+  flex-shrink:0;border:1.5px solid var(--rose);background:transparent;color:var(--rose2);
+  border-radius:var(--r-full);padding:11px 16px;font-size:11.5px;font-weight:800;
+  font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:6px;cursor:pointer;
+  white-space:nowrap;
+}
+.bdv-ai-btn:active{transform:scale(.95)}
+
+.bdv-sortrow{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 4px}
+.bdv-sort{
+  display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--dim);
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r-full);
+  padding:7px 13px;cursor:pointer;
+}
+.bdv-sort:active{transform:scale(.95)}
+
+/* صف المنتجات المميزة — سكرول أفقي، يتحول لشبكة كاملة عند الضغط على "عرض الكل" */
+#bd-prods{
+  display:flex;flex-direction:row-reverse;gap:12px;overflow-x:auto;
+  padding:6px 18px 6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+}
+#bd-prods::-webkit-scrollbar{display:none}
+#bd-prods .obf-card{
+  display:flex;flex-direction:column;align-items:stretch;
+  min-width:148px;max-width:148px;flex-shrink:0;scroll-snap-align:start;
+  position:relative;border-radius:16px;overflow:hidden;padding:0;
+  background:var(--card);border:1px solid var(--border);gap:0;
+}
+#bd-prods .obf-card-img{
+  width:100%;height:130px;min-width:0;border-radius:0;
+}
+#bd-prods .obf-card-fav{
+  position:absolute;top:8px;left:8px;z-index:3;
+  background:rgba(10,3,12,.4);border-radius:50%;width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;color:#fff;
+}
+#bd-prods .obf-card-fav.on{color:var(--rose)}
+#bd-prods .obf-card-body{padding:10px 11px 12px}
+#bd-prods .obf-card-name{font-size:12px;-webkit-line-clamp:2;margin-bottom:3px}
+#bd-prods .obf-card-brand{font-size:10.5px;color:var(--dim);margin-bottom:8px}
+#bd-prods .obf-card-sub{display:none}
+#bd-prods .obf-card-footer{margin-top:0;justify-content:flex-start}
+#bd-prods .obf-card-link{display:none}
+#bd-prods .obf-card-cart{
+  width:32px;height:32px;border-radius:10px;background:transparent;
+  border:1.5px solid var(--rose);color:var(--rose2);box-shadow:none;margin-right:0;
+}
+
+/* وضع "عرض الكل" — شبكة كاملة بعمودين */
+#bd-prods.expanded{
+  flex-wrap:wrap;overflow-x:visible;scroll-snap-type:none;
+  display:grid;grid-template-columns:repeat(2,1fr);padding:6px 18px 20px;
+}
+#bd-prods.expanded .obf-card{min-width:0;max-width:none}
+
+.bdv-viewall{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:14px 18px 0;padding:13px;border-radius:14px;
+  background:var(--card);border:1px solid var(--border);color:var(--dim);
+  font-size:12.5px;font-weight:700;font-family:'Cairo',sans-serif;cursor:pointer;width:calc(100% - 36px);
+}
+.bdv-viewall:active{transform:scale(.97)}
+.bdv-viewall i{font-size:11px}
+
+
 </style>
 </head>
 <body>
@@ -1971,37 +2077,74 @@ body.light-mode .pdm-ic-float{
       <div style="flex:1;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.3px">تفاصيل البراند</div>
       <div style="width:34px"></div>
     </div>
-    <div class="bd-hero-new" id="bd-hero">
-      <div class="bd-hero-bg" id="bd-hero-bg"></div>
-      <div class="bd-hero-glow"></div>
-      <div class="bd-hero-logo-wrap" id="bd-logo">
+
+    <!-- Hero: logo + name + meta -->
+    <div class="bdv-hero" id="bd-hero">
+      <div class="bdv-logo" id="bd-logo">
         <img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">
       </div>
-      <div class="bd-hero-name" id="bd-name"></div>
-      <div class="bd-hero-cat" id="bd-cat"></div>
+      <div class="bdv-info">
+        <div class="bdv-name" id="bd-name">Brand <span>👑</span></div>
+        <div class="bdv-pill" id="bd-cat">Category</div>
+      </div>
+    </div>
+    <div class="bdv-desc" id="bd-desc"></div>
+    <div class="bdv-meta">
+      <div class="bdv-meta-item">
+        <i class="fa-regular fa-calendar"></i>
+        <div><div class="bdv-meta-val" id="bd-year">—</div><div class="bdv-meta-lb">تأسست</div></div>
+      </div>
+      <div class="bdv-meta-item">
+        <i class="fa-solid fa-globe"></i>
+        <div><div class="bdv-meta-val" id="bd-country">—</div><div class="bdv-meta-lb">المنشأ</div></div>
+      </div>
+      <div class="bdv-meta-item">
+        <i class="fa-solid fa-tag"></i>
+        <div><div class="bdv-meta-val" id="bd-cat2">—</div><div class="bdv-meta-lb">الفئة</div></div>
+      </div>
     </div>
 
-    <!-- AI Insights — Elevated Premium Card -->
-    <div style="margin:16px 16px 0;background:linear-gradient(135deg,rgba(24,14,26,.95),rgba(34,19,38,.95));
-      border:1px solid rgba(214,61,110,.2);border-radius:var(--r-xl);padding:18px;
-      box-shadow:0 0 30px rgba(214,61,110,.06),var(--shadow-md)">
-      <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px">
-        <div style="width:28px;height:28px;border-radius:var(--r-sm);background:var(--rose-d);
-          display:flex;align-items:center;justify-content:center">
-          <i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2);font-size:12px"></i>
+    <!-- AI Insights — Premium horizontal card -->
+    <div class="bdv-ai-card">
+      <div class="bdv-ai-left">
+        <div class="bdv-ai-hd">
+          <div class="bdv-ai-ic"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+          <span>AI INSIGHTS</span>
         </div>
-        <div style="font-size:11px;font-weight:800;color:var(--gold2);letter-spacing:.8px;text-transform:uppercase">AI Insights</div>
+        <div id="bd-ai" class="bdv-ai-text"></div>
+        <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()">
+          <i class="fa-solid fa-volume-high"></i> استمعي للشرح
+        </button>
       </div>
-      <div id="bd-ai" style="font-size:13px;line-height:2;color:var(--text)">
-        <div class="dots"><span></span><span></span><span></span></div>
-      </div>
-      <button class="spk-btn" id="bd-spk" style="display:none;margin-top:12px" onclick="speakBr()">
-        <i class="fa-solid fa-volume-high"></i> استمعي للشرح
+      <button class="bdv-ai-btn" id="bd-ai-btn" onclick="triggerBrAI()">
+        <i class="fa-solid fa-sparkles"></i> احصل على توصيات
       </button>
     </div>
 
-    <div class="sec-lbl" style="margin-top:8px">أبرز المنتجات</div>
-    <div id="bd-prods" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:4px 16px 20px"></div>
+    <!-- Filter pills -->
+    <div class="ftabs" id="bd-ftabs">
+      <div class="ft on" onclick="filterBrandProds('all',this)">الكل</div>
+      <div class="ft" onclick="filterBrandProds('women',this)">نسائي</div>
+      <div class="ft" onclick="filterBrandProds('men',this)">رجالي</div>
+      <div class="ft" onclick="filterBrandProds('new',this)">جديد</div>
+      <div class="ft" onclick="filterBrandProds('best',this)">أكثر مبيعاً</div>
+    </div>
+
+    <!-- Sort + section label -->
+    <div class="bdv-sortrow">
+      <div class="sec-lbl" style="padding:0">أبرز المنتجات</div>
+      <div class="bdv-sort" onclick="sortBrandProds()"><i class="fa-solid fa-arrow-down-wide-short"></i> ترتيب</div>
+    </div>
+
+    <!-- Featured products — horizontal scroll -->
+    <div id="bd-prods"></div>
+
+    <!-- View all -->
+    <button class="bdv-viewall" id="bd-viewall" onclick="viewAllBrandProds()">
+      <i class="fa-solid fa-chevron-left"></i>
+      <span id="bd-viewall-lb">عرض جميع منتجات البراند</span>
+    </button>
+
     <div style="height:30px"></div>
   </div>
 
@@ -2444,6 +2587,40 @@ const BRANDS=[
   {id:'olaplex',nm:'Olaplex',           ar:'Olaplex',         cat:'Hair',   domain:'olaplex.com',        search:'Olaplex',         logo:'Olaplex',         lc:'#7080c0',bg:'#080a10',border:'#4050a0'},
   {id:'moroc',  nm:'Moroccanoil',        ar:'Moroccanoil',        cat:'Hair',   domain:'moroccanoil.com',    search:'Moroccanoil',     logo:'moroccanoil',     lc:'#c07040',bg:'#100a06',border:'#804020'},
 ];
+
+// بيانات تأسيس البراندات (سنة + بلد المنشأ) — لعرضها في صفحة تفاصيل البراند
+const BRAND_INFO={
+  dior:{year:1946,country:'فرنسا'},
+  chanel:{year:1910,country:'فرنسا'},
+  ysl:{year:1961,country:'فرنسا'},
+  rare:{year:2020,country:'الولايات المتحدة'},
+  huda:{year:2013,country:'الإمارات'},
+  fenty:{year:2017,country:'الولايات المتحدة'},
+  mac:{year:1984,country:'كندا'},
+  ct:{year:2013,country:'المملكة المتحدة'},
+  nars:{year:1994,country:'الولايات المتحدة'},
+  estee:{year:1946,country:'الولايات المتحدة'},
+  lancome:{year:1935,country:'فرنسا'},
+  lamer:{year:1965,country:'الولايات المتحدة'},
+  kayali:{year:2018,country:'الإمارات'},
+  creed:{year:1760,country:'المملكة المتحدة'},
+  tomford:{year:2005,country:'الولايات المتحدة'},
+  kera:{year:1964,country:'فرنسا'},
+  olaplex:{year:2014,country:'الولايات المتحدة'},
+  moroc:{year:2006,country:'إسرائيل'},
+};
+
+const BRAND_CAT_AR={'Fragrances':'عطور','Makeup':'مكياج','Skincare':'بشرة','Hair':'شعر'};
+function brandCatAr(cat){ return BRAND_CAT_AR[cat]||cat; }
+
+function brandDescAr(b){
+  const info=BRAND_INFO[b.id];
+  const catAr=brandCatAr(b.cat);
+  if(info){
+    return `${b.nm} هي علامة ${catAr} مرموقة، تأسست عام ${info.year} في ${info.country}، وتشتهر بتشكيلتها المميزة من منتجات ${catAr}.`;
+  }
+  return `${b.nm} علامة عالمية مرموقة في عالم ${catAr}، تقدّم تشكيلة مختارة من المنتجات المميزة.`;
+}
 
 const PRODS={
   dior:[
@@ -2902,38 +3079,109 @@ function setF(cat,el){
 async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
-    document.getElementById('bd-hero-bg').style.background=
-    `linear-gradient(135deg,${curBrand.bg} 0%,${curBrand.border}40 100%)`;
   const logoImg=document.getElementById('bd-logo-img');
   const logoWrap=document.getElementById('bd-logo');
-  // Try clearbit first, then favicon, then text fallback
+  // Try favicon, then text fallback (صندوق أبيض بحرف العلامة كما في المرجع)
   function tryLogo(urls, idx){
     if(idx>=urls.length){
       logoImg.style.display='none';
-      logoWrap.style.background=curBrand.border+'18';
-      logoWrap.style.display='flex';
-      logoWrap.style.alignItems='center';
-      logoWrap.style.justifyContent='center';
-      logoWrap.style.padding='0';
-      logoWrap.innerHTML=`<div style="font-size:32px;font-weight:900;letter-spacing:-2px;color:${curBrand.border};text-align:center;line-height:1">${curBrand.nm.substring(0,3).toUpperCase()}</div>`;
+      logoWrap.innerHTML=`<div style="font-size:15px;font-weight:900;letter-spacing:-.5px;color:#111;text-align:center;line-height:1.2">${curBrand.nm.toUpperCase()}</div>`;
       return;
     }
     logoImg.src=urls[idx];
     logoImg.onerror=()=>tryLogo(urls,idx+1);
   }
-  logoImg.style.display='block';
-  logoImg.alt=curBrand.nm;
-  tryLogo([
-    `https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=256`,
-  ], 0);
-  document.getElementById('bd-name').textContent=curBrand.nm;
-  document.getElementById('bd-cat').textContent=curBrand.cat;
-  document.getElementById('bd-ai').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  logoWrap.innerHTML='<img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">';
+  const freshLogoImg=document.getElementById('bd-logo-img');
+  freshLogoImg.alt=curBrand.nm;
+  freshLogoImg.style.display='block';
+  freshLogoImg.onerror=()=>tryLogo([],1);
+  tryLogo([`https://www.google.com/s2/favicons?domain=${curBrand.domain}&sz=256`], 0);
+
+  document.getElementById('bd-name').innerHTML=`${curBrand.nm} <span>👑</span>`;
+  document.getElementById('bd-cat').textContent=curBrand.cat.toUpperCase();
+  document.getElementById('bd-desc').textContent=brandDescAr(curBrand);
+
+  const info=BRAND_INFO[curBrand.id];
+  document.getElementById('bd-year').textContent=info?info.year:'—';
+  document.getElementById('bd-country').textContent=info?info.country:'—';
+  document.getElementById('bd-cat2').textContent=brandCatAr(curBrand.cat);
+
+  // إعادة تهيئة بطاقة AI Insights لوضعها الابتدائي (قبل الضغط على الزر)
+  document.getElementById('bd-ai').innerHTML=
+    `<span style="color:var(--dim)">احصلي على تحليل ذكي لمساعدتك في اختيار المنتجات المناسبة لذوقك باستخدام الذكاء الاصطناعي.</span>`;
+  const aiBtn=document.getElementById('bd-ai-btn');
+  if(aiBtn) aiBtn.style.display='flex';
   document.getElementById('bd-spk').style.display='none';
   lastBrInfo='';
+
+  // إعادة ضبط فلاتر وزر "عرض الكل"
+  document.querySelectorAll('#bd-ftabs .ft').forEach((t,i)=>t.classList.toggle('on', i===0));
+  curBrandGender='all';
+  const grid=document.getElementById('bd-prods');
+  grid.classList.remove('expanded');
+  const viewAllBtn=document.getElementById('bd-viewall');
+  if(viewAllBtn) viewAllBtn.style.display='flex';
+  document.getElementById('bd-viewall-lb').textContent=`عرض جميع منتجات ${curBrand.nm}`;
+
   navTo('bdet');
-  loadBrAI(curBrand);
   loadBrandProdsOBF(curBrand);
+}
+
+let curBrandGender='all';
+
+function filterBrandProds(kind, el){
+  document.querySelectorAll('#bd-ftabs .ft').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  curBrandGender=kind;
+  const grid=document.getElementById('bd-prods');
+  const cards=[...grid.children].filter(c=>c.classList && c.classList.contains('obf-card'));
+  if(kind==='all'){
+    cards.forEach(c=>c.style.display='');
+    return;
+  }
+  if(kind==='new'||kind==='best'){
+    // لا تتوفر بيانات تاريخ إصدار أو مبيعات حقيقية من OBF — نعرض الكل ونعيد ترتيبها بصرياً فقط
+    cards.forEach(c=>c.style.display='');
+    sortBrandProds();
+    return;
+  }
+  // نسائي / رجالي — فلترة حسب كلمات دالة موجودة في اسم المنتج (تخمين تقريبي، البيانات لا تحتوي تصنيف جنس رسمي)
+  const womenHints = ['women','her','femme','she','lady','rose','pink'];
+  const menHints = ['men','him','homme','he ','sport','blue'];
+  let matched = 0;
+  cards.forEach(c=>{
+    const n = c.dataset.name||'';
+    const isWomen = womenHints.some(h=>n.includes(h));
+    const isMen = menHints.some(h=>n.includes(h));
+    const show = kind==='women' ? (isWomen && !isMen) : (isMen && !isWomen);
+    c.style.display = show ? '' : 'none';
+    if(show) matched++;
+  });
+  if(!matched){
+    cards.forEach(c=>c.style.display='');
+    showToast('لا توجد بيانات كافية لفلترة دقيقة — تم عرض كل المنتجات');
+  }
+}
+
+function sortBrandProds(){
+  const grid=document.getElementById('bd-prods');
+  const cards=[...grid.children].filter(c=>c.classList && c.classList.contains('obf-card'));
+  cards.reverse().forEach(c=>grid.appendChild(c));
+}
+
+function viewAllBrandProds(){
+  const grid=document.getElementById('bd-prods');
+  grid.classList.add('expanded');
+  document.getElementById('bd-viewall').style.display='none';
+}
+
+function triggerBrAI(){
+  if(!curBrand) return;
+  const aiBtn=document.getElementById('bd-ai-btn');
+  if(aiBtn) aiBtn.style.display='none';
+  document.getElementById('bd-ai').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  loadBrAI(curBrand);
 }
 
 // ── Brand products pagination state ──
@@ -2946,6 +3194,8 @@ function renderBrandProdCard(p, b){
   const ingr   = (p.ingredients_text||p.ingredients_text_en||'').substring(0,800);
   const labels = p.labels||(p.labels_tags||[]).join(', ')||'';
   const el = makeProductCard(name, b.nm, img, ingr, labels);
+  if(!el) return el;
+  el.dataset.name = name.toLowerCase();
   // override onclick لإضافة brand
   el.onclick = ()=> openProdDetail({name, brand:b.nm, img, ingr, labels});
   return el;
@@ -4991,6 +5241,11 @@ function guessArabicDesc(name, labels){
   if(l.includes('organic')) extra.push('عضوي 🌿');
   if(l.includes('natural')) extra.push('مكونات طبيعية ✨');
   if(l.includes('cruelty')) extra.push('غير مجرّب على الحيوانات 🐰');
+  // تحديد تركيز العطر بدقة أكبر إن وُجد في الاسم (يطابق تسمية المتاجر)
+  if(/eau de parfum/.test(n)) cat='Eau de Parfum';
+  else if(/eau de toilette/.test(n)) cat='Eau de Toilette';
+  else if(/eau de cologne/.test(n)) cat='Eau de Cologne';
+  else if(/parfum\b/.test(n) && cat==='عطر') cat='Parfum';
   return {cat, desc, extra};
 }
 
