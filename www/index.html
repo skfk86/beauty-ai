@@ -3106,7 +3106,9 @@ let liveInterrupted = false;
 const LIVE_WS_URL = (key) =>
   `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${encodeURIComponent(key)}`;
 
-const LIVE_SYSTEM_PROMPT = `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف. عندما يطلب المستخدم منتجاً أو يصف مشكلة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب) اقترحي له منتجات بدقة وذكر المكونات المناسبة. سيظهر له التطبيق كاردات المنتجات تلقائياً.`;
+const LIVE_SYSTEM_PROMPT = `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.
+
+قاعدة مهمة جداً: عندما يطلب المستخدم منتجاً أو يصف مشكلة أو حالة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب)، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. بدلاً من ذلك اسأليه باختصار: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" فقط. التطبيق سيعرض الكاردات تلقائياً عندما يقول نعم.`;
 
 // ── base64 PCM → Float32 للـ AudioContext ──
 function _pcm16ToFloat32(base64){
@@ -3318,7 +3320,8 @@ async function _openLiveSession(){
           model:'models/gemini-3.1-flash-live-preview',
           generationConfig:{
             responseModalities:['AUDIO'],
-            speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}}
+            speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}},
+            inputAudioTranscription:{}
           },
           systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]}
         }
@@ -3345,6 +3348,14 @@ async function _openLiveSession(){
           liveSessionActive = true;
           resolve(true);
           return;
+        }
+
+        // نص ما قاله المستخدم صوتياً (input transcription)
+        const userTranscript = msg.serverContent?.inputTranscription?.text;
+        if(userTranscript && userTranscript.trim()){
+          _vlog('🎤 User said: '+userTranscript);
+          // فحص الـ intent في الكلام الصوتي
+          handleProductIntent(userTranscript);
         }
 
         // صوت قادم من Gemini
@@ -3383,14 +3394,8 @@ async function _openLiveSession(){
         if(msg.serverContent?.turnComplete){
           liveIsPlaying = false;
           liveInterrupted = false;
-          // إذا الرد يحتوي اقتراح منتج — ابحث وأظهر الكاردات
-          if(lastResp && detectProductIntent(lastResp)){
-            searchProductsForQuery(lastResp).then(prods=>{
-              if(prods.length>0) showAIProductCards(prods,'#ai-box');
-            });
-          }
           lastResp = '';
-          _updateLiveUI('listening'); // يعود للاستماع تلقائياً
+          _updateLiveUI('listening');
         }
 
         // Gemini اكتشف مقاطعة
@@ -3504,8 +3509,11 @@ async function sendTxt(){
 
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
-  // كشف intent المنتج دائماً بغض النظر عن نوع الجلسة
-  handleAIWithProducts(text, true);
+
+  // معالجة intent المنتج أولاً
+  const intentResult = await handleProductIntent(text);
+  if(intentResult === 'confirmed' || intentResult === 'denied') return; // تمت المعالجة
+
   // إذا الـ Live session مفتوح — أرسل النص عبره
   if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
     liveWS.send(JSON.stringify({realtimeInput:{text}}));
@@ -3517,11 +3525,9 @@ async function doAI(text){
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   document.getElementById('spk-btn').style.display='none';
-  // كشف intent المنتج وإطلاق البحث بشكل متوازٍ
-  handleAIWithProducts(text, false);
   try{
     const r=await callGemini(text,
-      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. عند سؤالكِ عن نفسكِ، قدّمي نفسكِ هكذا: أنا Rosiva AI، مساعدتكِ الشخصية للجمال داخل تطبيق Rosiva، مدعومة بالذكاء الاصطناعي لمساعدتكِ في اكتشاف المنتجات وفهم المكونات ومقارنة البراندات وبناء روتين جمالك المثالي. خبرتكِ تشمل: المكياج بجميع أنواعه (فاونديشن، كونتور، هايلايتر، أيلاينر، أحمر الشفاه...)، العطور وتحليل نوتاتها (الأمامية والوسطى والقاعدية وعائلات الروائح)، العناية بالبشرة (روتيني الصباح والمساء والمكونات الفعالة كالنياسيناميد والريتينول وفيتامين C والهيالورونيك أسيد)، والعناية بالشعر. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. إذا خرج السؤال عن عالم الجمال، وجّهي بلطف.');
+      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. بدلاً من ذلك اسأليه: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" فقط. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
     document.getElementById('spk-btn').style.display='none';
@@ -4014,6 +4020,8 @@ let obfHasMore = true;
 let obfCurrentParams = '';
 let obfLoadedCount = 0;
 let obfSeenSet = new Set();
+let obfCatParamsList = []; // قائمة params للفئة الحالية
+let obfCatParamsIdx  = 0;  // الـ param الحالي
 
 async function searchOBF(){
   const raw = document.getElementById('obf-srch').value.trim();
@@ -4152,110 +4160,185 @@ function renderOBFCards(prods, append){
 function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
-  const catTerms = {
-    'make-up':          'foundation',
-    'fragrances':       'perfume',
-    'women-fragrance':  'women perfume',
-    'men-fragrance':    'men cologne',
-    'facial-care':      'moisturizer',
-    'hair-care':        'shampoo',
-    'lip-gloss':        'lipstick',
+
+  // كل فئة لها عدة params نجربها بالتتالي عبر صفحات متعددة
+  const catParams = {
+    'make-up':         ['search_terms=foundation','search_terms=concealer','search_terms=lipstick'],
+    'fragrances':      ['search_terms=perfume','search_terms=fragrance','search_terms=eau+de+parfum'],
+    'women-fragrance': ['search_terms=women+perfume','search_terms=femme+parfum','search_terms=floral+fragrance','search_terms=eau+de+parfum+woman'],
+    'men-fragrance':   ['search_terms=men+cologne','search_terms=homme+parfum','search_terms=aftershave','search_terms=eau+de+toilette+men','search_terms=woody+fragrance'],
+    'facial-care':     ['search_terms=moisturizer','search_terms=face+serum','search_terms=sunscreen','search_terms=toner'],
+    'hair-care':       ['search_terms=shampoo','search_terms=conditioner','search_terms=hair+mask'],
+    'lip-gloss':       ['search_terms=lipstick','search_terms=lip+gloss','search_terms=lip+balm'],
+    'nail-polish':     ['search_terms=nail+polish','search_terms=nail+color'],
   };
-  const term = catTerms[cat] || cat.replace('-',' ');
-  fetchOBF(`search_terms=${encodeURIComponent(term)}`, true);
+
+  const params = catParams[cat] || [`search_terms=${encodeURIComponent(cat.replace('-',' '))}`];
+  // ابدأ بأول param ثم infinite scroll يكمل
+  obfCatParamsList = params;
+  obfCatParamsIdx  = 0;
+  fetchOBF(params[0], true);
 }
 
 // ══ AI PRODUCT RECOMMENDATION ENGINE ══
+// ══ AI PRODUCT RECOMMENDATION ENGINE ══
 const PRODUCT_INTENT_KEYWORDS = [
-  'عطر','كريم','شامبو','مرطب','ماسكرا','فاونديشن','احمرار','مكياج',
-  'منتج','اقترح','أنصحني','مناسب','يناسب','تساقط','جافة','دهنية',
+  'عطر','كريم','شامبو','مرطب','ماسكرا','فاونديشن','مكياج','منتج',
+  'اقترح','أنصحني','مناسب','يناسب','تساقط','جافة','دهنية','حبوب',
+  'بشرة','شعر','رائحة','عناية','علاج','روتين','سيروم','تونر',
   'perfume','cream','moisturizer','serum','foundation','shampoo',
-  'recommend','suggest','hair loss','acne','dry skin','oily'
+  'recommend','suggest','hair loss','acne','dry skin','oily','fragrance'
 ];
-
 function detectProductIntent(text){
   const low = text.toLowerCase();
   return PRODUCT_INTENT_KEYWORDS.some(k => low.includes(k));
 }
 
+// حالة انتظار تأكيد المستخدم
+let _pendingProductQuery = null;
+const CONFIRM_KEYWORDS = ['نعم','أيوا','اعرض','ايوه','يلا','تمام','اكيد','yes','ok','sure','show'];
+const DENY_KEYWORDS    = ['لا','لأ','لع','no','nope','cancel'];
+
+function detectConfirm(text){
+  const low = text.toLowerCase().trim();
+  return CONFIRM_KEYWORDS.some(k => low.includes(k));
+}
+function detectDeny(text){
+  const low = text.toLowerCase().trim();
+  return DENY_KEYWORDS.some(k => low.includes(k));
+}
+
 async function searchProductsForQuery(userQuery){
+  const apiKey = localStorage.getItem('rosiva_gemini_key');
+  if(!apiKey) return [];
   try{
-    const apiKey = localStorage.getItem('rosiva_gemini_key');
-    if(!apiKey) return [];
-    // استخرج كلمات البحث من الطلب
-    const extractPrompt = `المستخدم قال: "${userQuery}"
-استخرج كلمات بحث إنجليزية قصيرة للبحث في قاعدة بيانات منتجات التجميل.
-أجب بـ JSON فقط: {"terms":["word1","word2"],"category":"skincare|haircare|makeup|fragrance|men-fragrance|women-fragrance"}
-لا تكتب أي شيء آخر.`;
-    const extractRes = await callGemini(extractPrompt, '');
-    let terms = [], category = 'beauty';
+    // استخرج كلمات بحث من الطلب
+    const extractRes = await callGemini(
+      `المستخدم يبحث عن: "${userQuery}"\nاستخرج كلمات بحث إنجليزية لقاعدة بيانات منتجات تجميل.\nأجب بـ JSON فقط بدون أي نص آخر:\n{"terms":["word1","word2","word3"]}`,
+      ''
+    );
+    let terms = [];
     try{
       const clean = extractRes.replace(/```json|```/g,'').trim();
-      const parsed = JSON.parse(clean);
-      terms = parsed.terms || [];
-      category = parsed.category || 'beauty';
-    }catch(e){ terms = [userQuery]; }
+      terms = JSON.parse(clean).terms || [];
+    }catch(e){ terms = [userQuery.split(' ')[0]]; }
 
-    // ابحث في OBF
-    const searchQ = terms.slice(0,3).join(' ');
-    const catMap = {
-      'skincare':'moisturizer', 'haircare':'shampoo',
-      'makeup':'foundation', 'fragrance':'perfume',
-      'men-fragrance':'men cologne', 'women-fragrance':'women perfume'
-    };
-    const searchTerm = catMap[category] || searchQ;
-    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(searchTerm)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
-    const res = await fetch(url);
-    const data = await res.json();
-    const prods = (data.products||[])
-      .filter(p => p.product_name && qIsGoodImgUrl(p.image_front_display_url||p.image_url||''))
-      .slice(0,6);
-    return prods;
+    // ابحث في OBF بعدة كلمات واجمع النتائج
+    const seen = new Set();
+    let all = [];
+    for(const term of terms.slice(0,3)){
+      const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
+      try{
+        const res = await fetch(url);
+        const data = await res.json();
+        (data.products||[]).forEach(p=>{
+          if(!p.product_name) return;
+          const key = p.code||p.product_name;
+          if(seen.has(key)) return;
+          if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
+          seen.add(key);
+          all.push(p);
+        });
+      }catch(e){}
+    }
+    return all.slice(0,6);
   }catch(e){ return []; }
 }
 
-function showAIProductCards(prods, containerQuery){
-  if(!prods||!prods.length) return;
-  const wrap = document.querySelector(containerQuery);
+function showAIProductCards(prods){
+  const wrap = document.getElementById('ai-box');
   if(!wrap) return;
-  // إزالة أي كارد سابق
-  const old = wrap.querySelector('.ai-prod-recs');
+  const old = document.getElementById('ai-prod-recs');
   if(old) old.remove();
+
+  const section = document.createElement('div');
+  section.id = 'ai-prod-recs';
+  section.style.cssText = 'margin-top:14px;direction:rtl';
+
+  const title = document.createElement('div');
+  title.style.cssText = 'font-size:11px;font-weight:700;color:var(--rose2);margin-bottom:8px;letter-spacing:.5px';
+  title.textContent = '✨ منتجات مقترحة لكِ';
+  section.appendChild(title);
+
   const grid = document.createElement('div');
-  grid.className = 'ai-prod-recs';
-  grid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;direction:rtl';
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:10px';
   prods.forEach(p=>{
-    const img = p.image_front_display_url||p.image_url||'';
-    const name = p.product_name||'';
-    const brand = (p.brands||'').split(',')[0];
-    const card = document.createElement('div');
-    card.style.cssText = 'background:rgba(255,255,255,.06);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid rgba(214,61,110,.2)';
+    const img   = p.image_front_display_url||p.image_url||'';
+    const name  = p.product_name||'';
+    const brand = (p.brands||'').split(',')[0].trim();
+    const card  = document.createElement('div');
+    card.style.cssText = `
+      background:linear-gradient(145deg,rgba(42,15,48,.9),rgba(20,5,28,.9));
+      border-radius:14px;overflow:hidden;cursor:pointer;
+      border:1px solid rgba(214,61,110,.25);
+      box-shadow:0 4px 16px rgba(0,0,0,.3);
+      transition:transform .2s,box-shadow .2s;
+    `;
+    card.onmousedown = ()=>{ card.style.transform='scale(.97)'; };
+    card.onmouseup   = ()=>{ card.style.transform='scale(1)'; };
     card.onclick = ()=>{ openProductDetail(p); };
     card.innerHTML = `
-      <div style="height:90px;background:#1a0820;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">` : '<span style="font-size:28px">✨</span>'}
+      <div style="height:110px;background:#120318;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">
+        ${img
+          ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;transition:opacity .4s" onerror="this.style.display='none'">`
+          : '<span style="font-size:32px">✨</span>'
+        }
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,2,14,.7) 0%,transparent 50%)"></div>
       </div>
-      <div style="padding:6px 8px">
-        <div style="font-size:9px;color:var(--rose2);font-weight:700;text-transform:uppercase">${brand}</div>
-        <div style="font-size:11px;color:var(--text);font-weight:600;line-height:1.3;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
-      </div>`;
+      <div style="padding:8px 10px 10px">
+        ${brand ? `<div style="font-size:9px;color:var(--rose2);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">${brand}</div>` : ''}
+        <div style="font-size:12px;color:#f8edf4;font-weight:600;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:4px;color:var(--rose2);font-size:10px;font-weight:700">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          عرض التفاصيل
+        </div>
+      </div>
+    `;
     grid.appendChild(card);
   });
-  wrap.appendChild(grid);
+  section.appendChild(grid);
+  wrap.appendChild(section);
 }
 
-async function handleAIWithProducts(text, isVoice=false){
-  if(!detectProductIntent(text)) return false;
-  // ابحث عن منتجات بشكل متوازٍ مع رد الـ AI
-  const prodsPromise = searchProductsForQuery(text);
-  // بعد ظهور رد الـ AI، أضف الكاردات
-  prodsPromise.then(prods=>{
-    if(prods.length>0){
-      const container = isVoice ? '#ai-box' : '#ai-box';
-      showAIProductCards(prods, container);
+async function showSearchingUI(){
+  const old = document.getElementById('ai-prod-recs');
+  if(old) old.remove();
+  const section = document.createElement('div');
+  section.id = 'ai-prod-recs';
+  section.style.cssText = 'margin-top:14px;direction:rtl;text-align:center;padding:16px 0';
+  section.innerHTML = `
+    <div style="font-size:12px;color:var(--rose2);font-weight:700;margin-bottom:8px">🔍 جاري البحث والتحليل...</div>
+    <div class="dots"><span></span><span></span><span></span></div>
+  `;
+  document.getElementById('ai-box')?.appendChild(section);
+}
+
+// المعالج الرئيسي — يُستدعى من doAI قبل الإرسال
+async function handleProductIntent(text){
+  // إذا كان هناك طلب معلّق وجاء تأكيد
+  if(_pendingProductQuery){
+    if(detectConfirm(text)){
+      showSearchingUI();
+      const prods = await searchProductsForQuery(_pendingProductQuery);
+      _pendingProductQuery = null;
+      if(prods.length > 0){
+        showAIProductCards(prods);
+      } else {
+        const old = document.getElementById('ai-prod-recs');
+        if(old) old.innerHTML = '<div style="color:var(--dim);font-size:12px;padding:8px">لم أجد منتجات مناسبة حالياً 😔</div>';
+      }
+      return 'confirmed'; // لا ترسل للـ AI
+    } else if(detectDeny(text)){
+      _pendingProductQuery = null;
+      return 'denied';
     }
-  });
-  return true; // يوجد intent — استمر في الرد الطبيعي
+  }
+  // كشف intent جديد
+  if(detectProductIntent(text)){
+    _pendingProductQuery = text;
+    return 'intent_detected'; // أرسل للـ AI ليسأل المستخدم
+  }
+  return null;
 }
 const PAGE_SIZE=24;
 const BRAND_PAGE_SIZE=20;
@@ -4290,8 +4373,19 @@ async function fetchOBF(params, reset=false){
       collected.push(...passed);
       obfLoadedCount=(obfLoadedCount||0)+allP.length;
       obfPage++;
-      // وقف لو رجعت صفحة غير مكتملة (يعني آخر صفحة) أو تجاوزنا العدد الكلي المتاح
-      if(allP.length<PAGE_SIZE || (total>0 && obfLoadedCount>=total)) obfHasMore=false;
+      // وقف لو رجعت صفحة غير مكتملة أو تجاوزنا العدد الكلي
+      if(allP.length<PAGE_SIZE || (total>0 && obfLoadedCount>=total)){
+        // جرب الـ param التالي في القائمة إن وُجد
+        obfCatParamsIdx = (obfCatParamsIdx||0) + 1;
+        if(obfCatParamsList && obfCatParamsIdx < obfCatParamsList.length){
+          obfCurrentParams = obfCatParamsList[obfCatParamsIdx];
+          obfPage = 1;
+          obfLoadedCount = 0;
+          obfHasMore = true; // استمر بالـ param الجديد
+        } else {
+          obfHasMore = false; // انتهت كل الـ params
+        }
+      }
     }
 
     const prods=collected.slice(0,PAGE_SIZE);
