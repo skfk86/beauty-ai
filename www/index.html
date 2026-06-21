@@ -3576,7 +3576,7 @@ async function callGemini(msg, sys=''){
   const headers = {'Content-Type':'application/json'};
   const body = {
     contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
-    generationConfig:{maxOutputTokens:500, temperature:0.7}
+    generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}
   };
   let lastErr = '';
   for(const model of _GEMINI_MODELS){
@@ -3643,7 +3643,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
   let lastErr = '';
   for(const model of _GEMINI_MODELS){
     try{
-      let body = {contents:_aiChatHistory, tools, toolConfig, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:500, temperature:0.7}};
+      let body = {contents:_aiChatHistory, tools, toolConfig, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}};
       let r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
       if(!r.ok){
         let errMsg='API_ERR_'+r.status;
@@ -3667,7 +3667,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
         const res = await execProductSearchTool(q);
         products = res.products;
         _aiChatHistory.push({role:'user', parts:[{functionResponse:{name:'search_beauty_products', response:{result:res.summary}}}]});
-        body = {contents:_aiChatHistory, tools, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:500, temperature:0.7}};
+        body = {contents:_aiChatHistory, tools, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}};
         r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
         if(r.ok){ d = await r.json(); cand = d.candidates?.[0]; parts = cand?.content?.parts || []; }
       }
