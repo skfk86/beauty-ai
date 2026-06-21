@@ -1692,52 +1692,10 @@ body.light-mode textarea{
     </div>
     <div class="voice-hint" id="vh" style="margin-top:4px">اضغطي للتحدث مع روزيفا</div>
 
-    <!-- AI Response Box -->
+    <!-- AI Response Box — عنوان + نص + (منتجات مقترحة تُضاف ديناميكياً) فقط، بدون أي أزرار -->
     <div class="ai-box" id="ai-box">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <div class="ai-hd"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
-        <div style="display:flex;gap:6px" id="ai-actions">
-          <button onclick="copyAIText()" aria-label="نسخ"
-            style="background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);
-            width:28px;height:28px;display:flex;align-items:center;justify-content:center;
-            cursor:pointer;color:var(--dim);font-size:11px;transition:color var(--dur-fast)">
-            <i class="fa-regular fa-copy"></i>
-          </button>
-          <button onclick="clearAIText()" aria-label="مسح"
-            style="background:var(--card2);border:1px solid var(--border);border-radius:var(--r-sm);
-            width:28px;height:28px;display:flex;align-items:center;justify-content:center;
-            cursor:pointer;color:var(--dim);font-size:11px;transition:color var(--dur-fast)">
-            <i class="fa-regular fa-trash-can"></i>
-          </button>
-        </div>
-      </div>
+      <div class="ai-hd" style="margin-bottom:8px"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
       <div class="ai-txt" id="ai-txt"></div>
-
-      <!-- مؤشر الاستماع — يظهر فقط أثناء Live session -->
-      <div id="live-listening-indicator" style="display:none;align-items:center;gap:10px;padding:10px 0;direction:rtl">
-        <div style="position:relative;width:36px;height:36px;flex-shrink:0">
-          <div style="position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(214,61,110,.3),rgba(232,85,122,.1));animation:liveListenPulse 1.5s ease-in-out infinite"></div>
-          <div style="position:absolute;inset:4px;border-radius:50%;background:linear-gradient(135deg,#d63d6e,#e8557a);display:flex;align-items:center;justify-content:center">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="12" y1="19" x2="12" y2="23" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-        </div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:var(--text)">روسيفا تستمع إليكِ</div>
-          <div style="display:flex;gap:3px;margin-top:5px;align-items:flex-end;height:16px">
-            <span style="display:inline-block;width:3px;background:var(--rose2);border-radius:2px;animation:soundBar 1s ease-in-out infinite;animation-delay:0s"></span>
-            <span style="display:inline-block;width:3px;background:var(--rose2);border-radius:2px;animation:soundBar 1s ease-in-out infinite;animation-delay:.15s"></span>
-            <span style="display:inline-block;width:3px;background:var(--rose2);border-radius:2px;animation:soundBar 1s ease-in-out infinite;animation-delay:.3s"></span>
-            <span style="display:inline-block;width:3px;background:var(--rose2);border-radius:2px;animation:soundBar 1s ease-in-out infinite;animation-delay:.45s"></span>
-            <span style="display:inline-block;width:3px;background:var(--rose2);border-radius:2px;animation:soundBar 1s ease-in-out infinite;animation-delay:.6s"></span>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button id="stop-spk-btn" onclick="stopAISpeaking()" style="display:none;align-items:center;gap:6px;background:var(--gold-d);color:var(--gold2);border:1.5px solid rgba(196,136,96,.4);border-radius:var(--r-full);padding:6px 14px;font-size:12px;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer">
-          <i class="fa-solid fa-stop"></i> إيقاف
-        </button>
-        <button class="spk-btn" id="spk-btn" onclick="speakR()" style="display:none"><i class="fa-solid fa-volume-high"></i> استمعي</button>
-      </div>
     </div>
 
     <!-- Text Input -->
@@ -3286,50 +3244,40 @@ function _stopWaveAnimation(){
   });
 }
 
+// مؤشّرا "تستمع/تتكلم" وزر الإيقاف أصبحا مرتبطين بالمايك الرئيسي فقط (كلاس + نص التلميح تحته)
+// — لا يوجد أي عنصر منفصل داخل صندوق ai-box بعد الآن
 function _updateLiveUI(state){
   const btn = document.getElementById('mic-btn');
   const hint = document.getElementById('vh');
-  const stopBtn = document.getElementById('stop-spk-btn');
   const aiTxt = document.getElementById('ai-txt');
-  const listeningIndicator = document.getElementById('live-listening-indicator');
 
   if(state==='connecting'){
     hint.textContent='جاري الاتصال... ⏳';
     btn.classList.remove('rec');
-    if(listeningIndicator) listeningIndicator.style.display='none';
+    btn.classList.remove('speaking');
     _stopWaveAnimation();
   } else if(state==='listening'){
-    hint.textContent='';
+    hint.textContent='روسيفا تستمع إليكِ... 👂';
     btn.classList.remove('speaking');
     btn.classList.add('rec');
-    if(stopBtn) stopBtn.style.display='none';
     if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الاستماع
-    // أظهر مؤشر الاستماع
-    document.getElementById('ai-box')?.classList.add('vis'); // ai-box مخفي افتراضياً — لازم نظهره ليظهر المؤشر بداخله
-    if(listeningIndicator) listeningIndicator.style.display='flex';
     _startWaveAnimation('listening');
   } else if(state==='speaking'){
-    hint.textContent='';
+    hint.textContent='روسيفا بترد عليكِ... اضغطي المايك للإيقاف 🎙️';
     btn.classList.remove('rec');
     btn.classList.add('speaking');
-    document.getElementById('ai-box')?.classList.add('vis'); // نفس السبب — زر الإيقاف أيضاً طفل داخل ai-box
-    if(stopBtn) stopBtn.style.display='inline-flex';
-    if(listeningIndicator) listeningIndicator.style.display='none';
     if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الكلام
     _startWaveAnimation('speaking');
   } else if(state==='ready'){
     hint.textContent='اضغطي للتحدث مع روزيفا';
     btn.classList.remove('rec');
     btn.classList.remove('speaking');
-    if(stopBtn) stopBtn.style.display='none';
-    if(listeningIndicator) listeningIndicator.style.display='none';
     if(aiTxt){ aiTxt.style.display=''; } // أظهر النص مجدداً
     _stopWaveAnimation();
   } else if(state==='error'){
     hint.textContent='خطأ في الاتصال — اضغط للمحاولة مجدداً';
     btn.classList.remove('rec');
     btn.classList.remove('speaking');
-    if(listeningIndicator) listeningIndicator.style.display='none';
     if(aiTxt) aiTxt.style.display='';
     _stopWaveAnimation();
   }
@@ -3509,7 +3457,15 @@ async function _openLiveSession(){
 async function toggleVoice(){
   if(!apiKey){showToast('أضف مفتاح Gemini API أولاً 🔑');return;}
 
-  // إذا Gemini يتكلم → قاطعه
+  // إذا في صوت رد نصي شغال (TTS عادي) → لمسة المايك توقفه
+  if(speaking){
+    stopSpeech();
+    document.getElementById('mic-btn').classList.remove('speaking');
+    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    return;
+  }
+
+  // إذا Gemini يتكلم (Live) → قاطعه
   if(liveIsPlaying){
     _interruptLive();
     return;
@@ -3579,7 +3535,6 @@ async function doAI(text){
   const box=document.getElementById('ai-box');
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  document.getElementById('spk-btn').style.display='none';
   const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
   try{
     const {text:r, products} = await callGeminiWithProductTool(text,
@@ -3587,12 +3542,14 @@ async function doAI(text){
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
     if(products && products.length) showAIProductCards(products);
-    document.getElementById('spk-btn').style.display='none';
-    // Auto voice response
-    document.getElementById('stop-spk-btn').style.display='inline-flex';
+    // تشغيل الصوت تلقائياً — حالة "تتكلم" تظهر على المايك الرئيسي فقط، والنص يبقى ظاهراً
+    const micBtn = document.getElementById('mic-btn');
+    const hint = document.getElementById('vh');
+    micBtn.classList.add('speaking');
+    if(hint) hint.textContent='روسيفا بترد عليكِ... اضغطي المايك للإيقاف 🎙️';
     speakTxt(r, ()=>{
-      document.getElementById('stop-spk-btn').style.display='none';
-      document.getElementById('spk-btn').style.display='inline-flex';
+      micBtn.classList.remove('speaking');
+      if(hint) hint.textContent='اضغطي للتحدث مع روزيفا';
     });
   }catch(e){
     const msg = e.message || '';
@@ -3608,48 +3565,6 @@ async function doAI(text){
       document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">Error: '+msg+'</span>';
     }
   }
-}
-function copyAIText(){
-  if(!lastResp){showToast('لا يوجد شيء للنسخ');return;}
-  navigator.clipboard?.writeText(lastResp).then(()=>{
-    showToast('Copied ✅');
-  }).catch(()=>{
-    const ta=document.createElement('textarea');
-    ta.value=lastResp;ta.style.cssText='position:fixed;opacity:0';
-    document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    showToast('Copied ✅');
-  });
-}
-
-function clearAIText(){
-  stopSpeech();
-  lastResp='';
-  _aiChatHistory=[];
-  _awaitingProductOffer=false;
-  document.getElementById('ai-txt').textContent='';
-  document.getElementById('ai-box').classList.remove('vis');
-  document.getElementById('spk-btn').style.display='none';
-  document.getElementById('stop-spk-btn').style.display='none';
-  const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
-  showToast('Cleared 🗑️');
-}
-
-function speakR(){
-  document.getElementById('spk-btn').style.display='none';
-  document.getElementById('stop-spk-btn').style.display='inline-flex';
-  speakTxt(lastResp, ()=>{
-    document.getElementById('stop-spk-btn').style.display='none';
-    document.getElementById('spk-btn').style.display='inline-flex';
-  });
-}
-
-function stopAISpeaking(){
-  // مقاطعة Live إذا كانت نشطة
-  if(liveIsPlaying) _interruptLive();
-  stopSpeech();
-  document.getElementById('stop-spk-btn').style.display='none';
-  if(lastResp) document.getElementById('spk-btn').style.display='inline-flex';
 }
 
 // ══ GROQ ══
@@ -4448,7 +4363,15 @@ function showAIProductCards(prods){
     `;
     card.onmousedown = ()=>{ card.style.transform='scale(.97)'; };
     card.onmouseup   = ()=>{ card.style.transform='scale(1)'; };
-    card.onclick = ()=>{ openProductDetail(p); };
+    card.onclick = ()=>{
+      openProdDetail({
+        name:  p.product_name||'',
+        brand: (p.brands||'').split(',')[0].trim(),
+        img:   p.image_front_display_url||p.image_url||'',
+        ingr:  p.ingredients_text||'',
+        labels:(p.labels_tags||[]).join(', ')
+      });
+    };
     card.innerHTML = `
       <div style="height:110px;background:#120318;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">
         ${img
@@ -4801,9 +4724,12 @@ function openProdDetail(p){
         <i class="fa-solid fa-wand-magic-sparkles"></i> AI Beauty Analysis
       </div>
       <div class="pdm-ai-text" id="pdm-ai-text">
-        <div class="dots"><span></span><span></span><span></span></div>
+        <span style="color:var(--dim);font-size:12px">اضغطي "تحليل المنتج" لتحصلي على تحليل ذكاء اصطناعي لهذا المنتج.</span>
       </div>
       <div class="pdm-ai-actions">
+        <button class="pdm-ai-btn ask" id="pdm-analyze-btn" onclick="loadProdAI(currentProd)">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل المنتج
+        </button>
         <button class="pdm-ai-btn speak" id="pdm-spk-btn" onclick="speakProdAI()" style="display:none">
           <i class="fa-solid fa-volume-high"></i> Listen
         </button>
@@ -4859,9 +4785,6 @@ function openProdDetail(p){
   `;
 
   modal.classList.add('open');
-
-  // Auto-load AI analysis
-  if(apiKey) loadProdAI(p);
 }
 
 function closeProdDetail(){
@@ -4896,7 +4819,13 @@ function togglePdmSection(hd){
 
 async function loadProdAI(p){
   const el = document.getElementById('pdm-ai-text');
-  if(!el || !apiKey) return;
+  const analyzeBtn = document.getElementById('pdm-analyze-btn');
+  if(!el || !p) return;
+  if(!apiKey){
+    showToast('أضيفي مفتاح Gemini API أولاً 🔑');
+    return;
+  }
+  if(analyzeBtn) analyzeBtn.style.display='none';
   el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
   try{
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
@@ -4906,7 +4835,8 @@ async function loadProdAI(p){
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
   }catch(e){
-    el.textContent = 'أضيفي مفتاح Gemini API للحصول على تحليل الذكاء الاصطناعي.';
+    el.textContent = 'تعذّر تحميل التحليل، حاولي مرة أخرى.';
+    if(analyzeBtn) analyzeBtn.style.display='flex';
   }
 }
 
