@@ -3129,7 +3129,20 @@ const LIVE_WS_URL = (key) =>
 
 const LIVE_SYSTEM_PROMPT = `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.
 
-قاعدة مهمة جداً: عندما يطلب المستخدم منتجاً أو يصف مشكلة أو حالة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب)، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. بدلاً من ذلك اسأليه باختصار: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" فقط. التطبيق سيعرض الكاردات تلقائياً عندما يقول نعم.`;
+قاعدة مهمة جداً: عندما يطلب المستخدم منتجاً أو يصف مشكلة أو حالة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب)، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. اسأليه باختصار: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products بكلمات بحث إنجليزية دقيقة لجلب منتجات حقيقية من قاعدة بيانات التطبيق — التطبيق سيعرض الكاردات تلقائياً. ممنوع تماماً أن تقولي "تفضل" أو "هذه المنتجات" أو ما شابه قبل استدعاء الدالة فعلياً والحصول على نتيجتها؛ لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً.`;
+
+// ── تعريف أداة (function) البحث عن المنتجات — مشتركة بين Live والمحادثة النصية ──
+const PRODUCT_TOOL_DECL = {
+  name:'search_beauty_products',
+  description:'تبحث عن منتجات تجميل وعناية حقيقية داخل قاعدة بيانات تطبيق Rosiva (Open Beauty Facts) لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
+  parameters:{
+    type:'OBJECT',
+    properties:{
+      query:{type:'STRING', description:'كلمات بحث بالإنجليزية تصف المنتج المطلوب بدقة، مثل "moisturizer for dry skin" أو "rose perfume women"'}
+    },
+    required:['query']
+  }
+};
 
 // ── base64 PCM → Float32 للـ AudioContext ──
 function _pcm16ToFloat32(base64){
@@ -3350,7 +3363,8 @@ async function _openLiveSession(){
           },
           systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]},
           inputAudioTranscription:{},
-          outputAudioTranscription:{}
+          outputAudioTranscription:{},
+          tools:[{functionDeclarations:[PRODUCT_TOOL_DECL]}]
         }
       }));
     };
@@ -3376,12 +3390,35 @@ async function _openLiveSession(){
           return;
         }
 
-        // نص ما قاله المستخدم صوتياً (input transcription)
+        // نص ما قاله المستخدم صوتياً (input transcription) — للسجل/التشخيص فقط
         const userTranscript = msg.serverContent?.inputTranscription?.text;
         if(userTranscript && userTranscript.trim()){
           _vlog('🎤 User said: '+userTranscript);
-          // فحص الـ intent في الكلام الصوتي
-          handleProductIntent(userTranscript);
+        }
+
+        // Gemini يطلب تنفيذ دالة (function calling) — بعد موافقة المستخدم على عرض منتجات
+        if(msg.toolCall?.functionCalls){
+          for(const fc of msg.toolCall.functionCalls){
+            if(fc.name === 'search_beauty_products'){
+              const q = fc.args?.query || '';
+              showSearchingUI();
+              execProductSearchTool(q).then(({summary, products})=>{
+                if(products.length){
+                  showAIProductCards(products);
+                } else {
+                  const old = document.getElementById('ai-prod-recs');
+                  if(old) old.innerHTML = '<div style="color:var(--dim);font-size:12px;padding:8px">لم أجد منتجات مناسبة حالياً 😔</div>';
+                }
+                if(liveWS && liveWS.readyState===WebSocket.OPEN){
+                  liveWS.send(JSON.stringify({
+                    toolResponse:{
+                      functionResponses:[{id:fc.id, name:fc.name, response:{result:summary}}]
+                    }
+                  }));
+                }
+              });
+            }
+          }
         }
 
         // صوت قادم من Gemini
@@ -3532,11 +3569,7 @@ async function sendTxt(){
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
 
-  // معالجة intent المنتج أولاً
-  const intentResult = await handleProductIntent(text);
-  if(intentResult === 'confirmed' || intentResult === 'denied') return; // تمت المعالجة
-
-  // إذا الـ Live session مفتوح — أرسل النص عبره
+  // إذا الـ Live session مفتوح — أرسل النص عبره (الموديل يتعامل مع tool calling بنفسه صوتياً)
   if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
     liveWS.send(JSON.stringify({realtimeInput:{text}}));
     document.getElementById('ai-box').classList.add('vis');
@@ -3547,11 +3580,13 @@ async function doAI(text){
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   document.getElementById('spk-btn').style.display='none';
+  const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
   try{
-    const r=await callGemini(text,
-      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. بدلاً من ذلك اسأليه: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" فقط. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
+    const {text:r, products} = await callGeminiWithProductTool(text,
+      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
     lastResp=r;
     document.getElementById('ai-txt').textContent=r;
+    if(products && products.length) showAIProductCards(products);
     document.getElementById('spk-btn').style.display='none';
     // Auto voice response
     document.getElementById('stop-spk-btn').style.display='inline-flex';
@@ -3590,10 +3625,13 @@ function copyAIText(){
 function clearAIText(){
   stopSpeech();
   lastResp='';
+  _aiChatHistory=[];
+  _awaitingProductOffer=false;
   document.getElementById('ai-txt').textContent='';
   document.getElementById('ai-box').classList.remove('vis');
   document.getElementById('spk-btn').style.display='none';
   document.getElementById('stop-spk-btn').style.display='none';
+  const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
   showToast('Cleared 🗑️');
 }
 
@@ -3655,6 +3693,85 @@ async function callGemini(msg, sys=''){
 // Alias للتوافق مع الكود القديم
 async function callGroq(msg,sys=''){
   return callGemini(msg,sys);
+}
+
+// ── سياق محادثة قصير لمحادثة النص — يسمح للموديل يتذكر سؤاله السابق (هل تريد أعرض لك منتجات؟) ──
+let _aiChatHistory = [];
+// هل آخر رد من Gemini كان عرضاً لمنتجات بانتظار تأكيد المستخدم؟ نستخدمه فقط لإجبار استدعاء الأداة، لا لتجاوز فهم الموديل
+let _awaitingProductOffer = false;
+function _looksLikeProductOffer(text){
+  return /منتج/.test(text) && /[؟?]/.test(text);
+}
+
+// ── نداء Gemini مع تفعيل أداة search_beauty_products (function calling حقيقي بدل كشف كلمات مفتاحية) ──
+async function callGeminiWithProductTool(userMsg, sys=''){
+  if(!apiKey) throw new Error('NO_KEY');
+  const headers = {'Content-Type':'application/json'};
+  const tools = [{functionDeclarations:[PRODUCT_TOOL_DECL]}];
+  const sysInstr = sys ? {parts:[{text:sys}]} : undefined;
+
+  // لو كان Gemini عرض منتجات بالسؤال السابق والمستخدم وافق الآن — نفرض استدعاء الأداة فعلياً
+  // (بعض الأحيان الموديل يكتب "تفضلي" نصياً بدون تنفيذ البحث الحقيقي، فما يظهر أي منتج)
+  let toolConfig;
+  if(_awaitingProductOffer){
+    if(detectConfirm(userMsg) && !detectDeny(userMsg)){
+      toolConfig = {functionCallingConfig:{mode:'ANY', allowedFunctionNames:['search_beauty_products']}};
+    }
+    _awaitingProductOffer = false; // استُهلك القرار سواء فُرض أو لا
+  }
+
+  _aiChatHistory.push({role:'user', parts:[{text:userMsg}]});
+
+  let lastErr = '';
+  for(const model of _GEMINI_MODELS){
+    try{
+      let body = {contents:_aiChatHistory, tools, toolConfig, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:500, temperature:0.7}};
+      let r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
+      if(!r.ok){
+        let errMsg='API_ERR_'+r.status;
+        try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
+        lastErr=errMsg;
+        if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+        if(r.status===429) throw new Error('RATE_LIMIT');
+        continue;
+      }
+      let d = await r.json();
+      let cand = d.candidates?.[0];
+      let parts = cand?.content?.parts || [];
+      let products = [];
+
+      // الموديل طلب تنفيذ الأداة — نفّذها فعلياً وأرجع له النتيجة الحقيقية (RAG)
+      const fcPart = parts.find(p=>p.functionCall);
+      if(fcPart){
+        const q = fcPart.functionCall.args?.query || userMsg;
+        _aiChatHistory.push(cand.content);
+        showSearchingUI();
+        const res = await execProductSearchTool(q);
+        products = res.products;
+        _aiChatHistory.push({role:'user', parts:[{functionResponse:{name:'search_beauty_products', response:{result:res.summary}}}]});
+        body = {contents:_aiChatHistory, tools, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:500, temperature:0.7}};
+        r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
+        if(r.ok){ d = await r.json(); cand = d.candidates?.[0]; parts = cand?.content?.parts || []; }
+      }
+
+      const text = parts.filter(p=>!p.thought && p.text).map(p=>p.text).join('').trim();
+      if(text){
+        _aiChatHistory.push({role:'model', parts:[{text}]});
+        if(_aiChatHistory.length > 12) _aiChatHistory.splice(0, _aiChatHistory.length-12); // حافظي على آخر سياق قصير فقط
+        // لو ما تم استدعاء الأداة بس النص يبدو عرضاً لمنتجات — خزّن هذا لإجبار الأداة في الرد القادم
+        if(!fcPart && _looksLikeProductOffer(text)) _awaitingProductOffer = true;
+        return {text, products};
+      }
+      lastErr = 'EMPTY_RESPONSE (finishReason: '+(cand?.finishReason||'unknown')+')';
+      continue;
+    }catch(netErr){
+      if(String(netErr.message).startsWith('INVALID_KEY') || netErr.message==='RATE_LIMIT') throw netErr;
+      lastErr='NET_ERR: '+netErr.message;
+      continue;
+    }
+  }
+  _aiChatHistory.pop(); // فشل كل المحاولات — لا نلوّث السياق برسالة بلا رد
+  throw new Error(lastErr || 'API_ERR: All models failed');
 }
 
 // ── فحص ديناميكي بالذكاء الاصطناعي: هل الصورة فعلاً منتج تجميل؟ ──
@@ -4228,6 +4345,39 @@ function detectConfirm(text){
 function detectDeny(text){
   const low = text.toLowerCase().trim();
   return DENY_KEYWORDS.some(k => low.includes(k));
+}
+
+// ── بحث مباشر في OBF بكلمات الاستعلام اللي يحددها الموديل نفسه (بدون نداء Gemini إضافي) ──
+async function fetchOBFByQuery(query){
+  const seen = new Set();
+  let all = [];
+  const tries = [query, ...String(query).split(/\s+/).filter(w=>w.length>2)].slice(0,3);
+  for(const term of tries){
+    if(all.length >= 6) break;
+    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
+    try{
+      const res = await fetch(url);
+      const data = await res.json();
+      (data.products||[]).forEach(p=>{
+        if(!p.product_name) return;
+        const key = p.code||p.product_name;
+        if(seen.has(key)) return;
+        if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
+        seen.add(key);
+        all.push(p);
+      });
+    }catch(e){}
+  }
+  return all.slice(0,6);
+}
+
+// ── المنفّذ الفعلي لأداة search_beauty_products — يرجع منتجات حقيقية + ملخص نصي يُرسَل لـ Gemini كـ functionResponse ──
+async function execProductSearchTool(query){
+  const products = await fetchOBFByQuery(query);
+  const summary = products.length
+    ? products.map(p=>`${p.product_name}${p.brands ? (' - '+p.brands.split(',')[0].trim()) : ''}`).join(' | ')
+    : 'لم يتم العثور على منتجات مطابقة في قاعدة البيانات';
+  return {summary, products};
 }
 
 async function searchProductsForQuery(userQuery){
