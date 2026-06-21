@@ -3292,12 +3292,14 @@ function _updateLiveUI(state){
     if(stopBtn) stopBtn.style.display='none';
     if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الاستماع
     // أظهر مؤشر الاستماع
+    document.getElementById('ai-box')?.classList.add('vis'); // ai-box مخفي افتراضياً — لازم نظهره ليظهر المؤشر بداخله
     if(listeningIndicator) listeningIndicator.style.display='flex';
     _startWaveAnimation('listening');
   } else if(state==='speaking'){
     hint.textContent='';
     btn.classList.remove('rec');
     btn.classList.add('speaking');
+    document.getElementById('ai-box')?.classList.add('vis'); // نفس السبب — زر الإيقاف أيضاً طفل داخل ai-box
     if(stopBtn) stopBtn.style.display='inline-flex';
     if(listeningIndicator) listeningIndicator.style.display='none';
     if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الكلام
@@ -3346,7 +3348,9 @@ async function _openLiveSession(){
             responseModalities:['AUDIO'],
             speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}}
           },
-          systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]}
+          systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]},
+          inputAudioTranscription:{},
+          outputAudioTranscription:{}
         }
       }));
     };
