@@ -2114,6 +2114,8 @@ body.light-mode textarea{
     <div class="ftabs" id="obf-ftabs">
       <div class="ft on" onclick="searchOBFCat('make-up',this)">💄 ماكياج</div>
       <div class="ft" onclick="searchOBFCat('fragrances',this)">🌸 عطور</div>
+      <div class="ft" onclick="searchOBFCat('women-fragrance',this)">👩 عطر نسائي</div>
+      <div class="ft" onclick="searchOBFCat('men-fragrance',this)">👨 عطر رجالي</div>
       <div class="ft" onclick="searchOBFCat('facial-care',this)">✨ بشرة</div>
       <div class="ft" onclick="searchOBFCat('hair-care',this)">💇 شعر</div>
       <div class="ft" onclick="searchOBFCat('lip-gloss',this)">💋 شفاه</div>
@@ -3104,7 +3106,7 @@ let liveInterrupted = false;
 const LIVE_WS_URL = (key) =>
   `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${encodeURIComponent(key)}`;
 
-const LIVE_SYSTEM_PROMPT = 'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.';
+const LIVE_SYSTEM_PROMPT = `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف. عندما يطلب المستخدم منتجاً أو يصف مشكلة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب) اقترحي له منتجات بدقة وذكر المكونات المناسبة. سيظهر له التطبيق كاردات المنتجات تلقائياً.`;
 
 // ── base64 PCM → Float32 للـ AudioContext ──
 function _pcm16ToFloat32(base64){
@@ -3381,6 +3383,12 @@ async function _openLiveSession(){
         if(msg.serverContent?.turnComplete){
           liveIsPlaying = false;
           liveInterrupted = false;
+          // إذا الرد يحتوي اقتراح منتج — ابحث وأظهر الكاردات
+          if(lastResp && detectProductIntent(lastResp)){
+            searchProductsForQuery(lastResp).then(prods=>{
+              if(prods.length>0) showAIProductCards(prods,'#ai-box');
+            });
+          }
           lastResp = '';
           _updateLiveUI('listening'); // يعود للاستماع تلقائياً
         }
@@ -3496,6 +3504,8 @@ async function sendTxt(){
 
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
+  // كشف intent المنتج دائماً بغض النظر عن نوع الجلسة
+  handleAIWithProducts(text, true);
   // إذا الـ Live session مفتوح — أرسل النص عبره
   if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
     liveWS.send(JSON.stringify({realtimeInput:{text}}));
@@ -3507,6 +3517,8 @@ async function doAI(text){
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
   document.getElementById('spk-btn').style.display='none';
+  // كشف intent المنتج وإطلاق البحث بشكل متوازٍ
+  handleAIWithProducts(text, false);
   try{
     const r=await callGemini(text,
       'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. عند سؤالكِ عن نفسكِ، قدّمي نفسكِ هكذا: أنا Rosiva AI، مساعدتكِ الشخصية للجمال داخل تطبيق Rosiva، مدعومة بالذكاء الاصطناعي لمساعدتكِ في اكتشاف المنتجات وفهم المكونات ومقارنة البراندات وبناء روتين جمالك المثالي. خبرتكِ تشمل: المكياج بجميع أنواعه (فاونديشن، كونتور، هايلايتر، أيلاينر، أحمر الشفاه...)، العطور وتحليل نوتاتها (الأمامية والوسطى والقاعدية وعائلات الروائح)، العناية بالبشرة (روتيني الصباح والمساء والمكونات الفعالة كالنياسيناميد والريتينول وفيتامين C والهيالورونيك أسيد)، والعناية بالشعر. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. إذا خرج السؤال عن عالم الجمال، وجّهي بلطف.');
@@ -4141,17 +4153,110 @@ function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
   el.classList.add('on');
   const catTerms = {
-    'make-up':    'foundation',
-    'fragrances': 'perfume',
-    'facial-care':'moisturizer',
-    'hair-care':  'shampoo',
-    'lip-gloss':  'lipstick',
+    'make-up':          'foundation',
+    'fragrances':       'perfume',
+    'women-fragrance':  'women perfume',
+    'men-fragrance':    'men cologne',
+    'facial-care':      'moisturizer',
+    'hair-care':        'shampoo',
+    'lip-gloss':        'lipstick',
   };
   const term = catTerms[cat] || cat.replace('-',' ');
   fetchOBF(`search_terms=${encodeURIComponent(term)}`, true);
 }
 
-// ══ OBF DISCOVER ══
+// ══ AI PRODUCT RECOMMENDATION ENGINE ══
+const PRODUCT_INTENT_KEYWORDS = [
+  'عطر','كريم','شامبو','مرطب','ماسكرا','فاونديشن','احمرار','مكياج',
+  'منتج','اقترح','أنصحني','مناسب','يناسب','تساقط','جافة','دهنية',
+  'perfume','cream','moisturizer','serum','foundation','shampoo',
+  'recommend','suggest','hair loss','acne','dry skin','oily'
+];
+
+function detectProductIntent(text){
+  const low = text.toLowerCase();
+  return PRODUCT_INTENT_KEYWORDS.some(k => low.includes(k));
+}
+
+async function searchProductsForQuery(userQuery){
+  try{
+    const apiKey = localStorage.getItem('rosiva_gemini_key');
+    if(!apiKey) return [];
+    // استخرج كلمات البحث من الطلب
+    const extractPrompt = `المستخدم قال: "${userQuery}"
+استخرج كلمات بحث إنجليزية قصيرة للبحث في قاعدة بيانات منتجات التجميل.
+أجب بـ JSON فقط: {"terms":["word1","word2"],"category":"skincare|haircare|makeup|fragrance|men-fragrance|women-fragrance"}
+لا تكتب أي شيء آخر.`;
+    const extractRes = await callGemini(extractPrompt, '');
+    let terms = [], category = 'beauty';
+    try{
+      const clean = extractRes.replace(/```json|```/g,'').trim();
+      const parsed = JSON.parse(clean);
+      terms = parsed.terms || [];
+      category = parsed.category || 'beauty';
+    }catch(e){ terms = [userQuery]; }
+
+    // ابحث في OBF
+    const searchQ = terms.slice(0,3).join(' ');
+    const catMap = {
+      'skincare':'moisturizer', 'haircare':'shampoo',
+      'makeup':'foundation', 'fragrance':'perfume',
+      'men-fragrance':'men cologne', 'women-fragrance':'women perfume'
+    };
+    const searchTerm = catMap[category] || searchQ;
+    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(searchTerm)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const prods = (data.products||[])
+      .filter(p => p.product_name && qIsGoodImgUrl(p.image_front_display_url||p.image_url||''))
+      .slice(0,6);
+    return prods;
+  }catch(e){ return []; }
+}
+
+function showAIProductCards(prods, containerQuery){
+  if(!prods||!prods.length) return;
+  const wrap = document.querySelector(containerQuery);
+  if(!wrap) return;
+  // إزالة أي كارد سابق
+  const old = wrap.querySelector('.ai-prod-recs');
+  if(old) old.remove();
+  const grid = document.createElement('div');
+  grid.className = 'ai-prod-recs';
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;direction:rtl';
+  prods.forEach(p=>{
+    const img = p.image_front_display_url||p.image_url||'';
+    const name = p.product_name||'';
+    const brand = (p.brands||'').split(',')[0];
+    const card = document.createElement('div');
+    card.style.cssText = 'background:rgba(255,255,255,.06);border-radius:12px;overflow:hidden;cursor:pointer;border:1px solid rgba(214,61,110,.2)';
+    card.onclick = ()=>{ openProductDetail(p); };
+    card.innerHTML = `
+      <div style="height:90px;background:#1a0820;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        ${img ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'">` : '<span style="font-size:28px">✨</span>'}
+      </div>
+      <div style="padding:6px 8px">
+        <div style="font-size:9px;color:var(--rose2);font-weight:700;text-transform:uppercase">${brand}</div>
+        <div style="font-size:11px;color:var(--text);font-weight:600;line-height:1.3;margin-top:2px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  wrap.appendChild(grid);
+}
+
+async function handleAIWithProducts(text, isVoice=false){
+  if(!detectProductIntent(text)) return false;
+  // ابحث عن منتجات بشكل متوازٍ مع رد الـ AI
+  const prodsPromise = searchProductsForQuery(text);
+  // بعد ظهور رد الـ AI، أضف الكاردات
+  prodsPromise.then(prods=>{
+    if(prods.length>0){
+      const container = isVoice ? '#ai-box' : '#ai-box';
+      showAIProductCards(prods, container);
+    }
+  });
+  return true; // يوجد intent — استمر في الرد الطبيعي
+}
 const PAGE_SIZE=24;
 const BRAND_PAGE_SIZE=20;
 
