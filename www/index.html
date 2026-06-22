@@ -2353,8 +2353,8 @@ body.light-mode .pdm-ic-float{
       <div class="prof-av">
         <i class="fa-solid fa-user" style="color:#fff;font-size:28px"></i>
       </div>
-      <div style="font-size:16px;font-weight:900">مستخدمة روزيفا</div>
-      <div style="font-size:11px;color:var(--dim);margin-top:3px">خصوصيتكِ هي أولويتنا 🔒</div>
+      <div style="font-size:16px;font-weight:900" id="prof-username">مستخدمة روزيفا</div>
+      <div style="font-size:11px;color:var(--dim);margin-top:3px" id="prof-email">خصوصيتكِ هي أولويتنا 🔒</div>
     </div>
     <div class="key-box">
       <div class="key-lbl">
@@ -2411,6 +2411,7 @@ body.light-mode .pdm-ic-float{
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل للصور</div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
+    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج</button>
     <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> Clear All Favorites</button>
     <div style="height:30px"></div>
   </div>
@@ -2713,6 +2714,72 @@ body.light-mode .pdm-ic-float{
 
 <div id="loader"><div class="spin"></div><div style="font-size:12px;color:var(--dim)">Loading...</div></div>
 <div class="toast" id="toast"></div>
+
+<!-- AUTH SCREEN (Firebase) -->
+<div id="auth-screen" style="display:none;position:fixed;inset:0;z-index:980;background:var(--bg);overflow-y:auto">
+  <div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;">
+    <div style="width:100%;max-width:360px;">
+      <div style="text-align:center;margin-bottom:28px">
+        <div style="width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,var(--rose),var(--gold2));display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:var(--shadow-glow)">
+          <i class="fa-solid fa-spa" style="font-size:30px;color:#fff"></i>
+        </div>
+        <div style="font-size:22px;font-weight:900;color:var(--text)">Rosiva</div>
+        <div style="font-size:12px;color:var(--dim);margin-top:4px">دليلكِ الذكي لعالم الجمال</div>
+      </div>
+
+      <!-- TABS -->
+      <div style="display:flex;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-md);padding:4px;margin-bottom:18px">
+        <button id="auth-tab-login" onclick="setAuthMode('login')" style="flex:1;padding:10px;border:none;border-radius:var(--r-sm);background:var(--rose);color:#fff;font-weight:800;font-size:13px;font-family:'Cairo',sans-serif;cursor:pointer;transition:all var(--dur-fast)">تسجيل الدخول</button>
+        <button id="auth-tab-signup" onclick="setAuthMode('signup')" style="flex:1;padding:10px;border:none;border-radius:var(--r-sm);background:transparent;color:var(--dim);font-weight:800;font-size:13px;font-family:'Cairo',sans-serif;cursor:pointer;transition:all var(--dur-fast)">حساب جديد</button>
+      </div>
+
+      <!-- NAME (signup only) -->
+      <div id="auth-name-wrap" style="display:none;margin-bottom:12px">
+        <input id="auth-name" type="text" placeholder="اسمك" autocomplete="name"
+          style="width:100%;padding:13px 16px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-family:'Cairo',sans-serif" />
+      </div>
+
+      <!-- EMAIL -->
+      <div style="margin-bottom:12px">
+        <input id="auth-email" type="email" placeholder="البريد الإلكتروني" dir="ltr" autocomplete="email"
+          style="width:100%;padding:13px 16px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-family:'Cairo',sans-serif;text-align:left" />
+      </div>
+
+      <!-- PASSWORD -->
+      <div style="position:relative;margin-bottom:8px">
+        <input id="auth-pass" type="password" placeholder="كلمة المرور" dir="ltr" autocomplete="current-password"
+          style="width:100%;padding:13px 16px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;font-family:'Cairo',sans-serif;text-align:left;padding-left:44px" />
+        <button type="button" onclick="toggleAuthPassVis()" aria-label="إظهار/إخفاء كلمة المرور"
+          style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px">
+          <i class="fa-regular fa-eye" id="auth-pass-icon"></i>
+        </button>
+      </div>
+
+      <div id="auth-forgot-wrap" style="text-align:left;margin-bottom:16px">
+        <span onclick="handleForgotPassword()" style="font-size:11px;color:var(--gold2);cursor:pointer;font-weight:700">نسيتِ كلمة المرور؟</span>
+      </div>
+
+      <div id="auth-error" style="display:none;background:var(--error-d);color:var(--error);border:1px solid rgba(224,96,96,.3);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;margin-bottom:14px;text-align:center"></div>
+
+      <label style="display:flex;align-items:flex-start;gap:8px;margin-bottom:16px;cursor:pointer;user-select:none">
+        <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--rose);flex-shrink:0;cursor:pointer" />
+        <span style="font-size:11.5px;color:var(--dim);line-height:1.7">
+          أوافق على <span onclick="event.preventDefault();navTo('prof');setTimeout(openPrivacy,300)" style="color:var(--gold2);cursor:pointer;font-weight:700">سياسة الخصوصية</span> وشروط استخدام روزيفا
+        </span>
+      </label>
+
+      <button id="auth-submit-btn" onclick="handleAuthSubmit()"
+        style="width:100%;padding:14px;border:none;border-radius:var(--r-md);background:linear-gradient(135deg,var(--rose),var(--rose2));color:#fff;font-weight:900;font-size:14px;font-family:'Cairo',sans-serif;cursor:pointer;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;gap:8px">
+        <span id="auth-submit-label">تسجيل الدخول</span>
+        <i class="fa-solid fa-arrow-left-long"></i>
+      </button>
+
+      <div style="text-align:center;margin-top:18px;font-size:11px;color:var(--dim);line-height:1.8">
+        بالاستمرار، أنتِ توافقين على <span onclick="navTo('prof');setTimeout(openPrivacy,300)" style="color:var(--gold2);cursor:pointer;font-weight:700">سياسة الخصوصية</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 // ══ DATA ══
@@ -5282,6 +5349,177 @@ function closePrivacy(){
 window.addEventListener('beforeunload', ()=>{
   stopSpeech();
 });
+</script>
+
+<!-- ══ FIREBASE AUTH ══ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+  import {
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    signOut,
+    sendPasswordResetEmail,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDxc0xckepN2Q3Be8hlcpkRDy9_8pH9_dA",
+    authDomain: "rosiva-929c8.firebaseapp.com",
+    projectId: "rosiva-929c8",
+    storageBucket: "rosiva-929c8.firebasestorage.app",
+    messagingSenderId: "141600560026",
+    appId: "1:141600560026:web:02586cb8da21089a25e023",
+    measurementId: "G-XWD0GMM9HV"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  try { getAnalytics(app); } catch(e){ /* analytics may fail offline / in webview */ }
+  const auth = getAuth(app);
+
+  let authMode = 'login'; // 'login' | 'signup'
+  let passVisible = false;
+
+  function $(id){ return document.getElementById(id); }
+
+  function showAuthError(msg){
+    const el = $('auth-error');
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+  function hideAuthError(){ $('auth-error').style.display = 'none'; }
+  window.hideAuthErrorIfAny = function(){ hideAuthError(); };
+
+  function friendlyError(code){
+    const map = {
+      'auth/invalid-email':'صيغة البريد الإلكتروني غير صحيحة',
+      'auth/user-not-found':'لا يوجد حساب بهذا البريد',
+      'auth/wrong-password':'كلمة المرور غير صحيحة',
+      'auth/invalid-credential':'البريد أو كلمة المرور غير صحيحة',
+      'auth/email-already-in-use':'هذا البريد مستخدم بالفعل، جرّبي تسجيل الدخول',
+      'auth/weak-password':'كلمة المرور ضعيفة، استخدمي 6 أحرف على الأقل',
+      'auth/too-many-requests':'محاولات كثيرة، حاولي بعد قليل',
+      'auth/network-request-failed':'تحققي من اتصال الإنترنت'
+    };
+    return map[code] || 'حدث خطأ، حاولي مرة أخرى';
+  }
+
+  window.setAuthMode = function(mode){
+    authMode = mode;
+    hideAuthError();
+    const loginTab = $('auth-tab-login'), signupTab = $('auth-tab-signup');
+    if(mode === 'login'){
+      loginTab.style.background = 'var(--rose)'; loginTab.style.color = '#fff';
+      signupTab.style.background = 'transparent'; signupTab.style.color = 'var(--dim)';
+      $('auth-name-wrap').style.display = 'none';
+      $('auth-forgot-wrap').style.display = 'block';
+      $('auth-submit-label').textContent = 'تسجيل الدخول';
+    } else {
+      signupTab.style.background = 'var(--rose)'; signupTab.style.color = '#fff';
+      loginTab.style.background = 'transparent'; loginTab.style.color = 'var(--dim)';
+      $('auth-name-wrap').style.display = 'block';
+      $('auth-forgot-wrap').style.display = 'none';
+      $('auth-submit-label').textContent = 'إنشاء حساب';
+    }
+  };
+
+  window.toggleAuthPassVis = function(){
+    passVisible = !passVisible;
+    $('auth-pass').type = passVisible ? 'text' : 'password';
+    $('auth-pass-icon').className = passVisible ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye';
+  };
+
+  window.handleForgotPassword = async function(){
+    const email = $('auth-email').value.trim();
+    hideAuthError();
+    if(!email){ showAuthError('اكتبي بريدك الإلكتروني أولاً'); return; }
+    try{
+      await sendPasswordResetEmail(auth, email);
+      if(window.showToast) showToast('تم إرسال رابط إعادة التعيين لبريدك 📩');
+    }catch(e){
+      showAuthError(friendlyError(e.code));
+    }
+  };
+
+  window.handleAuthSubmit = async function(){
+    hideAuthError();
+    const email = $('auth-email').value.trim();
+    const pass = $('auth-pass').value;
+    const btn = $('auth-submit-btn');
+    if(!email || !pass){ showAuthError('من فضلك أكملي جميع الحقول'); return; }
+    if(pass.length < 6){ showAuthError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); return; }
+    if(!$('auth-agree').checked){ showAuthError('يجب الموافقة على سياسة الخصوصية للاستمرار'); return; }
+
+    btn.style.opacity = '.6';
+    btn.style.pointerEvents = 'none';
+    try{
+      if(authMode === 'login'){
+        await signInWithEmailAndPassword(auth, email, pass);
+      } else {
+        const name = $('auth-name').value.trim();
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        if(name) await updateProfile(cred.user, { displayName: name });
+      }
+      // onAuthStateChanged سيتولى الانتقال للتطبيق
+    }catch(e){
+      showAuthError(friendlyError(e.code));
+    }finally{
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    }
+  };
+
+  window.handleLogout = async function(){
+    try{
+      await signOut(auth);
+      if(window.showToast) showToast('تم تسجيل الخروج 👋');
+    }catch(e){ /* noop */ }
+  };
+
+  function applyUserToProfile(user){
+    const nameEl = $('prof-username');
+    const emailEl = $('prof-email');
+    if(!user){
+      if(nameEl) nameEl.textContent = 'مستخدمة روزيفا';
+      if(emailEl) emailEl.textContent = 'خصوصيتكِ هي أولويتنا 🔒';
+      return;
+    }
+    if(nameEl) nameEl.textContent = user.displayName || (user.email ? user.email.split('@')[0] : 'مستخدمة روزيفا');
+    if(emailEl) emailEl.textContent = user.email || '';
+  }
+
+  function showAuthScreen(){
+    $('auth-screen').style.display = 'block';
+  }
+  function hideAuthScreen(){
+    $('auth-screen').style.display = 'none';
+  }
+
+  // ── ربط بوابة تسجيل الدخول بدورة حياة التطبيق الحالية ──
+  // نعيد تعريف startApp لإضافة فحص حالة تسجيل الدخول دون لمس بقية المنطق الحالي
+  const _originalStartApp = window.startApp;
+  window.startApp = function(){
+    if(typeof _originalStartApp === 'function') _originalStartApp();
+    if(!auth.currentUser){ showAuthScreen(); }
+  };
+
+  onAuthStateChanged(auth, (user)=>{
+    applyUserToProfile(user);
+    // إذا كان التطبيق قد بدأ فعلياً (تجاوزنا شاشة الـ onboarding)
+    const appEl = $('app');
+    const appVisible = appEl && appEl.style.display === 'flex';
+    if(user){
+      hideAuthScreen();
+    } else if(appVisible){
+      // كان مسجلاً ثم سجّل خروج (أو لا توجد جلسة) بعد بدء التطبيق فعلياً
+      showAuthScreen();
+    }
+  });
+
+  // ضبط الوضع الافتراضي للتبويبات عند التحميل
+  window.setAuthMode('login');
 </script>
 </body>
 </html>
