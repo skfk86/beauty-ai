@@ -4,3 +4,4 @@ android/
 *.jks
 .DS_Store
 .env
+!android/app/src/main/res/mipmap-*/
