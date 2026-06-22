@@ -289,6 +289,43 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
   font-size:13px;line-height:1.95;color:var(--text);
   animation:cardIn .3s ease;
 }
+/* ── تنسيق نص الذكاء الاصطناعي ── */
+.ai-fmt-bold{font-weight:800;color:var(--rose2)}
+.ai-fmt-head{
+  font-size:13.5px;font-weight:900;color:var(--rose2);
+  margin:10px 0 5px;display:flex;align-items:center;gap:5px;
+  letter-spacing:-.2px;
+}
+.ai-fmt-head::before{content:'';display:inline-block;width:3px;height:14px;
+  background:linear-gradient(to bottom,var(--rose),var(--gold));
+  border-radius:2px;flex-shrink:0;
+}
+.ai-fmt-list{margin:6px 0 6px 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.ai-fmt-li{
+  display:flex;align-items:flex-start;gap:7px;
+  font-size:13px;line-height:1.8;color:var(--text);
+}
+.ai-fmt-li::before{
+  content:'\2736';color:var(--rose2);font-size:9px;
+  flex-shrink:0;margin-top:5px;opacity:.8;
+}
+.ai-fmt-tip{
+  margin:8px 0 2px;padding:9px 12px;
+  background:linear-gradient(135deg,var(--rose-d),var(--gold-d));
+  border-radius:var(--r-md);border-right:3px solid var(--rose);
+  font-size:12.5px;line-height:1.8;color:var(--text);
+}
+.ai-fmt-divider{
+  border:none;height:1px;
+  background:linear-gradient(to right,transparent,var(--border),transparent);
+  margin:8px 0;
+}
+.ai-fmt-emoji-line{
+  display:flex;align-items:center;gap:6px;
+  font-size:13px;line-height:1.8;margin:3px 0;
+}
+.ai-fmt-emoji-line .ai-fmt-em{font-size:15px;flex-shrink:0}
+body.light-mode .ai-fmt-tip{background:linear-gradient(135deg,rgba(192,48,94,.07),rgba(154,92,40,.06))}
 /* dots loading */
 .ai-chat-body .dots{padding:4px 0}
 
@@ -425,6 +462,9 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
 .ai-card-hd{font-size:12px;font-weight:700;color:var(--gold2);margin-bottom:10px;
   display:flex;align-items:center;gap:6px}
 .ai-card-txt{font-size:12px;line-height:1.9;color:var(--text)}
+.ai-card-txt .ai-fmt-head{font-size:12.5px}
+.ai-card-txt .ai-fmt-li{font-size:12px}
+.ai-card-txt .ai-fmt-tip{font-size:11.5px}
 .dots{display:flex;gap:5px;justify-content:center;padding:6px 0}
 .dots span{width:6px;height:6px;border-radius:50%;background:var(--rose);
   animation:dp 1.2s ease-in-out infinite}
@@ -3338,7 +3378,7 @@ async function loadBrAI(b){
       r = await callGemini(`اكتبي 3 جمل عامة ومفيدة عن منتجات ${b.cat} ولمن تناسب، دون تكرار اسم البراند كثيراً.`, sys);
     }
     if(!r || r.trim().length < 15) throw new Error('EMPTY');
-    el.textContent = r;
+    el.innerHTML = formatAIText(r);
     lastBrInfo = r;
     if(spkBtn) spkBtn.style.display='inline-flex';
   }catch(e){
@@ -3435,7 +3475,7 @@ async function loadPrAI(p,b){
       'أنتِ Rosiva AI، خبيرة جمال ومستشارة منتجات محترفة. لديكِ معرفة دقيقة بمكونات منتجات الجمال وفوائدها الحقيقية وكيفية استخدامها ومن تناسب. أجيبي باللغة العربية بأسلوب ودي وعلمي في 4-5 جمل مفيدة.'
     );
     lastPrInfo=r;
-    document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
+    document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${formatAIText(r)}</div>`;
   }catch(e){
     const msg=e.message||'';
     const txt=msg.includes('401')?'Invalid API key':msg.includes('NET_ERR')?'Check your internet':msg||'Unknown error';
@@ -3467,7 +3507,7 @@ async function askMoreModal(){
   if(!question)return;
   try{
     const r=await callGemini(question,`You are a beauty expert and smart shopping consultant. The user is asking about a product "${curProd.ar}" (${curProd.nm}). لديكِ معرفة شاملة بالبدائل والأسعار والمكونات ومقارنات المنتجات وطرق الاستخدام والمناسبات. أجيبي باللغة العربية بأسلوب مباشر وعملي ومفيد.`);
-    document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${r}</div>`;
+    document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${formatAIText(r)}</div>`;
     lastPrInfo=r;
   }catch{showToast('خطأ في الاتصال');}
 }
@@ -3720,6 +3760,78 @@ function clearAIChat(){
   _awaitingProductOffer=false;
 }
 
+// ══ FORMAT AI TEXT — يحوّل النص العادي إلى HTML منسّق ══
+function formatAIText(text){
+  if(!text) return '';
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const lines = text.split('\n');
+  let html = '';
+  let inList = false;
+
+  for(let i=0;i<lines.length;i++){
+    let line = lines[i].trimEnd();
+
+    if(!line.trim()){
+      if(inList){ html+='</ul>'; inList=false; }
+      html+='<div style="height:6px"></div>';
+      continue;
+    }
+
+    // عناوين: **نص** منفرد أو ### نص
+    if(/^#{1,3}\s/.test(line) || /^\*{2}[^*\n]+\*{2}$/.test(line.trim())){
+      if(inList){ html+='</ul>'; inList=false; }
+      const headTxt = line.replace(/^#{1,3}\s*/,'').replace(/^\*{2}|\*{2}$/g,'');
+      html+=`<div class="ai-fmt-head">${applyInline(esc(headTxt))}</div>`;
+      continue;
+    }
+
+    // نقاط القائمة
+    if(/^[-*•]\s+/.test(line) || /^\d+[\.\)]\s+/.test(line)){
+      if(!inList){ html+='<ul class="ai-fmt-list">'; inList=true; }
+      const itemTxt = line.replace(/^[-*•]\s+/,'').replace(/^\d+[\.\)]\s+/,'');
+      html+=`<li class="ai-fmt-li">${applyInline(esc(itemTxt))}</li>`;
+      continue;
+    }
+
+    // سطر يبدأ بإيموجي
+    const emojiMatch = line.trim().match(/^([\u{1F300}-\u{1FFFF}\u{2600}-\u{27BF}])/u);
+    if(emojiMatch){
+      if(inList){ html+='</ul>'; inList=false; }
+      const em = emojiMatch[1];
+      const rest = line.trim().slice(em.length);
+      html+=`<div class="ai-fmt-emoji-line"><span class="ai-fmt-em">${em}</span><span>${applyInline(esc(rest))}</span></div>`;
+      continue;
+    }
+
+    // ملاحظة/نصيحة
+    if(/^(ملاحظة|تنبيه|نصيحة|مهم)[:\s]/i.test(line.trim())){
+      if(inList){ html+='</ul>'; inList=false; }
+      html+=`<div class="ai-fmt-tip">${applyInline(esc(line.trim()))}</div>`;
+      continue;
+    }
+
+    // خط فاصل
+    if(/^[-_]{3,}$/.test(line.trim())){
+      if(inList){ html+='</ul>'; inList=false; }
+      html+='<hr class="ai-fmt-divider">';
+      continue;
+    }
+
+    // سطر عادي
+    if(inList){ html+='</ul>'; inList=false; }
+    html+=`<div style="margin:1px 0;line-height:1.9">${applyInline(esc(line))}</div>`;
+  }
+
+  if(inList) html+='</ul>';
+  return html;
+}
+
+function applyInline(s){
+  s = s.replace(/\*\*(.+?)\*\*/g,'<span class="ai-fmt-bold">$1</span>');
+  s = s.replace(/\*([^*\n]+?)\*/g,'<em style="color:var(--gold2);font-style:normal;font-weight:600">$1</em>');
+  return s;
+}
+
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
 
@@ -3741,7 +3853,7 @@ async function doAI(text){
     const {text:r, products} = await callGeminiWithProductTool(text,
       'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
     lastResp=r;
-    if(reply) reply.innerHTML=r;
+    if(reply) reply.innerHTML=formatAIText(r);
     document.getElementById('ai-txt').textContent=r;
     if(products && products.length) showAIProductCards(products);
     if(body) setTimeout(()=>{ body.scrollTop=body.scrollHeight; },100);
@@ -5066,7 +5178,7 @@ async function loadProdAI(p){
     const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
     const text = await callGemini(prompt, sys);
-    el.textContent = text;
+    el.innerHTML = formatAIText(text);
     window._lastProdAI = text;
     document.getElementById('pdm-spk-btn').style.display='flex';
   }catch(e){
