@@ -240,72 +240,114 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
 .greet-title{font-size:24px;font-weight:900;color:var(--text);letter-spacing:-.5px;line-height:1.2}
 .greet-sub{font-size:11px;color:var(--dim);margin-top:2px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
 
-/* VOICE WAVEFORM — Real Physics */
-.voice-row{display:flex;align-items:center;justify-content:center;
-  padding:14px 10px;position:relative;width:100%}
-.wave-side{display:flex;align-items:center;gap:2.5px;flex:1}
-.wave-side.right{flex-direction:row-reverse}
-.wb{width:3px;border-radius:3px;
-  background:linear-gradient(to top,var(--rose),var(--gold2));
-  transition:height .09s ease-out;flex-shrink:0}
-.wb.idle{opacity:.3}
-.wb.a{animation:wa 1.2s ease-in-out infinite}
-.wb.speaking-mode{background:linear-gradient(to top,var(--gold2),var(--gold))}
-@keyframes wa{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
-
-/* MIC BUTTON — Premium Glow */
-.mic-wrap{position:relative;flex-shrink:0;margin:0 10px}
-.mic-outer{width:86px;height:86px;border-radius:50%;
-  border:1.5px solid rgba(208,66,114,.35);
+/* ─── AI CHAT WIDGET ─── */
+/* بطاقة AI الرئيسية */
+.ai-chat-card{
+  margin:10px 16px 0;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r-xl);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  animation:cardIn var(--dur-slow) var(--ease-out);
+}
+/* رأس البطاقة — gradient شريط */
+.ai-chat-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px 10px;
+  background:linear-gradient(135deg,rgba(214,61,110,.12) 0%,rgba(196,136,96,.08) 100%);
+  border-bottom:1px solid var(--border);
+}
+.ai-chat-avatar{
+  width:34px;height:34px;border-radius:var(--r-md);flex-shrink:0;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 28px rgba(208,66,114,.18),0 0 56px rgba(208,66,114,.06)}
-.mic-btn i{color:var(--rose2);font-size:26px}
-.mic-btn{width:72px;height:72px;border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#3d1530,#1a0818);
-  border:1.5px solid rgba(214,61,110,.6);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 24px rgba(208,66,114,.4),inset 0 1px 0 rgba(255,255,255,.1);
-  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out)}
-.mic-btn:active{transform:scale(.93)}
-.mic-btn.rec{animation:mr .9s ease-in-out infinite;
-  box-shadow:0 0 40px rgba(208,66,114,.7),inset 0 1px 0 rgba(255,255,255,.1)}
-.mic-btn.speaking{background:radial-gradient(circle at 40% 35%,#2a1508,#1a0e04);
-  border-color:rgba(200,144,74,.7);
-  box-shadow:0 0 30px rgba(196,136,96,.5),inset 0 1px 0 rgba(255,255,255,.08)}
-@keyframes mr{0%,100%{transform:scale(1);box-shadow:0 0 30px rgba(208,66,114,.5)}
-  50%{transform:scale(1.08);box-shadow:0 0 50px rgba(208,66,114,.8)}}
+  box-shadow:0 0 12px rgba(214,61,110,.3);
+}
+.ai-chat-avatar i{color:#fff;font-size:15px}
+.ai-chat-meta{flex:1;min-width:0}
+.ai-chat-name{font-size:13px;font-weight:900;color:var(--text);letter-spacing:-.2px}
+.ai-chat-status{font-size:10px;color:var(--gold2);font-weight:700;letter-spacing:.3px;margin-top:1px;display:flex;align-items:center;gap:4px}
+.ai-chat-status-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 
-.voice-hint{text-align:center;font-size:12px;color:var(--dim);
-  padding:0 0 8px;letter-spacing:.4px;font-weight:500;min-height:20px;
-  transition:color var(--dur-base);line-height:1.6}
+/* منطقة الرد */
+.ai-chat-body{
+  min-height:64px;max-height:180px;overflow-y:auto;
+  padding:14px 16px 10px;
+  scrollbar-width:none;
+}
+.ai-chat-body::-webkit-scrollbar{display:none}
+.ai-chat-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;padding:8px 0;text-align:center;
+}
+.ai-chat-empty-ic{font-size:28px;opacity:.5}
+.ai-chat-empty-txt{font-size:12px;color:var(--dim);font-weight:600}
+/* النص الفعلي للرد */
+.ai-chat-reply{
+  font-size:13px;line-height:1.95;color:var(--text);
+  animation:cardIn .3s ease;
+}
+/* dots loading */
+.ai-chat-body .dots{padding:4px 0}
 
-/* AI RESPONSE BOX — Elevated Premium */
+/* أسئلة سريعة */
+.ai-quick-row{
+  display:flex;gap:7px;padding:8px 14px 12px;
+  overflow-x:auto;scrollbar-width:none;flex-direction:row-reverse;
+}
+.ai-quick-row::-webkit-scrollbar{display:none}
+.ai-quick-chip{
+  flex-shrink:0;padding:7px 14px;border-radius:var(--r-full);
+  font-size:11.5px;font-weight:700;font-family:'Cairo',sans-serif;
+  background:var(--bg2);border:1px solid var(--border);color:var(--dim);
+  cursor:pointer;white-space:nowrap;
+  transition:all var(--dur-fast);
+}
+.ai-quick-chip:active{transform:scale(.95);background:var(--rose-d);border-color:rgba(214,61,110,.4);color:var(--rose2)}
+
+/* شريط الإدخال */
+.ai-input-bar{
+  display:flex;align-items:center;gap:9px;
+  padding:8px 12px 10px;
+  border-top:1px solid var(--border);
+  background:var(--bg2);
+}
+.ai-input-bar input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--text);font-size:13px;font-family:'Cairo',sans-serif;
+  text-align:right;
+}
+.ai-input-bar input::placeholder{color:var(--muted)}
+.ai-send-btn{
+  width:34px;height:34px;border-radius:var(--r-md);flex-shrink:0;
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  border:none;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 2px 8px rgba(214,61,110,.3);
+  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
+}
+.ai-send-btn:active{transform:scale(.9);box-shadow:none}
+.ai-send-btn i{color:#fff;font-size:13px}
+
+/* light mode */
+body.light-mode .ai-chat-card{background:var(--card);border-color:var(--border)}
+body.light-mode .ai-input-bar{background:var(--card2)}
+body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-color:var(--border)}
+
+/* AI RESPONSE BOX — kept for compat (hidden behind ai-chat-card) */
 .ai-box{margin:0 16px;background:var(--card);border:1px solid var(--border);
   border-radius:var(--r-lg);padding:14px 16px;display:none;
   box-shadow:var(--shadow-sm)}
-.ai-box.vis{display:block;animation:cardIn var(--dur-slow) var(--ease-out)}
+.ai-box.vis{display:none!important}/* نخفيه — الرد يظهر في ai-chat-card */
 .ai-hd{font-size:12px;font-weight:800;color:var(--gold2);margin-bottom:7px;
   display:flex;align-items:center;gap:6px;letter-spacing:.3px}
 .ai-txt{font-size:13px;line-height:1.95;color:var(--text)}
-.spk-btn i{color:var(--rose2)}
-.spk-btn{display:inline-flex;align-items:center;gap:5px;background:var(--rose-d);
-  color:var(--rose2);border:1px solid rgba(208,66,114,.35);border-radius:var(--r-full);
-  padding:5px 14px;font-size:11px;font-family:'Cairo',sans-serif;cursor:pointer;margin-top:8px;
-  transition:all var(--dur-fast)}
-.spk-btn:active{opacity:.75}
 
-/* TEXT INPUT — Premium Floating */
-.txt-row{display:flex;align-items:center;gap:9px;
-  margin:12px 16px 6px;background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r-full);padding:9px 14px;
-  transition:border-color var(--dur-fast);box-shadow:var(--shadow-sm)}
-.txt-row:focus-within{border-color:rgba(214,61,110,.5)}
-.txt-row input{background:none;border:none;outline:none;color:var(--text);
-  font-size:13px;font-family:'Cairo',sans-serif;flex:1;text-align:right}
-.txt-row input::placeholder{color:var(--muted)}
-.txt-send{background:none;border:none;font-size:17px;cursor:pointer;color:var(--rose2);
-  transition:transform var(--dur-fast);padding:0 2px}
-.txt-send:active{transform:scale(.88)}
+/* TEXT INPUT — مخفي (نستخدم ai-input-bar بدله) */
+.txt-row{display:none}
+.voice-hint{display:none}
+.mic-btn,.mic-wrap,.mic-outer,.wave-side,.voice-row,.wb{display:none!important}
 
 /* CATEGORY GRID — Premium Cards */
 .sec-lbl{padding:14px 18px 8px;font-size:13px;font-weight:800;color:var(--gold2);
@@ -1950,35 +1992,63 @@ body.light-mode .pdm-ic-float{
       <div class="greet-title">كيف أساعدكِ اليوم؟ ✨</div>
     </div>
 
-    <!-- VOICE SECTION — مصغّر لتقليل الهيمنة -->
-    <div style="display:flex;align-items:center;gap:12px;padding:8px 20px 4px">
-      <div class="voice-row" id="vrow" style="padding:4px 0;flex:1">
-        <div class="wave-side" id="wl"></div>
-        <div class="mic-wrap">
-          <div class="mic-outer" style="width:72px;height:72px">
-            <button class="mic-btn" id="mic-btn" aria-label="تحدثي مع روزيفا" onclick="toggleVoice()"
-              style="width:60px;height:60px"><i class="fa-solid fa-microphone"></i></button>
+    <!-- AI CHAT WIDGET — بطاقة الذكاء الاصطناعي -->
+    <div class="ai-chat-card" id="ai-chat-card">
+      <!-- رأس البطاقة -->
+      <div class="ai-chat-hdr">
+        <div class="ai-chat-avatar">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div class="ai-chat-meta">
+          <div class="ai-chat-name">Rosiva AI</div>
+          <div class="ai-chat-status">
+            <span class="ai-chat-status-dot"></span>
+            مساعدة الجمال الذكية
           </div>
         </div>
-        <div class="wave-side right" id="wr"></div>
+        <div id="ai-chat-clear" onclick="clearAIChat()"
+          style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);
+          border:1px solid var(--border);display:none;align-items:center;justify-content:center;
+          cursor:pointer;color:var(--dim);font-size:11px">
+          <i class="fa-solid fa-rotate-left"></i>
+        </div>
+      </div>
+
+      <!-- منطقة الرد -->
+      <div class="ai-chat-body" id="ai-chat-body">
+        <div class="ai-chat-empty" id="ai-chat-empty">
+          <div class="ai-chat-empty-ic">✨</div>
+          <div class="ai-chat-empty-txt">اسأليني عن أي منتج أو براند</div>
+        </div>
+        <div class="ai-chat-reply" id="ai-chat-reply" style="display:none"></div>
+      </div>
+
+      <!-- أسئلة سريعة -->
+      <div class="ai-quick-row" id="ai-quick-row">
+        <div class="ai-quick-chip" onclick="quickAsk('أفضل كريم مرطب للبشرة الجافة')">💧 بشرة جافة</div>
+        <div class="ai-quick-chip" onclick="quickAsk('عطر نسائي خفيف للصيف')">🌸 عطر صيفي</div>
+        <div class="ai-quick-chip" onclick="quickAsk('أفضل فاونديشن تغطية كاملة')">💄 فاونديشن</div>
+        <div class="ai-quick-chip" onclick="quickAsk('روتين العناية بالبشرة الدهنية')">✨ روتين بشرة</div>
+        <div class="ai-quick-chip" onclick="quickAsk('كريم للهالات السوداء تحت العين')">👁️ هالات</div>
+      </div>
+
+      <!-- شريط الإدخال -->
+      <div class="ai-input-bar">
+        <button class="ai-send-btn" onclick="sendAIChat()" aria-label="إرسال">
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <input type="text" id="ai-chat-inp" placeholder="اكتبي سؤالك هنا..." dir="rtl"
+          onkeydown="if(event.key==='Enter')sendAIChat()">
+        <i class="fa-solid fa-sparkles" style="color:var(--rose2);font-size:15px;opacity:.6"></i>
       </div>
     </div>
-    <div class="voice-hint" id="vh" style="margin-top:4px">اضغطي للتحدث مع روزيفا</div>
 
-    <!-- AI Response Box — عنوان + نص + (منتجات مقترحة تُضاف ديناميكياً) فقط، بدون أي أزرار -->
-    <div class="ai-box" id="ai-box">
-      <div class="ai-hd" style="margin-bottom:8px"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--gold2)"></i> Rosiva AI</div>
-      <div class="ai-txt" id="ai-txt"></div>
-    </div>
-
-    <!-- Text Input -->
-    <div class="txt-row">
-      <span class="srch-ic" style="color:var(--rose2)"><i class="fa-solid fa-paper-plane"></i></span>
-      <input type="text" id="txt-in" placeholder="اكتبي سؤالك هنا..." dir="rtl"
-        style="text-align:right"
-        onkeydown="if(event.key==='Enter')sendTxt()">
-      <button class="txt-send" onclick="sendTxt()" aria-label="إرسال"><i class="fa-solid fa-arrow-left"></i></button>
-    </div>
+    <!-- hidden compat elements for old JS -->
+    <div id="ai-box" class="ai-box"><div class="ai-txt" id="ai-txt"></div></div>
+    <div id="vh" style="display:none"></div>
+    <div id="mic-btn" style="display:none"></div>
+    <div id="wl" style="display:none"></div>
+    <div id="wr" style="display:none"></div>
 
     <!-- Hero Card — براند مميّز -->
     <div class="sec-lbl" style="margin-top:12px">✨ مميّز اليوم</div>
@@ -3513,30 +3583,11 @@ function clearFavs(){
   renderFavs();showToast('تم حذف المفضلة');
 }
 
-// ══ GEMINI LIVE VOICE ══
-// WebSocket Live API — محادثة صوتية حقيقية مع إمكانية المقاطعة
-
-let liveWS = null;          // WebSocket connection
-let liveAudioCtx = null;    // AudioContext للتشغيل
-let liveMicStream = null;    // ميكروفون stream
-let liveMicProcessor = null; // ScriptProcessor node
-let liveMicAnalyser = null;  // لقياس مستوى صوت الميكروفون الحقيقي
-let livePlaybackAnalyser = null; // لقياس مستوى صوت تشغيل Gemini الحقيقي
-let _waveRAF = null;         // requestAnimationFrame loop للموجة المرئية
-let liveAudioQueue = [];     // queue لـ PCM chunks القادمة
-let liveIsPlaying = false;   // هل يتكلم Gemini الآن
-let liveNextPlayTime = 0;    // وقت التشغيل التالي
+// ══ VOICE INPUT (STT فقط — نص فقط بدون Live) ══
 let liveSessionActive = false;
-let liveInterrupted = false;
+let liveIsPlaying = false;
 
-const LIVE_WS_URL = (key) =>
-  `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${encodeURIComponent(key)}`;
-
-const LIVE_SYSTEM_PROMPT = `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. تحدثي دائماً باللغة العربية بأسلوب ودود وخبير ومختصر. خبرتكِ تشمل المكياج، العطور، العناية بالبشرة والشعر. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.
-
-قاعدة مهمة جداً: عندما يطلب المستخدم منتجاً أو يصف مشكلة أو حالة (مثل: تساقط الشعر، بشرة جافة، عطر رجالي، كريم للحبوب)، لا تقترحي أسماء منتجات من خارج التطبيق أبداً. اسأليه باختصار: "هل تريد أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products بكلمات بحث إنجليزية دقيقة لجلب منتجات حقيقية من قاعدة بيانات التطبيق — التطبيق سيعرض الكاردات تلقائياً. ممنوع تماماً أن تقولي "تفضل" أو "هذه المنتجات" أو ما شابه قبل استدعاء الدالة فعلياً والحصول على نتيجتها؛ لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً.`;
-
-// ── تعريف أداة (function) البحث عن المنتجات — مشتركة بين Live والمحادثة النصية ──
+// ── تعريف أداة (function) البحث عن المنتجات ──
 const PRODUCT_TOOL_DECL = {
   name:'search_beauty_products',
   description:'تبحث عن منتجات تجميل وعناية حقيقية داخل قاعدة بيانات تطبيق Rosiva (Open Beauty Facts) لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
@@ -3549,471 +3600,161 @@ const PRODUCT_TOOL_DECL = {
   }
 };
 
-// ── base64 PCM → Float32 للـ AudioContext ──
-function _pcm16ToFloat32(base64){
-  const raw = Uint8Array.from(atob(base64), c=>c.charCodeAt(0));
-  const pcm = new Int16Array(raw.buffer);
-  const f32 = new Float32Array(pcm.length);
-  for(let i=0;i<pcm.length;i++) f32[i]=pcm[i]/32768.0;
-  return f32;
-}
+// ── toggleVoice: إدخال صوتي بـ Speech Recognition (نص فقط) ──
+let _sttRecognition = null;
 
-// ── تشغيل chunk صوتي بدون انقطاع (queued playback) ──
-function _scheduleLiveAudio(f32, sampleRate=24000){
-  if(!liveAudioCtx) liveAudioCtx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:24000});
-  if(!livePlaybackAnalyser){
-    livePlaybackAnalyser = liveAudioCtx.createAnalyser();
-    livePlaybackAnalyser.fftSize = 64;
-    livePlaybackAnalyser.smoothingTimeConstant = 0.55;
-    livePlaybackAnalyser.connect(liveAudioCtx.destination);
-  }
-  const buf = liveAudioCtx.createBuffer(1, f32.length, sampleRate);
-  buf.copyToChannel(f32, 0);
-  const src = liveAudioCtx.createBufferSource();
-  src.buffer = buf;
-  src.connect(livePlaybackAnalyser);
-  const now = liveAudioCtx.currentTime;
-  const start = Math.max(now, liveNextPlayTime);
-  src.start(start);
-  liveNextPlayTime = start + buf.duration;
-  liveIsPlaying = true;
-  src.onended = () => {
-    if(liveNextPlayTime <= liveAudioCtx.currentTime + 0.05){
-      liveIsPlaying = false;
-      _updateLiveUI('ready');
-    }
-  };
-}
-
-// ── إرسال صوت الميكروفون عبر WebSocket ──
-async function _startMicStreaming(){
-  try{
-    liveMicStream = await navigator.mediaDevices.getUserMedia({audio:{
-      sampleRate:16000,channelCount:1,
-      echoCancellation:true,noiseSuppression:true,autoGainControl:true
-    }});
-  }catch(e){
-    showToast('لا يمكن الوصول للميكروفون');
-    return false;
-  }
-
-  const micCtx = new (window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
-  const src = micCtx.createMediaStreamSource(liveMicStream);
-  const processor = micCtx.createScriptProcessor(4096, 1, 1);
-  liveMicProcessor = {processor, ctx: micCtx};
-
-  // Analyser حقيقي لقياس مستوى صوت الميكروفون الفعلي (للموجة المرئية)
-  liveMicAnalyser = micCtx.createAnalyser();
-  liveMicAnalyser.fftSize = 64;
-  liveMicAnalyser.smoothingTimeConstant = 0.55;
-  src.connect(liveMicAnalyser);
-
-  processor.onaudioprocess = (e) => {
-    if(!liveWS || liveWS.readyState !== WebSocket.OPEN) return;
-    // أثناء كلام روزيفا لا نرسل صوت الميكروفون للسيرفر — كي لا يحدث اكتشاف صوت تلقائي (VAD) يقاطعها بمجرد الكلام؛
-    // المقاطعة تتم فقط يدوياً بالضغط على زر المايك (toggleVoice → _interruptLive)
-    if(liveIsPlaying) return;
-    const f32 = e.inputBuffer.getChannelData(0);
-    // Float32 → Int16 PCM
-    const pcm16 = new Int16Array(f32.length);
-    for(let i=0;i<f32.length;i++) pcm16[i]=Math.max(-32768,Math.min(32767,f32[i]*32768));
-    const b64 = btoa(String.fromCharCode(...new Uint8Array(pcm16.buffer)));
-    liveWS.send(JSON.stringify({
-      realtimeInput:{
-        audio:{data:b64, mimeType:'audio/pcm;rate=16000'}
-      }
-    }));
-  };
-
-  src.connect(processor);
-  processor.connect(micCtx.destination);
-  return true;
-}
-
-// ── إيقاف الميكروفون ──
-function _stopMicStreaming(){
-  if(liveMicProcessor){
-    liveMicProcessor.processor.disconnect();
-    liveMicProcessor.ctx.close();
-    liveMicProcessor = null;
-  }
-  if(liveMicStream){
-    liveMicStream.getTracks().forEach(t=>t.stop());
-    liveMicStream = null;
-  }
-  liveMicAnalyser = null;
-}
-
-// ── المقاطعة: أوقف صوت Gemini فوراً وأعد الاستماع ──
-function _interruptLive(){
-  if(!liveIsPlaying) return;
-  liveInterrupted = true;
-  if(liveAudioCtx) liveAudioCtx.suspend().then(()=>liveAudioCtx.resume());
-  liveNextPlayTime = 0;
-  liveIsPlaying = false;
-  // إرسال إشارة المقاطعة للسيرفر
-  if(liveWS && liveWS.readyState===WebSocket.OPEN){
-    liveWS.send(JSON.stringify({clientContent:{turnComplete:false,interrupted:true}}));
-  }
-  _updateLiveUI('listening');
-}
-
-// ── موجة مرئية حقيقية: تتحرك بناءً على الصوت الفعلي (ميكروفون أو تشغيل) ──
-function _startWaveAnimation(mode){ // mode: 'listening' | 'speaking'
-  cancelAnimationFrame(_waveRAF);
-  const bars = [...document.querySelectorAll('.wb')];
-  const analyser = mode==='listening' ? liveMicAnalyser : livePlaybackAnalyser;
-  bars.forEach(b=>{
-    b.classList.remove('idle','a'); // نوقف أنيميشن CSS الوهمي — الحركة الآن حقيقية من الصوت
-    b.classList.toggle('speaking-mode', mode==='speaking');
-  });
-  if(!analyser || !bars.length) return;
-  const data = new Uint8Array(analyser.frequencyBinCount);
-  const minH = 6, maxH = 46;
-  function tick(){
-    analyser.getByteFrequencyData(data);
-    bars.forEach((bar,i)=>{
-      // كل شريط ياخذ عينة تردد مختلفة بدل قيمة واحدة موحّدة — إحساس طبيعي بدل التزامن الآلي
-      const idx = Math.floor((i/bars.length)*data.length);
-      const v = data[idx]/255;
-      const h = minH + v*(maxH-minH);
-      bar.style.height = h.toFixed(1)+'px';
-    });
-    _waveRAF = requestAnimationFrame(tick);
-  }
-  tick();
-}
-
-function _stopWaveAnimation(){
-  cancelAnimationFrame(_waveRAF);
-  _waveRAF = null;
-  document.querySelectorAll('.wb').forEach((bar,i)=>{
-    bar.classList.add('idle','a');
-    bar.classList.remove('speaking-mode');
-    bar.style.height = WH[i % WH.length]+'px';
-  });
-}
-
-// مؤشّرا "تستمع/تتكلم" وزر الإيقاف أصبحا مرتبطين بالمايك الرئيسي فقط (كلاس + نص التلميح تحته)
-// — لا يوجد أي عنصر منفصل داخل صندوق ai-box بعد الآن
-function _updateLiveUI(state){
-  const btn = document.getElementById('mic-btn');
-  const hint = document.getElementById('vh');
-  const aiTxt = document.getElementById('ai-txt');
-
-  if(state==='connecting'){
-    hint.textContent='جاري الاتصال... ⏳';
-    btn.classList.remove('rec');
-    btn.classList.remove('speaking');
-    _stopWaveAnimation();
-  } else if(state==='listening'){
-    hint.textContent='روسيفا تستمع إليكِ... 👂';
-    btn.classList.remove('speaking');
-    btn.classList.add('rec');
-    if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الاستماع
-    _startWaveAnimation('listening');
-  } else if(state==='speaking'){
-    hint.textContent='روسيفا بترد عليكِ... اضغطي المايك للإيقاف 🎙️';
-    btn.classList.remove('rec');
-    btn.classList.add('speaking');
-    if(aiTxt) aiTxt.style.display='none'; // أخفِ النص أثناء الكلام
-    _startWaveAnimation('speaking');
-  } else if(state==='ready'){
-    hint.textContent='اضغطي للتحدث مع روزيفا';
-    btn.classList.remove('rec');
-    btn.classList.remove('speaking');
-    if(aiTxt){ aiTxt.style.display=''; } // أظهر النص مجدداً
-    _stopWaveAnimation();
-  } else if(state==='error'){
-    hint.textContent='خطأ في الاتصال — اضغط للمحاولة مجدداً';
-    btn.classList.remove('rec');
-    btn.classList.remove('speaking');
-    if(aiTxt) aiTxt.style.display='';
-    _stopWaveAnimation();
-  }
-}
-
-// ── سجل تشخيص معطّل ──
-function _vlog(){ }
-let _vlogStart = 0;
-
-// ── فتح جلسة Live ──
-async function _openLiveSession(){
-  if(!apiKey){showToast('أضف مفتاح API أولاً 🔑');return false;}
-  apiKey = (apiKey||'').trim();
-  _updateLiveUI('connecting');
-  _vlogStart = Date.now();
-  _vlog('بدء الاتصال بـ: '+LIVE_WS_URL(apiKey).replace(apiKey,'***KEY***'));
-
-  return new Promise((resolve)=>{
-    const ws = new WebSocket(LIVE_WS_URL(apiKey));
-    liveWS = ws;
-    _vlog('WebSocket object created, readyState='+ws.readyState);
-
-    ws.onopen = () => {
-      _vlog('onopen');
-      ws.send(JSON.stringify({
-        setup:{
-          model:'models/gemini-3.1-flash-live-preview',
-          generationConfig:{
-            responseModalities:['AUDIO'],
-            speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:'Leda'}}}
-          },
-          systemInstruction:{parts:[{text:LIVE_SYSTEM_PROMPT}]},
-          inputAudioTranscription:{},
-          outputAudioTranscription:{},
-          tools:[{functionDeclarations:[PRODUCT_TOOL_DECL]}]
-        }
-      }));
-    };
-
-    ws.onmessage = async (event) => {
-      // WebView يوصّل الرسائل الثنائية كـ Blob لا كنص — لازم نحوّلها أولاً
-      let raw = event.data;
-      if(typeof Blob !== 'undefined' && raw instanceof Blob){
-        try{ raw = await raw.text(); }
-        catch(e){ _vlog('❌ فشل قراءة Blob: '+e.message); return; }
-      } else if(raw instanceof ArrayBuffer){
-        raw = new TextDecoder('utf-8').decode(raw);
-      }
-      _vlog('📩 onmessage('+(typeof event.data)+'): '+String(raw).substring(0,120));
-      try{
-        const msg = JSON.parse(raw);
-
-        // إعداد مكتمل
-        if(msg.setupComplete){
-          _vlog('🎉 setupComplete — الجلسة نشطة!');
-          liveSessionActive = true;
-          resolve(true);
-          return;
-        }
-
-        // نص ما قاله المستخدم صوتياً (input transcription) — للسجل/التشخيص فقط
-        const userTranscript = msg.serverContent?.inputTranscription?.text;
-        if(userTranscript && userTranscript.trim()){
-          _vlog('🎤 User said: '+userTranscript);
-        }
-
-        // Gemini يطلب تنفيذ دالة (function calling) — بعد موافقة المستخدم على عرض منتجات
-        if(msg.toolCall?.functionCalls){
-          for(const fc of msg.toolCall.functionCalls){
-            if(fc.name === 'search_beauty_products'){
-              const q = fc.args?.query || '';
-              showSearchingUI();
-              execProductSearchTool(q).then(({summary, products})=>{
-                if(products.length){
-                  showAIProductCards(products);
-                } else {
-                  const old = document.getElementById('ai-prod-recs');
-                  if(old) old.innerHTML = '<div style="color:var(--dim);font-size:12px;padding:8px">لم أجد منتجات مناسبة حالياً 😔</div>';
-                }
-                if(liveWS && liveWS.readyState===WebSocket.OPEN){
-                  liveWS.send(JSON.stringify({
-                    toolResponse:{
-                      functionResponses:[{id:fc.id, name:fc.name, response:{result:summary}}]
-                    }
-                  }));
-                }
-              });
-            }
-          }
-        }
-
-        // صوت قادم من Gemini
-        // Audio data from Gemini Live
-        const parts = msg.serverContent?.modelTurn?.parts;
-        if(parts){
-          parts.forEach(p=>{
-            if(p.inlineData?.data){
-              const mime = p.inlineData.mimeType||'';
-              // PCM audio — play it
-              if(mime.includes('audio') || mime.includes('pcm') || mime.includes('L16')){
-                const f32 = _pcm16ToFloat32(p.inlineData.data);
-                _scheduleLiveAudio(f32, 24000);
-                _updateLiveUI('speaking');
-              }
-            }
-            // transcript text — لا نعرضه في Live، الصوت يكفي
-            if(p.text){
-              lastResp = (lastResp||'') + p.text;
-              // لا نعرض النص في ai-txt أثناء Live
-            }
-          });
-        }
-        // outputTranscription — نحفظه فقط بدون عرض
-        const transcript = msg.serverContent?.outputTranscription?.text;
-        if(transcript){
-          lastResp = (lastResp||'') + transcript;
-          // لا نعرض النص في Live
-        }
-
-        // انتهى دور Gemini
-        if(msg.serverContent?.turnComplete){
-          liveIsPlaying = false;
-          liveInterrupted = false;
-          lastResp = '';
-          _updateLiveUI('listening');
-        }
-
-        // Gemini اكتشف مقاطعة
-        if(msg.serverContent?.interrupted){
-          liveNextPlayTime = 0;
-          liveIsPlaying = false;
-          _updateLiveUI('listening');
-        }
-      }catch(e){ console.warn('Live msg parse error',e); _vlog('⚠️ parse error: '+e.message); }
-    };
-
-    ws.onerror = (e) => {
-      _vlog('❌ onerror: '+(e?.message||'(no message — typical for WebSocket Event)'));
-      console.error('Live WS error:', e);
-      _updateLiveUI('error');
-      liveSessionActive = false;
-      resolve(false);
-    };
-
-    ws.onclose = (e) => {
-      _vlog('🔌 onclose — code='+e.code+' reason='+(e.reason||'(none)')+' wasClean='+e.wasClean);
-      console.log('Live WS closed:', e.code, e.reason);
-      const wasActive = liveSessionActive;
-      liveSessionActive = false;
-      _stopMicStreaming();
-      // كود 1000 = إغلاق طبيعي، غير ذلك يعني فشل فعلي — أظهر السبب الحقيقي
-      if(e.code && e.code!==1000){
-        const reasonTxt = e.reason ? (' — ' + e.reason) : '';
-        showToast('فشل اتصال Rosiva AI (كود ' + e.code + ')' + reasonTxt);
-        if(!wasActive) _updateLiveUI('error');
-      }
-      if(isRec){
-        isRec=false;
-        _updateLiveUI('ready');
-      }
-    };
-
-    // timeout إذا لم يتصل خلال 20 ثانية (مهم على شبكات بطيئة/VPN)
-    setTimeout(()=>{
-      if(!liveSessionActive){
-        _vlog('⏱ TIMEOUT بعد 20s — readyState النهائي='+ws.readyState);
-        ws.close();
-        resolve(false);
-        showToast('فشل الاتصال — تحقق من المفتاح والإنترنت');
-        _updateLiveUI('error');
-      }
-    },20000);
-  });
-}
-
-// ── toggleVoice: المفتاح الرئيسي ──
 async function toggleVoice(){
   if(!apiKey){showToast('أضف مفتاح Gemini API أولاً 🔑');return;}
 
-  // إذا في صوت رد نصي شغال (TTS عادي) → لمسة المايك توقفه
+  // إذا في صوت TTS شغال → لمسة المايك توقفه
   if(speaking){
     stopSpeech();
-    document.getElementById('mic-btn').classList.remove('speaking');
+    document.getElementById('mic-btn').classList.remove('rec','speaking');
     document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
     return;
   }
 
-  // إذا Gemini يتكلم (Live) → قاطعه
-  if(liveIsPlaying){
-    _interruptLive();
-    return;
-  }
-
-  // إذا الجلسة شغالة → أوقف الكل
-  if(isRec || liveSessionActive){
+  // إذا STT شغال → أوقفه
+  if(isRec){
     isRec=false;
-    liveSessionActive=false;
-    if(liveWS) liveWS.close();
-    liveWS=null;
-    _stopMicStreaming();
-    _updateLiveUI('ready');
+    if(_sttRecognition) _sttRecognition.stop();
+    document.getElementById('mic-btn').classList.remove('rec');
+    setWaveIdle(true);
+    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
     return;
   }
 
-  // ابدأ جلسة جديدة
+  // ابدأ STT
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRec){
+    showToast('التعرف على الصوت غير مدعوم — اكتبي سؤالك');
+    return;
+  }
+
   isRec=true;
-  stopSpeech();
-  lastResp='';
-  document.getElementById('ai-txt').textContent='';
-  document.getElementById('ai-box').classList.remove('vis');
-
-  const ok = await _openLiveSession();
-  if(!ok){isRec=false;return;}
-
-  const micOk = await _startMicStreaming();
-  if(!micOk){
-    liveWS?.close();
-    isRec=false;
-    return;
-  }
-
+  document.getElementById('mic-btn').classList.add('rec');
   setWaveIdle(false);
-  _updateLiveUI('listening');
+  document.getElementById('vh').textContent='روسيفا تستمع إليكِ... 👂';
+
+  const rec = new SpeechRec();
+  _sttRecognition = rec;
+  rec.lang = 'ar-SA';
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+
+  rec.onresult = async (e) => {
+    const txt = e.results[0][0].transcript.trim();
+    isRec=false;
+    _sttRecognition=null;
+    document.getElementById('mic-btn').classList.remove('rec');
+    setWaveIdle(true);
+    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    if(txt){
+      document.getElementById('txt-in').value='';
+      await doAI(txt);
+    }
+  };
+
+  rec.onerror = (e) => {
+    isRec=false;
+    _sttRecognition=null;
+    document.getElementById('mic-btn').classList.remove('rec');
+    setWaveIdle(true);
+    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    if(e.error !== 'aborted') showToast('لم يتم التعرف على الصوت — حاولي مجدداً');
+  };
+
+  rec.onend = () => {
+    if(!isRec) return;
+    isRec=false;
+    _sttRecognition=null;
+    document.getElementById('mic-btn').classList.remove('rec');
+    setWaveIdle(true);
+    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+  };
+
+  rec.start();
 }
 
-// startRec/stopRec متوافقة مع باقي الكود
 function startRec(){ toggleVoice(); }
 function stopRec(){
   isRec=false;
-  liveSessionActive=false;
-  if(liveWS) liveWS.close();
-  liveWS=null;
-  _stopMicStreaming();
+  if(_sttRecognition){ _sttRecognition.stop(); _sttRecognition=null; }
   document.getElementById('mic-btn').classList.remove('rec');
   setWaveIdle(true);
-  _updateLiveUI('ready');
 }
 
+
+
 async function sendTxt(){
-  const inp=document.getElementById('txt-in');
-  const t=inp.value.trim();if(!t)return;
-  inp.value='';await doAI(t);
+  const inp=document.getElementById('ai-chat-inp') || document.getElementById('txt-in');
+  const t=(inp?.value||'').trim();if(!t)return;
+  if(inp) inp.value='';
+  await doAI(t);
+}
+
+// ── وظائف بطاقة AI Chat الجديدة ──
+function quickAsk(text){
+  const inp=document.getElementById('ai-chat-inp');
+  if(inp) inp.value=text;
+  sendAIChat();
+}
+
+function sendAIChat(){
+  const inp=document.getElementById('ai-chat-inp');
+  const t=(inp?.value||'').trim();if(!t)return;
+  if(inp) inp.value='';
+  doAI(t);
+}
+
+function clearAIChat(){
+  const reply=document.getElementById('ai-chat-reply');
+  const empty=document.getElementById('ai-chat-empty');
+  const clearBtn=document.getElementById('ai-chat-clear');
+  const prods=document.getElementById('ai-prod-recs');
+  if(reply){reply.style.display='none';reply.innerHTML='';}
+  if(empty) empty.style.display='flex';
+  if(clearBtn) clearBtn.style.display='none';
+  if(prods) prods.remove();
+  _aiChatHistory=[];
+  _awaitingProductOffer=false;
 }
 
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
 
-  // إذا الـ Live session مفتوح — أرسل النص عبره (الموديل يتعامل مع tool calling بنفسه صوتياً)
-  if(liveSessionActive && liveWS && liveWS.readyState===WebSocket.OPEN){
-    liveWS.send(JSON.stringify({realtimeInput:{text}}));
-    document.getElementById('ai-box').classList.add('vis');
-    document.getElementById('ai-txt').style.display='none';
-    return;
-  }
-  const box=document.getElementById('ai-box');
-  box.classList.add('vis');
-  document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
+  // عرض loading في البطاقة الجديدة
+  const reply=document.getElementById('ai-chat-reply');
+  const empty=document.getElementById('ai-chat-empty');
+  const clearBtn=document.getElementById('ai-chat-clear');
+  const body=document.getElementById('ai-chat-body');
+  const quickRow=document.getElementById('ai-quick-row');
+
+  if(empty) empty.style.display='none';
+  if(reply){ reply.style.display='block'; reply.innerHTML='<div class="dots"><span></span><span></span><span></span></div>'; }
+  if(quickRow) quickRow.style.display='none';
+  if(clearBtn) clearBtn.style.display='flex';
+
   const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
+
   try{
     const {text:r, products} = await callGeminiWithProductTool(text,
       'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
     lastResp=r;
+    if(reply) reply.innerHTML=r;
     document.getElementById('ai-txt').textContent=r;
     if(products && products.length) showAIProductCards(products);
-    // تشغيل الصوت تلقائياً — حالة "تتكلم" تظهر على المايك الرئيسي فقط، والنص يبقى ظاهراً
-    const micBtn = document.getElementById('mic-btn');
-    const hint = document.getElementById('vh');
-    micBtn.classList.add('speaking');
-    if(hint) hint.textContent='روسيفا بترد عليكِ... اضغطي المايك للإيقاف 🎙️';
-    speakTxt(r, ()=>{
-      micBtn.classList.remove('speaking');
-      if(hint) hint.textContent='اضغطي للتحدث مع روزيفا';
-    });
+    if(body) setTimeout(()=>{ body.scrollTop=body.scrollHeight; },100);
   }catch(e){
     const msg = e.message || '';
-    if(msg==='NO_KEY'){
-      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 Add your Gemini API key from the sidebar</span>';
-    } else if(msg.includes('401')){
-      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">❌ Invalid API key</span>';
-    } else if(msg.includes('429')){
-      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">⏳ Rate limit reached — please wait a minute</span>';
-    } else if(msg.includes('NET_ERR')){
-      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">📵 Check your internet connection</span>';
-    } else {
-      document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">Error: '+msg+'</span>';
-    }
+    let errHtml='';
+    if(msg==='NO_KEY') errHtml='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Gemini API من الإعدادات</span>';
+    else if(msg.includes('401')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
+    else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — انتظري دقيقة</span>';
+    else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
+    else errHtml='<span style="color:#e06060">خطأ: '+msg+'</span>';
+    if(reply) reply.innerHTML=errHtml;
+    document.getElementById('ai-txt').innerHTML=errHtml;
   }
 }
 
@@ -4782,15 +4523,15 @@ async function searchProductsForQuery(userQuery){
 }
 
 function showAIProductCards(prods){
-  const wrap = document.getElementById('ai-box');
-  if(!wrap) return;
-  wrap.classList.add('vis'); // المنتجات نفسها محتوى يجب أن يظهر دائماً — بغض النظر عن وضع المايك
+  // نضيف الكاردات داخل ai-chat-body أو بعد البطاقة مباشرة
+  const chatCard = document.getElementById('ai-chat-card');
+  if(!chatCard) return;
   const old = document.getElementById('ai-prod-recs');
   if(old) old.remove();
 
   const section = document.createElement('div');
   section.id = 'ai-prod-recs';
-  section.style.cssText = 'margin-top:14px;direction:rtl';
+  section.style.cssText = 'padding:0 16px 16px;direction:rtl';
 
   const title = document.createElement('div');
   title.style.cssText = 'font-size:11px;font-weight:700;color:var(--rose2);margin-bottom:8px;letter-spacing:.5px';
@@ -4842,22 +4583,22 @@ function showAIProductCards(prods){
     grid.appendChild(card);
   });
   section.appendChild(grid);
-  wrap.appendChild(section);
+  chatCard.insertAdjacentElement('afterend', section);
 }
 
 async function showSearchingUI(){
-  const box = document.getElementById('ai-box');
-  box?.classList.add('vis');
+  const chatCard = document.getElementById('ai-chat-card');
   const old = document.getElementById('ai-prod-recs');
   if(old) old.remove();
   const section = document.createElement('div');
   section.id = 'ai-prod-recs';
-  section.style.cssText = 'margin-top:14px;direction:rtl;text-align:center;padding:16px 0';
+  section.style.cssText = 'padding:16px;direction:rtl;text-align:center';
   section.innerHTML = `
     <div style="font-size:12px;color:var(--rose2);font-weight:700;margin-bottom:8px">🔍 جاري البحث والتحليل...</div>
     <div class="dots"><span></span><span></span><span></span></div>
   `;
-  box?.appendChild(section);
+  const chatCard = document.getElementById('ai-chat-card');
+  if(chatCard) chatCard.insertAdjacentElement('afterend', section);
 }
 
 // المعالج الرئيسي — يُستدعى من doAI قبل الإرسال
@@ -5391,8 +5132,7 @@ function closePrivacy(){
 }
 
 window.addEventListener('beforeunload', ()=>{
-  if(liveWS) liveWS.close();
-  _stopMicStreaming();
+  stopSpeech();
 });
 </script>
 </body>
