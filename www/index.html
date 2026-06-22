@@ -1888,6 +1888,11 @@ body.light-mode .pdm-ic-float{
 }
 .bdv-ai-btn:active{transform:scale(.95)}
 
+.bdv-ai-recs{margin:12px 18px 0;display:none}
+.bdv-ai-recs.show{display:block;animation:cardIn .3s ease}
+.bdv-ai-recs-title{font-size:11px;font-weight:800;color:var(--rose2);margin-bottom:8px;letter-spacing:.3px}
+.bdv-ai-recs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
 .bdv-sortrow{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 4px}
 .bdv-sort{
   display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--dim);
@@ -2253,13 +2258,15 @@ body.light-mode .pdm-ic-float{
           <span>AI INSIGHTS</span>
         </div>
         <div id="bd-ai" class="bdv-ai-text"></div>
-        <button class="spk-btn" id="bd-spk" style="display:none;margin-top:10px" onclick="speakBr()">
-          <i class="fa-solid fa-volume-high"></i> استمعي للشرح
-        </button>
       </div>
       <button class="bdv-ai-btn" id="bd-ai-btn" onclick="triggerBrAI()">
         <i class="fa-solid fa-sparkles"></i> احصل على توصيات
       </button>
+    </div>
+
+    <div class="bdv-ai-recs" id="bd-ai-recs">
+      <div class="bdv-ai-recs-title">✨ منتجات موصى بها لكِ</div>
+      <div class="bdv-ai-recs-grid" id="bd-ai-recs-grid"></div>
     </div>
 
     <!-- Filter pills -->
@@ -3268,7 +3275,8 @@ async function openBrand(id){
     `<span style="color:var(--dim)">احصلي على تحليل ذكي لمساعدتك في اختيار المنتجات المناسبة لذوقك باستخدام الذكاء الاصطناعي.</span>`;
   const aiBtn=document.getElementById('bd-ai-btn');
   if(aiBtn) aiBtn.style.display='flex';
-  document.getElementById('bd-spk').style.display='none';
+  const recsBox=document.getElementById('bd-ai-recs');
+  if(recsBox){ recsBox.classList.remove('show'); document.getElementById('bd-ai-recs-grid').innerHTML=''; }
   lastBrInfo='';
 
   // إعادة ضبط فلاتر وزر "عرض الكل"
@@ -3358,19 +3366,48 @@ function renderBrandProdCard(p, b){
 }
 
 
+// ── يجلب عيّنة سريعة من منتجات البراند الحقيقية (نفس مصادر OBF) لتأسيس توصيات حقيقية عليها ──
+async function fetchBrandProductsQuick(b){
+  const term = b.search || b.nm;
+  const urls = [
+    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`,
+    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`
+  ];
+  for(const url of urls){
+    try{
+      const controller = new AbortController();
+      const timer = setTimeout(()=>controller.abort(), 8000);
+      const res = await fetch(url, {signal: controller.signal});
+      clearTimeout(timer);
+      const data = await res.json();
+      const prods = (data.products||[]).filter(p=>p.product_name && qIsGoodImgUrl(p.image_front_display_url||p.image_url||''));
+      if(prods.length) return prods.slice(0,8);
+    }catch(e){}
+  }
+  return [];
+}
+
 async function loadBrAI(b){
   const el = document.getElementById('bd-ai');
-  const spkBtn = document.getElementById('bd-spk');
+  const recsBox = document.getElementById('bd-ai-recs');
+  const recsGrid = document.getElementById('bd-ai-recs-grid');
   if(!el) return;
   el.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  if(spkBtn) spkBtn.style.display='none';
+  if(recsBox) recsBox.classList.remove('show');
+  if(recsGrid) recsGrid.innerHTML='';
   if(!apiKey){
     el.innerHTML='<div style="font-size:11px;color:var(--dim);text-align:center;padding:4px">Add your Gemini API key to get AI insights</div>';
     return;
   }
   try{
-    const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة.';
-    const prompt = `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
+    // اجلبي منتجات حقيقية للبراند أولاً لتأسيس توصية فعلية عليها (RAG) بدل وصف عام فقط
+    const realProds = await fetchBrandProductsQuick(b);
+    const namesList = realProds.map(p=>p.product_name).slice(0,8).join(' | ');
+
+    const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (اسم البراند، نوع المنتجات، الفئة المستهدفة) لتمييزها بصرياً.';
+    const prompt = realProds.length
+      ? `لدى براند "${b.nm}" (${b.cat}) هذه المنتجات الحقيقية المتوفرة في التطبيق: ${namesList}.\nرشّحي 2-3 منها بالاسم تحديداً مع سبب مختصر لكل ترشيح ولمن يناسب، ضمن نص قصير وودود. لا تذكري أي منتج غير مذكور في القائمة أعلاه.`
+      : `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
     let r = await callGemini(prompt, sys);
     // Gemini أحياناً يقطع الرد بسبب فلتر recitation عند ذكر براندات تجارية معروفة —
     // إعادة محاولة بصياغة أبسط بدل عرض نص ناقص للمستخدم
@@ -3380,13 +3417,21 @@ async function loadBrAI(b){
     if(!r || r.trim().length < 15) throw new Error('EMPTY');
     el.innerHTML = formatAIText(r);
     lastBrInfo = r;
-    if(spkBtn) spkBtn.style.display='inline-flex';
+
+    // اعرضي بطاقات حقيقية للمنتجات المرشّحة (أو أول عيّنة منها) بدل نص فقط
+    if(realProds.length && recsBox && recsGrid){
+      const mentioned = realProds.filter(p=>r.includes(p.product_name));
+      const toShow = (mentioned.length ? mentioned : realProds).slice(0,4);
+      toShow.forEach(p=>{
+        const card = renderBrandProdCard(p, b);
+        if(card) recsGrid.appendChild(card);
+      });
+      if(recsGrid.children.length) recsBox.classList.add('show');
+    }
   }catch(e){
     el.innerHTML='<div style="font-size:11px;color:var(--dim)">تعذّر تحميل التحليل</div>';
   }
 }
-
-function speakBr(){speakTxt(lastBrInfo);}
 
 // ══ PRODUCT MODAL ══
 function openProd(brandId,prodId){
@@ -5030,9 +5075,6 @@ function openProdDetail(p){
         <button class="pdm-ai-btn ask" id="pdm-analyze-btn" onclick="loadProdAI(currentProd)">
           <i class="fa-solid fa-wand-magic-sparkles"></i> تحليل المنتج
         </button>
-        <button class="pdm-ai-btn speak" id="pdm-spk-btn" onclick="speakProdAI()" style="display:none">
-          <i class="fa-solid fa-volume-high"></i> استماع
-        </button>
         <button class="pdm-ai-btn ask" onclick="askProdAI()">
           <i class="fa-solid fa-comment"></i> اسأليني
         </button>
@@ -5175,20 +5217,15 @@ async function loadProdAI(p){
   if(analyzeBtn) analyzeBtn.style.display='none';
   el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء.";
+    const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (الفوائد الرئيسية، نوع البشرة/الاستخدام المناسب) لتمييزها بصرياً، واذكري الفوائد الرئيسية كنقاط قصيرة بعلامة - إن أمكن.";
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
     const text = await callGemini(prompt, sys);
     el.innerHTML = formatAIText(text);
     window._lastProdAI = text;
-    document.getElementById('pdm-spk-btn').style.display='flex';
   }catch(e){
     el.textContent = 'تعذّر تحميل التحليل، حاولي مرة أخرى.';
     if(analyzeBtn) analyzeBtn.style.display='flex';
   }
-}
-
-function speakProdAI(){
-  if(window._lastProdAI) speakTxt(window._lastProdAI);
 }
 
 function askProdAI(){
