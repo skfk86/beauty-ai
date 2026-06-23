@@ -804,16 +804,19 @@ body.light-mode #ob{
 }
 .sp-logo{
   width:140px;height:140px;border-radius:36px;overflow:hidden;
+  background:#0d0310;
+  display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 0 1px rgba(208,66,114,.3),
              0 20px 60px rgba(208,66,114,.25),
              0 8px 24px rgba(0,0,0,.5);
 }
 body.light-mode .sp-logo{
+  background:#1a0520;
   box-shadow:0 0 0 1px rgba(192,48,96,.2),
              0 20px 60px rgba(192,48,96,.15),
              0 8px 24px rgba(0,0,0,.1);
 }
-.sp-logo img{width:100%;height:100%;object-fit:cover}
+.sp-logo img{width:88%;height:88%;object-fit:contain;border-radius:28px;}
 
 /* Brand name */
 .sp-name{
@@ -3006,7 +3009,7 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GEMINI_KEY='AQ.Ab8RN6IYbfS5cRwazTg_qVnowrSNJryMlzC5Qu4Z3nFG5z3faw';
+const DEFAULT_GEMINI_KEY='AIzaSyAb8RN6IYbfS5cRwazTg_qVnowrSNJryMlzC5Qu4Z3nFG5z3faw';
 let apiKey=DEFAULT_GEMINI_KEY;
 localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
 let isRec=false,recog=null,speaking=false;
@@ -3931,7 +3934,7 @@ async function doAI(text){
 // ══ GROQ ══
 async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json'};
+  const headers = _geminiHeaders(apiKey);
   const body = {
     contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
     generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}
@@ -3982,7 +3985,7 @@ function _looksLikeProductOffer(text){
 // ── نداء Gemini مع تفعيل أداة search_beauty_products (function calling حقيقي بدل كشف كلمات مفتاحية) ──
 async function callGeminiWithProductTool(userMsg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json'};
+  const headers = _geminiHeaders(apiKey);
   const tools = [{functionDeclarations:[PRODUCT_TOOL_DECL]}];
   const sysInstr = sys ? {parts:[{text:sys}]} : undefined;
 
@@ -4076,7 +4079,7 @@ async function validateProductImageAI(imgUrl, code){
       generationConfig:{maxOutputTokens:5}
     };
     const r = await fetch(_geminiUrl(apiKey, _GEMINI_MODELS[0]),{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+      method:'POST', headers:_geminiHeaders(apiKey), body:JSON.stringify(body)
     });
     if(!r.ok) return true; // فشل الفحص نفسه — لا نحظر بدون تأكيد
     const d = await r.json();
@@ -4134,7 +4137,7 @@ async function geminiTTS(text){
   };
   const r = await fetch(url,{
     method:'POST',
-    headers:{'Content-Type':'application/json'},
+    headers:_geminiHeaders(apiKey),
     body:JSON.stringify(body)
   });
   if(!r.ok){
@@ -4260,7 +4263,18 @@ function stopSpeech(){
 
 function _geminiUrl(k, model){
   const m = model || 'gemini-2.5-flash-lite';
+  // مفاتيح AQ. (Auth keys) لا تحتاج ?key= — تُرسل عبر Authorization header
+  // مفاتيح AIza (Standard keys) تعمل بكلا الأسلوبين
+  if(k && k.startsWith('AQ.')){
+    return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
+  }
   return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
+}
+
+function _geminiHeaders(k){
+  const h = {'Content-Type':'application/json'};
+  if(k && k.startsWith('AQ.')) h['Authorization'] = `Bearer ${k}`;
+  return h;
 }
 
 const _GEMINI_MODELS = [
@@ -4274,11 +4288,10 @@ async function _testGeminiKey(k){
     contents:[{role:'user',parts:[{text:'hi'}]}],
     generationConfig:{maxOutputTokens:5}
   });
-  const headers = {'Content-Type':'application/json'};
   let lastStatus=0; let lastMsg='';
   for(const model of _GEMINI_MODELS){
     try{
-      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers,body});
+      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers:_geminiHeaders(k),body});
       if(r.ok) return {ok:true,model};
       lastStatus=r.status;
       try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
