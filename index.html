@@ -724,10 +724,10 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       <div style="font-size:11px;color:var(--dim);margin-top:3px">خصوصيتكِ أولويتنا 🔒</div>
     </div>
     <div class="key-box">
-      <div class="key-lbl"><i class="fa-solid fa-key" style="color:var(--gold2)"></i> مفتاح Groq API</div>
-      <input class="key-inp" type="password" id="pr-key" placeholder="gsk_xxxxxxxxxxxxxxxxxxxx" dir="ltr">
+      <div class="key-lbl"><i class="fa-solid fa-key" style="color:var(--gold2)"></i> مفتاح Gemini API</div>
+      <input class="key-inp" type="password" id="pr-key" placeholder="AQ.Ab8RN..." dir="ltr">
       <button class="save-btn" onclick="saveKey()"><i class="fa-solid fa-floppy-disk"></i> حفظ المفتاح</button>
-      <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px">احصلي على مفتاح مجاني من console.groq.com</div>
+      <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:8px">احصلي على مفتاح من aistudio.google.com</div>
     </div>
     <div class="plist">
       <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Llama 3.3 70B</div></div>
@@ -949,7 +949,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       </div>
       <div class="sb-key-row">
         <i class="fa-solid fa-key"></i>
-        <input class="sb-key-inp" type="password" id="sb-key" placeholder="Groq API Key" dir="ltr">
+        <input class="sb-key-inp" type="password" id="sb-key" placeholder="Gemini API Key" dir="ltr">
         <button class="sb-key-save" onclick="saveSBKey()">حفظ</button>
       </div>
       <button onclick="testAPI()" style="width:100%;background:none;border:1px solid var(--border);border-radius:9px;padding:8px;color:var(--dim);font-family:Cairo,sans-serif;font-size:11px;cursor:pointer;margin-top:8px">
@@ -1002,7 +1002,7 @@ body{font-family:'Cairo',sans-serif;color:var(--text)}
       </div>
     </div>
     <div class="sb-foot">
-      <div class="sb-version">Beauty AI v1.0 • Powered by Groq</div>
+      <div class="sb-version">Beauty AI v1.0 • Powered by Gemini</div>
     </div>
   </div>
 
@@ -1137,10 +1137,11 @@ async function testAPI(){
   if(!k){ st.innerHTML='<span style="color:var(--gold2)">أدخلي المفتاح أولاً</span>'; return; }
   st.innerHTML='<span style="color:var(--dim)">جاري الاختبار...</span>';
   try{
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${k}`;
+    const r = await fetch(testUrl,{
       method:'POST',
-      headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'hi'}],max_tokens:5})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:'hi'}]}]})
     });
     if(r.ok){
       st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
@@ -1394,7 +1395,7 @@ function initBrandScroll(){
 
 async function loadBrAI(b){
   if(!apiKey){
-    document.getElementById('bd-ai').innerHTML='<div style="color:var(--dim);font-size:12px">أضيفي مفتاح Groq API 🔑</div>';return;
+    document.getElementById('bd-ai').innerHTML='<div style="color:var(--dim);font-size:12px">أضيفي مفتاح Gemini API 🔑</div>';return;
   }
   try{
     const r=await callGroq(`أخبريني عن براند ${b.ar} (${b.nm}) في مجال ${b.cat}. تاريخه ونشأته، فلسفته وما يميزه عن المنافسين، أشهر منتجاته وأكثرها مبيعاً، الشريحة السعرية، ولمن يناسب هذا البراند.`,
@@ -1489,7 +1490,7 @@ function openProd(brandId,prodId){
 
 async function loadPrAI(p,b){
   if(!apiKey){
-    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">أضيفي مفتاح Groq API 🔑</div>';return;
+    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">أضيفي مفتاح Gemini API 🔑</div>';return;
   }
   try{
     const r=await callGroq(
@@ -1631,7 +1632,7 @@ async function sendTxt(){
 }
 
 async function doAI(text){
-  if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
+  if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
   const box=document.getElementById('ai-box');
   box.classList.add('vis');
   document.getElementById('ai-txt').innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
@@ -1651,7 +1652,7 @@ async function doAI(text){
   }catch(e){
     const msg = e.message || '';
     if(msg==='NO_KEY'){
-      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Groq API من القائمة الجانبية</span>';
+      document.getElementById('ai-txt').innerHTML='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Gemini API من القائمة الجانبية</span>';
     } else if(msg.includes('401')){
       document.getElementById('ai-txt').innerHTML='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
     } else if(msg.includes('429')){
@@ -1701,37 +1702,64 @@ function stopAISpeaking(){
   if(lastResp) document.getElementById('spk-btn').style.display='inline-flex';
 }
 
-// ══ GROQ ══
-async function callGroq(msg,sys=''){
+// ══ GEMINI — Queue + Retry + Model Fallback ══
+const _GEMINI_MODELS = [
+  'gemini-2.0-flash',
+  'gemini-2.0-flash-lite',
+  'gemini-1.5-flash'
+];
+let _geminiQueue = Promise.resolve();
+
+// نبقي callGroq كاسم للدالة حتى لا نغير كل الكود
+async function callGroq(msg, sys=''){
+  return _geminiQueue = _geminiQueue.then(() => _geminiCall(msg, sys));
+}
+
+async function _geminiCall(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  
-  let r;
-  try{
-    r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{
-        'Authorization':'Bearer '+apiKey,
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        messages:[...(sys?[{role:'system',content:sys}]:[]),{role:'user',content:msg}],
-        max_tokens:900,
-        temperature:0.7
-      })
-    });
-  } catch(netErr){
-    throw new Error('NET_ERR: ' + netErr.message);
+
+  const MAX_RETRIES = 3;
+  const RETRY_DELAYS = [3000, 8000, 15000];
+  const prompt = sys ? sys + '\n\n' + msg : msg;
+
+  for(let attempt = 0; attempt < MAX_RETRIES; attempt++){
+    for(const model of _GEMINI_MODELS){
+      let r;
+      try{
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        r = await fetch(url,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            contents:[{parts:[{text: prompt}]}],
+            generationConfig:{maxOutputTokens:900, temperature:0.7}
+          })
+        });
+      } catch(netErr){
+        throw new Error('NET_ERR: ' + netErr.message);
+      }
+
+      if(r.ok){
+        const data = await r.json();
+        return data.candidates[0].content.parts[0].text;
+      }
+
+      if(r.status === 429){
+        continue; // جرّب النموذج التالي
+      }
+
+      let errMsg = '';
+      try{ const e = await r.json(); errMsg = e.error?.message || ''; }catch{}
+      throw new Error('HTTP_' + r.status + (errMsg ? ': ' + errMsg : ''));
+    }
+
+    // كل النماذج وصلت rate limit — انتظر ثم أعد المحاولة
+    if(attempt < MAX_RETRIES - 1){
+      await new Promise(res => setTimeout(res, RETRY_DELAYS[attempt]));
+    }
   }
-  
-  if(!r.ok){
-    let errMsg = '';
-    try{ const e = await r.json(); errMsg = e.error?.message || ''; }catch{}
-    throw new Error('HTTP_' + r.status + (errMsg ? ': ' + errMsg : ''));
-  }
-  
-  const data = await r.json();
-  return data.choices[0].message.content;
+
+  throw new Error('HTTP_429: تجاوزت حد الاستخدام، حاولي بعد قليل');
 }
 
 // ══ TTS ══
@@ -1841,10 +1869,11 @@ async function testAPI(){
   if(!k){ st.innerHTML='<span style="color:var(--gold2)">أدخلي المفتاح أولاً</span>'; return; }
   st.innerHTML='<span style="color:var(--dim)">جاري الاختبار...</span>';
   try{
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${k}`;
+    const r = await fetch(testUrl,{
       method:'POST',
-      headers:{'Authorization':'Bearer '+k,'Content-Type':'application/json'},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:'hi'}],max_tokens:5})
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:'hi'}]}]})
     });
     if(r.ok){
       st.innerHTML='<span style="color:#4caf7d">✅ الاتصال يعمل!</span>';
@@ -2057,10 +2086,10 @@ function openOBFProd(name, brand, img, ingr){
       if(el) el.textContent=r;
     }).catch(()=>{
       const el=document.getElementById('obf-ai-txt');
-      if(el) el.innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Groq للشرح 🔑</span>';
+      if(el) el.innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Gemini للشرح 🔑</span>';
     });
   } else {
-    document.getElementById('obf-ai-txt').innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Groq للشرح 🔑</span>';
+    document.getElementById('obf-ai-txt').innerHTML='<span style="color:var(--dim);font-size:11px">أضيفي مفتاح Gemini للشرح 🔑</span>';
   }
 }
 
