@@ -2435,51 +2435,15 @@ body.light-mode .pdm-ic-float{
     <div class="key-box">
       <div class="key-lbl">
         <i class="fa-solid fa-robot" style="color:var(--gold2)"></i>
-        مفتاح Gemini AI
-        <span id="key-status-dot" style="float:left;font-size:10px;margin-top:2px"></span>
+        مساعدة Rosiva الذكية
+        <span style="float:left;font-size:11px;color:#4caf50;font-weight:800"><i class="fa-solid fa-circle-check"></i> مفعّلة</span>
       </div>
-      <!-- خطوات الحصول على المفتاح -->
-      <div style="display:flex;gap:6px;margin-bottom:12px">
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--rose-d);border-radius:var(--r-sm);border:1px solid rgba(214,61,110,.2)">
-          <div style="font-size:16px">1️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">افتحي</div>
-          <div style="font-size:8px;color:var(--rose2);font-weight:700">aistudio.google.com</div>
-        </div>
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--gold-d);border-radius:var(--r-sm);border:1px solid rgba(200,144,74,.2)">
-          <div style="font-size:16px">2️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">اضغطي</div>
-          <div style="font-size:8px;color:var(--gold2);font-weight:700">Create API Key</div>
-        </div>
-        <div style="flex:1;text-align:center;padding:8px 4px;background:var(--card2);border-radius:var(--r-sm);border:1px solid var(--border)">
-          <div style="font-size:16px">3️⃣</div>
-          <div style="font-size:9px;color:var(--dim);margin-top:2px;font-weight:600">الصقي</div>
-          <div style="font-size:8px;color:var(--dim);font-weight:700">AIzaSy... or AQ. below</div>
-        </div>
+      <div style="font-size:11px;color:var(--dim);text-align:center;padding:6px 4px 2px;line-height:1.8">
+        الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨
       </div>
-      <!-- إدخال المفتاح -->
-      <div style="position:relative;margin-bottom:10px">
-        <input class="key-inp" type="password" id="pr-key"
-          placeholder="AIza... or AQ.Ab8..." dir="ltr"
-          style="font-family:monospace;font-size:13px;padding-left:44px"
-          oninput="checkKeyFormat(this.value)">
-        <button onclick="toggleKeyVis()" id="key-vis-btn" aria-label="إظهار/إخفاء المفتاح"
-          style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px">
-          <i class="fa-regular fa-eye" id="key-vis-icon"></i>
-        </button>
-      </div>
-      <!-- أزرار الحفظ والاختبار -->
-      <div style="display:flex;gap:8px">
-        <button class="save-btn" onclick="saveKey()" style="flex:2">
-          <i class="fa-solid fa-floppy-disk"></i> حفظ المفتاح
-        </button>
-        <button onclick="testKeyFromProfile()" style="flex:1;background:var(--card2);border:1px solid var(--border);border-radius:var(--r-md);padding:10px;color:var(--dim);font-size:11px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all var(--dur-fast)">
-          <i class="fa-solid fa-vials"></i> اختبار
-        </button>
-      </div>
-      <div id="pr-key-status" style="font-size:11px;text-align:center;margin-top:8px;min-height:16px"></div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Gemini 2.5 Flash</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Gemini 2.5 Flash-Lite</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
@@ -2492,93 +2456,6 @@ body.light-mode .pdm-ic-float{
     <div style="height:30px"></div>
   </div>
 
-  <!-- PRIVACY POLICY MODAL -->
-  <div id="prv-overlay" onclick="closePrivacy()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:900;backdrop-filter:blur(4px)"></div>
-  <div id="prv-modal" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:901;background:var(--card);border-radius:24px 24px 0 0;border-top:1px solid var(--border);padding:0;max-height:88vh;overflow:hidden;flex-direction:column">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
-      <button onclick="closePrivacy()" style="background:var(--card2);border:1px solid var(--border);border-radius:50%;width:32px;height:32px;color:var(--dim);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-xmark"></i></button>
-      <div style="text-align:center">
-        <div style="font-size:15px;font-weight:900;color:var(--text)">Privacy Policy</div>
-        <div style="font-size:10px;color:var(--dim);margin-top:2px">Rosiva — Gilgamesh LLC</div>
-      </div>
-      <div style="width:32px"></div>
-    </div>
-    <div style="overflow-y:auto;padding:20px;flex:1;-webkit-overflow-scrolling:touch">
-
-      <div style="background:linear-gradient(135deg,rgba(208,66,114,.15),rgba(196,136,96,.1));border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:18px;text-align:center">
-        <div style="font-size:28px;margin-bottom:6px">🔒</div>
-        <div style="font-size:13px;font-weight:900;color:var(--rose2)">Your Privacy is Our Priority</div>
-        <div style="font-size:11px;color:var(--dim);margin-top:4px;line-height:1.7">Welcome to Rosiva. At Gilgamesh LLC, we are committed to providing a smart and secure experience that fully protects your privacy and personal data.</div>
-      </div>
-
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(208,66,114,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-microphone" style="color:var(--rose2);font-size:14px"></i></div>
-          <div style="font-size:13px;font-weight:800;color:var(--text)">1. Voice Data</div>
-        </div>
-        <div style="font-size:11px;color:var(--dim);line-height:1.8;background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-          Rosiva relies on a smart voice assistant dedicated to beauty and personal skincare needs. We request microphone access to process your instant queries about makeup, fragrances and skincare. This voice is analyzed in real time by AI to provide answers and recommendations. <span style="color:var(--gold2);font-weight:700">We do not save or permanently store voice recordings.</span>
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(196,136,96,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-star" style="color:var(--gold2);font-size:14px"></i></div>
-          <div style="font-size:13px;font-weight:800;color:var(--text)">2. Personalized Recommendations</div>
-        </div>
-        <div style="font-size:11px;color:var(--dim);line-height:1.8;background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-          The app provides personalized recommendations and explanations of product ingredients and their benefits based on your text or voice preferences. We follow the principle of <span style="color:var(--rose2);font-weight:700">"No photos — No analysis"</span> completely; we never request camera access and never capture or analyze your facial features.
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(208,66,114,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-bag-shopping" style="color:var(--rose2);font-size:14px"></i></div>
-          <div style="font-size:13px;font-weight:800;color:var(--text)">3. Purchase Links & Third Parties</div>
-        </div>
-        <div style="font-size:11px;color:var(--dim);line-height:1.8;background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-          The app includes official and direct purchase links from trusted global retailers such as Sephora, Ulta, Amazon, Dior, Notino and Lookfantastic. When you click these links you are redirected to external platforms governed by privacy policies entirely independent of our app.
-        </div>
-      </div>
-
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(196,136,96,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-shield-halved" style="color:var(--gold2);font-size:14px"></i></div>
-          <div style="font-size:13px;font-weight:800;color:var(--text)">4. Security Guarantees — Our Commitments</div>
-        </div>
-        <div style="background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
-            <div style="width:24px;height:24px;border-radius:8px;background:rgba(208,66,114,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><i class="fa-solid fa-camera-slash" style="color:var(--rose2);font-size:10px"></i></div>
-            <div><div style="font-size:11px;font-weight:700;color:var(--text)">We never ask for your photos</div><div style="font-size:10px;color:var(--dim);margin-top:2px">Your privacy is 100% protected. No need to upload personal photos.</div></div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px">
-            <div style="width:24px;height:24px;border-radius:8px;background:rgba(196,136,96,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><i class="fa-solid fa-ban" style="color:var(--gold2);font-size:10px"></i></div>
-            <div><div style="font-size:11px;font-weight:700;color:var(--text)">We never sell your data</div><div style="font-size:10px;color:var(--dim);margin-top:2px">Your data is completely safe and is not shared or sold to any advertising entity or third parties.</div></div>
-          </div>
-          <div style="display:flex;align-items:flex-start;gap:10px">
-            <div style="width:24px;height:24px;border-radius:8px;background:rgba(208,66,114,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><i class="fa-solid fa-trash-can" style="color:var(--rose2);font-size:10px"></i></div>
-            <div><div style="font-size:11px;font-weight:700;color:var(--text)">Full control over your history</div><div style="font-size:10px;color:var(--dim);margin-top:2px">You can delete your account and clear all conversations and voice queries at any time.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-bottom:20px">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <div style="width:32px;height:32px;border-radius:10px;background:rgba(208,66,114,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fa-solid fa-triangle-exclamation" style="color:var(--rose2);font-size:14px"></i></div>
-          <div style="font-size:13px;font-weight:800;color:var(--text)">5. Disclaimer</div>
-        </div>
-        <div style="font-size:11px;color:var(--dim);line-height:1.8;background:var(--card2);border-radius:10px;padding:12px;border:1px solid var(--border)">
-          All recommendations, analyses and information provided through the Rosiva AI assistant are for general beauty and skincare guidance only. This information does not constitute medical advice or a therapeutic diagnosis for skin problems, and the company bears no responsibility for the results of product use. <span style="color:var(--gold2)">Always consult specialists or official product packaging.</span>
-        </div>
-      </div>
-
-      <div style="text-align:center;padding:16px;background:var(--card2);border-radius:14px;border:1px solid var(--border);margin-bottom:20px">
-        <div style="font-size:11px;color:var(--dim)">For contact and inquiries</div>
-        <div style="font-size:12px;font-weight:700;color:var(--gold2);margin-top:4px">Gilgamesh LLC — Rosiva Support</div>
-      </div>
-
-    </div>
-  </div>
 
   <!-- DISCOVER SCREEN -->
   <div id="s-discover" class="screen">
@@ -2718,25 +2595,13 @@ body.light-mode .pdm-ic-float{
       </div>
       <div style="padding:14px 16px 0">
         <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold2);text-transform:uppercase;margin-bottom:8px">
-          <i class="fa-solid fa-key"></i> Gemini API Key
+          <i class="fa-solid fa-robot"></i> Rosiva AI
         </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input class="sb-key-inp" type="password" id="sb-key"
-            placeholder="AIza... or AQ.Ab8..." dir="ltr"
-            style="flex:1;font-size:12px;font-family:monospace">
-          <button class="sb-key-save" onclick="saveSBKey()">
-            <i class="fa-solid fa-check"></i> Save
-          </button>
+        <div style="display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:9px 12px">
+          <i class="fa-solid fa-circle-check" style="color:#4caf50;font-size:13px"></i>
+          <span style="font-size:11.5px;color:var(--dim);font-weight:700">الذكاء الاصطناعي مفعّل ويعمل تلقائياً</span>
         </div>
-        <div style="font-size:9px;color:var(--muted);margin-top:6px;text-align:center">
-          Get free key → <span style="color:var(--rose2);font-weight:700">aistudio.google.com</span>
-        </div>
-        <div id="api-status" style="font-size:11px;text-align:center;margin-top:6px;min-height:16px"></div>
       </div>
-      <button onclick="testAPI()" style="width:100%;background:none;border:1px solid var(--border);border-radius:9px;padding:8px;color:var(--dim);font-family:Cairo,sans-serif;font-size:11px;cursor:pointer;margin-top:8px">
-        <i class="fa-solid fa-circle-check"></i> Test Connection
-      </button>
-      <div id="api-status" style="font-size:11px;text-align:center;margin-top:6px;min-height:16px"></div>
     </div>
     <div class="sb-body">
       <div class="sb-section">Navigation</div>
@@ -3249,7 +3114,6 @@ function finishOB(skip=false){
 
 function startApp(){
   document.getElementById('app').style.display='flex';
-  document.getElementById('pr-key').value=apiKey;
   renderBrands();navTo('home');
 }
 
@@ -4389,47 +4253,18 @@ function stopSpeech(){
 
 // ══ PROFILE ══
 
-function checkKeyFormat(val){
-  const dot = document.getElementById('key-status-dot');
-  if(!dot) return;
-  if(!val||val.trim()===''){ dot.textContent=''; return; }
-  const t=val.trim();
-  const isAIza=/^AIza[A-Za-z0-9_-]{35,}$/.test(t);
-  const isAQ=/^AQ\.[A-Za-z0-9_\-\.]{10,}$/.test(t);
-  if(isAIza||isAQ){
-    dot.innerHTML='<span style="color:#4caf50">✅ Valid format</span>';
-  } else if(t.length>8){
-    dot.innerHTML='<span style="color:#FFA500">⚠️ Format may not be valid</span>';
-  } else {
-    dot.innerHTML='<span style="color:#e06060">⚠️ Key too short</span>';
-  }
-}
-
-function toggleKeyVis(){
-  const inp = document.getElementById('pr-key');
-  const icon = document.getElementById('key-vis-icon');
-  if(!inp) return;
-  if(inp.type==='password'){
-    inp.type='text';
-    if(icon) icon.className='fa-regular fa-eye-slash';
-  } else {
-    inp.type='password';
-    if(icon) icon.className='fa-regular fa-eye';
-  }
-}
-
 // ── Gemini Helper — وثائق Google الرسمية ──
 // المفاتيح AQ. و AIza كلاهما يعملان عبر ?key= في الـ URL
 // هذا هو الأسلوب الرسمي الوحيد المضمون للـ REST API
 
 function _geminiUrl(k, model){
-  const m = model || 'gemini-2.5-flash';
+  const m = model || 'gemini-2.5-flash-lite';
   return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
 }
 
 const _GEMINI_MODELS = [
-  'gemini-2.5-flash',
   'gemini-2.5-flash-lite',
+  'gemini-2.0-flash-lite',
   'gemini-1.5-flash'
 ];
 
@@ -4454,38 +4289,6 @@ async function _testGeminiKey(k){
   return {ok:false,status:lastStatus,msg:lastMsg||'All models failed'};
 }
 
-async function testKeyFromProfile(){
-  const k = document.getElementById('pr-key').value.trim() || apiKey;
-  const st = document.getElementById('pr-key-status');
-  if(!k){ if(st) st.innerHTML='<span style="color:var(--gold2)">Enter your key first</span>'; return; }
-  if(st) st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  try{
-    const res = await _testGeminiKey(k);
-    if(res.ok){
-      // Save working config globally
-      window._geminiWorkingUrl = res.url;
-      window._geminiWorkingHeaders = res.headers;
-      if(st) st.innerHTML='<span style="color:#4caf50">✅ Key is working perfectly!</span>';
-    } else {
-      if(st) st.innerHTML='<span style="color:#e06060">❌ '+res.msg+'</span>';
-    }
-  }catch(e){
-    const m=e.message||'';
-    const friendly=m.includes('Failed to fetch')||m.includes('NetworkError')?'Connection error — check internet':'Error: '+m.slice(0,80);
-    if(st) st.innerHTML='<span style="color:#e06060">❌ '+friendly+'</span>';
-  }
-}
-function saveKey(){
-  const k=document.getElementById('pr-key').value.trim();
-  if(!k){ showToast('أدخلي مفتاح Gemini أولاً 🔑'); return; }
-  // Accept any key format
-  localStorage.setItem('bai_key',k);
-  apiKey=k;
-  showToast('✅ تم حفظ المفتاح!');
-  const st=document.getElementById('pr-key-status');
-  if(st) st.innerHTML='<span style="color:#4caf50">✅ Saved! Tap Test to verify</span>';
-}
-
 // ══ UTILS ══
 function showToast(msg){
   const t=document.getElementById('toast');
@@ -4495,29 +4298,9 @@ function showToast(msg){
 
 
 // ══ SIDEBAR ══
-async function testAPI(){
-  const k = document.getElementById('sb-key').value.trim() || apiKey;
-  const st = document.getElementById('api-status');
-  if(!k){ st.innerHTML='<span style="color:var(--gold2)">Enter API key first</span>'; return; }
-  st.innerHTML='<div class="dots"><span></span><span></span><span></span></div>';
-  try{
-    const res = await _testGeminiKey(k);
-    if(res.ok){
-      window._geminiWorkingUrl = res.url;
-      window._geminiWorkingHeaders = res.headers;
-      st.innerHTML='<span style="color:#4caf50">✅ Gemini connected!</span>';
-    }else{
-      st.innerHTML='<span style="color:#e06060">❌ '+res.msg+'</span>';
-    }
-  }catch(e){
-    const m=e.message||'';
-    const friendly=m.includes('Failed to fetch')||m.includes('NetworkError')?'Connection error — check internet':'Error: '+m.slice(0,80);
-    st.innerHTML='<span style="color:#e06060">❌ '+friendly+'</span>';
-  }
-}function openSB(){
+function openSB(){
   document.getElementById('sb').classList.add('open');
   document.getElementById('sb-ov').classList.add('open');
-  document.getElementById('sb-key').value = apiKey;
 }
 function closeSB(){
   document.getElementById('sb').classList.remove('open');
@@ -4533,15 +4316,6 @@ function sbNav(screen, filter){
     if(el) el.classList.add('on');
   }, 300);
 }
-function saveSBKey(){
-  const k = document.getElementById('sb-key').value.trim();
-  if(!k){ showToast('أدخلي المفتاح أولاً'); return; }
-  localStorage.setItem('bai_key', k);
-  apiKey = k;
-  document.getElementById('pr-key').value = k;
-  showToast('تم حفظ المفتاح ✅');
-}
-
 function applyTheme(){
   const isDark = localStorage.getItem('bai_theme') !== 'light';
   document.body.style.transition='background .3s,color .3s';
@@ -5411,20 +5185,11 @@ function buyOnAmazon(productName){
   else window.open(url,'_blank');
 }
 
+const PRIVACY_POLICY_URL = 'https://skfk86.github.io/beauty-ai/privacy.html';
+
 function openPrivacy(){
-  const o=document.getElementById('prv-overlay');
-  const m=document.getElementById('prv-modal');
-  o.style.display='block';
-  m.style.display='flex';
-  m.style.flexDirection='column';
-  requestAnimationFrame(()=>{
-    m.style.transition='transform .3s ease';
-    m.style.transform='translateY(0)';
-  });
-}
-function closePrivacy(){
-  document.getElementById('prv-overlay').style.display='none';
-  document.getElementById('prv-modal').style.display='none';
+  if(window.Capacitor) window.open(PRIVACY_POLICY_URL, '_system');
+  else window.open(PRIVACY_POLICY_URL, '_blank');
 }
 
 window.addEventListener('beforeunload', ()=>{
