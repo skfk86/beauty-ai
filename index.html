@@ -1104,7 +1104,8 @@ const PRODS={
 let curScreen='home',prevScreen='home',curFilter='All';
 let curBrand=null,curProd=null;
 let favs=JSON.parse(localStorage.getItem('bai_favs')||'[]');
-let apiKey=localStorage.getItem('bai_key')||'';
+const _DEFAULT_KEY='__GEMINI_API_KEY__';
+let apiKey=localStorage.getItem('bai_key')||_DEFAULT_KEY;
 let isRec=false,recog=null,speaking=false;
 let lastResp='',lastBrInfo='',lastPrInfo='';
 
