@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>سياسة الخصوصية — Rosiva</title>
+<meta name="description" content="سياسة الخصوصية الرسمية لتطبيق Rosiva — مساعدتك الذكية لعالم الجمال">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  :root{
+    --bg:#0d0610; --bg2:#150a1a; --card:#1a0f20; --card2:#211428;
+    --border:rgba(255,255,255,.08); --text:#f5eef8; --dim:#b8a8c2; --muted:#8a7793;
+    --rose:#d63d6e; --rose2:#ff6f9c; --gold:#c8904a; --gold2:#e3b566;
+    --r-md:14px; --r-lg:20px; --r-full:999px;
+    --shadow-glow:0 8px 30px rgba(214,61,110,.25);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'Cairo',sans-serif;line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:'';position:fixed;top:-120px;right:-100px;width:320px;height:320px;
+    background:var(--rose);border-radius:50%;filter:blur(90px);opacity:.18;z-index:0;
+  }
+  body::after{
+    content:'';position:fixed;bottom:-100px;left:-100px;width:280px;height:280px;
+    background:var(--gold2);border-radius:50%;filter:blur(90px);opacity:.14;z-index:0;
+  }
+  .wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 20px 70px}
+  header{text-align:center;margin-bottom:34px}
+  .logo{
+    width:68px;height:68px;border-radius:20px;margin:0 auto 14px;
+    background:linear-gradient(135deg,var(--rose),var(--gold2));
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-glow);
+  }
+  .logo i{font-size:28px;color:#fff}
+  header h1{font-size:22px;font-weight:900;margin:0 0 6px;
+    background:linear-gradient(135deg,var(--rose2),var(--gold2));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  header p{font-size:13px;color:var(--dim);margin:0}
+  .meta-row{
+    display:flex;justify-content:center;gap:14px;margin-top:16px;flex-wrap:wrap;
+  }
+  .meta-chip{
+    font-size:11px;color:var(--gold2);background:var(--card2);border:1px solid var(--border);
+    border-radius:var(--r-full);padding:6px 14px;font-weight:700;
+  }
+  .card{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:22px 20px;margin-bottom:16px;
+  }
+  .card h2{
+    font-size:15px;font-weight:800;margin:0 0 12px;color:var(--rose2);
+    display:flex;align-items:center;gap:8px;
+  }
+  .card h2 i{font-size:14px;color:var(--gold2);width:20px;text-align:center}
+  .card p, .card li{font-size:13.5px;color:var(--text);margin:0 0 10px}
+  .card p:last-child, .card li:last-child{margin-bottom:0}
+  .card ul{margin:0;padding-right:18px}
+  .card li{margin-bottom:8px}
+  .card li::marker{color:var(--gold2)}
+  .dim{color:var(--dim);font-size:12.5px}
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;background:var(--rose-d,rgba(214,61,110,.12));
+    border:1px solid rgba(214,61,110,.25);color:var(--rose2);font-weight:700;font-size:11.5px;
+    padding:4px 10px;border-radius:var(--r-full);margin:2px 4px 2px 0;
+  }
+  .badge i{font-size:10px}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px}
+  th,td{padding:9px 8px;text-align:right;border-bottom:1px solid var(--border)}
+  th{color:var(--gold2);font-weight:800;font-size:11.5px}
+  td{color:var(--dim)}
+  .toc{
+    background:var(--card2);border:1px solid var(--border);border-radius:var(--r-lg);
+    padding:16px 18px;margin-bottom:24px;
+  }
+  .toc strong{display:block;color:var(--gold2);font-size:12px;margin-bottom:10px}
+  .toc a{
+    display:block;color:var(--dim);text-decoration:none;font-size:13px;padding:6px 0;
+    border-bottom:1px solid var(--border);transition:color .15s;
+  }
+  .toc a:last-child{border-bottom:none}
+  .toc a:hover{color:var(--rose2)}
+  .toc a i{margin-left:6px;font-size:10px;color:var(--gold2)}
+  footer{text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid var(--border)}
+  footer p{font-size:11.5px;color:var(--muted);margin:4px 0}
+  footer a{color:var(--rose2);text-decoration:none;font-weight:700}
+  .back-btn{
+    display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--rose),var(--rose2));
+    color:#fff;font-weight:800;font-size:13px;padding:11px 22px;border-radius:var(--r-full);
+    text-decoration:none;margin-top:18px;box-shadow:var(--shadow-glow);
+  }
+  @media(max-width:420px){
+    .wrap{padding:28px 14px 50px}
+    .card{padding:18px 14px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo"><i class="fa-solid fa-spa"></i></div>
+    <h1>سياسة الخصوصية — Rosiva</h1>
+    <p>دليلكِ الذكي لعالم الجمال ✨</p>
+    <div class="meta-row">
+      <span class="meta-chip"><i class="fa-regular fa-calendar"></i> آخر تحديث: 23 يونيو 2026</span>
+      <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> الإصدار 2.0</span>
+    </div>
+  </header>
+
+  <div class="toc">
+    <strong>محتوى الصفحة</strong>
+    <a href="#intro"><i class="fa-solid fa-chevron-left"></i> 1. مقدمة</a>
+    <a href="#data-collect"><i class="fa-solid fa-chevron-left"></i> 2. البيانات التي نجمعها</a>
+    <a href="#third-party"><i class="fa-solid fa-chevron-left"></i> 3. الخدمات الخارجية المستخدمة</a>
+    <a href="#data-use"><i class="fa-solid fa-chevron-left"></i> 4. كيف نستخدم بياناتك</a>
+    <a href="#ai-section"><i class="fa-solid fa-chevron-left"></i> 5. الذكاء الاصطناعي وبياناتك</a>
+    <a href="#affiliate"><i class="fa-solid fa-chevron-left"></i> 6. روابط الشراء التابعة (Amazon Associates)</a>
+    <a href="#storage"><i class="fa-solid fa-chevron-left"></i> 7. تخزين البيانات وأمانها</a>
+    <a href="#sharing"><i class="fa-solid fa-chevron-left"></i> 8. مشاركة البيانات</a>
+    <a href="#rights"><i class="fa-solid fa-chevron-left"></i> 9. حقوقك</a>
+    <a href="#children"><i class="fa-solid fa-chevron-left"></i> 10. خصوصية الأطفال</a>
+    <a href="#changes"><i class="fa-solid fa-chevron-left"></i> 11. تعديلات السياسة</a>
+    <a href="#contact"><i class="fa-solid fa-chevron-left"></i> 12. التواصل معنا</a>
+  </div>
+
+  <div class="card" id="intro">
+    <h2><i class="fa-solid fa-book-open"></i> 1. مقدمة</h2>
+    <p>
+      مرحباً بك في <strong>Rosiva</strong> ("التطبيق"، "نحن"، "روزيفا"). نحترم خصوصيتك ونلتزم بحمايتها.
+      توضح هذه السياسة بشفافية كاملة ما هي البيانات التي يجمعها التطبيق، وكيف تُستخدم، ومع من تُشارَك،
+      وما هي حقوقك كمستخدمة. باستخدامك للتطبيق فإنك توافقين على الممارسات الموضحة في هذه السياسة.
+    </p>
+  </div>
+
+  <div class="card" id="data-collect">
+    <h2><i class="fa-solid fa-database"></i> 2. البيانات التي نجمعها</h2>
+    <table>
+      <tr><th>نوع البيانات</th><th>التفاصيل</th></tr>
+      <tr><td>بيانات الحساب</td><td>الاسم، البريد الإلكتروني، كلمة المرور (مشفّرة عبر Firebase Authentication)</td></tr>
+      <tr><td>بيانات الاستخدام</td><td>المنتجات المفضّلة، سجل البحث داخل التطبيق، التفاعل مع المساعد الذكي</td></tr>
+      <tr><td>بيانات الجهاز</td><td>نوع الجهاز ونظام التشغيل لأغراض تحسين الأداء (عبر Firebase Analytics)</td></tr>
+      <tr><td>محتوى المحادثة</td><td>الأسئلة والرسائل التي تكتبينها للمساعد الذكي Rosiva AI</td></tr>
+    </table>
+    <p class="dim" style="margin-top:12px">
+      لا يقوم التطبيق بتحليل الصور الشخصية أو الوصول إلى كاميرا جهازك دون إذن صريح منك، ولا نطلب أي صور لوجهك لتقديم التوصيات.
+    </p>
+  </div>
+
+  <div class="card" id="third-party">
+    <h2><i class="fa-solid fa-puzzle-piece"></i> 3. الخدمات الخارجية المستخدمة</h2>
+    <p>يعتمد التطبيق على خدمات موثوقة من جهات خارجية لتقديم تجربته الكاملة:</p>
+    <span class="badge"><i class="fa-solid fa-fire"></i> Firebase (Google)</span>
+    <span class="badge"><i class="fa-solid fa-robot"></i> Google Gemini AI</span>
+    <span class="badge"><i class="fa-solid fa-barcode"></i> Open Beauty Facts</span>
+    <span class="badge"><i class="fa-brands fa-amazon"></i> Amazon Associates</span>
+    <ul style="margin-top:14px">
+      <li><strong>Firebase Authentication & Analytics</strong> (Google LLC) — لإدارة حسابات المستخدمات بأمان وتحليل استخدام التطبيق بشكل مجمّع وغير شخصي.</li>
+      <li><strong>Google Gemini AI</strong> — لتشغيل المساعد الذكي وتحليل أسئلتك وتقديم توصيات منتجات مخصصة.</li>
+      <li><strong>Open Beauty Facts</strong> — قاعدة بيانات مفتوحة المصدر لمعلومات ومكونات منتجات التجميل، لا تتضمن بيانات شخصية عنك.</li>
+      <li><strong>Amazon Associates</strong> — برنامج تسويق بالعمولة لعرض روابط شراء المنتجات الموصى بها.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="data-use">
+    <h2><i class="fa-solid fa-gears"></i> 4. كيف نستخدم بياناتك</h2>
+    <ul>
+      <li>تخصيص توصيات المنتجات بناءً على تفضيلاتك واهتماماتك.</li>
+      <li>تشغيل ميزة المساعد الذكي والرد على استفساراتك حول الجمال والعناية.</li>
+      <li>حفظ قائمة مفضلاتك ومزامنتها بين الأجهزة عند تسجيل الدخول.</li>
+      <li>تحسين أداء التطبيق وتشخيص الأعطال التقنية.</li>
+      <li>التواصل معك بخصوص حسابك (مثل إعادة تعيين كلمة المرور).</li>
+    </ul>
+    <p class="dim">لا نبيع بياناتك الشخصية لأي طرف ثالث، ولا نستخدمها في إعلانات موجّهة خارج التطبيق.</p>
+  </div>
+
+  <div class="card" id="ai-section">
+    <h2><i class="fa-solid fa-wand-magic-sparkles"></i> 5. الذكاء الاصطناعي وبياناتك</h2>
+    <p>
+      عندما تتحدثين مع مساعد Rosiva الذكي، يتم إرسال نص رسالتك إلى واجهة برمجة Google Gemini لمعالجتها
+      وتوليد رد مناسب. هذه الرسائل تُستخدم فقط لتقديم الرد المباشر لك، ولا نقوم بتخزينها بشكل دائم
+      مرتبطة بهويتك الشخصية إلا في حدود ما يلزم لتحسين تجربتك ضمن الجلسة.
+    </p>
+    <p class="dim">
+      ملاحظة: تطبّق Google سياسات الخصوصية الخاصة بها على معالجة طلبات Gemini API. يمكنك مراجعتها على
+      <span style="color:var(--rose2)"> policies.google.com/privacy</span>.
+    </p>
+  </div>
+
+  <div class="card" id="affiliate">
+    <h2><i class="fa-brands fa-amazon"></i> 6. روابط الشراء التابعة (Amazon Associates)</h2>
+    <p>
+      بعض روابط "شراء المنتج" داخل التطبيق هي روابط تسويق بالعمولة (Affiliate Links) ضمن برنامج
+      Amazon Associates. عند الضغط على هذه الروابط، يتم تحويلك لموقع Amazon الرسمي خارج التطبيق،
+      ولا تتم أي عملية شراء داخل Rosiva نفسه. قد نحصل على عمولة صغيرة من Amazon عند إتمام عملية شراء
+      عبر هذه الروابط، دون أي تكلفة إضافية عليك. خصوصية بياناتك على Amazon تخضع لسياسة خصوصية Amazon
+      الخاصة بهم، ولا تُشارك Rosiva أي بيانات شخصية معهم بخصوص هذه الزيارة.
+    </p>
+  </div>
+
+  <div class="card" id="storage">
+    <h2><i class="fa-solid fa-shield-halved"></i> 7. تخزين البيانات وأمانها</h2>
+    <ul>
+      <li>تُخزَّن بيانات حسابك على خوادم Google Firebase الآمنة والمشفّرة.</li>
+      <li>كلمات المرور مشفّرة بالكامل ولا يمكن لأي شخص في فريقنا الوصول إليها كنص صريح.</li>
+      <li>بعض التفضيلات (مثل المفضلات والإعدادات) قد تُخزَّن محلياً على جهازك لتحسين سرعة الاستخدام.</li>
+    </ul>
+    <p class="dim">رغم اتخاذنا تدابير أمان معقولة، لا يمكن لأي نظام رقمي ضمان أمان مطلق بنسبة 100%.</p>
+  </div>
+
+  <div class="card" id="sharing">
+    <h2><i class="fa-solid fa-share-nodes"></i> 8. مشاركة البيانات</h2>
+    <p>لا نشارك بياناتك الشخصية إلا في الحالات التالية:</p>
+    <ul>
+      <li>مع مزودي الخدمة الموضحين أعلاه (Firebase، Gemini) فقط لتشغيل وظائف التطبيق الأساسية.</li>
+      <li>إذا طُلب ذلك قانونياً من جهة رسمية مخوّلة.</li>
+      <li>لحماية حقوق وسلامة مستخدمي التطبيق أو الجمهور عند الضرورة القصوى.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="rights">
+    <h2><i class="fa-solid fa-user-shield"></i> 9. حقوقك</h2>
+    <ul>
+      <li><strong>الوصول:</strong> يمكنك طلب نسخة من بياناتك المخزنة لدينا.</li>
+      <li><strong>التصحيح:</strong> يمكنك تعديل بيانات حسابك في أي وقت من شاشة "حسابي".</li>
+      <li><strong>الحذف:</strong> يمكنك طلب حذف حسابك وكل بياناتك المرتبطة بشكل نهائي.</li>
+      <li><strong>تسجيل الخروج:</strong> يمكنك تسجيل الخروج من حسابك في أي لحظة من إعدادات التطبيق.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="children">
+    <h2><i class="fa-solid fa-child-reaching"></i> 10. خصوصية الأطفال</h2>
+    <p>
+      Rosiva غير مُوجَّه للأطفال دون 13 عاماً، ولا نجمع بوعي بيانات شخصية من أطفال في هذه الفئة العمرية.
+      إذا تبيّن لنا حدوث ذلك، سنقوم بحذف هذه البيانات فوراً.
+    </p>
+  </div>
+
+  <div class="card" id="changes">
+    <h2><i class="fa-solid fa-rotate"></i> 11. تعديلات السياسة</h2>
+    <p>
+      قد نحدّث سياسة الخصوصية هذه من وقت لآخر لتعكس تغييرات في التطبيق أو القوانين المعمول بها.
+      سيتم تحديث تاريخ "آخر تحديث" أعلى الصفحة عند أي تعديل، ونوصي بمراجعتها بشكل دوري.
+    </p>
+  </div>
+
+  <div class="card" id="contact">
+    <h2><i class="fa-solid fa-envelope-open-text"></i> 12. التواصل معنا</h2>
+    <p>
+      لأي استفسار يخص خصوصيتك أو بياناتك داخل تطبيق Rosiva، يمكنك التواصل معنا عبر صفحة المشروع على GitHub:
+    </p>
+    <p>
+      <a href="https://github.com/skfk86/beauty-ai" style="color:var(--rose2);font-weight:700;text-decoration:none">
+        github.com/skfk86/beauty-ai <i class="fa-brands fa-github"></i>
+      </a>
+    </p>
+  </div>
+
+  <footer>
+    <p>© 2026 Rosiva. جميع الحقوق محفوظة.</p>
+    <p>هذه الصفحة جزء لا يتجزأ من تطبيق Rosiva وشروط استخدامه.</p>
+    <a class="back-btn" href="javascript:history.back()"><i class="fa-solid fa-arrow-right"></i> رجوع للتطبيق</a>
+  </footer>
+
+</div>
+</body>
+</html>
