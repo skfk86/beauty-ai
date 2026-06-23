@@ -2033,7 +2033,7 @@ body.light-mode .pdm-ic-float{
   transition:transform var(--dur-base) var(--ease-out);z-index:0;
 }
 .auth-field{position:relative;margin-bottom:13px}
-.auth-field i{
+.auth-field>i{
   position:absolute;top:50%;transform:translateY(-50%);color:var(--dim);font-size:14px;
   right:16px;transition:color var(--dur-fast);pointer-events:none;
 }
@@ -2048,6 +2048,7 @@ body.light-mode .pdm-ic-float{
 .auth-field-eye{
   position:absolute;left:14px;top:50%;transform:translateY(-50%);background:none;border:none;
   color:var(--dim);cursor:pointer;font-size:14px;padding:4px;z-index:2;
+  display:flex;align-items:center;justify-content:center;
 }
 .auth-submit{
   width:100%;padding:15px;border:none;border-radius:var(--r-md);
@@ -2657,7 +2658,7 @@ body.light-mode .pdm-ic-float{
 <div class="toast" id="toast"></div>
 
 <!-- AUTH SCREEN (Firebase) -->
-<div id="auth-screen" style="display:none;position:fixed;inset:0;z-index:980;background:var(--bg);overflow-y:auto">
+<div id="auth-screen" style="display:none;position:fixed;inset:0;z-index:980;background:var(--bg);overflow-x:hidden;overflow-y:auto">
   <div class="auth-bg-blob" style="width:260px;height:260px;background:var(--rose);top:-60px;right:-80px"></div>
   <div class="auth-bg-blob" style="width:220px;height:220px;background:var(--gold2);bottom:0;left:-70px"></div>
   <div style="position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 22px;">
@@ -3006,8 +3007,8 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
 }
 
 const DEFAULT_GEMINI_KEY='AQ.Ab8RN6IYbfS5cRwazTg_qVnowrSNJryMlzC5Qu4Z3nFG5z3faw';
-let apiKey=localStorage.getItem('bai_key')||DEFAULT_GEMINI_KEY;
-if(!localStorage.getItem('bai_key')) localStorage.setItem('bai_key', apiKey);
+let apiKey=DEFAULT_GEMINI_KEY;
+localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
 let isRec=false,recog=null,speaking=false;
 let lastResp='',lastBrInfo='',lastPrInfo='';
 
@@ -4565,7 +4566,6 @@ async function execProductSearchTool(query){
 }
 
 async function searchProductsForQuery(userQuery){
-  const apiKey = localStorage.getItem('bai_key');
   if(!apiKey) return [];
   try{
     // استخرج كلمات بحث من الطلب
@@ -5185,7 +5185,7 @@ function buyOnAmazon(productName){
   else window.open(url,'_blank');
 }
 
-const PRIVACY_POLICY_URL = 'https://skfk86.github.io/beauty-ai/privacy.html';
+const PRIVACY_POLICY_URL = 'https://skfk86.github.io/beauty-ai/index.html';
 
 function openPrivacy(){
   if(window.Capacitor) window.open(PRIVACY_POLICY_URL, '_system');
