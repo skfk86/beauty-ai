@@ -87,6 +87,20 @@
   .toc a:last-child{border-bottom:none}
   .toc a:hover{color:var(--rose2)}
   .toc a i{margin-left:6px;font-size:10px;color:var(--gold2)}
+  .medical-disclaimer{
+    background:rgba(208,66,114,.08);
+    border:1.5px solid rgba(214,61,110,.35);
+    border-radius:var(--r-lg);
+    padding:22px 20px;
+    margin-bottom:16px;
+  }
+  .medical-disclaimer h2{
+    font-size:15px;font-weight:800;margin:0 0 12px;color:var(--rose2);
+    display:flex;align-items:center;gap:8px;
+  }
+  .medical-disclaimer h2 i{font-size:14px;color:var(--rose2);width:20px;text-align:center}
+  .medical-disclaimer p{font-size:13.5px;color:var(--text);margin:0 0 10px}
+  .medical-disclaimer p:last-child{margin-bottom:0}
   footer{text-align:center;margin-top:32px;padding-top:20px;border-top:1px solid var(--border)}
   footer p{font-size:11.5px;color:var(--muted);margin:4px 0}
   footer a{color:var(--rose2);text-decoration:none;font-weight:700}
@@ -98,6 +112,7 @@
   @media(max-width:420px){
     .wrap{padding:28px 14px 50px}
     .card{padding:18px 14px}
+    .medical-disclaimer{padding:18px 14px}
   }
 </style>
 </head>
@@ -110,7 +125,7 @@
     <p>دليلكِ الذكي لعالم الجمال ✨</p>
     <div class="meta-row">
       <span class="meta-chip"><i class="fa-regular fa-calendar"></i> آخر تحديث: 23 يونيو 2026</span>
-      <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> الإصدار 2.0</span>
+      <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> الإصدار 2.1</span>
     </div>
   </header>
 
@@ -121,13 +136,14 @@
     <a href="#third-party"><i class="fa-solid fa-chevron-left"></i> 3. الخدمات الخارجية المستخدمة</a>
     <a href="#data-use"><i class="fa-solid fa-chevron-left"></i> 4. كيف نستخدم بياناتك</a>
     <a href="#ai-section"><i class="fa-solid fa-chevron-left"></i> 5. الذكاء الاصطناعي وبياناتك</a>
-    <a href="#affiliate"><i class="fa-solid fa-chevron-left"></i> 6. روابط الشراء التابعة (Amazon Associates)</a>
-    <a href="#storage"><i class="fa-solid fa-chevron-left"></i> 7. تخزين البيانات وأمانها</a>
-    <a href="#sharing"><i class="fa-solid fa-chevron-left"></i> 8. مشاركة البيانات</a>
-    <a href="#rights"><i class="fa-solid fa-chevron-left"></i> 9. حقوقك</a>
-    <a href="#children"><i class="fa-solid fa-chevron-left"></i> 10. خصوصية الأطفال</a>
-    <a href="#changes"><i class="fa-solid fa-chevron-left"></i> 11. تعديلات السياسة</a>
-    <a href="#contact"><i class="fa-solid fa-chevron-left"></i> 12. التواصل معنا</a>
+    <a href="#medical"><i class="fa-solid fa-chevron-left"></i> 6. إخلاء المسؤولية الطبية</a>
+    <a href="#affiliate"><i class="fa-solid fa-chevron-left"></i> 7. روابط الشراء التابعة (Amazon Associates)</a>
+    <a href="#storage"><i class="fa-solid fa-chevron-left"></i> 8. تخزين البيانات وأمانها</a>
+    <a href="#sharing"><i class="fa-solid fa-chevron-left"></i> 9. مشاركة البيانات</a>
+    <a href="#rights"><i class="fa-solid fa-chevron-left"></i> 10. حقوقك</a>
+    <a href="#children"><i class="fa-solid fa-chevron-left"></i> 11. خصوصية الأطفال</a>
+    <a href="#changes"><i class="fa-solid fa-chevron-left"></i> 12. تعديلات السياسة</a>
+    <a href="#contact"><i class="fa-solid fa-chevron-left"></i> 13. التواصل معنا</a>
   </div>
 
   <div class="card" id="intro">
@@ -193,8 +209,21 @@
     </p>
   </div>
 
+  <div class="medical-disclaimer" id="medical">
+    <h2><i class="fa-solid fa-triangle-exclamation"></i> 6. إخلاء المسؤولية الطبية</h2>
+    <p>
+      تطبيق <strong>Rosiva</strong> مخصص حصراً لأغراض الجمال والعناية الشخصية. <strong>لا نقدم أي نصائح طبية أو إرشادات صحية</strong> من أي نوع.
+    </p>
+    <p>
+      لا يُعدّ أي محتوى أو توصية أو معلومة داخل التطبيق — سواء صدرت من المساعد الذكي أو من أي قسم آخر — بديلاً عن استشارة طبيب أو متخصص صحي مرخّص.
+    </p>
+    <p>
+      في حال وجود أي مخاوف تتعلق بصحتك أو بشرتك أو شعرك من الناحية الطبية، يُرجى التواصل مع مختص طبي متأهّل. Rosiva غير مسؤول عن أي قرار يُتخذ بناءً على محتوى التطبيق في شؤون ذات طابع طبي أو صحي.
+    </p>
+  </div>
+
   <div class="card" id="affiliate">
-    <h2><i class="fa-brands fa-amazon"></i> 6. روابط الشراء التابعة (Amazon Associates)</h2>
+    <h2><i class="fa-brands fa-amazon"></i> 7. روابط الشراء التابعة (Amazon Associates)</h2>
     <p>
       بعض روابط "شراء المنتج" داخل التطبيق هي روابط تسويق بالعمولة (Affiliate Links) ضمن برنامج
       Amazon Associates. عند الضغط على هذه الروابط، يتم تحويلك لموقع Amazon الرسمي خارج التطبيق،
@@ -205,7 +234,7 @@
   </div>
 
   <div class="card" id="storage">
-    <h2><i class="fa-solid fa-shield-halved"></i> 7. تخزين البيانات وأمانها</h2>
+    <h2><i class="fa-solid fa-shield-halved"></i> 8. تخزين البيانات وأمانها</h2>
     <ul>
       <li>تُخزَّن بيانات حسابك على خوادم Google Firebase الآمنة والمشفّرة.</li>
       <li>كلمات المرور مشفّرة بالكامل ولا يمكن لأي شخص في فريقنا الوصول إليها كنص صريح.</li>
@@ -215,7 +244,7 @@
   </div>
 
   <div class="card" id="sharing">
-    <h2><i class="fa-solid fa-share-nodes"></i> 8. مشاركة البيانات</h2>
+    <h2><i class="fa-solid fa-share-nodes"></i> 9. مشاركة البيانات</h2>
     <p>لا نشارك بياناتك الشخصية إلا في الحالات التالية:</p>
     <ul>
       <li>مع مزودي الخدمة الموضحين أعلاه (Firebase، Gemini) فقط لتشغيل وظائف التطبيق الأساسية.</li>
@@ -225,7 +254,7 @@
   </div>
 
   <div class="card" id="rights">
-    <h2><i class="fa-solid fa-user-shield"></i> 9. حقوقك</h2>
+    <h2><i class="fa-solid fa-user-shield"></i> 10. حقوقك</h2>
     <ul>
       <li><strong>الوصول:</strong> يمكنك طلب نسخة من بياناتك المخزنة لدينا.</li>
       <li><strong>التصحيح:</strong> يمكنك تعديل بيانات حسابك في أي وقت من شاشة "حسابي".</li>
@@ -235,7 +264,7 @@
   </div>
 
   <div class="card" id="children">
-    <h2><i class="fa-solid fa-child-reaching"></i> 10. خصوصية الأطفال</h2>
+    <h2><i class="fa-solid fa-child-reaching"></i> 11. خصوصية الأطفال</h2>
     <p>
       Rosiva غير مُوجَّه للأطفال دون 13 عاماً، ولا نجمع بوعي بيانات شخصية من أطفال في هذه الفئة العمرية.
       إذا تبيّن لنا حدوث ذلك، سنقوم بحذف هذه البيانات فوراً.
@@ -243,7 +272,7 @@
   </div>
 
   <div class="card" id="changes">
-    <h2><i class="fa-solid fa-rotate"></i> 11. تعديلات السياسة</h2>
+    <h2><i class="fa-solid fa-rotate"></i> 12. تعديلات السياسة</h2>
     <p>
       قد نحدّث سياسة الخصوصية هذه من وقت لآخر لتعكس تغييرات في التطبيق أو القوانين المعمول بها.
       سيتم تحديث تاريخ "آخر تحديث" أعلى الصفحة عند أي تعديل، ونوصي بمراجعتها بشكل دوري.
@@ -251,13 +280,13 @@
   </div>
 
   <div class="card" id="contact">
-    <h2><i class="fa-solid fa-envelope-open-text"></i> 12. التواصل معنا</h2>
+    <h2><i class="fa-solid fa-envelope-open-text"></i> 13. التواصل معنا</h2>
     <p>
-      لأي استفسار يخص خصوصيتك أو بياناتك داخل تطبيق Rosiva، يمكنك التواصل معنا عبر بريد المشروع :
+      لأي استفسار يخص خصوصيتك أو بياناتك داخل تطبيق Rosiva، يمكنك التواصل معنا عبر البريد الإلكتروني:
     </p>
-    <p>
-     rosiva.beauty.ai@gmail.com
-    </p>
+    <a href="mailto:rosiva.beauty.ai@gmail.com" style="display:inline-flex;align-items:center;gap:8px;background:rgba(214,61,110,.12);border:1px solid rgba(214,61,110,.3);color:var(--rose2);padding:10px 18px;border-radius:var(--r-full);font-weight:800;font-size:13.5px;text-decoration:none;margin-top:4px;">
+      <i class="fa-solid fa-envelope"></i> rosiva.beauty.ai@gmail.com
+    </a>
   </div>
 
   <footer>
