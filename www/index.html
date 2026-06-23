@@ -804,19 +804,16 @@ body.light-mode #ob{
 }
 .sp-logo{
   width:140px;height:140px;border-radius:36px;overflow:hidden;
-  background:#0d0310;
-  display:flex;align-items:center;justify-content:center;
   box-shadow:0 0 0 1px rgba(208,66,114,.3),
              0 20px 60px rgba(208,66,114,.25),
              0 8px 24px rgba(0,0,0,.5);
 }
 body.light-mode .sp-logo{
-  background:#1a0520;
   box-shadow:0 0 0 1px rgba(192,48,96,.2),
              0 20px 60px rgba(192,48,96,.15),
              0 8px 24px rgba(0,0,0,.1);
 }
-.sp-logo img{width:88%;height:88%;object-fit:contain;border-radius:28px;}
+.sp-logo img{width:100%;height:100%;object-fit:cover}
 
 /* Brand name */
 .sp-name{
@@ -3009,7 +3006,7 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GEMINI_KEY='AQ.Ab8RN6IYbfS5cRwazTg_qVnowrSNJryMlzC5Qu4Z3nFG5z3faw';
+const DEFAULT_GEMINI_KEY='AQ.Ab8RN6K3XtrBWat5IMbDvH07fhIWwLCQZprhQR9Qc-A1aaMEpg';
 let apiKey=DEFAULT_GEMINI_KEY;
 localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
 let isRec=false,recog=null,speaking=false;
@@ -3922,7 +3919,7 @@ async function doAI(text){
     const msg = e.message || '';
     let errHtml='';
     if(msg==='NO_KEY') errHtml='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Gemini API من الإعدادات</span>';
-    else if(msg.includes('401')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
+    else if(msg.includes('401')||msg.includes('403')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span><br><span style="font-size:10px;color:var(--muted);direction:ltr;display:inline-block;margin-top:4px">'+msg.replace('INVALID_KEY: ','')+'</span>';
     else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — انتظري دقيقة</span>';
     else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
     else errHtml='<span style="color:#e06060">خطأ: '+msg+'</span>';
@@ -4258,22 +4255,22 @@ function stopSpeech(){
 // ══ PROFILE ══
 
 // ── Gemini Helper — وثائق Google الرسمية ──
-// نستخدم ?key= في الرابط (لا x-goog-api-key) لأن الهيدر المخصص
-// يتعارض مع CORS Preflight عند الإرسال من متصفح/WebView
+// مفاتيح Authorization (AQ.) الجديدة من جوجل يجب إرسالها عبر هيدر x-goog-api-key
+// لا عبر ?key= في الرابط — موثّق رسمياً: ai.google.dev/gemini-api/docs/api-key
+// إرسالها عبر ?key= يرجّع 401 "ACCESS_TOKEN_TYPE_UNSUPPORTED" مهما كان المفتاح صحيحاً
 
 function _geminiUrl(k, model){
   const m = model || 'gemini-2.5-flash-lite';
-  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
+  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
 }
-
 function _geminiHeaders(k){
-  return {'Content-Type':'application/json'};
+  return {'Content-Type':'application/json','x-goog-api-key':k};
 }
 
 const _GEMINI_MODELS = [
   'gemini-2.5-flash-lite',
-  'gemini-2.5-flash',
-  'gemini-2.0-flash'
+  'gemini-2.0-flash-lite',
+  'gemini-1.5-flash'
 ];
 
 async function _testGeminiKey(k){
@@ -4281,10 +4278,11 @@ async function _testGeminiKey(k){
     contents:[{role:'user',parts:[{text:'hi'}]}],
     generationConfig:{maxOutputTokens:5}
   });
+  const headers = _geminiHeaders(k);
   let lastStatus=0; let lastMsg='';
   for(const model of _GEMINI_MODELS){
     try{
-      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers:_geminiHeaders(k),body});
+      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers,body});
       if(r.ok) return {ok:true,model};
       lastStatus=r.status;
       try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
