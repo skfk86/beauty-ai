@@ -3009,7 +3009,7 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GEMINI_KEY='AIzaSyAb8RN6IYbfS5cRwazTg_qVnowrSNJryMlzC5Qu4Z3nFG5z3faw';
+const DEFAULT_GEMINI_KEY='__GEMINI_API_KEY__';
 let apiKey=DEFAULT_GEMINI_KEY;
 localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
 let isRec=false,recog=null,speaking=false;
@@ -4258,22 +4258,19 @@ function stopSpeech(){
 // ══ PROFILE ══
 
 // ── Gemini Helper — وثائق Google الرسمية ──
-// المفاتيح AQ. و AIza كلاهما يعملان عبر ?key= في الـ URL
-// هذا هو الأسلوب الرسمي الوحيد المضمون للـ REST API
+// كل المفاتيح (AIza و AQ.) تُرسل عبر هيدر x-goog-api-key
+// هذا الأسلوب الموحّد الموصى به رسميًا من جوجل لكل أنواع المفاتيح
 
 function _geminiUrl(k, model){
   const m = model || 'gemini-2.5-flash-lite';
-  // مفاتيح AQ. (Auth keys) لا تحتاج ?key= — تُرسل عبر Authorization header
-  // مفاتيح AIza (Standard keys) تعمل بكلا الأسلوبين
-  if(k && k.startsWith('AQ.')){
-    return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
-  }
-  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
+  // الأسلوب الموحّد الرسمي: المفتاح يُرسل عبر هيدر x-goog-api-key دايمًا
+  // ما نضيف ?key= في الرابط لتجنب خطأ "Multiple authentication credentials received"
+  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`;
 }
 
 function _geminiHeaders(k){
   const h = {'Content-Type':'application/json'};
-  if(k && k.startsWith('AQ.')) h['Authorization'] = `Bearer ${k}`;
+  if(k) h['x-goog-api-key'] = k;
   return h;
 }
 
