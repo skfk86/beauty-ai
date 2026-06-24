@@ -74,7 +74,7 @@ jobs:
 
       - name: Inject Gemini API Key
         run: |
-          sed -i "s|__GEMINI_API_KEY__|${{ secrets.GEMINI_API_KEY }}|g" index.html
+          sed -i "s|__GEMINI_API_KEY__|${{ secrets.GEMINI_API_KEY }}|g" www/index.html
 
       - name: Capacitor Sync
         run: npx cap sync android
