@@ -47,7 +47,7 @@ jobs:
       - name: Patch AndroidManifest
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
-          sed -i 's|<application|<uses-permission android:name="android.permission.RECORD_AUDIO" />\n    <uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />\n\n    <application|' "$MANIFEST"
+          sed -i 's|<application|<uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />\n\n    <application|' "$MANIFEST"
           sed -i 's|android:supportsRtl="true"|android:supportsRtl="true"\n        android:usesCleartextTraffic="true"\n        android:networkSecurityConfig="@xml/network_security_config"|' "$MANIFEST"
           sed -i 's|android:roundIcon="[^"]*"||g' "$MANIFEST"
 
@@ -63,8 +63,7 @@ jobs:
               </trust-anchors>
             </base-config>
             <domain-config cleartextTrafficPermitted="true">
-              <domain includeSubdomains="true">generativelanguage.googleapis.com</domain>
-              <domain includeSubdomains="true">translate.googleapis.com</domain>
+              <domain includeSubdomains="true">api.groq.com</domain>
               <domain includeSubdomains="true">world.openbeautyfacts.org</domain>
               <domain includeSubdomains="true">cdnjs.cloudflare.com</domain>
               <domain includeSubdomains="true">fonts.googleapis.com</domain>
@@ -72,9 +71,9 @@ jobs:
           </network-security-config>
           XMLEOF
 
-      - name: Inject Gemini API Key
+      - name: Inject Groq API Key
         run: |
-          sed -i "s|__GEMINI_API_KEY__|${{ secrets.GEMINI_API_KEY }}|g" www/index.html
+          sed -i "s|__GROQ_API_KEY__|${{ secrets.GROQ_API_KEY }}|g" www/index.html
 
       - name: Capacitor Sync
         run: npx cap sync android

@@ -2444,7 +2444,7 @@ body.light-mode .pdm-ic-float{
       </div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Gemini 2.5 Flash-Lite</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Groq Llama 4 Scout</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
       <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
@@ -2649,7 +2649,7 @@ body.light-mode .pdm-ic-float{
       </div>
     </div>
     <div class="sb-foot">
-      <div class="sb-version">Beauty AI v1.0 • Powered by Gemini</div>
+      <div class="sb-version">Beauty AI v1.0 • Powered by Groq</div>
     </div>
   </div>
 
@@ -3006,10 +3006,10 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GEMINI_KEY='__GEMINI_API_KEY__';
-let apiKey=DEFAULT_GEMINI_KEY;
+const DEFAULT_GROQ_KEY='__GROQ_API_KEY__';
+let apiKey=DEFAULT_GROQ_KEY;
 localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
-let isRec=false,recog=null,speaking=false;
+let isRec=false,recog=null;
 let lastResp='',lastBrInfo='',lastPrInfo='';
 
 // ══ WAVE HEIGHTS ══
@@ -3409,7 +3409,7 @@ async function loadBrAI(b){
   if(recsBox) recsBox.classList.remove('show');
   if(recsGrid) recsGrid.innerHTML='';
   if(!apiKey){
-    el.innerHTML='<div style="font-size:11px;color:var(--dim);text-align:center;padding:4px">Add your Gemini API key to get AI insights</div>';
+    el.innerHTML='<div style="font-size:11px;color:var(--dim);text-align:center;padding:4px">Add your Groq API key to get AI insights</div>';
     return;
   }
   try{
@@ -3525,7 +3525,7 @@ function openProd(brandId,prodId){
 
 async function loadPrAI(p,b){
   if(!apiKey){
-    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Gemini API key 🔑</div>';return;
+    document.getElementById('pm-ai').innerHTML='<div style="color:var(--dim);font-size:12px">Add your Groq API key 🔑</div>';return;
   }
   try{
     const r=await callGemini(
@@ -3542,17 +3542,7 @@ async function loadPrAI(p,b){
 }
 
 function playExp(){
-  if(!lastPrInfo){showToast('يرجى الانتظار حتى ينتهي التحميل...');return;}
-  if(speaking){
-    speechSynthesis.cancel();speaking=false;
-    document.getElementById('vp-play').textContent='▶';
-    return;
-  }
-  document.getElementById('vp-play').textContent='⏹';
-  speakTxt(lastPrInfo,()=>{
-    speaking=false;
-    document.getElementById('vp-play').textContent='▶';
-  });
+  showToast('ميزة الصوت غير متاحة');
 }
 
 function prevTrack(){showToast('المنتج السابق');}
@@ -3592,7 +3582,6 @@ function closePM(e){
 }
 function closePMDirect(){
   document.getElementById('mov').classList.remove('open');
-  speechSynthesis.cancel();speaking=false;
 }
 
 // ══ FAVORITES ══
@@ -3702,7 +3691,7 @@ const PRODUCT_TOOL_DECL = {
 let _sttRecognition = null;
 
 async function toggleVoice(){
-  if(!apiKey){showToast('أضف مفتاح Gemini API أولاً 🔑');return;}
+  if(!apiKey){showToast('أضف مفتاح Groq API أولاً 🔑');return;}
 
   // إذا في صوت TTS شغال → لمسة المايك توقفه
   if(speaking){
@@ -3891,7 +3880,7 @@ function applyInline(s){
 }
 
 async function doAI(text){
-  if(!apiKey){showToast('أضيفي مفتاح Gemini API أولاً 🔑');return;}
+  if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
 
   // عرض loading في البطاقة الجديدة
   const reply=document.getElementById('ai-chat-reply');
@@ -3917,9 +3906,9 @@ async function doAI(text){
     if(body) setTimeout(()=>{ body.scrollTop=body.scrollHeight; },100);
   }catch(e){
     const msg = e.message || '';
-    console.error('Gemini error detail:', msg);
+    console.error('Groq error detail:', msg);
     let errHtml='';
-    if(msg==='NO_KEY') errHtml='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Gemini API من الإعدادات</span>';
+    if(msg==='NO_KEY') errHtml='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Groq API من الإعدادات</span>';
     else if(msg.includes('401')||msg.includes('INVALID_KEY')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
     else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — '+msg+'</span>';
     else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
@@ -3930,40 +3919,44 @@ async function doAI(text){
 }
 
 // ══ GROQ ══
+const _GROQ_MODELS = [
+  'meta-llama/llama-4-scout-17b-16e-instruct',
+  'meta-llama/llama-4-maverick-17b-128e-instruct',
+  'llama-3.3-70b-versatile'
+];
+
+function _groqUrl(){
+  return 'https://api.groq.com/openai/v1/chat/completions';
+}
+
 async function callGemini(msg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json'};
-  const body = {
-    contents:[{role:'user', parts:[{text: sys ? sys+'\n\n'+msg : msg}]}],
-    generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}
-  };
+  const headers = {'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey};
   let lastErr = '';
-  for(const model of _GEMINI_MODELS){
+  for(const model of _GROQ_MODELS){
     let r;
     try{
-      r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
+      const messages = [];
+      if(sys) messages.push({role:'system', content:sys});
+      messages.push({role:'user', content:msg});
+      const body = {model, messages, max_tokens:800, temperature:0.7};
+      r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
     }catch(netErr){
       lastErr='NET_ERR: '+netErr.message;
       continue;
     }
     if(r.ok){
       const d = await r.json();
-      const parts = d.candidates?.[0]?.content?.parts || [];
-      // نجمع كل أجزاء النص — Gemini أحياناً يقسّم الرد على أكثر من part
-      // (مثلاً جزء "thought" تمهيدي ثم الإجابة الفعلية)، فقراءة parts[0] فقط
-      // كانت تقطع الرد عند أول جزء قصير دائمًا
-      const text = parts.filter(p=>!p.thought && p.text).map(p=>p.text).join('').trim();
+      const text = d.choices?.[0]?.message?.content?.trim() || '';
       if(text) return text;
-      // رد فاضي/محجوب — جرّب الموديل التالي بدل ما نرجّع نص ناقص للمستخدم
-      lastErr = 'EMPTY_RESPONSE (finishReason: '+(d.candidates?.[0]?.finishReason||'unknown')+')';
+      lastErr = 'EMPTY_RESPONSE';
       continue;
     }
     let errMsg='API_ERR_'+r.status;
     try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
     lastErr=errMsg;
     if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
-    if(r.status===429) continue; // jump to next model fallback, lastErr already holds full detail above
-
+    if(r.status===429) continue;
   }
   throw new Error(lastErr || 'API_ERR: All models failed');
 }
@@ -3975,82 +3968,113 @@ async function callGroq(msg,sys=''){
 
 // ── سياق محادثة قصير لمحادثة النص — يسمح للموديل يتذكر سؤاله السابق (هل تريد أعرض لك منتجات؟) ──
 let _aiChatHistory = [];
-// هل آخر رد من Gemini كان عرضاً لمنتجات بانتظار تأكيد المستخدم؟ نستخدمه فقط لإجبار استدعاء الأداة، لا لتجاوز فهم الموديل
+// هل آخر رد كان عرضاً لمنتجات بانتظار تأكيد المستخدم؟
 let _awaitingProductOffer = false;
 function _looksLikeProductOffer(text){
   return /منتج/.test(text) && /[؟?]/.test(text);
 }
 
-// ── نداء Gemini مع تفعيل أداة search_beauty_products (function calling حقيقي بدل كشف كلمات مفتاحية) ──
+// ── نداء Groq مع تفعيل أداة search_beauty_products (tool_calls) ──
 async function callGeminiWithProductTool(userMsg, sys=''){
   if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json'};
-  const tools = [{functionDeclarations:[PRODUCT_TOOL_DECL]}];
-  const sysInstr = sys ? {parts:[{text:sys}]} : undefined;
+  const headers = {'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey};
 
-  // لو كان Gemini عرض منتجات بالسؤال السابق والمستخدم وافق الآن — نفرض استدعاء الأداة فعلياً
-  // (بعض الأحيان الموديل يكتب "تفضلي" نصياً بدون تنفيذ البحث الحقيقي، فما يظهر أي منتج)
-  let toolConfig;
+  // أداة البحث بصيغة OpenAI/Groq
+  const tools = [{
+    type: 'function',
+    function: {
+      name: 'search_beauty_products',
+      description: PRODUCT_TOOL_DECL.description,
+      parameters: {
+        type: 'object',
+        properties: {
+          query: {type:'string', description:'كلمات بحث بالإنجليزية لمنتج تجميل'}
+        },
+        required: ['query']
+      }
+    }
+  }];
+
+  // لو كانت الدردشة بانتظار تأكيد المستخدم لعرض منتجات
   if(_awaitingProductOffer){
     if(detectConfirm(userMsg) && !detectDeny(userMsg)){
-      toolConfig = {functionCallingConfig:{mode:'ANY', allowedFunctionNames:['search_beauty_products']}};
+      // سنضيف رسالة system مؤقتة تحثّ الموديل على استدعاء الأداة
+      _awaitingProductOffer = false;
+    } else {
+      _awaitingProductOffer = false;
     }
-    _awaitingProductOffer = false; // استُهلك القرار سواء فُرض أو لا
   }
 
+  // بناء messages بصيغة OpenAI
+  const messages = [];
+  if(sys) messages.push({role:'system', content:sys});
+  // تحويل السياق السابق من صيغة Gemini إلى صيغة OpenAI
+  for(const h of _aiChatHistory){
+    if(h.role==='user' && h.parts){
+      const content = h.parts.map(p=>p.text||'').join('');
+      if(content) messages.push({role:'user',content});
+    } else if(h.role==='model' && h.parts){
+      const content = h.parts.map(p=>p.text||'').join('');
+      if(content) messages.push({role:'assistant',content});
+    }
+  }
+  messages.push({role:'user', content:userMsg});
   _aiChatHistory.push({role:'user', parts:[{text:userMsg}]});
 
   let lastErr = '';
-  for(const model of _GEMINI_MODELS){
+  for(const model of _GROQ_MODELS){
     try{
-      let body = {contents:_aiChatHistory, tools, toolConfig, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}};
-      let r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
+      let body = {model, messages, tools, tool_choice:'auto', max_tokens:800, temperature:0.7};
+      let r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
       if(!r.ok){
         let errMsg='API_ERR_'+r.status;
         try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
         lastErr=errMsg;
         if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
-        if(r.status===429) continue; // jump to next model, lastErr already holds full detail
+        if(r.status===429) continue;
         continue;
       }
       let d = await r.json();
-      let cand = d.candidates?.[0];
-      let parts = cand?.content?.parts || [];
+      let choice = d.choices?.[0];
       let products = [];
 
-      // الموديل طلب تنفيذ الأداة — نفّذها فعلياً وأرجع له النتيجة الحقيقية (RAG)
-      const fcPart = parts.find(p=>p.functionCall);
-      if(fcPart){
-        const q = fcPart.functionCall.args?.query || userMsg;
-        _aiChatHistory.push(cand.content);
-        showSearchingUI();
-        const res = await execProductSearchTool(q);
-        products = res.products;
-        _aiChatHistory.push({role:'user', parts:[{functionResponse:{name:'search_beauty_products', response:{result:res.summary}}}]});
-        body = {contents:_aiChatHistory, tools, systemInstruction:sysInstr, generationConfig:{maxOutputTokens:800, temperature:0.7, thinkingConfig:{thinkingBudget:0}}};
-        r = await fetch(_geminiUrl(apiKey, model),{method:'POST',headers,body:JSON.stringify(body)});
-        if(r.ok){
-          d = await r.json(); cand = d.candidates?.[0]; parts = cand?.content?.parts || [];
-        } else {
-          let errMsg='API_ERR_'+r.status;
-          try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
-          if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
-          lastErr=errMsg; continue;
+      // الموديل طلب تنفيذ أداة
+      if(choice?.finish_reason==='tool_calls' || choice?.message?.tool_calls?.length){
+        const tc = choice.message.tool_calls?.[0];
+        if(tc && tc.function?.name==='search_beauty_products'){
+          let args = {};
+          try{ args=JSON.parse(tc.function.arguments||'{}'); }catch(e){}
+          const q = args.query || userMsg;
+          showSearchingUI();
+          const res = await execProductSearchTool(q);
+          products = res.products;
+          // أضف رد الأداة للـ messages وأعد الطلب
+          messages.push({role:'assistant', content:null, tool_calls:[tc]});
+          messages.push({role:'tool', tool_call_id:tc.id, content:res.summary});
+          body = {model, messages, max_tokens:800, temperature:0.7};
+          r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
+          if(r.ok){
+            d = await r.json(); choice = d.choices?.[0];
+          } else {
+            let errMsg='API_ERR_'+r.status;
+            try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
+            if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+            lastErr=errMsg; continue;
+          }
         }
       }
 
-      const text = parts.filter(p=>!p.thought && p.text).map(p=>p.text).join('').trim();
+      const text = (choice?.message?.content||'').trim();
       if(text){
         _aiChatHistory.push({role:'model', parts:[{text}]});
-        if(_aiChatHistory.length > 12) _aiChatHistory.splice(0, _aiChatHistory.length-12); // حافظي على آخر سياق قصير فقط
-        // لو ما تم استدعاء الأداة بس النص يبدو عرضاً لمنتجات — خزّن هذا لإجبار الأداة في الرد القادم
-        if(!fcPart && _looksLikeProductOffer(text)) _awaitingProductOffer = true;
+        if(_aiChatHistory.length > 12) _aiChatHistory.splice(0, _aiChatHistory.length-12);
+        if(!products.length && _looksLikeProductOffer(text)) _awaitingProductOffer = true;
         return {text, products};
       }
-      lastErr = 'EMPTY_RESPONSE (finishReason: '+(cand?.finishReason||'unknown')+')';
+      lastErr = 'EMPTY_RESPONSE';
       continue;
     }catch(netErr){
-      if(String(netErr.message).startsWith('INVALID_KEY') || netErr.message==='RATE_LIMIT') throw netErr;
+      if(String(netErr.message).startsWith('INVALID_KEY')) throw netErr;
       lastErr='NET_ERR: '+netErr.message;
       continue;
     }
@@ -4077,226 +4101,59 @@ async function validateProductImageAI(imgUrl, code){
       r.onerror = rej;
       r.readAsDataURL(blob);
     });
+    const mimeType = blob.type||'image/jpeg';
     const body = {
-      contents:[{role:'user', parts:[
-        {inline_data:{mime_type: blob.type||'image/jpeg', data: base64}},
-        {text:'هل هذه صورة منتج تجميل/عناية حقيقية (عبوة، أنبوب، زجاجة، علبة مستحضر)؟ أجيبي بكلمة واحدة فقط: yes أو no.'}
+      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      messages:[{role:'user', content:[
+        {type:'image_url', image_url:{url:`data:${mimeType};base64,${base64}`}},
+        {type:'text', text:'هل هذه صورة منتج تجميل/عناية حقيقية (عبوة، أنبوب، زجاجة، علبة مستحضر)؟ أجيبي بكلمة واحدة فقط: yes أو no.'}
       ]}],
-      generationConfig:{maxOutputTokens:5}
+      max_tokens:5
     };
-    const r = await fetch(_geminiUrl(apiKey, _GEMINI_MODELS[0]),{
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)
+    const r = await fetch(_groqUrl(),{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body:JSON.stringify(body)
     });
     if(!r.ok) return true; // فشل الفحص نفسه — لا نحظر بدون تأكيد
     const d = await r.json();
-    const txt=(d.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('').toLowerCase().trim();
+    const txt=(d.choices?.[0]?.message?.content||'').toLowerCase().trim();
     const isValid = !txt.startsWith('no');
     localStorage.setItem(cacheKey, isValid?'1':'0');
     return isValid;
   }catch(e){ return true; } // أي خطأ شبكة/فحص — لا نحظر صورة بالغلط
 }
-// ══ TTS ══
-let ttsTimer=null;
-let currentAudio=null;
-let geminiTTSAudioCtx=null;
-
-// ── PCM L16 → WAV buffer converter (مطلوب لـ Gemini TTS) ──
-function _pcmToWav(pcmBase64, sampleRate=24000){
-  const raw = Uint8Array.from(atob(pcmBase64), c=>c.charCodeAt(0));
-  const wavHeader = new ArrayBuffer(44);
-  const view = new DataView(wavHeader);
-  const write = (off,val,fn='setUint8')=>view[fn](off,val,true);
-  // RIFF
-  [82,73,70,70].forEach((b,i)=>write(4+i-4+0,b)); // "RIFF"
-  view.setUint32(4, 36+raw.length, true);
-  [87,65,86,69].forEach((b,i)=>write(8+i,b));       // "WAVE"
-  [102,109,116,32].forEach((b,i)=>write(12+i,b));   // "fmt "
-  view.setUint32(16,16,true);   // chunk size
-  view.setUint16(20,1,true);    // PCM
-  view.setUint16(22,1,true);    // mono
-  view.setUint32(24,sampleRate,true);
-  view.setUint32(28,sampleRate*2,true); // byte rate
-  view.setUint16(32,2,true);    // block align
-  view.setUint16(34,16,true);   // bits
-  [100,97,116,97].forEach((b,i)=>write(36+i,b));    // "data"
-  view.setUint32(40,raw.length,true);
-  const wav = new Uint8Array(44+raw.length);
-  wav.set(new Uint8Array(wavHeader));
-  wav.set(raw,44);
-  return wav;
-}
-
-// ── Gemini TTS — صوت طبيعي عالي الجودة ──
-async function geminiTTS(text){
-  if(!apiKey) throw new Error('NO_KEY');
-  const url = _geminiUrl(apiKey,'gemini-2.5-flash-preview-tts');
-  const body = {
-    contents:[{role:'user',parts:[{text}]}],
-    generationConfig:{
-      responseModalities:['AUDIO'],
-      speechConfig:{
-        voiceConfig:{
-          prebuiltVoiceConfig:{voiceName:'Leda'} // صوت أنثوي طبيعي ← مناسب لـ Rosiva
-        }
-      }
-    }
-  };
-  const r = await fetch(url,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
-  });
-  if(!r.ok){
-    const e=await r.json().catch(()=>({}));
-    throw new Error('GEMINI_TTS_ERR_'+r.status+': '+(e?.error?.message||''));
-  }
-  const d = await r.json();
-  const part = d.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-  if(!part?.data) throw new Error('GEMINI_TTS: no audio in response');
-  return {base64:part.data, mimeType:part.mimeType||'audio/L16;rate=24000'};
-}
-
-// ── تشغيل WAV buffer في WebView/Browser ──
-async function _playWavBuffer(wavBytes){
-  return new Promise((res,rej)=>{
-    const blob = new Blob([wavBytes],{type:'audio/wav'});
-    const url  = URL.createObjectURL(blob);
-    currentAudio = new Audio(url);
-    currentAudio.onended = ()=>{ URL.revokeObjectURL(url); res(); };
-    currentAudio.onerror = ()=>{ URL.revokeObjectURL(url); rej(new Error('audio play failed')); };
-    currentAudio.play().catch(rej);
-  });
-}
-
-async function speakTxt(text,cb){
-  if(!text)return;
-  stopSpeech();
-  speaking=true;
-
-  // ① Gemini TTS (أفضل جودة — مدفوع)
-  if(apiKey){
-    try{
-      const {base64} = await geminiTTS(text);
-      const wav = _pcmToWav(base64,24000);
-      await _playWavBuffer(wav);
-      speaking=false;if(cb)cb();return;
-    }catch(e){
-      console.warn('Gemini TTS failed, fallback:',e.message);
-    }
-  }
-
-  // ② Capacitor Plugin (Android APK native)
-  if(window.Capacitor?.isNativePlatform?.() && window.Capacitor?.Plugins?.TextToSpeech){
-    try{
-      await Capacitor.Plugins.TextToSpeech.speak({
-        text,lang:'ar',rate:1.0,pitch:1.0,volume:1.0,category:'ambient'
-      });
-      speaking=false;if(cb)cb();return;
-    }catch(e){console.warn('TTS plugin failed',e);}
-  }
-
-  // ③ Web Speech API
-  if(window.speechSynthesis){
-    try{
-      await webSpeak(text);
-      speaking=false;if(cb)cb();return;
-    }catch(e){console.warn('webSpeech failed',e);}
-  }
-
-  // ④ Google Translate TTS (آخر احتياطي)
-  googleTTS(text,cb);
-}
-
-function webSpeak(text){
-  return new Promise((res,rej)=>{
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang='ar';u.rate=0.85;u.volume=1.0;
-
-    // Waiting for voices to load
-    const go=()=>{
-      const voices=speechSynthesis.getVoices();
-      const ar=voices.find(v=>v.lang.startsWith('ar'));
-      if(ar)u.voice=ar;
-
-      const timeout=setTimeout(()=>rej(new Error('timeout')),4000);
-      u.onstart=()=>clearTimeout(timeout);
-      u.onend=()=>{clearTimeout(timeout);res();};
-      u.onerror=()=>{clearTimeout(timeout);rej();};
-      speechSynthesis.speak(u);
-
-      // Android keep-alive
-      ttsTimer=setInterval(()=>{
-        if(!speechSynthesis.speaking){clearInterval(ttsTimer);return;}
-        speechSynthesis.pause();speechSynthesis.resume();
-      },5000);
-    };
-
-    if(speechSynthesis.getVoices().length>0){go();}
-    else{speechSynthesis.onvoiceschanged=go;setTimeout(go,1000);}
-  });
-}
-
-function googleTTS(text,cb){
-  const chunks=text.match(/.{1,150}/g)||[text];
-  let i=0;
-  function next(){
-    if(i>=chunks.length){speaking=false;if(cb)cb();return;}
-    const url=`https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunks[i])}&tl=ar&client=gtx`;
-    currentAudio=new Audio(url);
-    currentAudio.onended=()=>{i++;next();};
-    currentAudio.onerror=()=>{i++;next();};
-    currentAudio.play().catch(()=>{speaking=false;showToast('الصوت غير متاح على هذا الجهاز');if(cb)cb();});
-  }
-  next();
-}
-
-function stopSpeech(){
-  speaking=false;
-  if(ttsTimer)clearInterval(ttsTimer);
-  if(window.speechSynthesis)speechSynthesis.cancel();
-  if(currentAudio){currentAudio.pause();currentAudio=null;}
-  if(window.Capacitor?.Plugins?.TextToSpeech){
-    try{Capacitor.Plugins.TextToSpeech.stop();}catch(e){}
-  }
-}
+// ══ TTS — معطّل (لا توجد ميزة صوت) ══
+let speaking=false;
+function speakTxt(text,cb){ if(cb)cb(); }
+function stopSpeech(){ speaking=false; }
 
 // ══ PROFILE ══
 
-// ── Gemini Helper — وثائق Google الرسمية ──
-// المفاتيح AQ. و AIza كلاهما يعملان عبر ?key= في الـ URL
-// هذا هو الأسلوب الرسمي الوحيد المضمون للـ REST API
-
-function _geminiUrl(k, model){
-  const m = model || 'gemini-2.5-flash-lite';
-  return `https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${encodeURIComponent(k)}`;
-}
-
-const _GEMINI_MODELS = [
-  'gemini-2.5-flash-lite',
-  'gemini-2.5-flash',
-  'gemini-2.0-flash'
-];
-
 async function _testGeminiKey(k){
-  const body = JSON.stringify({
-    contents:[{role:'user',parts:[{text:'hi'}]}],
-    generationConfig:{maxOutputTokens:5}
-  });
-  const headers = {'Content-Type':'application/json'};
-  let lastStatus=0; let lastMsg='';
-  for(const model of _GEMINI_MODELS){
-    try{
-      const r = await fetch(_geminiUrl(k, model),{method:'POST',headers,body});
-      if(r.ok) return {ok:true,model};
-      lastStatus=r.status;
-      try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
-      if(r.status===400) return {ok:false,status:400,msg:'Invalid key format'};
-      if(r.status===401||r.status===403) return {ok:false,status:r.status,msg:'Unauthorized — invalid key'};
-      if(r.status===429) return {ok:false,status:429,msg:'Rate limit — try later'};
-    }catch(e){lastMsg=e.message||'network error';}
+  // تختبر مفتاح Groq
+  try{
+    const body = JSON.stringify({
+      model: _GROQ_MODELS[0],
+      messages:[{role:'user',content:'hi'}],
+      max_tokens:5
+    });
+    const r = await fetch(_groqUrl(),{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},
+      body
+    });
+    if(r.ok) return {ok:true,model:_GROQ_MODELS[0]};
+    const lastStatus=r.status;
+    let lastMsg='';
+    try{const ej=await r.json();lastMsg=ej?.error?.message||'';}catch(e){}
+    if(lastStatus===400) return {ok:false,status:400,msg:'Invalid key format'};
+    if(lastStatus===401||lastStatus===403) return {ok:false,status:lastStatus,msg:'Unauthorized — invalid key'};
+    if(lastStatus===429) return {ok:false,status:429,msg:'Rate limit — try later'};
+    return {ok:false,status:lastStatus,msg:lastMsg||'Unknown error'};
+  }catch(e){
+    return {ok:false,status:0,msg:e.message||'network error'};
   }
-  return {ok:false,status:lastStatus,msg:lastMsg||'All models failed'};
 }
 
 // ══ UTILS ══
@@ -5142,7 +4999,7 @@ async function loadProdAI(p){
   const analyzeBtn = document.getElementById('pdm-analyze-btn');
   if(!el || !p) return;
   if(!apiKey){
-    showToast('أضيفي مفتاح Gemini API أولاً 🔑');
+    showToast('أضيفي مفتاح Groq API أولاً 🔑');
     return;
   }
   if(analyzeBtn) analyzeBtn.style.display='none';
