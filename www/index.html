@@ -2452,7 +2452,7 @@ body.light-mode .pdm-ic-float{
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل للصور</div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
-    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" id="prof-auth-btn" onclick="handleProfileAuthBtn()"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج</button>
+    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج</button>
     <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> Clear All Favorites</button>
     <div style="height:30px"></div>
   </div>
@@ -2526,7 +2526,7 @@ body.light-mode .pdm-ic-float{
       <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
       <div class="ni-lb">مفضلتي</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-prof" onclick="navToProf()" role="button" aria-label="حسابي">
+    <div class="ni" id="ni-prof" onclick="navTo('prof')" role="button" aria-label="حسابي">
       <div class="ni-ic"><i class="fa-solid fa-user-circle"></i></div>
       <div class="ni-lb">حسابي</div><div class="ni-dot"></div>
     </div>
@@ -5061,39 +5061,6 @@ function openPrivacy(){
 window.addEventListener('beforeunload', ()=>{
   stopSpeech();
 });
-
-// ══ AUTH GATE لشاشة حسابي فقط ══
-function navToProf(){
-  if(window._authUser){
-    navTo('prof');
-  } else {
-    // غير مسجّل → اعرض شاشة تسجيل الدخول
-    if(typeof window.showAuthScreenGlobal === 'function') window.showAuthScreenGlobal();
-  }
-}
-
-function handleProfileAuthBtn(){
-  if(window._authUser){
-    if(typeof handleLogout === 'function') handleLogout();
-  } else {
-    if(typeof window.showAuthScreenGlobal === 'function') window.showAuthScreenGlobal();
-  }
-}
-
-// تحديث زر الحساب في صفحة البروفايل بناءً على الحالة
-function updateProfAuthBtn(){
-  const btn = document.getElementById('prof-auth-btn');
-  if(!btn) return;
-  if(window._authUser){
-    btn.innerHTML = '<i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج';
-    btn.style.background = 'var(--card2)';
-    btn.style.color = 'var(--text)';
-  } else {
-    btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول / إنشاء حساب';
-    btn.style.background = 'linear-gradient(135deg,var(--rose),var(--gold))';
-    btn.style.color = '#fff';
-  }
-}
 </script>
 
 <!-- ══ FIREBASE AUTH ══ -->
@@ -5246,41 +5213,24 @@ function updateProfAuthBtn(){
     $('auth-screen').style.display = 'none';
   }
 
-  // نكشف الدوال عالمياً حتى تستخدمها بقية السكريبتات
-  window.showAuthScreenGlobal = showAuthScreen;
-  window.hideAuthScreenGlobal = hideAuthScreen;
-
   // ── ربط بوابة تسجيل الدخول بدورة حياة التطبيق الحالية ──
-  // startApp يعمل بشكل طبيعي بدون إجبار تسجيل الدخول
+  // نعيد تعريف startApp لإضافة فحص حالة تسجيل الدخول دون لمس بقية المنطق الحالي
   const _originalStartApp = window.startApp;
   window.startApp = function(){
     if(typeof _originalStartApp === 'function') _originalStartApp();
-    // ✅ التطبيق يفتح مباشرة — تسجيل الدخول اختياري
+    if(!auth.currentUser){ showAuthScreen(); }
   };
 
   onAuthStateChanged(auth, (user)=>{
-    window._authUser = user; // نشارك الحالة مع السكريبتات الأخرى
     applyUserToProfile(user);
-    if(typeof updateProfAuthBtn === 'function') updateProfAuthBtn();
-
+    // إذا كان التطبيق قد بدأ فعلياً (تجاوزنا شاشة الـ onboarding)
+    const appEl = $('app');
+    const appVisible = appEl && appEl.style.display === 'flex';
     if(user){
-      // تسجيل دخول ناجح → أغلق شاشة الدخول + انتقل لحسابي
-      const wasAuthVisible = $('auth-screen').style.display === 'block';
       hideAuthScreen();
-      if(wasAuthVisible){
-        // فقط إذا كانت شاشة الدخول مفتوحة → انتقل لحسابي
-        const appEl = $('app');
-        if(appEl && appEl.style.display === 'flex'){
-          if(typeof navTo === 'function') navTo('prof');
-        }
-      }
-    } else {
-      // تسجيل خروج → ابق في التطبيق لكن ارجع للرئيسية
-      const appEl = $('app');
-      if(appEl && appEl.style.display === 'flex'){
-        hideAuthScreen(); // تأكد أن شاشة الدخول مغلقة
-        if(typeof navTo === 'function') navTo('home');
-      }
+    } else if(appVisible){
+      // كان مسجلاً ثم سجّل خروج (أو لا توجد جلسة) بعد بدء التطبيق فعلياً
+      showAuthScreen();
     }
   });
 
