@@ -2058,6 +2058,31 @@ body.light-mode .pdm-ic-float{
 }
 .auth-submit:active{transform:scale(.97)}
 .auth-submit:disabled{opacity:.55;pointer-events:none}
+
+/* ══ BILINGUAL — LTR / English overrides ══ */
+html[dir="ltr"] .ai-input-bar{flex-direction:row}
+html[dir="ltr"] .ai-input-bar input{text-align:left}
+html[dir="ltr"] .ai-quick-row{flex-direction:row}
+html[dir="ltr"] .greet-sub,html[dir="ltr"] .greet-title{text-align:left}
+html[dir="ltr"] .sec-lbl{text-align:left}
+html[dir="ltr"] .pdm-info-v2,html[dir="ltr"] .pdm-name-v2,html[dir="ltr"] .pdm-cat-v2,html[dir="ltr"] .pdm-desc-v2{text-align:left}
+html[dir="ltr"] .bdv-desc{text-align:left}
+html[dir="ltr"] .ai-fmt-head::before{order:-1}
+html[dir="ltr"] .key-lbl{text-align:left}
+html[dir="ltr"] .ai-card-hd{text-align:left}
+html[dir="ltr"] .buy-title{text-align:left}
+html[dir="ltr"] .rev-hdr,html[dir="ltr"] .sim-hdr{text-align:left}
+html[dir="ltr"] .prof-top{text-align:left;padding-right:18px}
+html[dir="ltr"] .prof-av{margin:0 0 10px 0}
+html[dir="ltr"] .sb-logo-sub,html[dir="ltr"] .sb-logo-txt{text-align:left}
+html[dir="ltr"] .bdv-sortrow{flex-direction:row-reverse}
+html[dir="ltr"] .bdv-ai-card{flex-direction:row-reverse}
+html[dir="ltr"] .auth-tab-indicator{right:auto;left:4px}
+html[dir="ltr"] .empty-st{text-align:center}
+html[dir="ltr"] .bc-name,html[dir="ltr"] .bc-cat{text-align:left}
+html[dir="ltr"] .ai-card-txt,html[dir="ltr"] .ai-chat-reply{text-align:left}
+html[dir="ltr"] .plist .pitem{direction:ltr}
+html[dir="ltr"] .hdr-menu span{display:block}
 </style>
 </head>
 <body>
@@ -2110,8 +2135,8 @@ body.light-mode .pdm-ic-float{
 
     <!-- مرحباً + وصف مختصر -->
     <div class="greet" style="padding:6px 20px 10px">
-      <div class="greet-sub">مساعدة الجمال الذكية</div>
-      <div class="greet-title">كيف أساعدكِ اليوم؟ ✨</div>
+      <div class="greet-sub" data-i18n="home.subtitle">مساعدة الجمال الذكية</div>
+      <div class="greet-title" data-i18n="home.greeting">كيف أساعدكِ اليوم؟ ✨</div>
     </div>
 
     <!-- AI CHAT WIDGET — بطاقة الذكاء الاصطناعي -->
@@ -2125,7 +2150,7 @@ body.light-mode .pdm-ic-float{
           <div class="ai-chat-name">Rosiva AI</div>
           <div class="ai-chat-status">
             <span class="ai-chat-status-dot"></span>
-            مساعدة الجمال الذكية
+            <span data-i18n="home.ai.status">مساعدة الجمال الذكية</span>
           </div>
         </div>
         <div id="ai-chat-clear" onclick="clearAIChat()"
@@ -2140,7 +2165,7 @@ body.light-mode .pdm-ic-float{
       <div class="ai-chat-body" id="ai-chat-body">
         <div class="ai-chat-empty" id="ai-chat-empty">
           <div class="ai-chat-empty-ic">✨</div>
-          <div class="ai-chat-empty-txt">اسأليني عن أي منتج أو براند</div>
+          <div class="ai-chat-empty-txt" data-i18n="home.ai.empty">اسأليني عن أي منتج أو براند</div>
         </div>
         <div class="ai-chat-reply" id="ai-chat-reply" style="display:none"></div>
       </div>
@@ -2159,7 +2184,7 @@ body.light-mode .pdm-ic-float{
         <button class="ai-send-btn" onclick="sendAIChat()" aria-label="إرسال">
           <i class="fa-solid fa-arrow-left"></i>
         </button>
-        <input type="text" id="ai-chat-inp" placeholder="اكتبي سؤالك هنا..." dir="rtl"
+        <input type="text" id="ai-chat-inp" data-i18n-ph="home.ai.placeholder" placeholder="اكتبي سؤالك هنا..." dir="rtl"
           onkeydown="if(event.key==='Enter')sendAIChat()">
         <i class="fa-solid fa-sparkles" style="color:var(--rose2);font-size:15px;opacity:.6"></i>
       </div>
@@ -2173,7 +2198,7 @@ body.light-mode .pdm-ic-float{
     <div id="wr" style="display:none"></div>
 
     <!-- Hero Card — براند مميّز -->
-    <div class="sec-lbl" style="margin-top:12px">✨ مميّز اليوم</div>
+    <div class="sec-lbl" style="margin-top:12px" data-i18n="home.featured">✨ مميّز اليوم</div>
     <div id="hero-card" onclick="heroCardClick()"
       style="margin:0 16px 16px;border-radius:var(--r-xl);overflow:hidden;position:relative;
              height:150px;cursor:pointer;box-shadow:var(--shadow-glow);
@@ -2188,7 +2213,7 @@ body.light-mode .pdm-ic-float{
             style="width:85%;height:85%;object-fit:contain;opacity:0;transition:opacity .6s">
         </div>
         <div style="text-align:right;flex:1 1 auto;min-width:0">
-          <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px">براند مميّز</div>
+          <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px" data-i18n="home.hero.badge">براند مميّز</div>
           <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rosiva</div>
           <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
         </div>
@@ -2202,38 +2227,38 @@ body.light-mode .pdm-ic-float{
           box-shadow:0 4px 14px rgba(214,61,110,.45);
           letter-spacing:.5px;
         ">
-          <span>اكتشفي المنتجات</span>
+          <span data-i18n="home.hero.btn">اكتشفي المنتجات</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX(-1)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </div>
       </div>
     </div>
 
     <!-- Category Grid -->
-    <div class="sec-lbl">اكتشفي عالم الجمال</div>
+    <div class="sec-lbl" data-i18n="home.cat.title">اكتشفي عالم الجمال</div>
     <div class="cat-grid">
       <div class="cat-btn" onclick="goF('Makeup')" style="animation-delay:.05s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.35),rgba(180,40,90,.15))"><i class="fa-solid fa-palette" style="color:var(--rose2)"></i></div>
-        <div><div class="cat-nm">ماكياج</div><div class="cat-sb">براندات ومنتجات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.makeup">ماكياج</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('Fragrances')" style="animation-delay:.09s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(196,136,96,.35),rgba(212,175,55,.15))"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
-        <div><div class="cat-nm">عطور</div><div class="cat-sb">براندات ومنتجات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.fragrance">عطور</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('Skincare')" style="animation-delay:.13s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))"><i class="fa-solid fa-droplet" style="color:var(--info)"></i></div>
-        <div><div class="cat-nm">عناية بالبشرة</div><div class="cat-sb">براندات ومنتجات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.skincare">عناية بالبشرة</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="goF('Hair')" style="animation-delay:.17s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(130,90,200,.3),rgba(190,90,160,.15))"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
-        <div><div class="cat-nm">عناية بالشعر</div><div class="cat-sb">براندات ومنتجات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.hair">عناية بالشعر</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
       </div>
       <div class="cat-btn" onclick="navTo('brands')" style="animation-delay:.21s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.2),rgba(196,136,96,.15))"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
-        <div><div class="cat-nm">براندات عالمية</div><div class="cat-sb">جميع البراندات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.brands">براندات عالمية</div><div class="cat-sb" data-i18n="home.cat.sub.ab">جميع البراندات</div></div>
       </div>
       <div class="cat-btn" onclick="navTo('favs')" style="animation-delay:.25s">
         <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.28),rgba(255,120,130,.1))"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
-        <div><div class="cat-nm">مفضلتي</div><div class="cat-sb">المحفوظات</div></div>
+        <div><div class="cat-nm" data-i18n="home.cat.favs">مفضلتي</div><div class="cat-sb" data-i18n="home.cat.sub.sv">المحفوظات</div></div>
       </div>
     </div>
     <div style="height:70px"></div>
@@ -2244,20 +2269,20 @@ body.light-mode .pdm-ic-float{
     <div class="stpad"></div>
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">البراندات 🛍️</div></div>
+      <div class="hdr-title"><div class="ht-main" data-i18n="brands.title">البراندات 🛍️</div></div>
       <button class="hdr-vip" onclick="navTo('prof')"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div class="srch">
       <span class="srch-ic" style="color:var(--muted)"><i class="fa-solid fa-magnifying-glass"></i></span>
-      <input type="text" id="b-srch" placeholder="ابحثي عن براند..." dir="rtl"
+      <input type="text" id="b-srch" data-i18n-ph="brands.search" placeholder="ابحثي عن براند..." dir="rtl"
         style="text-align:right" oninput="renderBrands()">
     </div>
     <div class="ftabs" id="ftabs">
-      <div class="ft on" onclick="setF('All',this)">الكل ✦</div>
-      <div class="ft" onclick="setF('Makeup',this)">💄 ماكياج</div>
-      <div class="ft" onclick="setF('Fragrances',this)">🌸 عطور</div>
-      <div class="ft" onclick="setF('Skincare',this)">✨ بشرة</div>
-      <div class="ft" onclick="setF('Hair',this)">💇 شعر</div>
+      <div class="ft on" onclick="setF('All',this)" data-i18n="brands.filter.all">الكل ✦</div>
+      <div class="ft" onclick="setF('Makeup',this)" data-i18n="brands.filter.makeup">💄 ماكياج</div>
+      <div class="ft" onclick="setF('Fragrances',this)" data-i18n="brands.filter.fragrance">🌸 عطور</div>
+      <div class="ft" onclick="setF('Skincare',this)" data-i18n="brands.filter.skincare">✨ بشرة</div>
+      <div class="ft" onclick="setF('Hair',this)" data-i18n="brands.filter.hair">💇 شعر</div>
     </div>
 
     <!-- Hero Card روزيفا — يظهر فقط في وضع "الكل" -->
@@ -2287,7 +2312,7 @@ body.light-mode .pdm-ic-float{
 
     <div class="brands-grid" id="b-grid"></div>
     <div class="view-all" id="view-all-btn" onclick="showAllBrands()">
-      <span style="font-size:14px">✦</span><span>عرض جميع البراندات</span>
+      <span style="font-size:14px">✦</span><span data-i18n="brands.viewall">عرض جميع البراندات</span>
     </div>
     <div style="height:70px"></div>
   </div>
@@ -2297,7 +2322,7 @@ body.light-mode .pdm-ic-float{
     <div class="stpad"></div>
     <div class="bk-bar">
       <div class="bk-btn" onclick="back()"><i class="fa-solid fa-arrow-right"></i></div>
-      <div style="flex:1;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.3px">تفاصيل البراند</div>
+      <div style="flex:1;text-align:center;font-size:14px;font-weight:800;letter-spacing:-.3px" data-i18n="bdet.back">تفاصيل البراند</div>
       <div style="width:34px"></div>
     </div>
 
@@ -2315,15 +2340,15 @@ body.light-mode .pdm-ic-float{
     <div class="bdv-meta">
       <div class="bdv-meta-item">
         <i class="fa-regular fa-calendar"></i>
-        <div><div class="bdv-meta-val" id="bd-year">—</div><div class="bdv-meta-lb">تأسست</div></div>
+        <div><div class="bdv-meta-val" id="bd-year">—</div><div class="bdv-meta-lb" data-i18n="bdet.founded">تأسست</div></div>
       </div>
       <div class="bdv-meta-item">
         <i class="fa-solid fa-globe"></i>
-        <div><div class="bdv-meta-val" id="bd-country">—</div><div class="bdv-meta-lb">المنشأ</div></div>
+        <div><div class="bdv-meta-val" id="bd-country">—</div><div class="bdv-meta-lb" data-i18n="bdet.origin">المنشأ</div></div>
       </div>
       <div class="bdv-meta-item">
         <i class="fa-solid fa-tag"></i>
-        <div><div class="bdv-meta-val" id="bd-cat2">—</div><div class="bdv-meta-lb">الفئة</div></div>
+        <div><div class="bdv-meta-val" id="bd-cat2">—</div><div class="bdv-meta-lb" data-i18n="bdet.category">الفئة</div></div>
       </div>
     </div>
 
@@ -2337,28 +2362,28 @@ body.light-mode .pdm-ic-float{
         <div id="bd-ai" class="bdv-ai-text"></div>
       </div>
       <button class="bdv-ai-btn" id="bd-ai-btn" onclick="triggerBrAI()">
-        <i class="fa-solid fa-sparkles"></i> احصل على توصيات
+        <i class="fa-solid fa-sparkles"></i> <span data-i18n="bdet.ai.btn">احصل على توصيات</span>
       </button>
     </div>
 
     <div class="bdv-ai-recs" id="bd-ai-recs">
-      <div class="bdv-ai-recs-title">✨ منتجات موصى بها لكِ</div>
+      <div class="bdv-ai-recs-title" data-i18n="bdet.recs.title">✨ منتجات موصى بها لكِ</div>
       <div class="bdv-ai-recs-grid" id="bd-ai-recs-grid"></div>
     </div>
 
     <!-- Filter pills -->
     <div class="ftabs" id="bd-ftabs">
-      <div class="ft on" onclick="filterBrandProds('all',this)">الكل</div>
-      <div class="ft" onclick="filterBrandProds('women',this)">نسائي</div>
-      <div class="ft" onclick="filterBrandProds('men',this)">رجالي</div>
-      <div class="ft" onclick="filterBrandProds('new',this)">جديد</div>
-      <div class="ft" onclick="filterBrandProds('best',this)">أكثر مبيعاً</div>
+      <div class="ft on" onclick="filterBrandProds('all',this)" data-i18n="bdet.filter.all">الكل</div>
+      <div class="ft" onclick="filterBrandProds('women',this)" data-i18n="bdet.filter.women">نسائي</div>
+      <div class="ft" onclick="filterBrandProds('men',this)" data-i18n="bdet.filter.men">رجالي</div>
+      <div class="ft" onclick="filterBrandProds('new',this)" data-i18n="bdet.filter.new">جديد</div>
+      <div class="ft" onclick="filterBrandProds('best',this)" data-i18n="bdet.filter.best">أكثر مبيعاً</div>
     </div>
 
     <!-- Sort + section label -->
     <div class="bdv-sortrow">
-      <div class="sec-lbl" style="padding:0">أبرز المنتجات</div>
-      <div class="bdv-sort" onclick="sortBrandProds()"><i class="fa-solid fa-arrow-down-wide-short"></i> ترتيب</div>
+      <div class="sec-lbl" style="padding:0" data-i18n="bdet.featured">أبرز المنتجات</div>
+      <div class="bdv-sort" onclick="sortBrandProds()"><i class="fa-solid fa-arrow-down-wide-short"></i> <span data-i18n="bdet.sort">ترتيب</span></div>
     </div>
 
     <!-- Featured products — horizontal scroll -->
@@ -2408,12 +2433,12 @@ body.light-mode .pdm-ic-float{
     <div class="stpad"></div>
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">مفضلتي ❤️</div></div>
+      <div class="hdr-title"><div class="ht-main" data-i18n="favs.title">مفضلتي ❤️</div></div>
       <button class="hdr-vip"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
     <div id="fav-summary" style="padding:12px 18px 0;display:flex;align-items:center;justify-content:space-between">
       <div id="fav-count" style="font-size:12px;color:var(--dim);font-weight:700;letter-spacing:.3px"></div>
-      <button onclick="clearFavs()" id="fav-clear-btn" style="display:none;font-size:11px;color:var(--error);background:var(--error-d);border:1px solid rgba(224,96,96,.25);cursor:pointer;padding:5px 10px;border-radius:var(--r-sm);font-family:'Cairo',sans-serif;font-weight:700">حذف الكل</button>
+      <button onclick="clearFavs()" id="fav-clear-btn" style="display:none;font-size:11px;color:var(--error);background:var(--error-d);border:1px solid rgba(224,96,96,.25);cursor:pointer;padding:5px 10px;border-radius:var(--r-sm);font-family:'Cairo',sans-serif;font-weight:700" data-i18n="favs.clearall">حذف الكل</button>
     </div>
     <div id="fav-content" style="padding:4px 0 20px"></div>
   </div>
@@ -2436,24 +2461,24 @@ body.light-mode .pdm-ic-float{
     <div class="key-box">
       <div class="key-lbl">
         <i class="fa-solid fa-robot" style="color:var(--gold2)"></i>
-        مساعدة Rosiva الذكية
-        <span style="float:left;font-size:11px;color:#4caf50;font-weight:800"><i class="fa-solid fa-circle-check"></i> مفعّلة</span>
+        <span data-i18n="prof.ai.label">مساعدة Rosiva الذكية</span>
+        <span style="float:left;font-size:11px;color:#4caf50;font-weight:800"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prof.ai.badge">مفعّلة</span></span>
       </div>
-      <div style="font-size:11px;color:var(--dim);text-align:center;padding:6px 4px 2px;line-height:1.8">
+      <div style="font-size:11px;color:var(--dim);text-align:center;padding:6px 4px 2px;line-height:1.8" data-i18n="prof.ai.status">
         الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨
       </div>
     </div>
     <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb">نموذج الذكاء الاصطناعي</div><div class="pvl">Groq Llama 4 Scout</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb">لغة الصوت</div><div class="pvl">ar-SA</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb">اللغة</div><div class="pvl">عربي</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
-      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb">وضع العرض</div><div class="pvl" id="theme-lbl">داكن / فاتح</div></div>
-      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb">الخصوصية</div><div class="pvl">لا تحليل للصور</div></div>
-      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb" data-i18n="prof.item.model">نموذج الذكاء الاصطناعي</div><div class="pvl">Groq Llama 4 Scout</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb" data-i18n="prof.item.voice">لغة الصوت</div><div class="pvl">ar-SA</div></div>
+      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb" data-i18n="prof.item.version">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
+      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb" data-i18n="prof.item.theme">وضع العرض</div><div class="pvl" id="theme-lbl" data-i18n="prof.item.theme.val">داكن / فاتح</div></div>
+      <div class="pitem" onclick="toggleLang()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb" data-i18n="prof.lang.label">اللغة / Language</div><div class="pvl" id="prof-lang-val">العربية 🇸🇦</div></div>
+      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb" data-i18n="prof.item.privacy">الخصوصية</div><div class="pvl" data-i18n="prof.item.privacy.val">لا تحليل للصور</div></div>
+      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800" data-i18n="prof.item.policy">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
-    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج</button>
-    <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> Clear All Favorites</button>
+    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" id="prof-auth-btn" onclick="handleProfileAuthBtn()"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span data-i18n="prof.logout">تسجيل الخروج</span></button>
+    <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> <span data-i18n="prof.clearfavs">حذف جميع المفضلة</span></button>
     <div style="height:30px"></div>
   </div>
 
@@ -2464,7 +2489,7 @@ body.light-mode .pdm-ic-float{
     <div class="hdr">
       <div class="hdr-menu" onclick="openSB()"><span></span><span></span><span></span></div>
       <div class="hdr-title">
-        <div class="ht-main">اكتشفي 🔍</div>
+        <div class="ht-main" data-i18n="discover.title">اكتشفي 🔍</div>
       </div>
       <div style="width:40px"></div>
     </div>
@@ -2476,7 +2501,7 @@ body.light-mode .pdm-ic-float{
         <span onclick="searchOBF()" style="cursor:pointer;color:var(--muted);font-size:14px;flex-shrink:0">
           <i class="fa-solid fa-magnifying-glass"></i>
         </span>
-        <input type="text" id="obf-srch" placeholder="ابحثي عن أي منتج..." dir="rtl"
+        <input type="text" id="obf-srch" data-i18n-ph="discover.search" placeholder="ابحثي عن أي منتج..." dir="rtl"
           style="background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'Cairo',sans-serif;flex:1;text-align:right"
           onfocus="document.getElementById('obf-srch-wrap').style.borderColor='rgba(214,61,110,.5)'"
           onblur="document.getElementById('obf-srch-wrap').style.borderColor='var(--border)'"
@@ -2487,14 +2512,14 @@ body.light-mode .pdm-ic-float{
     </div>
     <!-- Category Pills -->
     <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('make-up',this)">💄 ماكياج</div>
-      <div class="ft" onclick="searchOBFCat('fragrances',this)">🌸 عطور</div>
-      <div class="ft" onclick="searchOBFCat('women-fragrance',this)">👩 عطر نسائي</div>
-      <div class="ft" onclick="searchOBFCat('men-fragrance',this)">👨 عطر رجالي</div>
-      <div class="ft" onclick="searchOBFCat('facial-care',this)">✨ بشرة</div>
-      <div class="ft" onclick="searchOBFCat('hair-care',this)">💇 شعر</div>
-      <div class="ft" onclick="searchOBFCat('lip-gloss',this)">💋 شفاه</div>
-      <div class="ft" onclick="searchOBFCat('nail-polish',this)">💅 أظافر</div>
+      <div class="ft on" onclick="searchOBFCat('make-up',this)" data-i18n="discover.cat.makeup">💄 ماكياج</div>
+      <div class="ft" onclick="searchOBFCat('fragrances',this)" data-i18n="discover.cat.fragrance">🌸 عطور</div>
+      <div class="ft" onclick="searchOBFCat('women-fragrance',this)" data-i18n="discover.cat.women">👩 عطر نسائي</div>
+      <div class="ft" onclick="searchOBFCat('men-fragrance',this)" data-i18n="discover.cat.men">👨 عطر رجالي</div>
+      <div class="ft" onclick="searchOBFCat('facial-care',this)" data-i18n="discover.cat.skin">✨ بشرة</div>
+      <div class="ft" onclick="searchOBFCat('hair-care',this)" data-i18n="discover.cat.hair">💇 شعر</div>
+      <div class="ft" onclick="searchOBFCat('lip-gloss',this)" data-i18n="discover.cat.lips">💋 شفاه</div>
+      <div class="ft" onclick="searchOBFCat('nail-polish',this)" data-i18n="discover.cat.nails">💅 أظافر</div>
     </div>
     <!-- Products Grid -->
     <div id="obf-grid"></div>
@@ -2512,23 +2537,23 @@ body.light-mode .pdm-ic-float{
   <nav class="bnav" role="navigation" aria-label="التنقل الرئيسي">
     <div class="ni on" id="ni-home" onclick="navTo('home')" role="button" aria-label="الرئيسية">
       <div class="ni-ic"><i class="fa-solid fa-house"></i></div>
-      <div class="ni-lb">الرئيسية</div><div class="ni-dot"></div>
+      <div class="ni-lb" data-i18n="nav.home">الرئيسية</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-gifts" onclick="navTo('discover')" role="button" aria-label="اكتشفي">
       <div class="ni-ic"><i class="fa-solid fa-compass"></i></div>
-      <div class="ni-lb">اكتشفي</div><div class="ni-dot"></div>
+      <div class="ni-lb" data-i18n="nav.discover">اكتشفي</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-brands" onclick="navTo('brands')" role="button" aria-label="براندات">
       <div class="ni-ic"><i class="fa-solid fa-store"></i></div>
-      <div class="ni-lb">براندات</div><div class="ni-dot"></div>
+      <div class="ni-lb" data-i18n="nav.brands">براندات</div><div class="ni-dot"></div>
     </div>
     <div class="ni" id="ni-favs" onclick="navTo('favs')" role="button" aria-label="مفضلتي">
       <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
-      <div class="ni-lb">مفضلتي</div><div class="ni-dot"></div>
+      <div class="ni-lb" data-i18n="nav.favs">مفضلتي</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-prof" onclick="navTo('prof')" role="button" aria-label="حسابي">
+    <div class="ni" id="ni-prof" onclick="navToProf()" role="button" aria-label="حسابي">
       <div class="ni-ic"><i class="fa-solid fa-user-circle"></i></div>
-      <div class="ni-lb">حسابي</div><div class="ni-dot"></div>
+      <div class="ni-lb" data-i18n="nav.account">حسابي</div><div class="ni-dot"></div>
     </div>
   </nav>
 
@@ -2600,52 +2625,52 @@ body.light-mode .pdm-ic-float{
         </div>
         <div style="display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:9px 12px">
           <i class="fa-solid fa-circle-check" style="color:#4caf50;font-size:13px"></i>
-          <span style="font-size:11.5px;color:var(--dim);font-weight:700">الذكاء الاصطناعي مفعّل ويعمل تلقائياً</span>
+          <span style="font-size:11.5px;color:var(--dim);font-weight:700" data-i18n="misc.ai.active">الذكاء الاصطناعي مفعّل ويعمل تلقائياً</span>
         </div>
       </div>
     </div>
     <div class="sb-body">
-      <div class="sb-section">Navigation</div>
+      <div class="sb-section" data-i18n="sb.nav">Navigation</div>
       <div class="sb-item" id="sbi-home" onclick="sbNav('home')">
         <div class="sb-item-ic"><i class="fa-solid fa-house" style="color:var(--rose2)"></i></div>
-        <div class="sb-item-lb">Home</div>
+        <div class="sb-item-lb" data-i18n="sb.home">Home</div>
       </div>
       <div class="sb-item" id="sbi-brands" onclick="sbNav('brands')">
         <div class="sb-item-ic"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
-        <div class="sb-item-lb">Global Brands</div>
+        <div class="sb-item-lb" data-i18n="sb.brands">Global Brands</div>
       </div>
       <div class="sb-item" id="sbi-favs" onclick="sbNav('favs')">
         <div class="sb-item-ic"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
-        <div class="sb-item-lb">My Favorites</div>
+        <div class="sb-item-lb" data-i18n="sb.favs">My Favorites</div>
       </div>
       <div class="sb-divider"></div>
-      <div class="sb-section">Categories</div>
+      <div class="sb-section" data-i18n="sb.cats">Categories</div>
       <div class="sb-item" onclick="sbNav('brands','Makeup')">
         <div class="sb-item-ic"><i class="fa-solid fa-palette" style="color:#e080b0"></i></div>
-        <div class="sb-item-lb">Makeup</div>
+        <div class="sb-item-lb" data-i18n="sb.makeup">Makeup</div>
       </div>
       <div class="sb-item" onclick="sbNav('brands','Fragrances')">
         <div class="sb-item-ic"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
-        <div class="sb-item-lb">Fragrances</div>
+        <div class="sb-item-lb" data-i18n="sb.fragrance">Fragrances</div>
       </div>
       <div class="sb-item" onclick="sbNav('brands','Skincare')">
         <div class="sb-item-ic"><i class="fa-solid fa-droplet" style="color:#60c0d0"></i></div>
-        <div class="sb-item-lb">Skincare</div>
+        <div class="sb-item-lb" data-i18n="sb.skincare">Skincare</div>
       </div>
       <div class="sb-item" onclick="sbNav('brands','Hair')">
         <div class="sb-item-ic"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
-        <div class="sb-item-lb">Hair Care</div>
+        <div class="sb-item-lb" data-i18n="sb.hair">Hair Care</div>
       </div>
       <div class="sb-divider"></div>
-      <div class="sb-section">Account</div>
+      <div class="sb-section" data-i18n="sb.account">Account</div>
       <div class="sb-item" id="sbi-prof" onclick="sbNav('prof')">
         <div class="sb-item-ic"><i class="fa-solid fa-user" style="color:var(--dim)"></i></div>
-        <div class="sb-item-lb">My Account</div>
+        <div class="sb-item-lb" data-i18n="sb.myaccount">My Account</div>
       </div>
-      <div class="sb-item" onclick="showToast('قريباً 👑')">
+      <div class="sb-item" onclick="showToast(t('sb.coming')+' 👑')">
         <div class="sb-item-ic"><i class="fa-solid fa-crown" style="color:var(--gold2)"></i></div>
-        <div class="sb-item-lb">VIP Subscription</div>
-        <span class="sb-item-badge">Coming Soon</span>
+        <div class="sb-item-lb" data-i18n="sb.vip">VIP Subscription</div>
+        <span class="sb-item-badge" data-i18n="sb.coming">Coming Soon</span>
       </div>
     </div>
     <div class="sb-foot">
@@ -2668,26 +2693,26 @@ body.light-mode .pdm-ic-float{
           <i class="fa-solid fa-spa" style="font-size:32px;color:#fff"></i>
         </div>
         <div style="font-size:24px;font-weight:900;color:var(--text);letter-spacing:.3px">Rosiva</div>
-        <div style="font-size:12.5px;color:var(--dim);margin-top:5px">دليلكِ الذكي لعالم الجمال ✨</div>
+        <div style="font-size:12.5px;color:var(--dim);margin-top:5px" id="auth-tagline" data-i18n="auth.tagline">دليلكِ الذكي لعالم الجمال ✨</div>
       </div>
 
       <div class="auth-card">
         <!-- TABS -->
         <div class="auth-tabs">
           <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
-          <button class="auth-tab on" id="auth-tab-login" onclick="setAuthMode('login')">تسجيل الدخول</button>
-          <button class="auth-tab" id="auth-tab-signup" onclick="setAuthMode('signup')">حساب جديد</button>
+          <button class="auth-tab on" id="auth-tab-login" onclick="setAuthMode('login')" data-i18n="auth.login.tab">تسجيل الدخول</button>
+          <button class="auth-tab" id="auth-tab-signup" onclick="setAuthMode('signup')" data-i18n="auth.signup.tab">حساب جديد</button>
         </div>
 
         <!-- NAME (signup only) -->
         <div id="auth-name-wrap" class="auth-field" style="display:none">
-          <input id="auth-name" type="text" placeholder="اسمك" autocomplete="name" />
+          <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="اسمك" autocomplete="name" />
           <i class="fa-solid fa-user"></i>
         </div>
 
         <!-- EMAIL -->
         <div class="auth-field">
-          <input id="auth-email" type="email" placeholder="البريد الإلكتروني" dir="ltr" autocomplete="email" style="text-align:left;padding-right:16px;padding-left:44px" />
+          <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="البريد الإلكتروني" dir="ltr" autocomplete="email" style="text-align:left;padding-right:16px;padding-left:44px" />
           <i class="fa-solid fa-envelope" style="right:auto;left:16px"></i>
         </div>
 
@@ -3115,7 +3140,9 @@ function finishOB(skip=false){
 
 function startApp(){
   document.getElementById('app').style.display='flex';
-  renderBrands();navTo('home');
+  // تطبيق اللغة المحفوظة عند البداية
+  if(typeof setLang === 'function') setLang(currentLang || localStorage.getItem('rosiva_lang') || 'ar');
+  renderBrands(); navTo('home');
 }
 
 // ══ NAV ══
@@ -3234,7 +3261,7 @@ function renderBrands(showAll=false){
   if(viewAllBtn){
     if(!q&&list.length>12){
       viewAllBtn.style.display='flex';
-      viewAllBtn.innerHTML=`<span>⊞</span><span>عرض جميع البراندات (${list.length})</span>`;
+      viewAllBtn.innerHTML=`<span>⊞</span><span>${t('misc.brands.viewall.tpl').replace('{n}',list.length)}</span>`;
     } else {
       viewAllBtn.style.display='none';
     }
@@ -3299,7 +3326,7 @@ async function openBrand(id){
   grid.classList.remove('expanded');
   const viewAllBtn=document.getElementById('bd-viewall');
   if(viewAllBtn) viewAllBtn.style.display='flex';
-  document.getElementById('bd-viewall-lb').textContent=`عرض جميع منتجات ${curBrand.nm}`;
+  document.getElementById('bd-viewall-lb').textContent=t('bdet.viewall.prefix')+curBrand.nm;
 
   navTo('bdet');
   loadBrandProdsOBF(curBrand);
@@ -3337,7 +3364,7 @@ function filterBrandProds(kind, el){
   });
   if(!matched){
     cards.forEach(c=>c.style.display='');
-    showToast('لا توجد بيانات كافية لفلترة دقيقة — تم عرض كل المنتجات');
+    showToast(t('misc.filter.noresult'));
   }
 }
 
@@ -3417,7 +3444,7 @@ async function loadBrAI(b){
     const realProds = await fetchBrandProductsQuick(b);
     const namesList = realProds.map(p=>p.product_name).slice(0,8).join(' | ');
 
-    const sys = 'أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (اسم البراند، نوع المنتجات، الفئة المستهدفة) لتمييزها بصرياً.';
+    const sys = `أنتِ Rosiva AI، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (اسم البراند، نوع المنتجات، الفئة المستهدفة) لتمييزها بصرياً.`;
     const prompt = realProds.length
       ? `لدى براند "${b.nm}" (${b.cat}) هذه المنتجات الحقيقية المتوفرة في التطبيق: ${namesList}.\nرشّحي 2-3 منها بالاسم تحديداً مع سبب مختصر لكل ترشيح ولمن يناسب، ضمن نص قصير وودود. لا تذكري أي منتج غير مذكور في القائمة أعلاه.`
       : `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
@@ -3595,19 +3622,19 @@ function renderFavs(){
     c.innerHTML=`
       <div class="empty-st">
         <div class="empty-st-icon">🤍</div>
-        <div class="empty-st-title">لا توجد مفضّلة بعد</div>
-        <div class="empty-st-sub">تصفّحي المنتجات واضغطي على قلب أي منتج لحفظه هنا</div>
-        <button class="empty-st-btn" onclick="navTo('discover')">اكتشفي المنتجات ✨</button>
+        <div class="empty-st-title">${t('favs.empty.title')}</div>
+        <div class="empty-st-sub">${t('favs.empty.sub')}</div>
+        <button class="empty-st-btn" onclick="navTo('discover')">${t('favs.empty.btn')}</button>
       </div>
       <div style="margin:0 16px 8px">
-        <div class="sec-lbl" style="padding:0 0 10px">منتجات قد تعجبكِ</div>
+        <div class="sec-lbl" style="padding:0 0 10px">${t('favs.trending')}</div>
         <div id="fav-trending" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"></div>
       </div>`;
     _loadFavTrending();
     return;
   }
   const total=favs.length;
-  if(countEl) countEl.textContent=total+' منتج محفوظ'+(total>1?'':'');
+  if(countEl) countEl.textContent=total+t('favs.count.suffix');
   if(clearBtn) clearBtn.style.display='block';
   c.innerHTML='';
   const grid=document.createElement('div');
@@ -3898,7 +3925,7 @@ async function doAI(text){
 
   try{
     const {text:r, products} = await callGeminiWithProductTool(text,
-      'أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. أجيبي دائماً باللغة العربية بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.');
+      `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. ${t('misc.ai.lang')} بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.`);
     lastResp=r;
     if(reply) reply.innerHTML=formatAIText(r);
     document.getElementById('ai-txt').textContent=r;
@@ -5005,7 +5032,7 @@ async function loadProdAI(p){
   if(analyzeBtn) analyzeBtn.style.display='none';
   el.innerHTML = '<div class="dots"><span></span><span></span><span></span></div>';
   try{
-    const sys = "أنتِ Rosiva AI، خبيرة جمال محترفة. أجيبي باللغة العربية في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (الفوائد الرئيسية، نوع البشرة/الاستخدام المناسب) لتمييزها بصرياً، واذكري الفوائد الرئيسية كنقاط قصيرة بعلامة - إن أمكن.";
+    const sys = `أنتِ Rosiva AI، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (الفوائد الرئيسية، نوع البشرة/الاستخدام المناسب) لتمييزها بصرياً، واذكري الفوائد الرئيسية كنقاط قصيرة بعلامة - إن أمكن.`;
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
     const text = await callGemini(prompt, sys);
     el.innerHTML = formatAIText(text);
@@ -5061,6 +5088,241 @@ function openPrivacy(){
 window.addEventListener('beforeunload', ()=>{
   stopSpeech();
 });
+
+// ══ AUTH GATE لشاشة حسابي فقط ══
+function navToProf(){
+  if(window._authUser){ navTo('prof'); }
+  else { if(typeof window.showAuthScreenGlobal==='function') window.showAuthScreenGlobal(); }
+}
+
+function handleProfileAuthBtn(){
+  if(window._authUser){
+    if(typeof handleLogout==='function') handleLogout();
+  } else {
+    if(typeof window.showAuthScreenGlobal==='function') window.showAuthScreenGlobal();
+  }
+}
+
+function updateProfAuthBtn(){
+  const btn=document.getElementById('prof-auth-btn');
+  if(!btn) return;
+  if(window._authUser){
+    btn.innerHTML=`<i class="fa-solid fa-arrow-right-from-bracket"></i> <span data-i18n="prof.logout">${t('prof.logout')}</span>`;
+    btn.style.background='var(--card2)'; btn.style.color='var(--text)';
+  } else {
+    btn.innerHTML=`<i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="prof.login">${t('prof.login')}</span>`;
+    btn.style.background='linear-gradient(135deg,var(--rose),var(--gold))';
+    btn.style.color='#fff';
+  }
+}
+
+// ══════════════════════════════════════
+//  I18N SYSTEM — نظام ثنائية اللغة
+// ══════════════════════════════════════
+const TRANSLATIONS = {
+  ar:{
+    'nav.home':'الرئيسية','nav.discover':'اكتشفي','nav.brands':'براندات',
+    'nav.favs':'مفضلتي','nav.account':'حسابي',
+    'home.subtitle':'مساعدة الجمال الذكية',
+    'home.greeting':'كيف أساعدكِ اليوم؟ ✨',
+    'home.ai.status':'مساعدة الجمال الذكية',
+    'home.ai.empty':'اسأليني عن أي منتج أو براند',
+    'home.ai.placeholder':'اكتبي سؤالك هنا...',
+    'home.featured':'✨ مميّز اليوم',
+    'home.hero.badge':'براند مميّز','home.hero.btn':'اكتشفي المنتجات',
+    'home.cat.title':'اكتشفي عالم الجمال',
+    'home.cat.makeup':'ماكياج','home.cat.fragrance':'عطور',
+    'home.cat.skincare':'عناية بالبشرة','home.cat.hair':'عناية بالشعر',
+    'home.cat.brands':'براندات عالمية','home.cat.favs':'مفضلتي',
+    'home.cat.sub.bp':'براندات ومنتجات','home.cat.sub.ab':'جميع البراندات','home.cat.sub.sv':'المحفوظات',
+    'brands.title':'البراندات 🛍️','brands.search':'ابحثي عن براند...',
+    'brands.filter.all':'الكل ✦','brands.filter.makeup':'💄 ماكياج',
+    'brands.filter.fragrance':'🌸 عطور','brands.filter.skincare':'✨ بشرة','brands.filter.hair':'💇 شعر',
+    'brands.viewall':'عرض جميع البراندات',
+    'bdet.back':'تفاصيل البراند','bdet.founded':'تأسست','bdet.origin':'المنشأ','bdet.category':'الفئة',
+    'bdet.ai.btn':'احصل على توصيات','bdet.recs.title':'✨ منتجات موصى بها لكِ',
+    'bdet.filter.all':'الكل','bdet.filter.women':'نسائي','bdet.filter.men':'رجالي',
+    'bdet.filter.new':'جديد','bdet.filter.best':'أكثر مبيعاً',
+    'bdet.featured':'أبرز المنتجات','bdet.sort':'ترتيب','bdet.viewall.prefix':'عرض جميع منتجات ',
+    'favs.title':'مفضلتي ❤️','favs.clearall':'حذف الكل',
+    'favs.empty.title':'لا توجد مفضّلة بعد',
+    'favs.empty.sub':'تصفّحي المنتجات واضغطي على قلب أي منتج لحفظه هنا',
+    'favs.empty.btn':'اكتشفي المنتجات ✨','favs.trending':'منتجات قد تعجبكِ',
+    'favs.count.suffix':' منتج محفوظ',
+    'prof.title':'حسابي 👤',
+    'prof.ai.label':'مساعدة Rosiva الذكية',
+    'prof.ai.status':'الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨',
+    'prof.ai.badge':'مفعّلة',
+    'prof.item.model':'نموذج الذكاء الاصطناعي','prof.item.voice':'لغة الصوت',
+    'prof.item.version':'الإصدار','prof.item.theme':'وضع العرض','prof.item.theme.val':'داكن / فاتح',
+    'prof.item.privacy':'الخصوصية','prof.item.privacy.val':'لا تحليل للصور','prof.item.policy':'سياسة الخصوصية',
+    'prof.lang.label':'اللغة / Language','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
+    'prof.logout':'تسجيل الخروج','prof.login':'تسجيل الدخول / إنشاء حساب','prof.clearfavs':'حذف جميع المفضلة',
+    'discover.title':'اكتشفي 🔍','discover.search':'ابحثي عن أي منتج...',
+    'discover.cat.makeup':'💄 ماكياج','discover.cat.fragrance':'🌸 عطور',
+    'discover.cat.women':'👩 عطر نسائي','discover.cat.men':'👨 عطر رجالي',
+    'discover.cat.skin':'✨ بشرة','discover.cat.hair':'💇 شعر',
+    'discover.cat.lips':'💋 شفاه','discover.cat.nails':'💅 أظافر',
+    'sb.nav':'التنقل','sb.home':'الرئيسية','sb.brands':'البراندات العالمية',
+    'sb.favs':'مفضلتي','sb.cats':'التصنيفات','sb.makeup':'ماكياج',
+    'sb.fragrance':'عطور','sb.skincare':'عناية بالبشرة','sb.hair':'عناية بالشعر',
+    'sb.account':'الحساب','sb.myaccount':'حسابي','sb.vip':'اشتراك VIP','sb.coming':'قريباً',
+    'auth.login.tab':'تسجيل الدخول','auth.signup.tab':'حساب جديد',
+    'auth.name.ph':'اسمك','auth.email.ph':'البريد الإلكتروني','auth.pass.ph':'كلمة المرور',
+    'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'دليلكِ الذكي لعالم الجمال ✨',
+    'auth.submit.login':'تسجيل الدخول','auth.submit.signup':'إنشاء حساب',
+    'misc.viewprod':'عرض المنتج في المتجر',
+    'misc.ai.active':'الذكاء الاصطناعي مفعّل ويعمل تلقائياً',
+    'misc.ai.lang':'أجيبي دائماً باللغة العربية',
+    'misc.filter.noresult':'لا توجد بيانات كافية للفلترة — تم عرض الكل',
+    'misc.brands.viewall.tpl':'عرض جميع البراندات ({n})',
+  },
+  en:{
+    'nav.home':'Home','nav.discover':'Discover','nav.brands':'Brands',
+    'nav.favs':'Favorites','nav.account':'Account',
+    'home.subtitle':'Smart Beauty Assistant',
+    'home.greeting':'How can I help you today? ✨',
+    'home.ai.status':'Smart Beauty Assistant',
+    'home.ai.empty':'Ask me about any product or brand',
+    'home.ai.placeholder':'Write your question here...',
+    'home.featured':'✨ Featured Today',
+    'home.hero.badge':'Featured Brand','home.hero.btn':'Explore Products',
+    'home.cat.title':'Discover Beauty World',
+    'home.cat.makeup':'Makeup','home.cat.fragrance':'Fragrances',
+    'home.cat.skincare':'Skincare','home.cat.hair':'Hair Care',
+    'home.cat.brands':'Global Brands','home.cat.favs':'Favorites',
+    'home.cat.sub.bp':'Brands & Products','home.cat.sub.ab':'All Brands','home.cat.sub.sv':'Saved',
+    'brands.title':'Brands 🛍️','brands.search':'Search brands...',
+    'brands.filter.all':'All ✦','brands.filter.makeup':'💄 Makeup',
+    'brands.filter.fragrance':'🌸 Fragrances','brands.filter.skincare':'✨ Skincare','brands.filter.hair':'💇 Hair',
+    'brands.viewall':'View All Brands',
+    'bdet.back':'Brand Details','bdet.founded':'Founded','bdet.origin':'Origin','bdet.category':'Category',
+    'bdet.ai.btn':'Get Recommendations','bdet.recs.title':'✨ Recommended for you',
+    'bdet.filter.all':'All','bdet.filter.women':'Women','bdet.filter.men':'Men',
+    'bdet.filter.new':'New','bdet.filter.best':'Best Sellers',
+    'bdet.featured':'Featured Products','bdet.sort':'Sort','bdet.viewall.prefix':'View all products of ',
+    'favs.title':'Favorites ❤️','favs.clearall':'Clear All',
+    'favs.empty.title':'No favorites yet',
+    'favs.empty.sub':'Browse products and tap the heart on any item to save it here',
+    'favs.empty.btn':'Explore Products ✨','favs.trending':'Products you might like',
+    'favs.count.suffix':' saved',
+    'prof.title':'Account 👤',
+    'prof.ai.label':'Rosiva Smart Assistant',
+    'prof.ai.status':'AI ready and working automatically — no setup needed ✨',
+    'prof.ai.badge':'Active',
+    'prof.item.model':'AI Model','prof.item.voice':'Voice Language',
+    'prof.item.version':'Version','prof.item.theme':'Display Mode','prof.item.theme.val':'Dark / Light',
+    'prof.item.privacy':'Privacy','prof.item.privacy.val':'No Image Analysis','prof.item.policy':'Privacy Policy',
+    'prof.lang.label':'Language / اللغة','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
+    'prof.logout':'Sign Out','prof.login':'Sign In / Create Account','prof.clearfavs':'Clear All Favorites',
+    'discover.title':'Discover 🔍','discover.search':'Search any product...',
+    'discover.cat.makeup':'💄 Makeup','discover.cat.fragrance':'🌸 Fragrances',
+    'discover.cat.women':'👩 Women\'s Scent','discover.cat.men':'👨 Men\'s Scent',
+    'discover.cat.skin':'✨ Skincare','discover.cat.hair':'💇 Hair',
+    'discover.cat.lips':'💋 Lips','discover.cat.nails':'💅 Nails',
+    'sb.nav':'Navigation','sb.home':'Home','sb.brands':'Global Brands',
+    'sb.favs':'My Favorites','sb.cats':'Categories','sb.makeup':'Makeup',
+    'sb.fragrance':'Fragrances','sb.skincare':'Skincare','sb.hair':'Hair Care',
+    'sb.account':'Account','sb.myaccount':'My Account','sb.vip':'VIP Subscription','sb.coming':'Coming Soon',
+    'auth.login.tab':'Sign In','auth.signup.tab':'New Account',
+    'auth.name.ph':'Your name','auth.email.ph':'Email address','auth.pass.ph':'Password',
+    'auth.forgot':'Forgot password?','auth.tagline':'Your smart guide to the beauty world ✨',
+    'auth.submit.login':'Sign In','auth.submit.signup':'Create Account',
+    'misc.viewprod':'View Product in Store',
+    'misc.ai.active':'AI is active and working automatically',
+    'misc.ai.lang':'Always respond in English',
+    'misc.filter.noresult':'Not enough data for filtering — showing all',
+    'misc.brands.viewall.tpl':'View All Brands ({n})',
+  }
+};
+
+let currentLang = localStorage.getItem('rosiva_lang') || 'ar';
+
+function t(key){
+  return (TRANSLATIONS[currentLang]||{})[key] || (TRANSLATIONS.ar||{})[key] || key;
+}
+// نكشف t() عالمياً للـ module scripts
+window.t = t;
+
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem('rosiva_lang', lang);
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir  = lang==='ar' ? 'rtl' : 'ltr';
+
+  // تطبيق كل عناصر data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const val = t(el.getAttribute('data-i18n'));
+    el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    el.placeholder = t(el.getAttribute('data-i18n-ph'));
+  });
+
+  // اتجاه حقول البحث والإدخال
+  ['ai-chat-inp','b-srch','obf-srch'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el) return;
+    el.dir   = lang==='ar' ? 'rtl' : 'ltr';
+    el.style.textAlign = lang==='ar' ? 'right' : 'left';
+  });
+
+  // أيقونات الأسهم
+  const backArrow=document.querySelector('.bk-btn i');
+  if(backArrow) backArrow.className=lang==='ar'?'fa-solid fa-arrow-right':'fa-solid fa-arrow-left';
+  const sendArrow=document.querySelector('.ai-send-btn i');
+  if(sendArrow) sendArrow.className=lang==='ar'?'fa-solid fa-arrow-left':'fa-solid fa-arrow-right';
+  const pdmBack=document.querySelector('.pdm-back i');
+  if(pdmBack) pdmBack.className=lang==='ar'?'fa-solid fa-chevron-right':'fa-solid fa-chevron-left';
+
+  // مؤشر auth tab
+  const ind=document.getElementById('auth-tab-indicator');
+  if(ind){
+    if(lang==='ar'){ ind.style.right='4px'; ind.style.left=''; }
+    else            { ind.style.right='';   ind.style.left='4px'; }
+  }
+
+  // قيمة اللغة في الإعدادات
+  const langVal=document.getElementById('prof-lang-val');
+  if(langVal) langVal.textContent=lang==='ar'?t('prof.lang.val.ar'):t('prof.lang.val.en');
+
+  // تحديث زر auth
+  if(typeof updateProfAuthBtn==='function') updateProfAuthBtn();
+
+  // تحديث Quick Chips
+  _updateQuickChips();
+
+  // إعادة رسم الشاشة النشطة إذا احتوت نصوصاً ديناميكية
+  if(typeof renderFavs==='function'){
+    const fs=document.getElementById('s-favs');
+    if(fs && fs.classList.contains('on')) renderFavs();
+  }
+}
+
+function toggleLang(){
+  setLang(currentLang==='ar'?'en':'ar');
+}
+
+function _updateQuickChips(){
+  const row=document.getElementById('ai-quick-row');
+  if(!row) return;
+  const chips=currentLang==='ar'?[
+    {l:'💧 بشرة جافة',    q:'أفضل كريم مرطب للبشرة الجافة'},
+    {l:'🌸 عطر صيفي',    q:'عطر نسائي خفيف للصيف'},
+    {l:'💄 فاونديشن',    q:'أفضل فاونديشن تغطية كاملة'},
+    {l:'✨ روتين بشرة',   q:'روتين العناية بالبشرة الدهنية'},
+    {l:'👁️ هالات',       q:'كريم للهالات السوداء تحت العين'},
+  ]:[
+    {l:'💧 Dry Skin',     q:'Best moisturizer for dry skin'},
+    {l:'🌸 Summer Scent', q:'Best light fragrance for summer'},
+    {l:'💄 Foundation',   q:'Best full coverage foundation'},
+    {l:'✨ Skin Routine', q:'Oily skin care routine for beginners'},
+    {l:'👁️ Dark Circles', q:'Best eye cream for dark circles'},
+  ];
+  row.innerHTML=chips.map(c=>`<div class="ai-quick-chip" onclick="quickAsk('${c.q}')">${c.l}</div>`).join('');
+}
+
 </script>
 
 <!-- ══ FIREBASE AUTH ══ -->
@@ -5123,18 +5385,19 @@ window.addEventListener('beforeunload', ()=>{
     hideAuthError();
     const loginTab = $('auth-tab-login'), signupTab = $('auth-tab-signup');
     const indicator = $('auth-tab-indicator');
+    const isRTL = document.documentElement.dir !== 'ltr';
     if(mode === 'login'){
       loginTab.classList.add('on'); signupTab.classList.remove('on');
       indicator.style.transform = 'translateX(0)';
       $('auth-name-wrap').style.display = 'none';
       $('auth-forgot-wrap').style.display = 'block';
-      $('auth-submit-label').textContent = 'تسجيل الدخول';
+      $('auth-submit-label').textContent = window.t ? window.t('auth.submit.login') : 'تسجيل الدخول';
     } else {
       signupTab.classList.add('on'); loginTab.classList.remove('on');
-      indicator.style.transform = 'translateX(-100%)';
+      indicator.style.transform = isRTL ? 'translateX(-100%)' : 'translateX(100%)';
       $('auth-name-wrap').style.display = 'block';
       $('auth-forgot-wrap').style.display = 'none';
-      $('auth-submit-label').textContent = 'إنشاء حساب';
+      $('auth-submit-label').textContent = window.t ? window.t('auth.submit.signup') : 'إنشاء حساب';
     }
   };
 
@@ -5213,24 +5476,41 @@ window.addEventListener('beforeunload', ()=>{
     $('auth-screen').style.display = 'none';
   }
 
+  // نكشف الدوال عالمياً حتى تستخدمها بقية السكريبتات
+  window.showAuthScreenGlobal = showAuthScreen;
+  window.hideAuthScreenGlobal = hideAuthScreen;
+
   // ── ربط بوابة تسجيل الدخول بدورة حياة التطبيق الحالية ──
-  // نعيد تعريف startApp لإضافة فحص حالة تسجيل الدخول دون لمس بقية المنطق الحالي
+  // startApp يعمل بشكل طبيعي بدون إجبار تسجيل الدخول
   const _originalStartApp = window.startApp;
   window.startApp = function(){
     if(typeof _originalStartApp === 'function') _originalStartApp();
-    if(!auth.currentUser){ showAuthScreen(); }
+    // ✅ التطبيق يفتح مباشرة — تسجيل الدخول اختياري
   };
 
   onAuthStateChanged(auth, (user)=>{
+    window._authUser = user; // نشارك الحالة مع السكريبتات الأخرى
     applyUserToProfile(user);
-    // إذا كان التطبيق قد بدأ فعلياً (تجاوزنا شاشة الـ onboarding)
-    const appEl = $('app');
-    const appVisible = appEl && appEl.style.display === 'flex';
+    if(typeof updateProfAuthBtn === 'function') updateProfAuthBtn();
+
     if(user){
+      // تسجيل دخول ناجح → أغلق شاشة الدخول + انتقل لحسابي
+      const wasAuthVisible = $('auth-screen').style.display === 'block';
       hideAuthScreen();
-    } else if(appVisible){
-      // كان مسجلاً ثم سجّل خروج (أو لا توجد جلسة) بعد بدء التطبيق فعلياً
-      showAuthScreen();
+      if(wasAuthVisible){
+        // فقط إذا كانت شاشة الدخول مفتوحة → انتقل لحسابي
+        const appEl = $('app');
+        if(appEl && appEl.style.display === 'flex'){
+          if(typeof navTo === 'function') navTo('prof');
+        }
+      }
+    } else {
+      // تسجيل خروج → ابق في التطبيق لكن ارجع للرئيسية
+      const appEl = $('app');
+      if(appEl && appEl.style.display === 'flex'){
+        hideAuthScreen(); // تأكد أن شاشة الدخول مغلقة
+        if(typeof navTo === 'function') navTo('home');
+      }
     }
   });
 
