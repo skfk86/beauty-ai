@@ -2060,29 +2060,29 @@ body.light-mode .pdm-ic-float{
 .auth-submit:disabled{opacity:.55;pointer-events:none}
 
 /* ══ BILINGUAL — LTR / English overrides ══ */
-html[dir="ltr"] .ai-input-bar{flex-direction:row}
-html[dir="ltr"] .ai-input-bar input{text-align:left}
-html[dir="ltr"] .ai-quick-row{flex-direction:row}
-html[dir="ltr"] .greet-sub,html[dir="ltr"] .greet-title{text-align:left}
-html[dir="ltr"] .sec-lbl{text-align:left}
-html[dir="ltr"] .pdm-info-v2,html[dir="ltr"] .pdm-name-v2,html[dir="ltr"] .pdm-cat-v2,html[dir="ltr"] .pdm-desc-v2{text-align:left}
-html[dir="ltr"] .bdv-desc{text-align:left}
-html[dir="ltr"] .ai-fmt-head::before{order:-1}
-html[dir="ltr"] .key-lbl{text-align:left}
-html[dir="ltr"] .ai-card-hd{text-align:left}
-html[dir="ltr"] .buy-title{text-align:left}
-html[dir="ltr"] .rev-hdr,html[dir="ltr"] .sim-hdr{text-align:left}
-html[dir="ltr"] .prof-top{text-align:left;padding-right:18px}
-html[dir="ltr"] .prof-av{margin:0 0 10px 0}
-html[dir="ltr"] .sb-logo-sub,html[dir="ltr"] .sb-logo-txt{text-align:left}
-html[dir="ltr"] .bdv-sortrow{flex-direction:row-reverse}
-html[dir="ltr"] .bdv-ai-card{flex-direction:row-reverse}
-html[dir="ltr"] .auth-tab-indicator{right:auto;left:4px}
-html[dir="ltr"] .empty-st{text-align:center}
-html[dir="ltr"] .bc-name,html[dir="ltr"] .bc-cat{text-align:left}
-html[dir="ltr"] .ai-card-txt,html[dir="ltr"] .ai-chat-reply{text-align:left}
-html[dir="ltr"] .plist .pitem{direction:ltr}
-html[dir="ltr"] .hdr-menu span{display:block}
+html.lang-en .ai-input-bar{flex-direction:row}
+html.lang-en .ai-input-bar input{text-align:left}
+html.lang-en .ai-quick-row{flex-direction:row}
+html.lang-en .greet-sub,html.lang-en .greet-title{text-align:left}
+html.lang-en .sec-lbl{text-align:left}
+html.lang-en .pdm-info-v2,html.lang-en .pdm-name-v2,html.lang-en .pdm-cat-v2,html.lang-en .pdm-desc-v2{text-align:left}
+html.lang-en .bdv-desc{text-align:left}
+html.lang-en .ai-fmt-head::before{order:-1}
+html.lang-en .key-lbl{text-align:left}
+html.lang-en .ai-card-hd{text-align:left}
+html.lang-en .buy-title{text-align:left}
+html.lang-en .rev-hdr,html.lang-en .sim-hdr{text-align:left}
+html.lang-en .prof-top{text-align:left;padding-right:18px}
+html.lang-en .prof-av{margin:0 0 10px 0}
+html.lang-en .sb-logo-sub,html.lang-en .sb-logo-txt{text-align:left}
+html.lang-en .bdv-sortrow{flex-direction:row-reverse}
+html.lang-en .bdv-ai-card{flex-direction:row-reverse}
+html.lang-en .auth-tab-indicator{right:auto;left:4px}
+html.lang-en .empty-st{text-align:center}
+html.lang-en .bc-name,html.lang-en .bc-cat{text-align:left}
+html.lang-en .ai-card-txt,html.lang-en .ai-chat-reply{text-align:left}
+html.lang-en .plist .pitem{direction:ltr}
+html.lang-en .hdr-menu span{display:block}
 </style>
 </head>
 <body>
@@ -3031,7 +3031,7 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GROQ_KEY='__GROQ_API_KEY__';
+const DEFAULT_GROQ_KEY='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';
 let apiKey=DEFAULT_GROQ_KEY;
 localStorage.setItem('bai_key', apiKey); // يتجاوز أي مفتاح قديم محفوظ من نسخة سابقة كان فيها حقل إدخال يدوي
 let isRec=false,recog=null;
@@ -3939,7 +3939,7 @@ async function doAI(text){
     else if(msg.includes('401')||msg.includes('INVALID_KEY')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
     else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — '+msg+'</span>';
     else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
-    else errHtml='<span style="color:#e06060">خطأ: '+msg+'</span>';
+    else errHtml='<span style="color:#e06060">⚠️ تعذّر الحصول على رد — '+msg+'</span>';
     if(reply) reply.innerHTML=errHtml;
     document.getElementById('ai-txt').innerHTML=errHtml;
   }
@@ -3982,7 +3982,7 @@ async function callGemini(msg, sys=''){
     let errMsg='API_ERR_'+r.status;
     try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
     lastErr=errMsg;
-    if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+    if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
     if(r.status===429) continue;
   }
   throw new Error(lastErr || 'API_ERR: All models failed');
@@ -4057,7 +4057,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
         let errMsg='API_ERR_'+r.status;
         try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
         lastErr=errMsg;
-        if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+        if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
         if(r.status===429) continue;
         continue;
       }
@@ -4085,7 +4085,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
           } else {
             let errMsg='API_ERR_'+r.status;
             try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
-            if(r.status===400||r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+            if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
             lastErr=errMsg; continue;
           }
         }
@@ -4503,7 +4503,7 @@ function showAIProductCards(prods){
 
   const section = document.createElement('div');
   section.id = 'ai-prod-recs';
-  section.style.cssText = 'padding:0 16px 16px;direction:rtl';
+  section.style.cssText = `padding:0 16px 16px;direction:${currentLang==='ar'?'rtl':'ltr'}`;
 
   const title = document.createElement('div');
   title.style.cssText = 'font-size:11px;font-weight:700;color:var(--rose2);margin-bottom:8px;letter-spacing:.5px';
@@ -4563,7 +4563,7 @@ async function showSearchingUI(){
   if(old) old.remove();
   const section = document.createElement('div');
   section.id = 'ai-prod-recs';
-  section.style.cssText = 'padding:16px;direction:rtl;text-align:center';
+  section.style.cssText = `padding:16px;direction:${currentLang==='ar'?'rtl':'ltr'};text-align:center`;
   section.innerHTML = `
     <div style="font-size:12px;color:var(--rose2);font-weight:700;margin-bottom:8px">🔍 جاري البحث والتحليل...</div>
     <div class="dots"><span></span><span></span><span></span></div>
@@ -5249,7 +5249,14 @@ function setLang(lang){
   localStorage.setItem('rosiva_lang', lang);
   const html = document.documentElement;
   html.lang = lang;
-  html.dir  = lang==='ar' ? 'rtl' : 'ltr';
+  // ملاحظة مهمة: لا نُغيّر html.dir إلى ltr إطلاقاً.
+  // كل تخطيطات الصفحة (flex/grid) مبنية على اتجاه rtl، وتغيير
+  // الـ dir على مستوى الوثيقة يعكس ترتيب كل عناصر flex تلقائياً
+  // (حتى التي لا تحتوي على flex-direction صريح) ويكسر كل التصميم.
+  // لذلك نُبقي dir=rtl دائماً، ونستخدم كلاس lang-en فقط للتعديلات
+  // النصية الشكلية (text-align ...) المحدودة عبر CSS.
+  html.dir = 'rtl';
+  html.classList.toggle('lang-en', lang === 'en');
 
   // تطبيق كل عناصر data-i18n
   document.querySelectorAll('[data-i18n]').forEach(el=>{
@@ -5385,7 +5392,7 @@ function _updateQuickChips(){
     hideAuthError();
     const loginTab = $('auth-tab-login'), signupTab = $('auth-tab-signup');
     const indicator = $('auth-tab-indicator');
-    const isRTL = document.documentElement.dir !== 'ltr';
+    const isRTL = !document.documentElement.classList.contains('lang-en');
     if(mode === 'login'){
       loginTab.classList.add('on'); signupTab.classList.remove('on');
       indicator.style.transform = 'translateX(0)';
