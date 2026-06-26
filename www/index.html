@@ -2477,7 +2477,7 @@ html.lang-en .hdr-menu span{display:block}
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800" data-i18n="prof.item.policy">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
     <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" id="prof-auth-btn" onclick="handleProfileAuthBtn()"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span data-i18n="prof.logout">تسجيل الخروج</span></button>
-    <button class="danger-btn" onclick="clearFavs()"><i class="fa-solid fa-trash-can"></i> <span data-i18n="prof.clearfavs">حذف جميع المفضلة</span></button>
+    <button class="danger-btn" onclick="deleteAllUserData()"><i class="fa-solid fa-trash-can"></i> <span data-i18n="prof.clearfavs">حذف جميع بياناتي نهائياً</span></button>
     <div style="height:30px"></div>
   </div>
 
@@ -5156,7 +5156,7 @@ const TRANSLATIONS = {
     'prof.item.version':'الإصدار','prof.item.theme':'وضع العرض','prof.item.theme.val':'داكن / فاتح',
     'prof.item.privacy':'الخصوصية','prof.item.privacy.val':'لا تحليل للصور','prof.item.policy':'سياسة الخصوصية',
     'prof.lang.label':'اللغة / Language','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
-    'prof.logout':'تسجيل الخروج','prof.login':'تسجيل الدخول / إنشاء حساب','prof.clearfavs':'حذف جميع المفضلة',
+    'prof.logout':'تسجيل الخروج','prof.login':'تسجيل الدخول / إنشاء حساب','prof.clearfavs':'حذف جميع بياناتي نهائياً',
     'discover.title':'اكتشفي 🔍','discover.search':'ابحثي عن أي منتج...',
     'discover.cat.makeup':'💄 ماكياج','discover.cat.fragrance':'🌸 عطور',
     'discover.cat.women':'👩 عطر نسائي','discover.cat.men':'👨 عطر رجالي',
@@ -5213,7 +5213,7 @@ const TRANSLATIONS = {
     'prof.item.version':'Version','prof.item.theme':'Display Mode','prof.item.theme.val':'Dark / Light',
     'prof.item.privacy':'Privacy','prof.item.privacy.val':'No Image Analysis','prof.item.policy':'Privacy Policy',
     'prof.lang.label':'Language / اللغة','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
-    'prof.logout':'Sign Out','prof.login':'Sign In / Create Account','prof.clearfavs':'Clear All Favorites',
+    'prof.logout':'Sign Out','prof.login':'Sign In / Create Account','prof.clearfavs':'Delete All My Data Permanently',
     'discover.title':'Discover 🔍','discover.search':'Search any product...',
     'discover.cat.makeup':'💄 Makeup','discover.cat.fragrance':'🌸 Fragrances',
     'discover.cat.women':'👩 Women\'s Scent','discover.cat.men':'👨 Men\'s Scent',
@@ -5342,7 +5342,8 @@ function _updateQuickChips(){
     createUserWithEmailAndPassword,
     signOut,
     sendPasswordResetEmail,
-    updateProfile
+    updateProfile,
+    deleteUser
   } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -5423,6 +5424,47 @@ function _updateQuickChips(){
     }catch(e){
       showAuthError(friendlyError(e.code));
     }
+  };
+
+  // حذف نهائي وكامل لكل بيانات المستخدم: المفضلة + الإعدادات المحلية + حساب Firebase نفسه
+  window.deleteAllUserData = async function(){
+    const isRTL = !document.documentElement.classList.contains('lang-en');
+    const msg1 = isRTL
+      ? 'سيتم حذف جميع بياناتك نهائياً (المفضلة، الإعدادات، الحساب) ولا يمكن التراجع عن هذا. هل أنتِ متأكدة؟'
+      : 'This will permanently delete all your data (favorites, settings, account) and cannot be undone. Are you sure?';
+    const msg2 = isRTL
+      ? 'تأكيد أخير: سيتم حذف حسابك وكل بياناتك المحلية للأبد. استمرار؟'
+      : 'Final confirmation: your account and all local data will be deleted forever. Continue?';
+    if(!confirm(msg1)) return;
+    if(!confirm(msg2)) return;
+
+    let accountDeleteFailed = false;
+    if(auth.currentUser){
+      try{
+        await deleteUser(auth.currentUser);
+      }catch(e){
+        if(e.code === 'auth/requires-recent-login'){
+          if(window.showToast) showToast(isRTL
+            ? 'لأسباب أمنية، يجب تسجيل الخروج والدخول من جديد قبل حذف الحساب نهائياً'
+            : 'For security, please sign out and sign in again before permanently deleting your account');
+          return;
+        }
+        accountDeleteFailed = true;
+      }
+    }
+
+    try{ await signOut(auth); }catch(e){}
+
+    // مسح شامل لكل بيانات التطبيق المحلية (مفضلة، مفاتيح، إعدادات، ذاكرة تخزين مؤقتة...)
+    try{ localStorage.clear(); }catch(e){}
+    try{ sessionStorage.clear(); }catch(e){}
+
+    if(window.showToast) showToast(
+      accountDeleteFailed
+        ? (isRTL ? 'تم حذف بياناتك المحلية، لكن تعذّر حذف الحساب — حاولي تسجيل الدخول من جديد ثم احذفي مرة أخرى' : 'Local data cleared, but account deletion failed — try signing in again and deleting once more')
+        : (isRTL ? 'تم حذف جميع بياناتك نهائياً' : 'All your data has been permanently deleted')
+    );
+    setTimeout(()=>{ location.reload(); }, 900);
   };
 
   window.handleAuthSubmit = async function(){
