@@ -1,0 +1,18 @@
+{
+	"appId": "com.beautyai.app",
+	"appName": "Rosiva",
+	"webDir": "www",
+	"android": {
+		"allowMixedContent": true,
+		"minWebViewVersion": 60,
+		"backgroundColor": "#060108"
+	},
+	"server": {
+		"allowNavigation": [
+			"api.groq.com",
+			"translate.googleapis.com",
+			"fonts.googleapis.com",
+			"cdnjs.cloudflare.com"
+		]
+	}
+}

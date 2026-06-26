@@ -1,5 +1,4 @@
 node_modules/
-android/
 *.keystore
 *.jks
 .DS_Store
