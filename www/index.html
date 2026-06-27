@@ -3905,8 +3905,39 @@ function applyInline(s){
   return s;
 }
 
+// ══ حد الطلبات اليومي للذكاء الاصطناعي (لكل جهاز) ══
+const AI_DAILY_LIMIT = 5;
+function _aiQuotaToday(){
+  const key='bai_ai_quota';
+  const today=new Date().toDateString();
+  let q={};
+  try{ q=JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){ q={}; }
+  if(q.date!==today){ q={date:today,count:0}; }
+  return q;
+}
+function _aiQuotaRemaining(){
+  const q=_aiQuotaToday();
+  return Math.max(0, AI_DAILY_LIMIT - q.count);
+}
+function _aiQuotaConsume(){
+  const q=_aiQuotaToday();
+  q.count+=1;
+  localStorage.setItem('bai_ai_quota', JSON.stringify(q));
+  return Math.max(0, AI_DAILY_LIMIT - q.count);
+}
+
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
+
+  if(_aiQuotaRemaining()<=0){
+    const isRTL = !document.documentElement.classList.contains('lang-en');
+    showToast(isRTL
+      ? '⏳ لقد استخدمتِ حد الأسئلة اليومي (5 أسئلة). حاولي مرة أخرى بكرة!'
+      : '⏳ You\'ve used today\'s daily limit (5 questions). Try again tomorrow!');
+    return;
+  }
+
+  const remaining = _aiQuotaConsume();
 
   // عرض loading في البطاقة الجديدة
   const reply=document.getElementById('ai-chat-reply');
@@ -3930,6 +3961,14 @@ async function doAI(text){
     document.getElementById('ai-txt').textContent=r;
     if(products && products.length) showAIProductCards(products);
     if(body) setTimeout(()=>{ body.scrollTop=body.scrollHeight; },100);
+    if(window.showToast){
+      const isRTL = !document.documentElement.classList.contains('lang-en');
+      if(remaining===0){
+        showToast(isRTL ? '⏳ كان هذا آخر سؤال لكِ اليوم — رجوعك بكرة! ✨' : '⏳ That was your last question for today — see you tomorrow! ✨');
+      }else if(remaining<=2){
+        showToast(isRTL ? `بقي لكِ ${remaining} ${remaining===1?'سؤال':'أسئلة'} اليوم` : `${remaining} question${remaining===1?'':'s'} left today`);
+      }
+    }
   }catch(e){
     const msg = e.message || '';
     console.error('Groq error detail:', msg);
@@ -3946,6 +3985,7 @@ async function doAI(text){
 
 // ══ GROQ ══
 const _GROQ_MODELS = [
+  'llama-3.1-8b-instant',
   'meta-llama/llama-4-scout-17b-16e-instruct',
   'meta-llama/llama-4-maverick-17b-128e-instruct',
   'llama-3.3-70b-versatile'
