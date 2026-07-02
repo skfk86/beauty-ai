@@ -3905,39 +3905,8 @@ function applyInline(s){
   return s;
 }
 
-// ══ حد الطلبات اليومي للذكاء الاصطناعي (لكل جهاز) ══
-const AI_DAILY_LIMIT = 5;
-function _aiQuotaToday(){
-  const key='bai_ai_quota';
-  const today=new Date().toDateString();
-  let q={};
-  try{ q=JSON.parse(localStorage.getItem(key)||'{}'); }catch(e){ q={}; }
-  if(q.date!==today){ q={date:today,count:0}; }
-  return q;
-}
-function _aiQuotaRemaining(){
-  const q=_aiQuotaToday();
-  return Math.max(0, AI_DAILY_LIMIT - q.count);
-}
-function _aiQuotaConsume(){
-  const q=_aiQuotaToday();
-  q.count+=1;
-  localStorage.setItem('bai_ai_quota', JSON.stringify(q));
-  return Math.max(0, AI_DAILY_LIMIT - q.count);
-}
-
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
-
-  if(_aiQuotaRemaining()<=0){
-    const isRTL = !document.documentElement.classList.contains('lang-en');
-    showToast(isRTL
-      ? '⏳ لقد استخدمتِ حد الأسئلة اليومي (5 أسئلة). حاولي مرة أخرى بكرة!'
-      : '⏳ You\'ve used today\'s daily limit (5 questions). Try again tomorrow!');
-    return;
-  }
-
-  const remaining = _aiQuotaConsume();
 
   // عرض loading في البطاقة الجديدة
   const reply=document.getElementById('ai-chat-reply');
@@ -3961,14 +3930,6 @@ async function doAI(text){
     document.getElementById('ai-txt').textContent=r;
     if(products && products.length) showAIProductCards(products);
     if(body) setTimeout(()=>{ body.scrollTop=body.scrollHeight; },100);
-    if(window.showToast){
-      const isRTL = !document.documentElement.classList.contains('lang-en');
-      if(remaining===0){
-        showToast(isRTL ? '⏳ كان هذا آخر سؤال لكِ اليوم — رجوعك بكرة! ✨' : '⏳ That was your last question for today — see you tomorrow! ✨');
-      }else if(remaining<=2){
-        showToast(isRTL ? `بقي لكِ ${remaining} ${remaining===1?'سؤال':'أسئلة'} اليوم` : `${remaining} question${remaining===1?'':'s'} left today`);
-      }
-    }
   }catch(e){
     const msg = e.message || '';
     console.error('Groq error detail:', msg);
@@ -3985,7 +3946,6 @@ async function doAI(text){
 
 // ══ GROQ ══
 const _GROQ_MODELS = [
-  'llama-3.1-8b-instant',
   'meta-llama/llama-4-scout-17b-16e-instruct',
   'meta-llama/llama-4-maverick-17b-128e-instruct',
   'llama-3.3-70b-versatile'
@@ -4430,14 +4390,10 @@ function searchOBFCat(cat, el){
   };
 
   const params = catParams[cat] || [`search_terms=${encodeURIComponent(cat.replace('-',' '))}`];
-  const _catKeyMap = {
-    'make-up':'makeup','fragrances':'fragrances','women-fragrance':'fragrances',
-    'men-fragrance':'fragrances','facial-care':'skincare','hair-care':'haircare',
-    'lip-gloss':'makeup','nail-polish':'makeup',
-  };
+  // ابدأ بأول param ثم infinite scroll يكمل
   obfCatParamsList = params;
   obfCatParamsIdx  = 0;
-  fetchOBFSmart(params[0], true, _catKeyMap[cat]||'');
+  fetchOBF(params[0], true);
 }
 
 // ══ AI PRODUCT RECOMMENDATION ENGINE ══
@@ -4645,86 +4601,6 @@ async function handleProductIntent(text){
 const PAGE_SIZE=24;
 const BRAND_PAGE_SIZE=20;
 
-
-// ══════════════════════════════════════════════════
-// FIRESTORE-FIRST CACHE LAYER
-// جلب من Firestore أولاً → API الخارجي كـ fallback
-// ══════════════════════════════════════════════════
-
-function _fsDocToProduct(d){
-  const v=d.data();
-  return {
-    code:d.id,
-    product_name:v.name||'',
-    brands:v.brand||'',
-    image_front_display_url:v.image_url||'',
-    ingredients_text:v.ingredients||'',
-    labels_tags:v.labels||[],
-    _from_cache:true,
-  };
-}
-
-async function fsGetByCategory(catKey, n=20){
-  try{
-    const db=window._fsDb; if(!db) return [];
-    const snap=await getDocs(query(collection(db,'products'),where('category','==',catKey),limit(n)));
-    return snap.docs.map(_fsDocToProduct);
-  }catch(e){ return []; }
-}
-
-async function fsGetByBrand(brandSlug, n=20){
-  try{
-    const db=window._fsDb; if(!db) return [];
-    const slug=brandSlug.toLowerCase().replace(/[^a-z0-9]+/g,'-');
-    const snap=await getDocs(query(collection(db,'products'),where('brand_slug','==',slug),limit(n)));
-    return snap.docs.map(_fsDocToProduct);
-  }catch(e){ return []; }
-}
-
-function fsCacheProducts(prods){
-  try{
-    const db=window._fsDb; if(!db||!prods.length) return;
-    for(const p of prods.slice(0,15)){
-      const id=(p.code||'').trim(); if(!id) continue;
-      setDoc(doc(db,'products',id),{
-        code:id,
-        name:p.product_name||'',
-        brand:(p.brands||'').split(',')[0].trim(),
-        brand_slug:(p.brands||'').split(',')[0].trim().toLowerCase().replace(/[^a-z0-9]+/g,'-'),
-        category:_detectProdCat(p),
-        image_url:p.image_front_display_url||p.image_url||'',
-        ingredients:(p.ingredients_text||'').substring(0,500),
-        labels:(p.labels_tags||[]).slice(0,10),
-        source:'openbeautyfacts',
-        updated_at:new Date().toISOString(),
-      },{merge:true}).catch(()=>{});
-    }
-  }catch(e){}
-}
-
-function _detectProdCat(p){
-  const c=JSON.stringify(p.categories_tags||[]).toLowerCase();
-  if(c.includes('make-up')||c.includes('makeup')) return 'makeup';
-  if(c.includes('skin-care')||c.includes('skincare')) return 'skincare';
-  if(c.includes('fragrance')) return 'fragrances';
-  if(c.includes('hair')) return 'haircare';
-  return 'other';
-}
-
-async function fetchOBFSmart(params, reset=false, categoryKey=''){
-  if(reset){
-    obfLoading=false; obfPage=1; obfHasMore=true;
-    obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    document.getElementById('obf-grid').innerHTML=
-      '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div></div>';
-  }
-  if(categoryKey){
-    const cached=await fsGetByCategory(categoryKey,20);
-    if(cached.length>=6){ renderOBFCards(cached,!reset); return; }
-  }
-  await fetchOBF(params,reset);
-}
-
 async function fetchOBF(params, reset=false){
   if(reset){
     // إلغاء أي fetch جارٍ وبدء من جديد فوراً
@@ -4779,7 +4655,6 @@ async function fetchOBF(params, reset=false){
         '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
     } else if(prods.length){
       renderOBFCards(prods, !isFirst);
-      fsCacheProducts(prods); // write-through: احفظ بـ Firestore
     }
   }catch(e){
     if(isFirst) document.getElementById('obf-grid').innerHTML=
@@ -4796,27 +4671,6 @@ async function fetchBrandPage(b, page, append){
   const container=document.getElementById('bd-prods');
   const term = b.search || b.nm;
   const brandSlug = term.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-
-  // ── Firestore-first: الصفحة الأولى فقط
-  if(page===1 && !append){
-    const cached=await fsGetByBrand(brandSlug,20);
-    if(cached.length>=4){
-      container.innerHTML='';
-      cached.forEach(p=>{
-        const c=makeProductCard(
-          p.product_name||'Product',
-          (p.brands||'').split(',')[0].trim(),
-          p.image_front_display_url||'',
-          (p.ingredients_text||'').substring(0,800),
-          p.labels_tags||[], p.code
-        );
-        if(c) container.appendChild(c);
-      });
-      bdLoading=false;
-      return;
-    }
-  }
-  // ── fallback للـ API ──
   const brandSlugNoHyphen = term.toLowerCase().replace(/[^a-z0-9]+/g,'');
 
   // قائمة URLs نجربها بالترتيب حتى نجد نتائج
@@ -5482,10 +5336,6 @@ function _updateQuickChips(){
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
   import {
-    getFirestore, collection, query, where, limit,
-    getDocs, setDoc, doc
-  } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-  import {
     getAuth,
     onAuthStateChanged,
     signInWithEmailAndPassword,
@@ -5509,8 +5359,6 @@ function _updateQuickChips(){
   const app = initializeApp(firebaseConfig);
   try { getAnalytics(app); } catch(e){ /* analytics may fail offline / in webview */ }
   const auth = getAuth(app);
-  const db   = getFirestore(app);
-  window._fsDb = db;
 
   let authMode = 'login'; // 'login' | 'signup'
   let passVisible = false;

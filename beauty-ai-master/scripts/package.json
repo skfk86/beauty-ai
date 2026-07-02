@@ -1,0 +1,16 @@
+{
+  "name": "rosiva-sync",
+  "version": "1.0.0",
+  "description": "مزامنة منتجات Rosiva من OpenBeautyFacts إلى Firestore",
+  "type": "module",
+  "main": "sync-products.js",
+  "scripts": {
+    "sync": "node sync-products.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
