@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # خطوة أساسية لتفريغ مساحة القرص من الأدوات والملفات غير الضرورية في سيرفر جيتهاب
       - name: Free Disk Space (Room for Build)
         run: |
           sudo rm -rf /usr/share/dotnet
@@ -58,15 +57,22 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
 
-      # تم إضافة clean هنا للتخلص من أي مخلفات بناء سابقة وتوفير مساحة إضافية
-      - name: Build debug APK
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/rosiva-release.keystore
+
+      - name: Build Release APK
         working-directory: android
-        run: ./gradlew clean assembleDebug
+        run: ./gradlew clean assembleRelease
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload APK to Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
-          files: android/app/build/outputs/apk/debug/app-debug.apk
+          files: android/app/build/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
