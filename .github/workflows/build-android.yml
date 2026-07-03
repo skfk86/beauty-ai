@@ -10,12 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Free Disk Space (Room for Build)
+      # ─────────────────────────────────────────────
+      # 1. تحضير البيئة
+      # ─────────────────────────────────────────────
+      - name: Free Disk Space
         run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /usr/share/dotnet /opt/ghc \
+            "/usr/local/share/boost" "$AGENT_TOOLSDIRECTORY"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -24,8 +25,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'           # ✅ cache npm لتسريع البناء
 
-      - name: Setup JDK
+      - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
@@ -34,17 +36,32 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      # ─────────────────────────────────────────────
+      # 2. تثبيت الحزم
+      # ─────────────────────────────────────────────
       - name: Install npm dependencies
         run: npm install
 
-      - name: Ensure @capacitor/android is installed
-        run: npm install @capacitor/android
+      # ─────────────────────────────────────────────
+      # 3. حقن مفتاح Groq API في الكود
+      # ─────────────────────────────────────────────
+      - name: Inject Groq API Key
+        run: |
+          if [ -z "${{ secrets.GROQ_API_KEY }}" ]; then
+            echo "❌ خطأ: السر GROQ_API_KEY غير موجود في GitHub Secrets"
+            exit 1
+          fi
+          sed -i "s|__GROQ_API_KEY__|${{ secrets.GROQ_API_KEY }}|g" www/index.html
+          echo "✅ تم حقن مفتاح Groq API"
 
-      - name: Install @capacitor/assets (optional - for icon/splash generation)
+      # ─────────────────────────────────────────────
+      # 4. توليد الأيقونات وسينك Capacitor
+      # ─────────────────────────────────────────────
+      - name: Install Capacitor Assets (optional)
         run: npm install -D @capacitor/assets
         continue-on-error: true
 
-      - name: Generate icons from logo (optional, only if assets plugin installed)
+      - name: Generate icons
         run: |
           npx capacitor-assets generate --android \
             --iconBackgroundColor '#0e0512' \
@@ -54,26 +71,53 @@ jobs:
       - name: Sync Capacitor Android project
         run: npx cap sync android
 
+      # ─────────────────────────────────────────────
+      # 5. فك تشفير الـ Keystore
+      # ─────────────────────────────────────────────
+      - name: Decode Keystore
+        run: |
+          if [ -z "${{ secrets.KEYSTORE_BASE64 }}" ]; then
+            echo "❌ خطأ: السر KEYSTORE_BASE64 غير موجود في GitHub Secrets"
+            exit 1
+          fi
+          # tr -d يحذف أي أسطر جديدة أو مسافات قبل فك التشفير
+          echo "${{ secrets.KEYSTORE_BASE64 }}" \
+            | tr -d '\n\r ' \
+            | base64 -d > android/app/rosiva-release.keystore
+          echo "✅ تم فك تشفير الـ Keystore ($(wc -c < android/app/rosiva-release.keystore) bytes)"
+
+      # ─────────────────────────────────────────────
+      # 6. بناء APK
+      # ─────────────────────────────────────────────
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
 
-      - name: Decode Keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | tr -d "
- " | base64 -d > android/app/rosiva-release.keystore
-
       - name: Build Release APK
         working-directory: android
-        run: ./gradlew clean assembleRelease
+        run: ./gradlew clean assembleRelease --no-daemon
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+      # ─────────────────────────────────────────────
+      # 7. رفع الـ APK كـ Release
+      # ─────────────────────────────────────────────
       - name: Upload APK to Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
+          name: "Rosiva v${{ github.run_number }}"
           files: android/app/build/outputs/apk/release/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

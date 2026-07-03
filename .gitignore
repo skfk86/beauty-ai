@@ -4,3 +4,6 @@ node_modules/
 .DS_Store
 .env
 !android/app/src/main/res/mipmap-*/
+rosiva-keystore-b64.txt
+*.b64
+*.txt.keystore
