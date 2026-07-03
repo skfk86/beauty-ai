@@ -59,7 +59,8 @@ jobs:
 
       - name: Decode Keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/rosiva-release.keystore
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | tr -d "
+ " | base64 -d > android/app/rosiva-release.keystore
 
       - name: Build Release APK
         working-directory: android
