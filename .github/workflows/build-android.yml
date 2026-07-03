@@ -83,7 +83,7 @@ jobs:
           # tr -d يحذف أي أسطر جديدة أو مسافات قبل فك التشفير
           echo "${{ secrets.KEYSTORE_BASE64 }}" \
             | tr -d '\n\r ' \
-            | base64 -d > android/app/rosiva-release.keystore
+            | base64 -di > android/app/rosiva-release.keystore
           echo "✅ تم فك تشفير الـ Keystore ($(wc -c < android/app/rosiva-release.keystore) bytes)"
 
       # ─────────────────────────────────────────────
