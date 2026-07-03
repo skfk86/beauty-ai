@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#07010a" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fdf8fb" media="(prefers-color-scheme: light)">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Rosiva</title>
 <link rel="icon" type="image/jpeg" href="assets/rosiva-logo.jpg">
 <link rel="apple-touch-icon" href="assets/rosiva-logo.jpg">
@@ -2296,7 +2298,7 @@ html.lang-en .hdr-menu span{display:block}
       <!-- شعار روزيفا -->
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;
         align-items:center;justify-content:center;gap:4px">
-        <img src="assets/rosiva-logo.jpg" alt="Rosiva"
+        <img loading="lazy" src="assets/rosiva-logo.jpg" alt="Rosiva"
           style="width:96px;height:96px;border-radius:22px;object-fit:cover;
           box-shadow:0 8px 28px rgba(214,61,110,.4);margin-bottom:4px">
         <div style="font-size:9px;letter-spacing:3px;color:rgba(200,160,180,.6);
@@ -2611,7 +2613,7 @@ html.lang-en .hdr-menu span{display:block}
     <div class="sb-head">
       <div class="sb-logo">
         <div class="sb-logo-ic" style="overflow:hidden;padding:0">
-          <img src="assets/rosiva-logo.jpg" alt="Rosiva" style="width:100%;height:100%;object-fit:cover">
+          <img loading="lazy" src="assets/rosiva-logo.jpg" alt="Rosiva" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div>
           <div class="sb-logo-txt">Rosiva</div>
@@ -2751,6 +2753,24 @@ html.lang-en .hdr-menu span{display:block}
 </div>
 
 <script>
+// ══ GLOBAL ERROR HANDLERS ══
+window.onerror = function(msg, src, line, col, err){
+  console.warn('[Rosiva Error]', msg, 'line:', line);
+  return true; // منع ظهور خطأ في console للمستخدم
+};
+window.addEventListener('unhandledrejection', function(e){
+  console.warn('[Rosiva Promise]', e.reason);
+  e.preventDefault();
+});
+// كشف الاتصال بالإنترنت وإشعار المستخدم
+window.addEventListener('offline', function(){
+  if(window.showToast) showToast('📵 لا يوجد اتصال بالإنترنت');
+});
+window.addEventListener('online', function(){
+  if(window.showToast) showToast('✅ عاد الاتصال بالإنترنت');
+});
+
+
 // ══ DATA ══
 const BRANDS=[
   {id:'dior',   nm:'Dior',              ar:'Dior',             cat:'Fragrances',  domain:'dior.com',           search:'Dior',              logo:'DIOR',            lc:'#fff',  bg:'#1a0808',border:'#8b0000'},
@@ -3932,7 +3952,7 @@ async function doAI(text){
   if(_aiQuotaRemaining()<=0){
     const isRTL = !document.documentElement.classList.contains('lang-en');
     showToast(isRTL
-      ? '⏳ لقد استخدمتِ حد الأسئلة اليومي (5 أسئلة). حاولي مرة أخرى بكرة!'
+      ? '⏳ وصلت للحد اليومي للذكاء الاصطناعي (5 أسئلة). حاول مجدداً غداً!'
       : '⏳ You\'ve used today\'s daily limit (5 questions). Try again tomorrow!');
     return;
   }
@@ -3964,7 +3984,7 @@ async function doAI(text){
     if(window.showToast){
       const isRTL = !document.documentElement.classList.contains('lang-en');
       if(remaining===0){
-        showToast(isRTL ? '⏳ كان هذا آخر سؤال لكِ اليوم — رجوعك بكرة! ✨' : '⏳ That was your last question for today — see you tomorrow! ✨');
+        showToast(isRTL ? '⏳ هذا آخر سؤال لك اليوم — إلى اللقاء غداً! ✨' : '⏳ That was your last question for today — see you tomorrow! ✨');
       }else if(remaining<=2){
         showToast(isRTL ? `بقي لكِ ${remaining} ${remaining===1?'سؤال':'أسئلة'} اليوم` : `${remaining} question${remaining===1?'':'s'} left today`);
       }
@@ -3977,7 +3997,12 @@ async function doAI(text){
     else if(msg.includes('401')||msg.includes('INVALID_KEY')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
     else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — '+msg+'</span>';
     else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
-    else errHtml='<span style="color:#e06060">⚠️ تعذّر الحصول على رد — '+msg+'</span>';
+    else {
+      const _netOff = !navigator.onLine;
+      const _rtlAI = !document.documentElement.classList.contains('lang-en');
+      if(_netOff) errHtml='<span style="color:#e06060">📵 '+(_rtlAI?'لا يوجد اتصال بالإنترنت':'No internet connection')+'</span>';
+      else errHtml='<span style="color:#e06060">⚠️ '+(_rtlAI?'تعذّر الرد: ':'Error: ')+msg+'</span>';
+    }
     if(reply) reply.innerHTML=errHtml;
     document.getElementById('ai-txt').innerHTML=errHtml;
   }
@@ -4581,7 +4606,7 @@ function showAIProductCards(prods){
     card.innerHTML = `
       <div style="height:110px;background:#120318;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">
         ${img
-          ? `<img src="${img}" style="width:100%;height:100%;object-fit:cover;transition:opacity .4s" onerror="this.style.display='none'">`
+          ? `<img loading="lazy" src="${img}" style="width:100%;height:100%;object-fit:cover;transition:opacity .4s" onerror="this.style.display='none'">`
           : '<span style="font-size:32px">✨</span>'
         }
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,2,14,.7) 0%,transparent 50%)"></div>
@@ -4782,8 +4807,15 @@ async function fetchOBF(params, reset=false){
       fsCacheProducts(prods); // write-through: احفظ بـ Firestore
     }
   }catch(e){
-    if(isFirst) document.getElementById('obf-grid').innerHTML=
-      '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:12px">❌ Check your internet connection</div>';
+    if(isFirst){
+      const isOffline = !navigator.onLine;
+      const isRTL2 = !document.documentElement.classList.contains('lang-en');
+      const msg = isOffline
+        ? (isRTL2 ? '📵 لا يوجد اتصال — تحقق من الإنترنت' : '📵 No internet connection')
+        : (isRTL2 ? '❌ خطأ في تحميل المنتجات — حاول مجدداً' : '❌ Failed to load — tap to retry');
+      document.getElementById('obf-grid').innerHTML=
+        `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:13px;cursor:pointer" onclick="fetchOBF(obfCurrentParams,true)">${msg}</div>`;
+    }
   }
   if(loadMoreEl) loadMoreEl.style.display='none';
   obfLoading=false;
@@ -4897,7 +4929,9 @@ async function fetchBrandPage(b, page, append){
         setTimeout(()=>fetchBrandPage(b,1,false), 2000);
         return;
       }
-      container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:12px">❌ Check internet connection</div>';
+      const _off = !navigator.onLine;
+      const _rtl = !document.documentElement.classList.contains('lang-en');
+      container.innerHTML=`<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:13px;cursor:pointer" onclick="loadBrandProdsOBF(bdCurrentBrand)">${_off?(_rtl?'📵 لا يوجد اتصال بالإنترنت':'📵 No internet connection'):(_rtl?'❌ فشل التحميل — اضغط للإعادة':'❌ Load failed — tap to retry')}</div>`;
     }
   }
   bdLoading=false;
@@ -4990,7 +5024,7 @@ function openProdDetail(p){
   body.innerHTML = `
     <!-- Gallery -->
     <div class="pdm-gallery pdm-gallery-v2">
-      ${p.img ? `<img src="${p.img}" alt="${p.name}" class="pdm-gallery-img"
+      ${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" class="pdm-gallery-img"
           onerror="this.style.display='none';document.getElementById('pdm-no-img').style.display='flex'">` : ''}
       <div id="pdm-no-img" class="pdm-gallery-no-img" style="display:${p.img?'none':'flex'}">
         <i class="fa-solid fa-flask" style="font-size:48px;color:var(--dim)"></i>
@@ -4998,7 +5032,7 @@ function openProdDetail(p){
       </div>
       ${p.img ? `
       <div class="pdm-thumbs">
-        <div class="pdm-thumb on"><img src="${p.img}" alt=""></div>
+        <div class="pdm-thumb on"><img loading="lazy" src="${p.img}" alt=""></div>
       </div>` : ''}
     </div>
 
@@ -5511,6 +5545,25 @@ function _updateQuickChips(){
   const auth = getAuth(app);
   const db   = getFirestore(app);
   window._fsDb = db;
+  /*
+    FIRESTORE SECURITY RULES (ضعها بـ Firebase Console → Firestore → Rules):
+    rules_version = '2';
+    service cloud.firestore {
+      match /databases/{database}/documents {
+        match /products/{id} {
+          allow read: if true;
+          allow write: if false;
+        }
+        match /users/{uid}/{document=**} {
+          allow read, write: if request.auth != null && request.auth.uid == uid;
+        }
+        match /_meta/{id} {
+          allow read: if true;
+          allow write: if false;
+        }
+      }
+    }
+  */
 
   let authMode = 'login'; // 'login' | 'signup'
   let passVisible = false;
