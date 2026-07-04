@@ -1030,6 +1030,14 @@ body.light-mode .sp-bar-wrap{background:rgba(0,0,0,.08)}
   transition:transform var(--dur-fast),box-shadow var(--dur-fast);
 }
 .obf-card-buy:active{transform:scale(.95);box-shadow:none}
+/* ══ ROSIVA ERROR UI ══ */
+.rv-error{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;grid-column:1/-1;text-align:center;gap:12px;min-height:200px}
+.rv-error-anim{font-size:52px;animation:rv-float 2.4s ease-in-out infinite}
+@keyframes rv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.rv-error-title{font-size:15px;font-weight:700;color:var(--txt);letter-spacing:.3px}
+.rv-error-sub{font-size:12px;color:var(--dim);max-width:220px;line-height:1.5}
+.rv-error-btn{margin-top:6px;padding:9px 28px;border-radius:24px;border:none;background:var(--accent,#c87fa4);color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .2s,transform .1s;letter-spacing:.4px}
+.rv-error-btn:active{opacity:.8;transform:scale(.96)}
 /* OBF grid discover container */
 #obf-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:10px 16px 20px}
 
@@ -3084,6 +3092,47 @@ function buildVPWave(){
 
 
 // ══ INIT ══
+// ══ ROSIVA NETWORK ERROR UI ══
+function showNetworkError(container, retryFn){
+  const isRTL = !document.documentElement.classList.contains('lang-en');
+  const isOffline = !navigator.onLine;
+  const icon = isOffline ? '📡' : '🌸';
+  const title = isOffline
+    ? (isRTL ? 'لا يوجد اتصال بالإنترنت' : 'No internet connection')
+    : (isRTL ? 'تعذّر تحميل المنتجات' : 'Couldn\'t load products');
+  const sub = isOffline
+    ? (isRTL ? 'تحقق من الإنترنت وحاولي مجدداً' : 'Check your connection and try again')
+    : (isRTL ? 'حدث خطأ غير متوقع. لا تقلقي!' : 'Something went wrong. Don\'t worry!');
+  const btnTxt = isRTL ? 'إعادة المحاولة' : 'Retry';
+  const fnName = '_rvRetry_' + Date.now();
+  window[fnName] = () => { delete window[fnName]; retryFn(); };
+  if(container) container.innerHTML = `
+    <div class="rv-error">
+      <div class="rv-error-anim">${icon}</div>
+      <div class="rv-error-title">${title}</div>
+      <div class="rv-error-sub">${sub}</div>
+      <button class="rv-error-btn" onclick="${fnName}()">${btnTxt}</button>
+    </div>`;
+}
+
+// ══ ROSIVA LIGHTWEIGHT PRODUCT CACHE (localStorage) ══
+const LS_CACHE_TTL = 43200000; // 12 ساعة
+function lsCacheSet(key, prods){
+  try{
+    const data = JSON.stringify({ts: Date.now(), prods: prods.slice(0,50)});
+    localStorage.setItem('rv_c_'+key, data);
+  }catch(e){}
+}
+function lsCacheGet(key){
+  try{
+    const raw = localStorage.getItem('rv_c_'+key);
+    if(!raw) return null;
+    const obj = JSON.parse(raw);
+    if(Date.now() - obj.ts > LS_CACHE_TTL){ localStorage.removeItem('rv_c_'+key); return null; }
+    return obj.prods || null;
+  }catch(e){ return null; }
+}
+
 function init(){
   buildWave('wl',WH.slice(0,9));
   buildWave('wr',WH.slice(9),true);
@@ -4744,8 +4793,21 @@ async function fetchOBFSmart(params, reset=false, categoryKey=''){
       '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div></div>';
   }
   if(categoryKey){
+    // 1) كاش localStorage أولاً (أسرع)
+    const lsCached = lsCacheGet('cat_'+categoryKey);
+    if(lsCached && lsCached.length>=6){
+      renderOBFCards(lsCached, !reset);
+      // refresh في الخلفية بدون spinner
+      fetchOBF(params, false);
+      return;
+    }
+    // 2) Firestore
     const cached=await fsGetByCategory(categoryKey,20);
-    if(cached.length>=6){ renderOBFCards(cached,!reset); return; }
+    if(cached.length>=6){
+      renderOBFCards(cached,!reset);
+      lsCacheSet('cat_'+categoryKey, cached);
+      return;
+    }
   }
   await fetchOBF(params,reset);
 }
@@ -4800,21 +4862,27 @@ async function fetchOBF(params, reset=false){
     const prods=collected.slice(0,PAGE_SIZE);
 
     if(!prods.length && isFirst){
+      const isRTL2 = !document.documentElement.classList.contains('lang-en');
       document.getElementById('obf-grid').innerHTML=
-        '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--dim);font-size:13px">No results — try another keyword</div>';
+        `<div class="rv-error"><div class="rv-error-anim">🔍</div><div class="rv-error-title">${isRTL2?'لا توجد نتائج':'No results found'}</div><div class="rv-error-sub">${isRTL2?'جربي كلمة بحث مختلفة':'Try a different keyword'}</div></div>`;
     } else if(prods.length){
       renderOBFCards(prods, !isFirst);
-      fsCacheProducts(prods); // write-through: احفظ بـ Firestore
+      fsCacheProducts(prods);
+      // ✅ كاش خفيف في localStorage
+      if(isFirst && obfCatParamsIdx!==undefined){
+        lsCacheSet('discover_'+obfCurrentParams.substring(0,40), prods);
+      }
     }
   }catch(e){
     if(isFirst){
-      const isOffline = !navigator.onLine;
-      const isRTL2 = !document.documentElement.classList.contains('lang-en');
-      const msg = isOffline
-        ? (isRTL2 ? '📵 لا يوجد اتصال — تحقق من الإنترنت' : '📵 No internet connection')
-        : (isRTL2 ? '❌ خطأ في تحميل المنتجات — حاول مجدداً' : '❌ Failed to load — tap to retry');
-      document.getElementById('obf-grid').innerHTML=
-        `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#e06060;font-size:13px;cursor:pointer" onclick="fetchOBF(obfCurrentParams,true)">${msg}</div>`;
+      const grid = document.getElementById('obf-grid');
+      // ✅ حاول عرض البيانات المحفوظة قبل إظهار الخطأ
+      const cachedFallback = lsCacheGet('discover_'+obfCurrentParams.substring(0,40));
+      if(cachedFallback && cachedFallback.length){
+        renderOBFCards(cachedFallback, false);
+      } else {
+        showNetworkError(grid, ()=>fetchOBF(obfCurrentParams, true));
+      }
     }
   }
   if(loadMoreEl) loadMoreEl.style.display='none';
@@ -4918,6 +4986,10 @@ async function fetchBrandPage(b, page, append){
       });
       bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
       bdPage=page+1;
+      // ✅ حفظ خفيف في localStorage (صفحة أولى فقط)
+      if(page===1 && filtered.length){
+        lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
+      }
     }
   }catch(e){
     if(!append){
@@ -4929,9 +5001,15 @@ async function fetchBrandPage(b, page, append){
         setTimeout(()=>fetchBrandPage(b,1,false), 2000);
         return;
       }
-      const _off = !navigator.onLine;
-      const _rtl = !document.documentElement.classList.contains('lang-en');
-      container.innerHTML=`<div style="grid-column:1/-1;padding:24px;color:#e06060;text-align:center;font-size:13px;cursor:pointer" onclick="loadBrandProdsOBF(bdCurrentBrand)">${_off?(_rtl?'📵 لا يوجد اتصال بالإنترنت':'📵 No internet connection'):(_rtl?'❌ فشل التحميل — اضغط للإعادة':'❌ Load failed — tap to retry')}</div>`;
+      // ✅ عرض الكاش المحفوظ إن وجد
+      const bKey = 'brand_'+(b.search||b.nm||'').substring(0,30);
+      const bCached = lsCacheGet(bKey);
+      if(bCached && bCached.length){
+        container.innerHTML='';
+        bCached.forEach(p=>{ const c=renderBrandProdCard(p,b); if(c) container.appendChild(c); });
+      } else {
+        showNetworkError(container, ()=>loadBrandProdsOBF(bdCurrentBrand));
+      }
     }
   }
   bdLoading=false;

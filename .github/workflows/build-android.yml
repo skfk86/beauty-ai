@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android AAB
 
 on:
   push:
@@ -83,11 +83,11 @@ jobs:
           # tr -d يحذف أي أسطر جديدة أو مسافات قبل فك التشفير
           echo "${{ secrets.KEYSTORE_BASE64 }}" \
             | tr -d '\n\r ' \
-            | base64 -di > android/app/rosiva-release.keystore
+            | base64 -d > android/app/rosiva-release.keystore
           echo "✅ تم فك تشفير الـ Keystore ($(wc -c < android/app/rosiva-release.keystore) bytes)"
 
       # ─────────────────────────────────────────────
-      # 6. بناء APK
+      # 6. بناء AAB
       # ─────────────────────────────────────────────
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -102,22 +102,22 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x android/gradlew
 
-      - name: Build Release APK
+      - name: Build Release AAB
         working-directory: android
-        run: ./gradlew clean assembleRelease --no-daemon
+        run: ./gradlew clean bundleRelease --no-daemon
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       # ─────────────────────────────────────────────
-      # 7. رفع الـ APK كـ Release
+      # 7. رفع الـ AAB كـ Release
       # ─────────────────────────────────────────────
-      - name: Upload APK to Release
+      - name: Upload AAB to Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
           name: "Rosiva v${{ github.run_number }}"
-          files: android/app/build/outputs/apk/release/app-release.apk
+          files: android/app/build/outputs/bundle/release/app-release.aab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
