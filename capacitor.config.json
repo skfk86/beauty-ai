@@ -3,8 +3,8 @@
   "appName": "Rosiva",
   "webDir": "www",
   "android": {
-    "allowMixedContent": true,
-    "minWebViewVersion": 60,
+    "allowMixedContent": false,
+    "minWebViewVersion": 80,
     "backgroundColor": "#060108"
   },
   "server": {
