@@ -1,4 +1,4 @@
-package com.beautyai.app;
+package com.rosiva.app;
 
 import com.getcapacitor.BridgeActivity;
 

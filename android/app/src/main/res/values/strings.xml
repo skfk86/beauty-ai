@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Rosiva</string>
     <string name="title_activity_main">Rosiva</string>
-    <string name="package_name">com.beautyai.app</string>
-    <string name="custom_url_scheme">com.beautyai.app</string>
+    <string name="package_name">com.rosiva.app</string>
+    <string name="custom_url_scheme">com.rosiva.app</string>
 </resources>
