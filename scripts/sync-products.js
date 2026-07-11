@@ -129,6 +129,40 @@ async function fetchByBrand(brandSlug) {
   }
 }
 
+// === سحب منتجات مكياج من Makeup API (صور أعلى جودة، تغطية جزئية) ===
+const MAKEUP_API_BRANDS = [
+  'fenty', 'dior', 'clinique', 'glossier', 'smashbox', 'nyx', 'maybelline',
+  "l'oreal", 'covergirl', 'revlon', 'milani', 'wet n wild', 'benefit',
+  'stila', 'colourpop', 'physicians formula',
+];
+
+async function fetchFromMakeupAPI(brandSlug) {
+  const url = `https://makeup-api.herokuapp.com/api/v1/products.json?brand=${encodeURIComponent(brandSlug)}`;
+  try {
+    const data = await fetchJSON(url);
+    if (!Array.isArray(data)) return [];
+    const products = data
+      .filter(p => p.name && p.image_link)
+      .map(p => ({
+        code:        'mkapi_' + p.id,
+        name:        p.name,
+        brand:       p.brand || brandSlug,
+        brand_slug:  (p.brand || brandSlug).toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        category:    'makeup',
+        image_url:   p.image_link,
+        ingredients: (p.description || '').substring(0, 500),
+        labels:      (p.tag_list || []).slice(0, 10),
+        updated_at:  Timestamp.now(),
+        source:      'makeup-api',
+      }));
+    console.log(`  💄 Makeup API — براند ${brandSlug}: ${products.length} منتج`);
+    return products;
+  } catch (e) {
+    console.warn(`  ⚠️ فشل سحب Makeup API لبراند ${brandSlug}: ${e.message}`);
+    return [];
+  }
+}
+
 // === كتابة دفعات Firestore (Batch writes) ===
 async function writeBatch(products) {
   const BATCH_SIZE = 400; // Firestore max 500, نأخذ هامش أمان
@@ -190,11 +224,21 @@ async function main() {
     await new Promise(r => setTimeout(r, 300));
   }
 
+  // 3. سحب مكياج إضافي من Makeup API (صور أعلى جودة لبراندات مغطاة)
+  console.log('\n📂 مرحلة 3: سحب مكياج من Makeup API');
+  for (const brand of MAKEUP_API_BRANDS) {
+    const products = await fetchFromMakeupAPI(brand);
+    for (const p of products) {
+      allProducts.set(p.code, p);
+    }
+    await new Promise(r => setTimeout(r, 300));
+  }
+
   const uniqueProducts = Array.from(allProducts.values());
   console.log(`\n📊 إجمالي المنتجات الفريدة: ${uniqueProducts.length}`);
 
   // 3. الكتابة بـ Firestore
-  console.log('\n💾 مرحلة 3: كتابة Firestore...');
+  console.log('\n💾 مرحلة 4: كتابة Firestore...');
   const written = await writeBatch(uniqueProducts);
 
   // 4. تحديث metadata

@@ -55,6 +55,36 @@ jobs:
           echo "✅ تم حقن مفتاح Groq API"
 
       # ─────────────────────────────────────────────
+      # 3ب. حقن إعدادات Firebase الخاصة بالمشتري
+      # ─────────────────────────────────────────────
+      - name: Inject Firebase Config
+        run: |
+          missing=0
+          for var in FIREBASE_API_KEY FIREBASE_AUTH_DOMAIN FIREBASE_PROJECT_ID FIREBASE_STORAGE_BUCKET FIREBASE_MESSAGING_SENDER_ID FIREBASE_APP_ID FIREBASE_MEASUREMENT_ID; do
+            if [ -z "${!var}" ]; then
+              echo "❌ خطأ: السر $var غير موجود في GitHub Secrets"
+              missing=1
+            fi
+          done
+          if [ "$missing" = "1" ]; then exit 1; fi
+          sed -i "s|__FIREBASE_API_KEY__|${FIREBASE_API_KEY}|g" www/index.html
+          sed -i "s|__FIREBASE_AUTH_DOMAIN__|${FIREBASE_AUTH_DOMAIN}|g" www/index.html
+          sed -i "s|__FIREBASE_PROJECT_ID__|${FIREBASE_PROJECT_ID}|g" www/index.html
+          sed -i "s|__FIREBASE_STORAGE_BUCKET__|${FIREBASE_STORAGE_BUCKET}|g" www/index.html
+          sed -i "s|__FIREBASE_MESSAGING_SENDER_ID__|${FIREBASE_MESSAGING_SENDER_ID}|g" www/index.html
+          sed -i "s|__FIREBASE_APP_ID__|${FIREBASE_APP_ID}|g" www/index.html
+          sed -i "s|__FIREBASE_MEASUREMENT_ID__|${FIREBASE_MEASUREMENT_ID}|g" www/index.html
+          echo "✅ تم حقن إعدادات Firebase"
+        env:
+          FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
+          FIREBASE_AUTH_DOMAIN: ${{ secrets.FIREBASE_AUTH_DOMAIN }}
+          FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
+          FIREBASE_STORAGE_BUCKET: ${{ secrets.FIREBASE_STORAGE_BUCKET }}
+          FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+          FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
+
+      # ─────────────────────────────────────────────
       # 4. توليد الأيقونات وسينك Capacitor
       # ─────────────────────────────────────────────
       - name: Install Capacitor Assets (optional)

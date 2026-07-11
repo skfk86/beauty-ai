@@ -2092,6 +2092,209 @@ html.lang-en .bc-name,html.lang-en .bc-cat{text-align:left}
 html.lang-en .ai-card-txt,html.lang-en .ai-chat-reply{text-align:left}
 html.lang-en .plist .pitem{direction:ltr}
 html.lang-en .hdr-menu span{display:block}
+
+/* ══════════════════════════════════════════════════════
+   PREMIUM ENHANCEMENT LAYER — طبقة تحسينات بصرية إضافية
+   تُطبَّق فوق النظام الحالي بدون تعديل أي بنية HTML/JS
+   ══════════════════════════════════════════════════════ */
+
+/* عمق أكبر للخلفية العامة — mesh gradient هادئ بدل اللون الفلات */
+html,body{
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(214,61,110,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(200,144,74,.045) 0%, transparent 60%),
+    var(--bg);
+}
+body.light-mode{
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(192,48,94,.035) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(154,92,40,.03) 0%, transparent 60%),
+    var(--bg);
+}
+
+/* عنوان الهيدر — تباعد حروف أدق لمظهر تحريري أرقى */
+.hdr-title .ht-main{letter-spacing:-.2px}
+
+/* شارة VIP — لمعة ذهبية دورية بدل التوهج الثابت */
+.hdr-vip{position:relative;overflow:hidden}
+.hdr-vip::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,220,160,.35) 48%,rgba(255,220,160,.55) 52%,transparent 70%);
+  background-size:200% 100%;background-position:200% 0;
+  animation:vip-shine 3.6s ease-in-out infinite;
+  animation-delay:1.2s;pointer-events:none;
+}
+@keyframes vip-shine{
+  0%,55%{background-position:200% 0}
+  75%,100%{background-position:-60% 0}
+}
+
+/* حلقات الشاشة الافتتاحية — تدور بدل ما تنبض فقط، إحساس أكثر فخامة */
+.sp-ring{
+  border:1.5px solid transparent;
+  border-image:conic-gradient(from 0deg,rgba(208,66,114,.5),rgba(200,144,74,.35),rgba(208,66,114,.5)) 1;
+  animation:sp-pulse 2.4s ease-in-out infinite, sp-rotate 12s linear infinite;
+}
+.sp-ring2{animation:sp-pulse 2.4s ease-in-out infinite .8s, sp-rotate 18s linear infinite reverse}
+@keyframes sp-rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.sp-logo{transition:box-shadow .6s ease}
+
+/* بطاقات البراند — عمق أكبر + لمعة خفيفة عند الضغط */
+.bc{
+  box-shadow:var(--shadow-sm);
+  transition:transform var(--dur-fast) var(--ease-out),
+             box-shadow var(--dur-base) var(--ease-out);
+}
+.bc:active{box-shadow:var(--shadow-md),0 0 0 1px rgba(214,61,110,.25)}
+.bc::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(125deg,transparent 40%,rgba(255,255,255,.09) 50%,transparent 60%);
+  transition:opacity var(--dur-fast);pointer-events:none;
+}
+.bc:active::after{opacity:1}
+
+/* التنقل السفلي — وهج ناعم خلف الأيقونة النشطة بدل النقطة فقط */
+.ni{position:relative}
+.ni::before{
+  content:'';position:absolute;top:2px;width:40px;height:26px;
+  border-radius:var(--r-full);background:var(--rose-d);
+  opacity:0;transform:scale(.7);
+  transition:opacity var(--dur-base) var(--ease-out),transform var(--dur-base) var(--ease-out);
+  z-index:-1;
+}
+.ni.on::before{opacity:1;transform:scale(1)}
+
+/* أيقونة شعار السايدبار — توهج محيطي هادئ */
+.sb-logo-ic{box-shadow:0 4px 16px rgba(214,61,110,.35),0 0 0 1px rgba(255,255,255,.06) inset}
+
+@media (prefers-reduced-motion: reduce){
+  .hdr-vip::after,.sp-ring,.sp-ring2{animation:none !important}
+}
+
+/* ══════════════════════════════════════════════════════
+   PREMIUM ENHANCEMENT LAYER — المرحلة 2
+   شات الـ AI + تفاصيل المنتج + هيرو البراند + بطاقات المنتجات
+   ══════════════════════════════════════════════════════ */
+
+/* رد الـ AI — دخول أنعم سطر بسطر */
+.ai-chat-reply{animation:cardIn .4s var(--ease-out)}
+.ai-fmt-head,.ai-fmt-li,.ai-fmt-tip,.ai-fmt-emoji-line{
+  animation:fmt-in .35s var(--ease-out) backwards;
+}
+@keyframes fmt-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* معرض صورة المنتج — تكبير هادئ عند الدخول (Ken Burns) */
+.pdm-gallery img{animation:pdm-zoom 1.1s var(--ease-out) forwards}
+@keyframes pdm-zoom{from{transform:scale(1.08);opacity:.6}to{transform:scale(1);opacity:1}}
+
+/* زر الشراء الأساسي — لمعة دورية بدل الظل الثابت */
+.pdm-buy-primary{position:relative;overflow:hidden}
+.pdm-buy-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);
+  background-size:250% 100%;background-position:250% 0;
+  animation:vip-shine 4.2s ease-in-out infinite;animation-delay:1.6s;
+}
+
+/* بطاقة تحليل الـ AI — حدود متدرّجة ثابتة وهادئة بدل الدوران */
+.pdm-ai-card{position:relative}
+.pdm-ai-card::before{
+  content:'';position:absolute;inset:-1px;border-radius:inherit;z-index:-1;
+  background:linear-gradient(135deg,rgba(214,61,110,.35),rgba(200,144,74,.2));
+  opacity:.5;
+}
+
+.bd-hero-logo-wrap{transition:transform .4s var(--ease-out)}
+
+/* بطاقات المنتجات (OBF) — عمق أكبر وانعكاس ضوء عند الضغط */
+.obf-card::after{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(125deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);
+  transition:opacity var(--dur-fast);pointer-events:none;
+}
+.obf-card:active::after{opacity:1}
+.obf-card-buy{position:relative;overflow:hidden}
+
+@media (prefers-reduced-motion: reduce){
+  .ai-fmt-head,.ai-fmt-li,.ai-fmt-tip,.ai-fmt-emoji-line,
+  .pdm-gallery img,.pdm-buy-primary::after{
+    animation:none !important;opacity:1 !important;transform:none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   PREMIUM ENHANCEMENT LAYER — المرحلة 3
+   القائمة الجانبية (sidebar) + شاشة تسجيل الدخول (auth)
+   ══════════════════════════════════════════════════════ */
+
+/* عناصر القائمة — انزلاق بسيط عند الـ hover/press + مؤشر جانبي عند التفعيل */
+.sb-item{transition:background var(--dur-fast),transform var(--dur-fast) var(--ease-out);position:relative}
+.sb-item:active{transform:translateX(-3px)}
+html.lang-en .sb-item:active{transform:translateX(3px)}
+.sb-item.active::before{
+  content:'';position:absolute;right:0;top:8px;bottom:8px;width:3px;
+  background:linear-gradient(180deg,var(--rose),var(--gold));border-radius:2px;
+}
+html.lang-en .sb-item.active::before{right:auto;left:0}
+.sb-item-ic{transition:transform var(--dur-fast) var(--ease-out)}
+.sb-item.active .sb-item-ic{transform:scale(1.06)}
+
+/* خلفية شاشة الدخول — كتل ضوئية عائمة ببطء بدل ثابتة */
+.auth-bg-blob{animation:auth-drift 9s ease-in-out infinite}
+.auth-bg-blob:nth-child(2){animation-duration:12s;animation-direction:reverse}
+@keyframes auth-drift{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(10px,-14px) scale(1.08)}
+}
+
+/* بطاقة الدخول — ظهور هادئ */
+.auth-card{animation:cardIn .45s var(--ease-out)}
+
+/* الحقول — توهج خفيف حول الحقل عند التركيز بدل تغيير اللون بس */
+.auth-field input{box-shadow:0 0 0 0 rgba(214,61,110,0);transition:border-color var(--dur-fast),background var(--dur-fast),box-shadow var(--dur-base)}
+.auth-field input:focus{box-shadow:0 0 0 4px rgba(214,61,110,.12)}
+
+/* زر المفضلة — نبضة صغيرة عند الضغط */
+.fav-btn{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
+.fav-btn:active{transform:scale(1.3)}
+
+@media (prefers-reduced-motion: reduce){
+  .sb-item:active,.auth-bg-blob,.auth-card,.fav-btn{
+    animation:none !important;transform:none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   PREMIUM ENHANCEMENT LAYER — المرحلة 4 (اللمسة الأخيرة)
+   الحالات الفارغة + عناصر البروفايل + فلاتر التصنيف
+   ══════════════════════════════════════════════════════ */
+
+/* عناصر البروفايل — نفس منطق السايدبار للاتساق */
+.pitem{transition:background var(--dur-fast),transform var(--dur-fast) var(--ease-out)}
+.pitem:active{background:var(--card2);transform:translateX(-2px)}
+html.lang-en .pitem:active{transform:translateX(2px)}
+.pic{transition:transform var(--dur-fast) var(--ease-out)}
+.pitem:active .pic{transform:scale(1.08) rotate(-4deg)}
+
+/* أيقونة تبديل الوضع الليلي/النهاري — دوران ناعم عند التبديل */
+#theme-icon{display:inline-block;transition:transform .5s var(--ease-out)}
+
+@media (prefers-reduced-motion: reduce){
+  .pitem:active,.pitem:active .pic{
+    animation:none !important;transform:none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   PREMIUM ENHANCEMENT LAYER — المرحلة 5
+   معالجة قابلة للحل بالكود: أيقونات بلون متدرّج بدل الرمادي
+   العام (بدون تغيير مكتبة الأيقونات) — لإحساس هوية مخصّصة
+   ══════════════════════════════════════════════════════ */
+.ni.on i,.sb-item.active .sb-item-ic i,.hdr-vip i,
+.ai-chat-avatar i,.pdm-ai-card .pdm-section-hd i:first-child{
+  background:linear-gradient(135deg,var(--rose),var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
 </style>
 </head>
 <body>
@@ -4344,7 +4547,7 @@ function toggleTheme(){
 init();
 applyTheme();
 initSplash();
-const AMZN_TAG = '4133394-20';
+const AMZN_TAG = 'YOUR-TAG-HERE'; // ضع كود عمولة أمازون الخاص بك هنا (Amazon Associates) أو اتركه كما هو لتعطيل العمولة
 let obfLoading = false;
 let obfPage = 1;
 let obfHasMore = true;
@@ -4391,13 +4594,19 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   // صورة المنتج (مصغّرة، جانبية)
   const imgWrap = document.createElement('div');
   imgWrap.className = 'obf-card-img';
+  imgWrap.style.background = 'linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%)';
+  imgWrap.style.backgroundSize = '200% 100%';
+  imgWrap.style.animation = 'shimmer 1.4s ease-in-out infinite';
   const imgEl = document.createElement('img');
   imgEl.src = img; imgEl.alt = name; imgEl.loading = 'lazy';
+  imgEl.style.opacity = '0';
+  imgEl.style.transition = 'opacity .45s ease-out';
+  imgEl.onload = function(){ this.style.opacity = '1'; imgWrap.style.animation = 'none'; imgWrap.style.background = 'none'; };
   const fb = document.createElement('div');
   fb.className = 'obf-card-img-fb';
   fb.style.display = 'none';
   fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:22px;color:var(--dim)"></i>';
-  imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; };
+  imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; imgWrap.style.animation = 'none'; imgWrap.style.background = 'none'; };
   imgWrap.appendChild(imgEl);
   imgWrap.appendChild(fb);
   el.appendChild(imgWrap);
@@ -4890,12 +5099,69 @@ async function fetchOBF(params, reset=false){
 }
 
 
+// ══════════════════════════════════════════════════════
+// تكامل Makeup API — مصدر صور أعلى جودة لفئة المكياج
+// (تغطية جزئية فقط — براندات درجستور أمريكية بشكل أساسي)
+// ══════════════════════════════════════════════════════
+const MAKEUP_API_BRAND_MAP = {
+  'fenty beauty':'fenty', 'fenty':'fenty', 'dior':'dior', 'clinique':'clinique',
+  'glossier':'glossier', 'smashbox':'smashbox', 'nyx':'nyx', 'maybelline':'maybelline',
+  "l'oreal":'l\'oreal', 'loreal':'l\'oreal', 'covergirl':'covergirl', 'revlon':'revlon',
+  'milani':'milani', 'wet n wild':'wet n wild', 'benefit':'benefit', 'stila':'stila',
+  'colourpop':'colourpop', 'physicians formula':'physicians formula'
+};
+
+async function fetchFromMakeupAPI(brandTerm){
+  const key = (brandTerm||'').toLowerCase().trim();
+  const slug = MAKEUP_API_BRAND_MAP[key];
+  if(!slug) return []; // البراند مش موجود في تغطية Makeup API
+  try{
+    const controller = new AbortController();
+    const timer = setTimeout(()=>controller.abort(), 8000);
+    const res = await fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${encodeURIComponent(slug)}`, {signal:controller.signal});
+    clearTimeout(timer);
+    const data = await res.json();
+    if(!Array.isArray(data)) return [];
+    // تحويل شكل بيانات Makeup API لنفس شكل OpenBeautyFacts المستخدم في باقي التطبيق
+    return data
+      .filter(p=>p.name && p.image_link)
+      .map(p=>({
+        code: 'mkapi_'+p.id,
+        product_name: p.name,
+        brands: p.brand||brandTerm,
+        image_front_display_url: p.image_link,
+        image_url: p.image_link,
+        ingredients_text: p.description||'',
+        ingredients_text_en: p.description||'',
+        labels_tags: (p.tag_list||[]).map(t=>'en:'+t),
+        _mkSource: true,
+      }));
+  }catch(e){ return []; }
+}
+
 async function fetchBrandPage(b, page, append){
   if(bdLoading) return;
   bdLoading=true;
   const container=document.getElementById('bd-prods');
   const term = b.search || b.nm;
   const brandSlug = term.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+  // ── Makeup API أولاً (صور أعلى جودة) — لبراندات المكياج المغطاة فقط، صفحة أولى بس
+  if(page===1 && !append && b.cat==='Makeup'){
+    const mkProds = await fetchFromMakeupAPI(term);
+    if(mkProds.length>=4){
+      container.innerHTML='';
+      const filtered = await qFilterProducts(mkProds, bdSeenSet, 40, true);
+      filtered.forEach(p=>{
+        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
+      });
+      bdHasMore=false; // Makeup API مش فيها pagination بالبراند
+      bdPage=2;
+      if(filtered.length) lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
+      bdLoading=false;
+      return;
+    }
+  }
 
   // ── Firestore-first: الصفحة الأولى فقط
   if(page===1 && !append){
@@ -5609,13 +5875,13 @@ function _updateQuickChips(){
   } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyDxc0xckepN2Q3Be8hlcpkRDy9_8pH9_dA",
-    authDomain: "rosiva-929c8.firebaseapp.com",
-    projectId: "rosiva-929c8",
-    storageBucket: "rosiva-929c8.firebasestorage.app",
-    messagingSenderId: "141600560026",
-    appId: "1:141600560026:web:02586cb8da21089a25e023",
-    measurementId: "G-XWD0GMM9HV"
+    apiKey: "__FIREBASE_API_KEY__",
+    authDomain: "__FIREBASE_AUTH_DOMAIN__",
+    projectId: "__FIREBASE_PROJECT_ID__",
+    storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+    messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+    appId: "__FIREBASE_APP_ID__",
+    measurementId: "__FIREBASE_MEASUREMENT_ID__"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -5819,6 +6085,7 @@ function _updateQuickChips(){
     // ✅ التطبيق يفتح مباشرة — تسجيل الدخول اختياري
   };
 
+  let _authStateReady = false; // ✅ لتمييز أول تحقق عند الإقلاع عن تسجيل خروج فعلي لاحق
   onAuthStateChanged(auth, (user)=>{
     window._authUser = user; // نشارك الحالة مع السكريبتات الأخرى
     applyUserToProfile(user);
@@ -5835,14 +6102,15 @@ function _updateQuickChips(){
           if(typeof navTo === 'function') navTo('prof');
         }
       }
-    } else {
-      // تسجيل خروج → ابق في التطبيق لكن ارجع للرئيسية
+    } else if(_authStateReady){
+      // ✅ تسجيل خروج فعلي (مش أول تحقق عند فتح التطبيق كضيف) → ابق في التطبيق لكن ارجع للرئيسية
       const appEl = $('app');
       if(appEl && appEl.style.display === 'flex'){
         hideAuthScreen(); // تأكد أن شاشة الدخول مغلقة
         if(typeof navTo === 'function') navTo('home');
       }
     }
+    _authStateReady = true;
   });
 
   // ضبط الوضع الافتراضي للتبويبات عند التحميل
