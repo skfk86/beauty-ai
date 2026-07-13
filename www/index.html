@@ -212,7 +212,11 @@ body{font-family:'Cairo',sans-serif;color:var(--text);-webkit-font-smoothing:ant
 .stpad{height:calc(env(safe-area-inset-top,0px) + 8px);min-height:8px}
 
 /* ─── HEADER — Premium Glass ─── */
-.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 8px;
+  position:sticky;top:0;z-index:10;
+  background:rgba(4,2,10,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.04);}
+body.light-mode .hdr{background:rgba(250,246,250,.9);border-bottom:1px solid rgba(0,0,0,.05);}
 .hdr-menu{width:38px;height:38px;border-radius:var(--r-sm);
   background:rgba(255,255,255,.04);
   border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;
@@ -275,6 +279,17 @@ body.light-mode .hdr-vip{
 .ai-chat-status{font-size:10px;color:var(--gold2);font-weight:700;letter-spacing:.3px;margin-top:1px;display:flex;align-items:center;gap:4px}
 .ai-chat-status-dot{width:5px;height:5px;border-radius:50%;background:var(--gold2);animation:pulse-dot 2s ease-in-out infinite}
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* light mode island nav */
+body.light-mode nav.bnav > .ni-island{
+  background:rgba(250,246,250,.92);border-color:rgba(0,0,0,.08);
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+}
+body.light-mode .ni-ic i{color:rgba(0,0,0,.25)}
+body.light-mode .ni.on .ni-ic i{color:var(--rose)}
+body.light-mode .ni-lb{color:rgba(0,0,0,.25)}
+body.light-mode .ni.on .ni-lb{color:var(--rose)}
+body.light-mode .bnav{background:linear-gradient(to top,rgba(250,246,250,.98) 40%,transparent)}
 
 /* منطقة الرد */
 .ai-chat-body{
@@ -622,26 +637,53 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
 .danger-btn:active{border-color:var(--error);color:var(--error)}
 
 /* ─── BOTTOM NAV — Premium ─── */
-.bnav{position:fixed;bottom:0;left:0;right:0;
-  background:rgba(7,1,10,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-top:1px solid rgba(61,21,53,.8);display:flex;
-  padding-bottom:env(safe-area-inset-bottom,0px);z-index:200;
-  box-shadow:0 -4px 20px rgba(0,0,0,.4)}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;
-  padding:9px 2px 7px;cursor:pointer;gap:3px;
-  transition:opacity var(--dur-fast);position:relative}
-.ni:active{opacity:.7}
-.ni-ic{font-size:20px;transition:transform var(--dur-base) var(--ease-out);
-  display:flex;align-items:center;justify-content:center;height:22px}
-.ni-ic i{font-size:19px;color:var(--muted);transition:color var(--dur-base)}
-.ni.on .ni-ic i{color:var(--rose2)}
-.ni-lb{font-size:9px;color:var(--muted);font-weight:800;
-  transition:color var(--dur-base);letter-spacing:.2px}
-.ni.on .ni-lb{color:var(--rose2)}
-.ni.on .ni-ic{transform:scale(1.12) translateY(-1px)}
-.ni-dot{width:4px;height:4px;border-radius:50%;background:var(--rose);
-  position:absolute;bottom:6px;display:none}
-.ni.on .ni-dot{display:block}
+/* ══ FLOATING ISLAND NAV ══ */
+.bnav{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:center;align-items:flex-end;
+  padding:0 20px calc(env(safe-area-inset-bottom,0px) + 10px) 20px;
+  z-index:200;pointer-events:none;
+  background:linear-gradient(to top,rgba(4,2,10,.95) 40%,transparent);
+}
+nav.bnav > .ni-island{
+  display:flex;align-items:center;justify-content:space-around;
+  width:100%;max-width:360px;
+  background:rgba(17,11,24,.88);
+  backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:26px;padding:8px 6px;
+  box-shadow:0 -2px 0 rgba(255,255,255,.04),0 8px 32px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.04);
+  pointer-events:all;
+}
+.ni{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  padding:6px 4px 5px;cursor:pointer;gap:4px;
+  border-radius:20px;
+  transition:background var(--dur-fast);
+  position:relative;
+}
+.ni:active{ background:rgba(255,255,255,.06); }
+.ni-ic{
+  width:36px;height:36px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all var(--dur-base) var(--ease-out);
+  position:relative;
+}
+.ni-ic i{ font-size:17px;color:rgba(255,255,255,.3);transition:color var(--dur-base); }
+.ni.on .ni-ic{
+  background:linear-gradient(135deg,rgba(184,66,106,.25),rgba(184,114,48,.15));
+  box-shadow:0 0 16px rgba(184,66,106,.2);
+}
+.ni.on .ni-ic i{ color:var(--rose2); }
+.ni-lb{
+  font-size:8.5px;color:rgba(255,255,255,.25);font-weight:700;
+  letter-spacing:.3px;transition:color var(--dur-base);
+}
+.ni.on .ni-lb{ color:var(--rose2); }
+.ni-dot{ display:none; }
+
+/* adjust screen bottom padding for floating nav */
+.screen{ padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)); }
 
 
 /* ─── SIDEBAR ─── */
@@ -849,6 +891,19 @@ body.light-mode .sp-word{ color:#140816; }
   100%{opacity:0;transform:translateY(-120px) scale(1)}
 }
 @keyframes sp-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ Category Pills — horizontal scroll ══ */
+.cat-scroll{ scrollbar-width:none; }
+.cat-scroll::-webkit-scrollbar{ display:none; }
+.cat-pill{
+  flex-shrink:0;display:flex;align-items:center;gap:7px;
+  padding:10px 16px;border-radius:16px;cursor:pointer;
+  font-size:12.5px;font-weight:700;color:var(--text);
+  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
+  white-space:nowrap;
+}
+.cat-pill:active{ transform:scale(.94); }
+body.light-mode .cat-pill{ color:var(--text); }
 
 /* ══ BRAND CARDS — Premium Discovery Grid ══ */
 /* ══ BRANDS GRID — 3-col default / 5-col full view ══ */
@@ -2293,143 +2348,132 @@ html.lang-en .pitem:active{transform:translateX(2px)}
   <!-- HOME -->
   <div id="s-home" class="screen">
     <div class="stpad"></div>
-    <div class="hdr">
+
+    <!-- ── Header ── -->
+    <div class="hdr" style="padding:10px 18px 6px">
       <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
-      <div class="hdr-title">
-        <div class="ht-main" style="font-size:20px;background:linear-gradient(135deg,var(--text) 0%,var(--rose2) 50%,var(--gold2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Rosiva</div>
-      </div>
+      <div style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;letter-spacing:.12em;color:var(--text)">ROSIVA</div>
       <button class="hdr-vip" onclick="openVipModal()"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
 
-    <!-- مرحباً + وصف مختصر -->
-    <div class="greet" style="padding:6px 20px 10px">
-      <div class="greet-sub" data-i18n="home.subtitle">مساعدة الجمال الذكية</div>
-      <div class="greet-title" data-i18n="home.greeting">كيف أساعدكِ اليوم؟ ✨</div>
+    <!-- ── Hero greeting ── -->
+    <div style="padding:18px 20px 0">
+      <div style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);font-weight:600;margin-bottom:6px" data-i18n="home.subtitle">مساعدة الجمال الذكية</div>
+      <div style="font-size:26px;font-weight:900;letter-spacing:-.6px;line-height:1.2;color:var(--text)" data-i18n="home.greeting">كيف أساعدكِ اليوم؟</div>
     </div>
 
-    <!-- AI CHAT WIDGET — بطاقة الذكاء الاصطناعي -->
-    <div class="ai-chat-card" id="ai-chat-card">
-      <!-- رأس البطاقة -->
-      <div class="ai-chat-hdr">
-        <div class="ai-chat-avatar">
-          <i class="fa-solid fa-wand-magic-sparkles"></i>
-        </div>
-        <div class="ai-chat-meta">
-          <div class="ai-chat-name">Rosiva AI</div>
-          <div class="ai-chat-status">
-            <span class="ai-chat-status-dot"></span>
-            <span data-i18n="home.ai.status">مساعدة الجمال الذكية</span>
+    <!-- ── AI Widget ── -->
+    <div style="margin:16px 18px 0">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:var(--shadow-md)">
+        <!-- header -->
+        <div style="display:flex;align-items:center;gap:10px;padding:13px 15px 11px;background:linear-gradient(135deg,rgba(184,66,106,.1),rgba(184,114,48,.06));border-bottom:1px solid var(--border)">
+          <div style="width:34px;height:34px;border-radius:12px;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(184,66,106,.3);flex-shrink:0">
+            <i class="fa-solid fa-wand-magic-sparkles" style="color:#fff;font-size:14px"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:900;color:var(--text);letter-spacing:-.2px">Rosiva AI</div>
+            <div style="font-size:10px;color:var(--gold2);font-weight:700;letter-spacing:.1em;display:flex;align-items:center;gap:4px;margin-top:1px">
+              <span style="width:5px;height:5px;border-radius:50%;background:var(--gold2);display:inline-block;animation:pulse-dot 2s ease-in-out infinite"></span>
+              <span data-i18n="home.ai.status">مساعدة الجمال الذكية</span>
+            </div>
+          </div>
+          <div id="ai-chat-clear" onclick="clearAIChat()" style="width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:none;align-items:center;justify-content:center;cursor:pointer;color:var(--dim);font-size:11px">
+            <i class="fa-solid fa-rotate-left"></i>
           </div>
         </div>
-        <div id="ai-chat-clear" onclick="clearAIChat()"
-          style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.06);
-          border:1px solid var(--border);display:none;align-items:center;justify-content:center;
-          cursor:pointer;color:var(--dim);font-size:11px">
-          <i class="fa-solid fa-rotate-left"></i>
+        <!-- reply body -->
+        <div class="ai-chat-body" id="ai-chat-body">
+          <div class="ai-chat-empty" id="ai-chat-empty">
+            <div style="font-size:26px;opacity:.4">✨</div>
+            <div style="font-size:12px;color:var(--dim);font-weight:600" data-i18n="home.ai.empty">اسأليني عن أي منتج أو براند</div>
+          </div>
+          <div class="ai-chat-reply" id="ai-chat-reply" style="display:none"></div>
         </div>
-      </div>
-
-      <!-- منطقة الرد -->
-      <div class="ai-chat-body" id="ai-chat-body">
-        <div class="ai-chat-empty" id="ai-chat-empty">
-          <div class="ai-chat-empty-ic">✨</div>
-          <div class="ai-chat-empty-txt" data-i18n="home.ai.empty">اسأليني عن أي منتج أو براند</div>
+        <!-- quick chips -->
+        <div class="ai-quick-row" id="ai-quick-row">
+          <div class="ai-quick-chip" onclick="quickAsk('أفضل كريم مرطب للبشرة الجافة')">💧 بشرة جافة</div>
+          <div class="ai-quick-chip" onclick="quickAsk('عطر نسائي خفيف للصيف')">🌸 عطر صيفي</div>
+          <div class="ai-quick-chip" onclick="quickAsk('أفضل فاونديشن تغطية كاملة')">💄 فاونديشن</div>
+          <div class="ai-quick-chip" onclick="quickAsk('روتين العناية بالبشرة الدهنية')">✨ روتين</div>
+          <div class="ai-quick-chip" onclick="quickAsk('كريم للهالات السوداء تحت العين')">👁️ هالات</div>
         </div>
-        <div class="ai-chat-reply" id="ai-chat-reply" style="display:none"></div>
-      </div>
-
-      <!-- أسئلة سريعة -->
-      <div class="ai-quick-row" id="ai-quick-row">
-        <div class="ai-quick-chip" onclick="quickAsk('أفضل كريم مرطب للبشرة الجافة')">💧 بشرة جافة</div>
-        <div class="ai-quick-chip" onclick="quickAsk('عطر نسائي خفيف للصيف')">🌸 عطر صيفي</div>
-        <div class="ai-quick-chip" onclick="quickAsk('أفضل فاونديشن تغطية كاملة')">💄 فاونديشن</div>
-        <div class="ai-quick-chip" onclick="quickAsk('روتين العناية بالبشرة الدهنية')">✨ روتين بشرة</div>
-        <div class="ai-quick-chip" onclick="quickAsk('كريم للهالات السوداء تحت العين')">👁️ هالات</div>
-      </div>
-
-      <!-- شريط الإدخال -->
-      <div class="ai-input-bar">
-        <button class="ai-send-btn" onclick="sendAIChat()" aria-label="إرسال">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <input type="text" id="ai-chat-inp" data-i18n-ph="home.ai.placeholder" placeholder="اكتبي سؤالك هنا..." dir="rtl"
-          onkeydown="if(event.key==='Enter')sendAIChat()">
-        <i class="fa-solid fa-sparkles" style="color:var(--rose2);font-size:15px;opacity:.6"></i>
+        <!-- input -->
+        <div class="ai-input-bar">
+          <button class="ai-send-btn" onclick="sendAIChat()"><i class="fa-solid fa-arrow-left"></i></button>
+          <input type="text" id="ai-chat-inp" data-i18n-ph="home.ai.placeholder" placeholder="اكتبي سؤالك هنا..." dir="rtl" onkeydown="if(event.key==='Enter')sendAIChat()">
+          <i class="fa-solid fa-sparkles" style="color:var(--rose2);font-size:14px;opacity:.5"></i>
+        </div>
       </div>
     </div>
 
-    <!-- hidden compat elements for old JS -->
+    <!-- hidden compat -->
+    <div id="ai-chat-card" style="display:none"></div>
     <div id="ai-box" class="ai-box"><div class="ai-txt" id="ai-txt"></div></div>
     <div id="vh" style="display:none"></div>
     <div id="mic-btn" style="display:none"></div>
     <div id="wl" style="display:none"></div>
     <div id="wr" style="display:none"></div>
 
-    <!-- Hero Card — براند مميّز -->
-    <div class="sec-lbl" style="margin-top:12px" data-i18n="home.featured">✨ مميّز اليوم</div>
-    <div id="hero-card" onclick="heroCardClick()"
-      style="margin:0 16px 16px;border-radius:var(--r-xl);overflow:hidden;position:relative;
-             height:150px;cursor:pointer;box-shadow:var(--shadow-glow);
-             animation:cardIn var(--dur-slow) var(--ease-out) backwards .1s;
-             background:linear-gradient(135deg,#2a0f30 0%,#1a0820 50%,#0e0512 100%)">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 25% 50%,rgba(214,61,110,.18) 0%,transparent 70%)"></div>
-      <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 18px;gap:14px">
-        <div id="hero-logo-wrap" style="flex:0 0 auto;width:64px;height:64px;border-radius:18px;
-             background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;
-             overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.3)">
-          <img id="hero-img" src="" alt="Featured Brand"
-            style="width:85%;height:85%;object-fit:contain;opacity:0;transition:opacity .6s">
+    <!-- ── Featured Hero ── -->
+    <div style="padding:20px 18px 0">
+      <div style="font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:10px" data-i18n="home.featured">✦ مميّز اليوم</div>
+      <div id="hero-card" onclick="heroCardClick()"
+        style="border-radius:22px;overflow:hidden;position:relative;height:160px;cursor:pointer;
+               background:linear-gradient(135deg,#160A20,#0E0615,#06030C);
+               box-shadow:0 0 40px rgba(184,66,106,.12),var(--shadow-lg)">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 75% at 20% 50%,rgba(184,66,106,.18) 0%,transparent 70%)"></div>
+        <div style="position:absolute;top:0;right:0;width:160px;height:160px;background:radial-gradient(circle at 80% 20%,rgba(184,114,48,.12) 0%,transparent 65%)"></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;padding:0 20px;gap:16px">
+          <div id="hero-logo-wrap" style="flex-shrink:0;width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden">
+            <img id="hero-img" src="" alt="" style="width:85%;height:85%;object-fit:contain;opacity:0;transition:opacity .6s">
+          </div>
+          <div style="flex:1;text-align:right">
+            <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:.15em;color:var(--gold2);text-transform:uppercase;margin-bottom:5px" data-i18n="home.hero.badge">براند مميّز</div>
+            <div id="hero-name" style="font-size:21px;font-weight:900;letter-spacing:-.5px;color:var(--text);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rosiva</div>
+            <div id="hero-cat" style="font-size:10.5px;color:rgba(238,230,236,.5);margin-top:3px">Beauty & Fragrance</div>
+          </div>
         </div>
-        <div style="text-align:right;flex:1 1 auto;min-width:0">
-          <div id="hero-badge" style="font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold2);text-transform:uppercase;margin-bottom:4px" data-i18n="home.hero.badge">براند مميّز</div>
-          <div id="hero-name" style="font-size:20px;font-weight:900;letter-spacing:-.5px;color:#f8edf4;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rosiva</div>
-          <div id="hero-cat" style="font-size:10px;color:rgba(248,237,244,.6);margin-top:2px">Beauty & Fragrance</div>
-        </div>
-      </div>
-      <div style="position:absolute;bottom:14px;left:16px">
-        <div style="
-          display:flex;align-items:center;gap:6px;
-          background:linear-gradient(135deg,#d63d6e,#e8557a);
-          color:#fff;font-size:11px;font-weight:800;
-          padding:8px 16px;border-radius:20px;
-          box-shadow:0 4px 14px rgba(214,61,110,.45);
-          letter-spacing:.5px;
-        ">
-          <span data-i18n="home.hero.btn">اكتشفي المنتجات</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transform:scaleX(-1)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <div style="position:absolute;bottom:16px;left:18px">
+          <div style="background:linear-gradient(135deg,var(--rose),#D04470);color:#fff;font-size:11px;font-weight:800;padding:7px 15px;border-radius:20px;display:flex;align-items:center;gap:5px;box-shadow:0 4px 16px rgba(184,66,106,.4);letter-spacing:.04em">
+            <span data-i18n="home.hero.btn">اكتشفي المنتجات</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="transform:scaleX(-1)"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Category Grid -->
-    <div class="sec-lbl" data-i18n="home.cat.title">اكتشفي عالم الجمال</div>
-    <div class="cat-grid">
-      <div class="cat-btn" onclick="goF('Makeup')" style="animation-delay:.05s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.35),rgba(180,40,90,.15))"><i class="fa-solid fa-palette" style="color:var(--rose2)"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.makeup">ماكياج</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
-      </div>
-      <div class="cat-btn" onclick="goF('Fragrances')" style="animation-delay:.09s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(196,136,96,.35),rgba(212,175,55,.15))"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.fragrance">عطور</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
-      </div>
-      <div class="cat-btn" onclick="goF('Skincare')" style="animation-delay:.13s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(64,150,170,.3),rgba(64,128,100,.15))"><i class="fa-solid fa-droplet" style="color:var(--info)"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.skincare">عناية بالبشرة</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
-      </div>
-      <div class="cat-btn" onclick="goF('Hair')" style="animation-delay:.17s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(130,90,200,.3),rgba(190,90,160,.15))"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.hair">عناية بالشعر</div><div class="cat-sb" data-i18n="home.cat.sub.bp">براندات ومنتجات</div></div>
-      </div>
-      <div class="cat-btn" onclick="navTo('brands')" style="animation-delay:.21s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.2),rgba(196,136,96,.15))"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.brands">براندات عالمية</div><div class="cat-sb" data-i18n="home.cat.sub.ab">جميع البراندات</div></div>
-      </div>
-      <div class="cat-btn" onclick="navTo('favs')" style="animation-delay:.25s">
-        <div class="cat-ic" style="background:linear-gradient(135deg,rgba(208,66,114,.28),rgba(255,120,130,.1))"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
-        <div><div class="cat-nm" data-i18n="home.cat.favs">مفضلتي</div><div class="cat-sb" data-i18n="home.cat.sub.sv">المحفوظات</div></div>
+    <!-- ── Category scroll ── -->
+    <div style="padding:20px 0 0">
+      <div style="padding:0 18px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:12px" data-i18n="home.cat.title">✦ اكتشفي عالم الجمال</div>
+      <div style="display:flex;gap:10px;padding:0 18px;overflow-x:auto;scrollbar-width:none;flex-direction:row-reverse" class="cat-scroll">
+        <div onclick="goF('Makeup')" class="cat-pill" style="background:linear-gradient(135deg,rgba(184,66,106,.18),rgba(160,40,80,.08));border:1px solid rgba(184,66,106,.25)">
+          <i class="fa-solid fa-palette" style="color:var(--rose2);font-size:15px"></i>
+          <span data-i18n="home.cat.makeup">ماكياج</span>
+        </div>
+        <div onclick="goF('Fragrances')" class="cat-pill" style="background:linear-gradient(135deg,rgba(184,114,48,.16),rgba(160,100,30,.08));border:1px solid rgba(184,114,48,.25)">
+          <i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2);font-size:15px"></i>
+          <span data-i18n="home.cat.fragrance">عطور</span>
+        </div>
+        <div onclick="goF('Skincare')" class="cat-pill" style="background:linear-gradient(135deg,rgba(64,180,200,.14),rgba(40,140,160,.07));border:1px solid rgba(64,180,200,.22)">
+          <i class="fa-solid fa-droplet" style="color:#60C0D0;font-size:15px"></i>
+          <span data-i18n="home.cat.skincare">بشرة</span>
+        </div>
+        <div onclick="goF('Hair')" class="cat-pill" style="background:linear-gradient(135deg,rgba(160,100,220,.15),rgba(130,70,190,.07));border:1px solid rgba(160,100,220,.22)">
+          <i class="fa-solid fa-scissors" style="color:#B090E8;font-size:15px"></i>
+          <span data-i18n="home.cat.hair">شعر</span>
+        </div>
+        <div onclick="navTo('brands')" class="cat-pill" style="background:linear-gradient(135deg,rgba(184,66,106,.12),rgba(184,114,48,.1));border:1px solid rgba(255,255,255,.08)">
+          <i class="fa-solid fa-globe" style="color:var(--gold);font-size:15px"></i>
+          <span data-i18n="home.cat.brands">براندات</span>
+        </div>
+        <div onclick="navTo('favs')" class="cat-pill" style="background:linear-gradient(135deg,rgba(184,66,106,.15),rgba(200,80,100,.06));border:1px solid rgba(184,66,106,.2)">
+          <i class="fa-solid fa-heart" style="color:var(--rose2);font-size:15px"></i>
+          <span data-i18n="home.cat.favs">مفضلتي</span>
+        </div>
       </div>
     </div>
-    <div style="height:70px"></div>
+
+    <div style="height:20px"></div>
   </div>
 
   <!-- BRANDS -->
@@ -2614,57 +2658,73 @@ html.lang-en .pitem:active{transform:translateX(2px)}
   <!-- PROFILE -->
   <div id="s-prof" class="screen">
     <div class="stpad"></div>
-    <div class="hdr">
+    <div class="hdr" style="padding:10px 18px 6px">
       <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
-      <div class="hdr-title"><div class="ht-main">حسابي 👤</div></div>
+      <div style="font-size:15px;font-weight:900;color:var(--text)">حسابي</div>
       <button class="hdr-vip" onclick="openVipModal()"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
-    <div class="prof-top">
-      <div class="prof-av">
-        <i class="fa-solid fa-user" style="color:#fff;font-size:28px"></i>
+
+    <!-- Profile hero -->
+    <div style="margin:8px 18px 0;background:linear-gradient(160deg,var(--card) 0%,var(--card2) 100%);border:1px solid var(--border);border-radius:22px;padding:22px 18px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(184,66,106,.15) 0%,transparent 70%)"></div>
+      <div style="position:absolute;bottom:-20px;left:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(184,114,48,.1) 0%,transparent 70%)"></div>
+      <div style="position:relative;z-index:1;display:flex;align-items:center;gap:14px">
+        <div style="width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(184,66,106,.3);flex-shrink:0">
+          <i class="fa-solid fa-user" style="color:#fff;font-size:20px"></i>
+        </div>
+        <div>
+          <div style="font-size:16px;font-weight:900;letter-spacing:-.3px;color:var(--text)" id="prof-username">مستخدمة روزيفا</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:3px" id="prof-email">خصوصيتكِ هي أولويتنا 🔒</div>
+        </div>
       </div>
-      <div style="font-size:16px;font-weight:900" id="prof-username">مستخدمة روزيفا</div>
-      <div style="font-size:11px;color:var(--dim);margin-top:3px" id="prof-email">خصوصيتكِ هي أولويتنا 🔒</div>
     </div>
 
-    <!-- بطاقة الضيف — تظهر فقط إذا لم يسجّل الدخول -->
-    <div id="prof-guest-box" style="display:none;margin:0 16px 18px;background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:18px;text-align:center">
-      <i class="fa-solid fa-user-lock" style="font-size:28px;color:var(--dim);margin-bottom:10px;display:block"></i>
-      <div style="font-size:13px;font-weight:700;margin-bottom:4px">تصفّحين كضيفة</div>
-      <div style="font-size:11.5px;color:var(--dim);margin-bottom:14px;line-height:1.7">سجّلي الدخول لحفظ تحليلاتك، تاريخ المنتجات، والمزامنة بين الأجهزة</div>
+    <!-- بطاقة الضيف -->
+    <div id="prof-guest-box" style="display:none;margin:12px 18px 0;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px;text-align:center">
+      <div style="width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+        <i class="fa-solid fa-user-lock" style="font-size:18px;color:var(--dim)"></i>
+      </div>
+      <div style="font-size:13.5px;font-weight:800;margin-bottom:5px;color:var(--text)">تصفّحين كضيفة</div>
+      <div style="font-size:11.5px;color:var(--dim);margin-bottom:16px;line-height:1.8">سجّلي الدخول لحفظ تحليلاتك والمزامنة بين أجهزتك</div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='login';window.showAuthScreenGlobal();}" style="background:linear-gradient(135deg,var(--rose),var(--gold2));color:#fff;border:none;border-radius:12px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;width:100%">
+        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='login';window.showAuthScreenGlobal();}" style="background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;border:none;border-radius:14px;padding:13px;font-size:13px;font-weight:800;cursor:pointer;width:100%;font-family:'Cairo',sans-serif;box-shadow:0 4px 16px rgba(184,66,106,.3)">
           <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
         </button>
-        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='signup';window.showAuthScreenGlobal();}" style="background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:12px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;width:100%">
+        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='signup';window.showAuthScreenGlobal();}" style="background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:13px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:'Cairo',sans-serif">
           <i class="fa-solid fa-user-plus"></i> إنشاء حساب جديد
         </button>
       </div>
     </div>
 
-    <!-- محتوى الحساب (مرئي دائماً) -->
+    <!-- Settings -->
     <div id="prof-auth-actions">
-      <div class="key-lbl">
-        <i class="fa-solid fa-robot" style="color:var(--gold2)"></i>
-        <span data-i18n="prof.ai.label">مساعدة Rosiva الذكية</span>
-        <span style="float:left;font-size:11px;color:#4caf50;font-weight:800"><i class="fa-solid fa-circle-check"></i> <span data-i18n="prof.ai.badge">مفعّلة</span></span>
+    <div style="margin:14px 18px 0;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)">
+        <div style="width:32px;height:32px;border-radius:10px;background:rgba(76,175,80,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="fa-solid fa-robot" style="color:#4caf50;font-size:13px"></i>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:800;color:var(--text)" data-i18n="prof.ai.label">مساعدة Rosiva الذكية</div>
+          <div style="font-size:10.5px;color:#4caf50;font-weight:700;margin-top:1px" data-i18n="prof.ai.badge">مفعّلة ✓</div>
+        </div>
       </div>
-      <div style="font-size:11px;color:var(--dim);text-align:center;padding:6px 4px 2px;line-height:1.8" data-i18n="prof.ai.status">
-        الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨
-      </div>
-    </div>
-    <div class="plist">
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb" data-i18n="prof.item.model">نموذج الذكاء الاصطناعي</div><div class="pvl">Groq Llama 4 Scout</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-microphone"></i></div><div class="plb" data-i18n="prof.item.voice">لغة الصوت</div><div class="pvl">ar-SA</div></div>
-      <div class="pitem"><div class="pic"><i class="fa-solid fa-mobile-screen"></i></div><div class="plb" data-i18n="prof.item.version">الإصدار</div><div class="pvl">v2.0 Premium</div></div>
-      <div class="pitem" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb" data-i18n="prof.item.theme">وضع العرض</div><div class="pvl" id="theme-lbl" data-i18n="prof.item.theme.val">داكن / فاتح</div></div>
-      <div class="pitem" onclick="toggleLang()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb" data-i18n="prof.lang.label">اللغة / Language</div><div class="pvl" id="prof-lang-val">العربية 🇸🇦</div></div>
-      <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb" data-i18n="prof.item.privacy">الخصوصية</div><div class="pvl" data-i18n="prof.item.privacy.val">لا تحليل للصور</div></div>
+      <div class="pitem" style="border-bottom:1px solid var(--border)"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb" data-i18n="prof.item.model">نموذج AI</div><div class="pvl">Groq Llama 4</div></div>
+      <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb" data-i18n="prof.item.theme">وضع العرض</div><div class="pvl" id="theme-lbl" data-i18n="prof.item.theme.val">داكن / فاتح</div></div>
+      <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="toggleLang()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb" data-i18n="prof.lang.label">اللغة</div><div class="pvl" id="prof-lang-val">العربية 🇸🇦</div></div>
+      <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb" data-i18n="prof.item.privacy">الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800" data-i18n="prof.item.policy">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
     </div>
-    <button class="danger-btn" style="background:var(--card2);color:var(--text);border:1px solid var(--border);margin-bottom:10px" id="prof-auth-btn" onclick="handleProfileAuthBtn()"><i class="fa-solid fa-arrow-right-from-bracket"></i> <span data-i18n="prof.logout">تسجيل الخروج</span></button>
-    <button class="danger-btn" onclick="deleteAllUserData()"><i class="fa-solid fa-trash-can"></i> <span data-i18n="prof.clearfavs">حذف جميع بياناتي نهائياً</span></button>
-    </div><!-- /prof-auth-actions -->
+
+    <div style="margin:10px 18px 0;display:flex;flex-direction:column;gap:8px">
+      <button id="prof-auth-btn" onclick="handleProfileAuthBtn()" style="background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:13px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> <span data-i18n="prof.logout">تسجيل الخروج</span>
+      </button>
+      <button onclick="deleteAllUserData()" style="background:var(--error-d);color:var(--error);border:1px solid rgba(224,96,96,.2);border-radius:14px;padding:13px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px">
+        <i class="fa-solid fa-trash-can"></i> <span data-i18n="prof.clearfavs">حذف جميع بياناتي</span>
+      </button>
+    </div>
+    </div>
+
     <div style="height:30px"></div>
   </div>
 
@@ -2721,6 +2781,7 @@ html.lang-en .pitem:active{transform:translateX(2px)}
 
   <!-- BOTTOM NAV -->
   <nav class="bnav" role="navigation" aria-label="التنقل الرئيسي">
+    <div class="ni-island">
     <div class="ni on" id="ni-home" onclick="navTo('home')" role="button" aria-label="الرئيسية">
       <div class="ni-ic"><i class="fa-solid fa-house"></i></div>
       <div class="ni-lb" data-i18n="nav.home">الرئيسية</div><div class="ni-dot"></div>
@@ -2740,6 +2801,7 @@ html.lang-en .pitem:active{transform:translateX(2px)}
     <div class="ni" id="ni-prof" onclick="navToProf()" role="button" aria-label="حسابي">
       <div class="ni-ic"><i class="fa-solid fa-user-circle"></i></div>
       <div class="ni-lb" data-i18n="nav.account">حسابي</div><div class="ni-dot"></div>
+    </div>
     </div>
   </nav>
 
@@ -4312,40 +4374,62 @@ async function _aiQuotaConsume(){
   return Math.max(0,AI_DAILY_LIMIT-count);
 }
 
-// ══ Google Play Billing — VIP Subscription ══
+// ══ Google Play Billing — @capgo/native-purchases ══
 const VIP_PRODUCTS = { monthly:'rosiva_premium_monthly', yearly:'rosiva_premium_yearly' };
-let _vipStore=null;
+let _NP = null;
 
-function initVipBilling(){
-  if(!window.CdvPurchase){ return; }
-  const {store,ProductType,Platform}=window.CdvPurchase;
-  _vipStore=store;
-  store.register([
-    {id:VIP_PRODUCTS.monthly,type:ProductType.PAID_SUBSCRIPTION,platform:Platform.GOOGLE_PLAY},
-    {id:VIP_PRODUCTS.yearly, type:ProductType.PAID_SUBSCRIPTION,platform:Platform.GOOGLE_PLAY}
-  ]);
-  store.when()
-    .approved(t=>t.verify())
-    .verified(r=>r.finish())
-    .finished(t=>_onVipConfirmed(t))
-    .productUpdated(p=>_updateVipPrice(p));
-  store.error(e=>console.error('VIP billing:',e));
-  store.initialize([Platform.GOOGLE_PLAY]);
-}
-
-function _updateVipPrice(product){
+async function initVipBilling(){
   try{
-    const id=product.id===VIP_PRODUCTS.monthly?'vip-price-monthly':product.id===VIP_PRODUCTS.yearly?'vip-price-yearly':null;
-    if(!id) return;
-    const el=document.getElementById(id); if(!el) return;
-    const offer=product.getOffer&&product.getOffer();
-    const price=offer?.pricingPhases?.[0]?.price;
-    if(price) el.textContent=price;
-  }catch(e){}
+    const plugins = window.Capacitor && window.Capacitor.Plugins;
+    if(!plugins || !plugins.NativePurchases){ return; }
+    _NP = plugins.NativePurchases;
+    // جلب أسعار المنتجين
+    try{
+      const res = await _NP.getProducts({
+        productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly],
+        productType:'SUBS'
+      });
+      if(res && res.products){
+        res.products.forEach(p=>{
+          const elId = p.productIdentifier===VIP_PRODUCTS.monthly
+            ?'vip-price-monthly':'vip-price-yearly';
+          const el=document.getElementById(elId);
+          if(el && p.localizedPrice) el.textContent=p.localizedPrice;
+        });
+      }
+    }catch(e){ console.warn('getProducts:',e); }
+    // مستمع نجاح الشراء
+    _NP.addListener('purchasesUpdate',(data)=>{
+      if(data && data.purchases && data.purchases.length)
+        _onVipConfirmed(data.purchases[0]);
+    });
+  }catch(e){ console.error('initVipBilling:',e); }
 }
 
-async function _onVipConfirmed(transaction){
-  const productId=(transaction.products&&transaction.products[0]&&transaction.products[0].id)||null;
+async function purchaseVip(plan){
+  if(!window._authUser){ showToast('سجّلي الدخول أولاً لتفعيل الاشتراك 👤'); return; }
+  if(!_NP){ showToast('نظام الدفع لسه ما جهز، حاولي بعد لحظات'); setTimeout(initVipBilling,1000); return; }
+  try{
+    await _NP.purchaseProduct({
+      productIdentifier:VIP_PRODUCTS[plan],
+      productType:'SUBS'
+    });
+  }catch(e){
+    if(e.code!=='USER_CANCELLED') showToast('تعذّر إتمام الشراء، تأكدي من الاتصال بالإنترنت');
+  }
+}
+
+async function restoreVipPurchases(){
+  if(!_NP){ showToast('نظام الدفع لسه ما جهز'); return; }
+  try{
+    const res=await _NP.restoreTransactions();
+    if(res && res.purchases && res.purchases.length) await _onVipConfirmed(res.purchases[0]);
+    else showToast('لا توجد مشتريات سابقة');
+  }catch(e){ showToast('تعذّرت الاستعادة'); }
+}
+
+async function _onVipConfirmed(purchase){
+  const productId=purchase.productIdentifier||purchase.productId;
   if(!productId) return;
   const plan=productId===VIP_PRODUCTS.yearly?'yearly':'monthly';
   const expiry=new Date();
@@ -4355,22 +4439,7 @@ async function _onVipConfirmed(transaction){
   try{ localStorage.setItem('rosivaVip',JSON.stringify(info)); }catch(e){}
   if(window._authUser&&window._fsSetVipStatus) await window._fsSetVipStatus(window._authUser.uid,info);
   showToast('🎉 تم تفعيل اشتراك VIP بنجاح!');
-  updateVipUI();
-}
-
-function purchaseVip(plan){
-  if(!window._authUser){ showToast('سجّلي الدخول أولاً لتفعيل الاشتراك 👤'); return; }
-  if(!_vipStore){ showToast('نظام الدفع لسه ما جهز، حاولي بعد لحظات'); return; }
-  const product=_vipStore.get(VIP_PRODUCTS[plan],window.CdvPurchase.Platform.GOOGLE_PLAY);
-  const offer=product&&product.getOffer&&product.getOffer();
-  if(offer) offer.order();
-  else showToast('تعذّر جلب تفاصيل الاشتراك، تأكدي من الاتصال بالإنترنت');
-}
-
-function restoreVipPurchases(){
-  if(!_vipStore){ showToast('نظام الدفع لسه ما جهز'); return; }
-  _vipStore.restorePurchases();
-  showToast('جاري استعادة المشتريات... ⏳');
+  closeVipModal(); updateVipUI();
 }
 
 async function openVipModal(){
@@ -4395,7 +4464,15 @@ async function openVipModal(){
 function closeVipModal(){ const m=document.getElementById('vip-modal'); if(m) m.style.display='none'; }
 function updateVipUI(){ isVipActive().then(a=>{ document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none'); }); }
 
-document.addEventListener('DOMContentLoaded',()=>{ setTimeout(initVipBilling,300); updateVipUI(); });
+document.addEventListener('DOMContentLoaded',()=>{
+  const tryInit=(n=0)=>{
+    if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.NativePurchases){
+      initVipBilling();
+    } else if(n<15){ setTimeout(()=>tryInit(n+1),600); }
+  };
+  setTimeout(()=>tryInit(),800);
+  updateVipUI();
+});
 
 async function doAI(text){
   if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
