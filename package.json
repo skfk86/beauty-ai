@@ -6,7 +6,6 @@
     "@capacitor-community/text-to-speech": "^5.0.0",
     "@capacitor/android": "^6.2.1",
     "@capacitor/cli": "^6.1.0",
-    "@capacitor/core": "^6.1.0",
-    "@capgo/native-purchases": "^6.0.0"
+    "@capacitor/core": "^6.1.0"
   }
 }

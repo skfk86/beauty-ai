@@ -4374,20 +4374,18 @@ async function _aiQuotaConsume(){
   return Math.max(0,AI_DAILY_LIMIT-count);
 }
 
-// ══ Google Play Billing — @capgo/native-purchases ══
+// ══ Google Play Billing — Custom BillingPlugin (Java) ══
 const VIP_PRODUCTS = { monthly:'rosiva_premium_monthly', yearly:'rosiva_premium_yearly' };
 let _NP = null;
 
 async function initVipBilling(){
   try{
     const plugins = window.Capacitor && window.Capacitor.Plugins;
-    if(!plugins || !plugins.NativePurchases){ return; }
-    _NP = plugins.NativePurchases;
-    // جلب أسعار المنتجين
+    if(!plugins || !plugins.BillingPlugin){ return; }
+    _NP = plugins.BillingPlugin;
     try{
       const res = await _NP.getProducts({
-        productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly],
-        productType:'SUBS'
+        productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly]
       });
       if(res && res.products){
         res.products.forEach(p=>{
@@ -4398,7 +4396,6 @@ async function initVipBilling(){
         });
       }
     }catch(e){ console.warn('getProducts:',e); }
-    // مستمع نجاح الشراء
     _NP.addListener('purchasesUpdate',(data)=>{
       if(data && data.purchases && data.purchases.length)
         _onVipConfirmed(data.purchases[0]);
@@ -4410,12 +4407,10 @@ async function purchaseVip(plan){
   if(!window._authUser){ showToast('سجّلي الدخول أولاً لتفعيل الاشتراك 👤'); return; }
   if(!_NP){ showToast('نظام الدفع لسه ما جهز، حاولي بعد لحظات'); setTimeout(initVipBilling,1000); return; }
   try{
-    await _NP.purchaseProduct({
-      productIdentifier:VIP_PRODUCTS[plan],
-      productType:'SUBS'
-    });
+    const res = await _NP.purchaseProduct({ productIdentifier:VIP_PRODUCTS[plan] });
+    if(res && res.purchases && res.purchases.length) await _onVipConfirmed(res.purchases[0]);
   }catch(e){
-    if(e.code!=='USER_CANCELLED') showToast('تعذّر إتمام الشراء، تأكدي من الاتصال بالإنترنت');
+    if(e.message!=='USER_CANCELLED') showToast('تعذّر إتمام الشراء، تأكدي من الاتصال بالإنترنت');
   }
 }
 
@@ -4466,7 +4461,7 @@ function updateVipUI(){ isVipActive().then(a=>{ document.querySelectorAll('.vip-
 
 document.addEventListener('DOMContentLoaded',()=>{
   const tryInit=(n=0)=>{
-    if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.NativePurchases){
+    if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.BillingPlugin){
       initVipBilling();
     } else if(n<15){ setTimeout(()=>tryInit(n+1),600); }
   };
