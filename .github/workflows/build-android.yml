@@ -39,7 +39,7 @@ jobs:
       # 2. تثبيت الحزم
       # ─────────────────────────────────────────────
       - name: Install npm dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       # ─────────────────────────────────────────────
       # 3. حقن مفتاح Groq API في الكود
