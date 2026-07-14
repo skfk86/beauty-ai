@@ -4381,8 +4381,16 @@ let _NP = null;
 async function initVipBilling(){
   try{
     const plugins = window.Capacitor && window.Capacitor.Plugins;
-    if(!plugins || !plugins.BillingPlugin){ return; }
+    if(!plugins || !plugins.BillingPlugin){ console.warn('BillingPlugin not found'); return; }
     _NP = plugins.BillingPlugin;
+    // انتظر حتى يصبح BillingClient جاهزاً
+    let ready = false;
+    for(let i=0;i<10;i++){
+      try{ const r=await _NP.isReady(); if(r && r.ready){ ready=true; break; } }catch(e){}
+      await new Promise(res=>setTimeout(res,800));
+    }
+    if(!ready){ console.warn('Billing not ready after retries'); return; }
+    // جلب الأسعار
     try{
       const res = await _NP.getProducts({
         productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly]
