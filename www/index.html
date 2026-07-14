@@ -1006,55 +1006,7 @@ body.light-mode .cat-pill{ color:var(--text); }
   display:grid;grid-template-columns:repeat(2,1fr);
   gap:12px;padding:14px 18px 20px;
 }
-.obf-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r-lg);overflow:hidden;cursor:pointer;
-  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
-  box-shadow:var(--shadow-sm);position:relative;
-  animation:cardIn var(--dur-slow) var(--ease-out) backwards;
-}
-.obf-card:hover{box-shadow:var(--shadow-md)}
-.obf-card:active{transform:scale(.96)}
-.obf-card-img{
-  height:140px;background:var(--card2);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;position:relative;
-}
-.obf-card-img img{
-  width:100%;height:100%;object-fit:cover;
-  transition:transform .3s;
-}
-.obf-card:active .obf-card-img img{transform:scale(1.05)}
-.obf-card-badge{
-  position:absolute;top:8px;left:8px;
-  background:rgba(208,66,114,.92);color:#fff;
-  font-size:8px;font-weight:800;letter-spacing:.5px;
-  padding:3px 8px;border-radius:var(--r-full);text-transform:uppercase;
-  backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.15);
-}
-.obf-card-body{padding:10px 11px 13px}
-.obf-card-brand{
-  font-size:9px;font-weight:800;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--rose2);margin-bottom:3px;
-  display:flex;align-items:center;gap:4px;
-}
-.obf-card-name{
-  font-size:12px;font-weight:800;color:var(--text);
-  line-height:1.45;display:-webkit-box;
-  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  margin-bottom:9px;letter-spacing:-.1px;
-}
-.obf-card-buy{
-  width:100%;border:none;border-radius:var(--r-sm);padding:8px;
-  background:linear-gradient(135deg,var(--rose),var(--gold));
-  color:#fff;font-size:10px;font-weight:800;
-  font-family:'Cairo',sans-serif;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  box-shadow:0 2px 8px rgba(208,66,114,.2);
-  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
-}
-.obf-card-buy:active{transform:scale(.95);box-shadow:none}
-/* ══ ROSIVA ERROR UI ══ */
+/* ══ PRODUCT CARDS — defined in responsive section below ══ */
 .rv-error{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;grid-column:1/-1;text-align:center;gap:12px;min-height:200px}
 .rv-error-anim{font-size:52px;animation:rv-float 2.4s ease-in-out infinite}
 @keyframes rv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -1416,48 +1368,129 @@ body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose
   display:grid;grid-template-columns:repeat(2,1fr);
   gap:12px;padding:14px 18px 20px;
 }
+/* ══ PRODUCT CARDS — Obsidian Luxe ══ */
 .obf-card{
   background:var(--card);border:1px solid var(--border);
-  border-radius:var(--r-lg);overflow:hidden;cursor:pointer;
-  transition:transform var(--dur-fast) var(--ease-out),box-shadow var(--dur-base) var(--ease-out);
-  box-shadow:var(--shadow-sm);
+  border-radius:20px;overflow:hidden;cursor:pointer;
+  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+  position:relative;
+  animation:cardIn var(--dur-slow) var(--ease-out) backwards;
 }
-.obf-card:active{transform:scale(.95)}
+.obf-card:active{ transform:scale(.96); box-shadow:none; }
 .obf-card-img{
-  height:150px;background:var(--card2);
+  height:148px;background:var(--card2);
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;position:relative;
 }
 .obf-card-img img{
   width:100%;height:100%;object-fit:cover;
-  transition:transform .3s;
+  transition:opacity .4s,transform .3s;
 }
+.obf-card:active .obf-card-img img{ transform:scale(1.04); }
 .obf-card-badge{
-  position:absolute;top:8px;right:8px;
-  background:rgba(0,0,0,.6);color:#fff;
-  font-size:8px;font-weight:700;letter-spacing:.5px;
-  padding:4px 8px;border-radius:20px;
-  backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);
+  position:absolute;top:8px;right:8px;z-index:3;
+  background:rgba(4,2,10,.7);color:var(--rose2);
+  font-size:8px;font-weight:800;letter-spacing:.5px;
+  padding:3px 8px;border-radius:var(--r-full);
+  backdrop-filter:blur(8px);border:1px solid rgba(184,66,106,.3);
 }
-.obf-card-body{padding:12px 12px 14px}
+.obf-card-body{ padding:10px 12px 13px; }
 .obf-card-brand{
-  font-size:9px;font-weight:700;letter-spacing:1.2px;
-  text-transform:uppercase;color:var(--rose2);margin-bottom:5px;
+  font-size:8.5px;font-weight:900;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--rose2);margin-bottom:4px;
 }
 .obf-card-name{
-  font-size:12px;font-weight:700;color:var(--text);
-  line-height:1.45;margin-bottom:10px;
-  display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden;
-  min-height:35px;
+  font-size:12.5px;font-weight:800;color:var(--text);
+  line-height:1.4;display:-webkit-box;letter-spacing:-.2px;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:8px;min-height:34px;
 }
-.obf-card-buy{
-  width:100%;border:none;border-radius:12px;padding:9px;
+.obf-card-sub{
+  font-size:10px;color:var(--dim);margin-bottom:8px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.obf-card-footer{
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+}
+.obf-card-link{
+  font-size:11px;font-weight:700;color:var(--dim);
+  display:flex;align-items:center;gap:4px;
+}
+.obf-card-fav{
+  position:absolute;top:8px;left:8px;z-index:5;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(4,2,10,.6);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;
+  transition:color var(--dur-fast),background var(--dur-fast);
+}
+.obf-card-fav.on{ color:var(--rose2); background:rgba(184,66,106,.2); }
+.obf-card-cart{
+  width:32px;height:32px;flex-shrink:0;border:none;border-radius:50%;
   background:linear-gradient(135deg,var(--rose),var(--gold));
-  color:#fff;font-size:10px;font-weight:700;
-  font-family:'Cairo',sans-serif;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  letter-spacing:.3px;
+  color:#fff;font-size:12px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 3px 10px rgba(184,66,106,.35);
+  transition:transform var(--dur-fast),box-shadow var(--dur-fast);
+}
+.obf-card-cart:active{ transform:scale(.88); box-shadow:none; }
+.obf-card-img-fb{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--card2);
+}
+.obf-card-img-fb i{ font-size:28px;color:var(--border);opacity:.5; }
+
+/* ── Discover grid — vertical 2-col ── */
+#obf-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;padding:8px 16px 100px;
+}
+#obf-grid .obf-card{ display:block; }
+#obf-grid .obf-card-img{ height:130px; }
+#obf-grid .obf-card-body{ padding:10px 11px 12px; }
+#obf-grid .obf-card-name{ font-size:12px;min-height:32px; }
+#obf-grid .obf-card-sub{ display:none; }
+#obf-grid .obf-card-footer{ margin-top:4px; }
+#obf-grid .obf-card-link{ font-size:10px;color:var(--dim); }
+#obf-grid .obf-card-cart{
+  width:30px;height:30px;font-size:11px;
+}
+#obf-grid .obf-card-fav{
+  width:26px;height:26px;font-size:11px;
+  top:6px;left:6px;
+}
+body.light-mode #obf-grid .obf-card{
+  background:#fff;box-shadow:0 2px 10px rgba(60,0,40,.08);
+}
+
+/* ── Brand products grid — 2-col clean ── */
+#bd-prods{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px 20px;
+}
+#bd-prods .obf-card-img{ height:120px; }
+#bd-prods .obf-card-name{ font-size:12px;min-height:0; }
+#bd-prods .obf-card-sub{ display:none; }
+#bd-prods .obf-card-fav{
+  width:26px;height:26px;font-size:11px;top:6px;left:6px;
+}
+#bd-prods .obf-card-fav.on{ color:var(--rose); }
+#bd-prods .obf-card-cart{ width:28px;height:28px;font-size:10px; }
+
+/* ── AI brand recs grid ── */
+#bd-ai-recs-grid .obf-card-sub{ display:none; }
+#bd-ai-recs-grid .obf-card-footer{ display:none; }
+#bd-ai-recs-grid .obf-card-fav{
+  color:var(--dim);background:rgba(4,2,10,.5);
+  width:26px;height:26px;font-size:11px;
+}
+#bd-ai-recs-grid .obf-card-fav.on{ color:var(--rose); }
+
+body.light-mode .obf-card-fav{
+  background:rgba(250,246,250,.8);color:rgba(0,0,0,.3);border-color:rgba(0,0,0,.1);
 }
 
 /* ── Section Label ── */
@@ -1736,59 +1769,6 @@ body.light-mode textarea{
 
 /* بطاقة المنتج بدون سعر/تقييم وهمي — استبدال بزر سلة فعلي */
 .pdm-rating{display:none !important}
-
-/* ══════════════════════════════════════════════════
-   REDESIGN v3 — Discover list cards + Product detail
-   ══════════════════════════════════════════════════ */
-
-/* ── Discover: list-style cards (matches reference) ── */
-#obf-grid{
-  display:flex !important;flex-direction:column;
-  grid-template-columns:none !important;
-  gap:12px;padding:6px 16px 20px;
-}
-#obf-grid .obf-card{
-  display:flex;flex-direction:row-reverse;align-items:center;
-  gap:12px;padding:10px;border-radius:18px;
-  background:var(--card);border:1px solid var(--border);
-  position:relative;overflow:visible;
-}
-#obf-grid .obf-card-img{
-  width:78px;height:78px;min-width:78px;flex-shrink:0;
-  border-radius:14px;background:var(--card2);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-}
-#obf-grid .obf-card-img img{width:100%;height:100%;object-fit:cover}
-#obf-grid .obf-card-badge{display:none}
-#obf-grid .obf-card-body{flex:1;padding:0;min-width:0}
-#obf-grid .obf-card-name{
-  font-size:13.5px;font-weight:800;color:var(--text);
-  margin-bottom:4px;min-height:0;-webkit-line-clamp:2;
-}
-#obf-grid .obf-card-brand{
-  font-size:11px;font-weight:600;color:var(--dim);
-  text-transform:none;letter-spacing:0;margin-bottom:2px;
-}
-#obf-grid .obf-card-sub{
-  font-size:10.5px;color:var(--muted);margin-bottom:6px;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-#obf-grid .obf-card-footer{margin-top:2px;justify-content:flex-start}
-#obf-grid .obf-card-link{
-  font-size:11.5px;font-weight:700;color:var(--rose2);
-  display:flex;align-items:center;gap:5px;cursor:pointer;
-}
-#obf-grid .obf-card-fav{
-  position:absolute;top:8px;left:8px;
-  background:transparent;border:none;color:var(--dim);
-  width:22px;height:22px;backdrop-filter:none;
-}
-#obf-grid .obf-card-fav.on{color:var(--rose)}
-#obf-grid .obf-card-cart{
-  width:34px;height:34px;margin-right:auto;
-  background:var(--rose);box-shadow:0 3px 10px rgba(214,61,110,.35);
-}
-body.light-mode #obf-grid .obf-card{background:#fff;border-color:var(--border)}
 
 /* ── Product detail v2: floating header ── */
 .pdm-header-v2{
@@ -2961,33 +2941,42 @@ html.lang-en .pitem:active{transform:translateX(2px)}
         <div style="font-size:12px;color:rgba(216,148,76,.8);letter-spacing:.18em;text-transform:uppercase;font-weight:600">تجربة جمال لا حدود لها</div>
       </div>
 
-      <!-- features -->
-      <div style="position:relative;z-index:2;margin-top:24px;display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:24px;height:24px;border-radius:8px;background:rgba(184,66,106,.15);border:1px solid rgba(184,66,106,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="fa-solid fa-infinity" style="font-size:10px;color:var(--rose2)"></i>
+      <!-- features — bold & impactful -->
+      <div style="position:relative;z-index:2;margin-top:20px;display:flex;flex-direction:column;gap:8px">
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(184,66,106,.3),rgba(160,40,80,.2));border:1px solid rgba(184,66,106,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(184,66,106,.2)">
+            <i class="fa-solid fa-infinity" style="font-size:16px;color:#E8809A"></i>
           </div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#EEE6EC">تحليلات AI غير محدودة</div>
-            <div style="font-size:11px;color:var(--dim)">بلا حد يومي، كلّ ما تحتاجينه</div>
+            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">تحليلات AI بلا حدود</div>
+            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">بدل 5 تحليلات يومياً — اسألي كل ما تريدين</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:24px;height:24px;border-radius:8px;background:rgba(216,148,76,.12);border:1px solid rgba(216,148,76,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="fa-solid fa-bolt" style="font-size:10px;color:var(--gold2)"></i>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(216,148,76,.25),rgba(184,114,48,.15));border:1px solid rgba(216,148,76,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(216,148,76,.15)">
+            <i class="fa-solid fa-wand-magic-sparkles" style="font-size:15px;color:var(--gold2)"></i>
           </div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#EEE6EC">أولوية في الاستجابة</div>
-            <div style="font-size:11px;color:var(--dim)">ردود أسرع من نماذج AI المتقدمة</div>
+            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">توصيات شخصية متقدمة</div>
+            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">تحليل بشرتك وعطرك وروتينك الكامل</div>
           </div>
         </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:24px;height:24px;border-radius:8px;background:rgba(96,192,208,.1);border:1px solid rgba(96,192,208,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <i class="fa-solid fa-star" style="font-size:10px;color:#60C0D0"></i>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(96,192,208,.2),rgba(64,160,180,.1));border:1px solid rgba(96,192,208,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(96,192,208,.12)">
+            <i class="fa-solid fa-bolt" style="font-size:15px;color:#70D0E0"></i>
           </div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#EEE6EC">ميزات حصرية دائماً</div>
-            <div style="font-size:11px;color:var(--dim)">أول من يحصل على كل جديد</div>
+            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">ردود فورية وأسرع</div>
+            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">أولوية في قائمة الانتظار مع نماذج AI المتقدمة</div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(180,120,220,.2),rgba(140,80,200,.1));border:1px solid rgba(180,120,220,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(180,120,220,.12)">
+            <i class="fa-solid fa-crown" style="font-size:14px;color:#C090E8"></i>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">وصول حصري للمزايا الجديدة</div>
+            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">كوني أول من يجرّب كل ميزة قبل الجميع</div>
           </div>
         </div>
       </div>
@@ -3046,6 +3035,7 @@ html.lang-en .pitem:active{transform:translateX(2px)}
 </div>
 
 <style>
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @keyframes vip-pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
 </style>
 
@@ -4456,8 +4446,31 @@ async function openVipModal(){
     let info=null;
     if(window._authUser&&window._fsGetVipStatus) info=await window._fsGetVipStatus(window._authUser.uid);
     if(!info){ try{ info=JSON.parse(localStorage.getItem('rosivaVip')||'null'); }catch(e){} }
-    const dateStr=info?.premiumExpiry?new Date(info.premiumExpiry).toLocaleDateString('ar-EG'):'';
-    if(statusBox){ statusBox.style.display='block'; statusBox.innerHTML=`👑 اشتراكك فعّال حتى ${dateStr}`; }
+    const expiry=info?.premiumExpiry?new Date(info.premiumExpiry):null;
+    const dateStr=expiry?expiry.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}):'';
+    const plan=info?.premiumPlan==='yearly'?'سنوي':'شهري';
+    const daysLeft=expiry?Math.ceil((expiry-new Date())/(1000*60*60*24)):0;
+    if(statusBox){
+      statusBox.style.display='block';
+      statusBox.innerHTML=`
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px">
+          <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--rose));display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(216,148,76,.4)">
+            <i class="fa-solid fa-crown" style="color:#fff;font-size:18px"></i>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:16px;font-weight:900;color:var(--gold2);letter-spacing:-.2px">أنتِ VIP 👑</div>
+            <div style="font-size:11px;color:rgba(216,148,76,.7);font-weight:600">اشتراك ${plan} نشط</div>
+          </div>
+        </div>
+        <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-size:11px;color:rgba(240,232,236,.5)">ينتهي في</div>
+          <div style="font-size:12px;font-weight:800;color:var(--text)">${dateStr}</div>
+        </div>
+        <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:8px">
+          <div style="width:6px;height:6px;border-radius:50%;background:#4caf50;animation:pulse-dot 2s infinite;flex-shrink:0"></div>
+          <div style="font-size:11.5px;color:#6fcf97;font-weight:700">${daysLeft} يوم متبقي — تحليلات AI بلا حدود ✨</div>
+        </div>`;
+    }
     if(subRow) subRow.style.display='none';
   }else{
     if(statusBox) statusBox.style.display='none';
@@ -4465,7 +4478,21 @@ async function openVipModal(){
   }
 }
 function closeVipModal(){ const m=document.getElementById('vip-modal'); if(m) m.style.display='none'; }
-function updateVipUI(){ isVipActive().then(a=>{ document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none'); }); }
+function updateVipUI(){
+  isVipActive().then(a=>{
+    document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none');
+    document.querySelectorAll('.hdr-vip').forEach(btn=>{
+      if(a){
+        btn.style.background='linear-gradient(135deg,#1A0E08,#2C1A0A)';
+        btn.style.borderColor='rgba(216,148,76,.8)';
+        btn.style.boxShadow='0 0 20px rgba(216,148,76,.3)';
+        btn.innerHTML='<i class="fa-solid fa-crown"></i> VIP ✓';
+      } else {
+        btn.innerHTML='<i class="fa-solid fa-crown"></i> VIP';
+      }
+    });
+  });
+}
 
 document.addEventListener('DOMContentLoaded',()=>{
   const tryInit=(n=0)=>{
@@ -4475,6 +4502,17 @@ document.addEventListener('DOMContentLoaded',()=>{
   };
   setTimeout(()=>tryInit(),800);
   updateVipUI();
+
+  // Preload منتجات من Firebase فور فتح التطبيق (بدون انتظار AI)
+  setTimeout(async ()=>{
+    try{
+      if(typeof fsGetByCategory !== 'function') return;
+      const cached = await fsGetByCategory('all', 6);
+      if(cached && cached.length > 0 && typeof showAIProductCards === 'function'){
+        showAIProductCards(cached);
+      }
+    }catch(e){}
+  }, 1200);
 });
 
 async function doAI(text){
@@ -5100,9 +5138,7 @@ async function searchProductsForQuery(userQuery){
 }
 
 function showAIProductCards(prods){
-  // نضيف الكاردات داخل ai-chat-body أو بعد البطاقة مباشرة
   const chatCard = document.getElementById('ai-chat-card');
-  if(!chatCard) return;
   const old = document.getElementById('ai-prod-recs');
   if(old) old.remove();
 
@@ -5111,26 +5147,26 @@ function showAIProductCards(prods){
   section.style.cssText = `padding:0 16px 16px;direction:${currentLang==='ar'?'rtl':'ltr'}`;
 
   const title = document.createElement('div');
-  title.style.cssText = 'font-size:11px;font-weight:700;color:var(--rose2);margin-bottom:8px;letter-spacing:.5px';
-  title.textContent = '✨ منتجات مقترحة لكِ';
+  title.style.cssText = 'font-size:10px;font-weight:800;color:var(--dim);margin-bottom:10px;letter-spacing:.18em;text-transform:uppercase';
+  title.textContent = '✦ منتجات مقترحة لكِ';
   section.appendChild(title);
 
   const grid = document.createElement('div');
   grid.style.cssText = 'display:grid;grid-template-columns:repeat(2,1fr);gap:10px';
+
   prods.forEach(p=>{
     const img   = p.image_front_display_url||p.image_url||'';
     const name  = p.product_name||'';
-    const brand = (p.brands||'').split(',')[0].trim();
+    const brand = (p.brands||'').split(',')[0].trim().toUpperCase();
     const card  = document.createElement('div');
     card.style.cssText = `
-      background:linear-gradient(145deg,rgba(42,15,48,.9),rgba(20,5,28,.9));
-      border-radius:14px;overflow:hidden;cursor:pointer;
-      border:1px solid rgba(214,61,110,.25);
-      box-shadow:0 4px 16px rgba(0,0,0,.3);
-      transition:transform .2s,box-shadow .2s;
+      background:var(--card);border:1px solid var(--border);
+      border-radius:18px;overflow:hidden;cursor:pointer;
+      transition:transform .15s,box-shadow .15s;
+      box-shadow:var(--shadow-sm);
     `;
-    card.onmousedown = ()=>{ card.style.transform='scale(.97)'; };
-    card.onmouseup   = ()=>{ card.style.transform='scale(1)'; };
+    card.addEventListener('touchstart',()=>{ card.style.transform='scale(.96)'; card.style.boxShadow='none'; },{passive:true});
+    card.addEventListener('touchend',()=>{ card.style.transform='scale(1)'; card.style.boxShadow='var(--shadow-sm)'; },{passive:true});
     card.onclick = ()=>{
       openProdDetail({
         name:  p.product_name||'',
@@ -5140,27 +5176,46 @@ function showAIProductCards(prods){
         labels:(p.labels_tags||[]).join(', ')
       });
     };
-    card.innerHTML = `
-      <div style="height:110px;background:#120318;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">
-        ${img
-          ? `<img loading="lazy" src="${img}" style="width:100%;height:100%;object-fit:cover;transition:opacity .4s" onerror="this.style.display='none'">`
-          : '<span style="font-size:32px">✨</span>'
-        }
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,2,14,.7) 0%,transparent 50%)"></div>
-      </div>
-      <div style="padding:8px 10px 10px">
-        ${brand ? `<div style="font-size:9px;color:var(--rose2);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">${brand}</div>` : ''}
-        <div style="font-size:12px;color:#f8edf4;font-weight:600;line-height:1.35;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
-        <div style="margin-top:6px;display:flex;align-items:center;gap:4px;color:var(--rose2);font-size:10px;font-weight:700">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          عرض التفاصيل
-        </div>
-      </div>
-    `;
+
+    // Skeleton → image reveal
+    const imgWrap = document.createElement('div');
+    imgWrap.style.cssText = 'height:118px;background:var(--card2);position:relative;overflow:hidden';
+    const skeleton = document.createElement('div');
+    skeleton.style.cssText = 'position:absolute;inset:0;background:linear-gradient(90deg,var(--card2) 25%,rgba(255,255,255,.04) 50%,var(--card2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite';
+    imgWrap.appendChild(skeleton);
+    if(img){
+      const image = document.createElement('img');
+      image.src = img;
+      image.style.cssText = 'width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s;position:relative;z-index:1';
+      image.onload = ()=>{ image.style.opacity='1'; skeleton.style.display='none'; };
+      image.onerror = ()=>{ skeleton.style.display='none'; imgWrap.innerHTML='<div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.3">✨</div>'; };
+      imgWrap.appendChild(image);
+    } else {
+      skeleton.style.display='none';
+      imgWrap.innerHTML='<div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.3">✨</div>';
+    }
+    // Gradient overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(to top,var(--card),transparent);z-index:2';
+    imgWrap.appendChild(overlay);
+    card.appendChild(imgWrap);
+
+    const info = document.createElement('div');
+    info.style.cssText = 'padding:10px 12px 12px';
+    info.innerHTML = `
+      ${brand?`<div style="font-size:8.5px;color:var(--rose2);font-weight:900;letter-spacing:.15em;margin-bottom:4px">${brand}</div>`:''}
+      <div style="font-size:12px;color:var(--text);font-weight:700;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
+      <div style="margin-top:8px;display:flex;align-items:center;gap:4px;color:var(--dim);font-size:10px;font-weight:700">
+        <i class="fa-solid fa-arrow-left" style="font-size:8px"></i> عرض التفاصيل
+      </div>`;
+    card.appendChild(info);
     grid.appendChild(card);
   });
+
   section.appendChild(grid);
-  chatCard.insertAdjacentElement('afterend', section);
+  const chatCardEl = document.getElementById('ai-chat-card');
+  if(chatCardEl) chatCardEl.insertAdjacentElement('afterend', section);
+  else document.getElementById('s-home').appendChild(section);
 }
 
 async function showSearchingUI(){
