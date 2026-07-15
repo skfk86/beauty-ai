@@ -239,9 +239,169 @@ body.light-mode .hdr{background:rgba(250,246,250,.9);border-bottom:1px solid rgb
 }
 .hdr-vip:active{transform:scale(.94);box-shadow:none}
 body.light-mode .hdr-vip{
-  background:linear-gradient(135deg,#F8ECD8,#EEDDCC);
-  border:1px solid var(--gold);color:var(--gold);
+  background:linear-gradient(135deg,#FFF3E0,#FFE4B5);
+  border:1px solid rgba(184,114,48,.5);
+  color:var(--gold);
   box-shadow:0 2px 10px rgba(138,80,32,.15);
+}
+
+/* ══ VIP MODAL — Light Mode ══ */
+body.light-mode #vip-modal > div:nth-child(2){
+  background:#FAF6FA !important;
+}
+body.light-mode #vip-modal [style*="#0E0816"],
+body.light-mode #vip-modal [style*="#1C0E28"],
+body.light-mode #vip-modal [style*="#0A0510"],
+body.light-mode #vip-modal [style*="#09060F"]{
+  background:#FDF0F6 !important;
+}
+body.light-mode #vip-modal .vip-aurora-top{
+  background:linear-gradient(160deg,#FDF0F6 0%,#F5E8F5 40%,#F8F0FA 100%) !important;
+}
+/* VIP features rows */
+body.light-mode #vip-modal [style*="rgba(255,255,255,.04)"]{
+  background:rgba(0,0,0,.03) !important;
+  border-color:rgba(0,0,0,.07) !important;
+}
+/* VIP pricing cards */
+body.light-mode #vip-modal [style*="#1A0E24"],
+body.light-mode #vip-modal [style*="#120A1C"],
+body.light-mode #vip-modal [style*="#110C18"]{
+  background:#FFFFFF !important;
+  border-color:rgba(160,48,96,.2) !important;
+}
+/* VIP crown box */
+body.light-mode #vip-modal [style*="rgba(17,11,24"]{
+  background:rgba(250,240,248,.95) !important;
+}
+/* VIP text colors */
+body.light-mode #vip-modal [style*="color:#EEE6EC"],
+body.light-mode #vip-modal [style*="color:#F0E8EC"]{
+  color:#140816 !important;
+}
+body.light-mode #vip-modal [style*="color:rgba(240,232,236,.5)"]{
+  color:rgba(20,8,22,.45) !important;
+}
+body.light-mode #vip-modal [style*="color:rgba(240,232,236,.5)"],
+body.light-mode #vip-modal [style*="color:rgba(216,148,76,.8)"]{
+  color:var(--gold) !important;
+}
+/* VIP status box in light mode */
+body.light-mode #vip-status-box{
+  background:linear-gradient(135deg,rgba(184,114,48,.08),rgba(160,48,96,.06)) !important;
+  border-color:rgba(184,114,48,.25) !important;
+  color:var(--gold) !important;
+}
+
+/* ══ AI CHAT — Light Mode ══ */
+body.light-mode .ai-chat-card{ background:#FFFFFF; border-color:var(--border); }
+body.light-mode .ai-input-bar{ background:#F7F0F8; border-color:var(--border); }
+body.light-mode .ai-quick-chip{
+  background:#F2EAF4; color:var(--dim);
+  border-color:rgba(160,48,96,.15);
+}
+body.light-mode .ai-quick-chip:active{
+  background:var(--rose-d); border-color:var(--rose);
+}
+/* AI header gradient in light mode */
+body.light-mode .ai-chat-hdr,
+body.light-mode [style*="rgba(184,66,106,.1)"][style*="rgba(184,114,48,.06)"]{
+  background:linear-gradient(135deg,rgba(160,48,96,.07),rgba(184,114,48,.04)) !important;
+  border-color:rgba(160,48,96,.1) !important;
+}
+body.light-mode .ai-chat-reply{
+  background:#F7F0F8;
+  color:var(--text);
+  border-radius:16px;
+  padding:12px 14px;
+}
+body.light-mode .ai-chat-reply .dots span{
+  background:var(--rose);
+}
+
+/* ══ PRODUCT CARDS — Light Mode ══ */
+body.light-mode .obf-card{
+  background:#FFFFFF;
+  border-color:rgba(200,180,210,.35);
+  box-shadow:0 2px 12px rgba(80,0,40,.07);
+}
+body.light-mode .obf-card-img{
+  background:#F5EEF8;
+}
+body.light-mode .obf-card-badge{
+  background:rgba(250,246,250,.9);
+  color:var(--rose);
+  border-color:rgba(160,48,96,.2);
+}
+body.light-mode .obf-card-name{ color:#140816; }
+body.light-mode .obf-card-brand{ color:var(--rose); }
+body.light-mode .obf-card-link{ color:var(--dim); }
+body.light-mode .obf-card-fav{
+  background:rgba(250,246,250,.85);
+  color:rgba(0,0,0,.25);
+  border-color:rgba(0,0,0,.08);
+}
+
+/* ══ AI PRODUCT RECOMMENDATION CARDS — Light Mode ══ */
+body.light-mode #ai-prod-recs .obf-card{
+  background:#FFFFFF;
+  border-color:rgba(200,180,210,.3);
+  box-shadow:0 2px 10px rgba(80,0,40,.06);
+}
+body.light-mode #ai-prod-recs .obf-card-img{ background:#F5EEF8; }
+body.light-mode #ai-prod-recs [style*="var(--card)"]{
+  background:#FFFFFF !important;
+}
+
+/* ══ SKELETON LOADING — Premium light + dark ══ */
+@keyframes shimmer-dark{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+@keyframes shimmer-light{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+.skeleton-box{
+  border-radius:12px;overflow:hidden;
+  background:linear-gradient(90deg,var(--card2) 25%,rgba(255,255,255,.06) 50%,var(--card2) 75%);
+  background-size:200% 100%;
+  animation:shimmer-dark 1.5s ease-in-out infinite;
+}
+body.light-mode .skeleton-box{
+  background:linear-gradient(90deg,#EDE0F0 25%,rgba(255,255,255,.8) 50%,#EDE0F0 75%);
+  background-size:200% 100%;
+  animation:shimmer-light 1.5s ease-in-out infinite;
+}
+
+/* discover grid skeleton cards */
+.obf-skeleton{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  animation:cardIn .3s var(--ease-out) backwards;
+}
+.obf-skeleton-img{
+  height:130px;
+  background:linear-gradient(90deg,var(--card2) 25%,rgba(255,255,255,.05) 50%,var(--card2) 75%);
+  background-size:200% 100%;
+  animation:shimmer-dark 1.4s ease-in-out infinite;
+}
+.obf-skeleton-line{
+  height:10px;border-radius:5px;margin:0 12px 8px;
+  background:linear-gradient(90deg,var(--card2) 25%,rgba(255,255,255,.05) 50%,var(--card2) 75%);
+  background-size:200% 100%;
+  animation:shimmer-dark 1.4s ease-in-out infinite .1s;
+}
+body.light-mode .obf-skeleton{ background:#FFF; border-color:rgba(200,180,210,.3); }
+body.light-mode .obf-skeleton-img{
+  background:linear-gradient(90deg,#EDE0F0 25%,rgba(255,255,255,.8) 50%,#EDE0F0 75%);
+  background-size:200% 100%;
+}
+body.light-mode .obf-skeleton-line{
+  background:linear-gradient(90deg,#E8D8EE 25%,rgba(255,255,255,.8) 50%,#E8D8EE 75%);
+  background-size:200% 100%;
 }
 
 /* ─── HOME — Premium Layout ─── */
@@ -2996,7 +3156,7 @@ html.lang-en .pitem:active{transform:translateX(2px)}
             <div style="display:flex;justify-content:space-between;align-items:center">
               <div style="text-align:left">
                 <div style="font-size:11px;color:var(--gold2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px">سنوي</div>
-                <div style="font-size:22px;font-weight:900;color:#EEE6EC;letter-spacing:-.5px" id="vip-price-yearly">—</div>
+                <div style="font-size:22px;font-weight:900;color:#EEE6EC;letter-spacing:-.5px" id="vip-price-yearly">£34.99</div>
               </div>
               <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
                 <div style="font-size:13px;font-weight:800;color:#EEE6EC">اشتراك سنوي</div>
@@ -3012,7 +3172,7 @@ html.lang-en .pitem:active{transform:translateX(2px)}
           <div style="display:flex;justify-content:space-between;align-items:center">
             <div style="text-align:left">
               <div style="font-size:11px;color:var(--dim);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px">شهري</div>
-              <div style="font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.3px" id="vip-price-monthly">—</div>
+              <div style="font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.3px" id="vip-price-monthly">£4.99</div>
             </div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
               <div style="font-size:13px;font-weight:700;color:var(--text)">اشتراك شهري</div>
@@ -3190,67 +3350,67 @@ function brandDescAr(b){
 const PRODS={
   dior:[
     {id:'d1',ar:'Dior Sauvage',nm:'Dior Sauvage EDP',em:'🌊',rt:4.7,rv:12540,
-     links:{SEPHORA:'https://sephora.com',ULTA:'https://ulta.com',amazon:'https://amazon.com',DIOR:'https://dior.com',notino:'https://notino.com'},
+     links:{SEPHORA:'https://sephora.com',ULTA:'https://ulta.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k=',DIOR:'https://dior.com',notino:'https://notino.com'},
      desc:'A mens fragrance blending woody notes with fresh spices and a hint of jasmine. Perfect for daily wear and formal occasions.',
      reviews:[{nm:'Sarah',rt:5,tx:'One of the most beautiful fragrances! The scent lasts so long ❤️'},{nm:'Nour',rt:4,tx:'A very elegant fragrance, I used it as a gift and everyone loved it'}]},
-    {id:'d2',ar:'Miss Dior Blooming',nm:'Miss Dior Blooming',em:'🌸',rt:4.6,rv:9870,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'A romantic floral womens fragrance with peony and rose notes. Light and perfect for everyday wear.',reviews:[{nm:'Maryam',rt:5,tx:'Amazing scent that lasts for a long time'}]},
+    {id:'d2',ar:'Miss Dior Blooming',nm:'Miss Dior Blooming',em:'🌸',rt:4.6,rv:9870,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'A romantic floral womens fragrance with peony and rose notes. Light and perfect for everyday wear.',reviews:[{nm:'Maryam',rt:5,tx:'Amazing scent that lasts for a long time'}]},
     {id:'d3',ar:'Joy by Dior',nm:'Joy by Dior',em:'✨',rt:4.5,rv:6540,links:{SEPHORA:'https://sephora.com'},desc:'A bright womens fragrance reflecting joy and positivity.',reviews:[{nm:'Lamia',rt:4,tx:'A distinctive and different fragrance'}]},
   ],
   chanel:[
-    {id:'ch1',ar:'Chanel N°5',nm:'Chanel No.5 EDP',em:'💛',rt:4.8,rv:18920,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The eternal legend of perfumery. A unique blend of complex florals with moss and wood.',reviews:[{nm:'Reem',rt:5,tx:'The most beautiful classic of all time'},{nm:'Hind',rt:5,tx:'The perfect gift for every elegant lady'}]},
+    {id:'ch1',ar:'Chanel N°5',nm:'Chanel No.5 EDP',em:'💛',rt:4.8,rv:18920,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The eternal legend of perfumery. A unique blend of complex florals with moss and wood.',reviews:[{nm:'Reem',rt:5,tx:'The most beautiful classic of all time'},{nm:'Hind',rt:5,tx:'The perfect gift for every elegant lady'}]},
     {id:'ch2',ar:'Chanel Chance',nm:'Chanel Chance EDP',em:'🌼',rt:4.7,rv:14300,links:{SEPHORA:'https://sephora.com'},desc:'A modern, captivating womens fragrance with jasmine and rose notes.',reviews:[{nm:'Dana',rt:4,tx:'Light and very suitable for work'}]},
   ],
   ysl:[
-    {id:'y1',ar:'YSL Black Opium',nm:'Black Opium EDP',em:'🖤',rt:4.8,rv:21000,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'An enchanting oriental womens fragrance with black coffee and vanilla notes. Bold, mysterious and unforgettable.',reviews:[{nm:'Shaimaa',rt:5,tx:'The most beautiful fragrance I have ever tried!'},{nm:'Rana',rt:5,tx:'Lasts from morning to midnight'}]},
+    {id:'y1',ar:'YSL Black Opium',nm:'Black Opium EDP',em:'🖤',rt:4.8,rv:21000,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'An enchanting oriental womens fragrance with black coffee and vanilla notes. Bold, mysterious and unforgettable.',reviews:[{nm:'Shaimaa',rt:5,tx:'The most beautiful fragrance I have ever tried!'},{nm:'Rana',rt:5,tx:'Lasts from morning to midnight'}]},
     {id:'y2',ar:'YSL Libre',nm:'YSL Libre EDP',em:'🌺',rt:4.6,rv:8760,links:{SEPHORA:'https://sephora.com'},desc:'A free and bold womens fragrance expressing feminine independence.',reviews:[{nm:'Asma',rt:4,tx:'Strong and attractive scent'}]},
   ],
   tomford:[
-    {id:'tf1',ar:'Tom Ford Oud Wood',nm:'Oud Wood EDP',em:'🪵',rt:4.9,rv:7654,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'An East-West artistic masterpiece. Dewy oud with sandalwood and pink pepper.',reviews:[{nm:'Abeer',rt:5,tx:'The best in the modern oud category'}]},
+    {id:'tf1',ar:'Tom Ford Oud Wood',nm:'Oud Wood EDP',em:'🪵',rt:4.9,rv:7654,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'An East-West artistic masterpiece. Dewy oud with sandalwood and pink pepper.',reviews:[{nm:'Abeer',rt:5,tx:'The best in the modern oud category'}]},
     {id:'tf2',ar:'Black Orchid',nm:'Black Orchid EDP',em:'🌑',rt:4.7,rv:9876,links:{SEPHORA:'https://sephora.com'},desc:'Mysterious and luxurious with black orchid and warm spices.',reviews:[{nm:'Laure',rt:5,tx:'An unforgettable fragrance'}]},
   ],
   creed:[
-    {id:'cr1',ar:'Creed Aventus',nm:'Aventus EDP',em:'👑',rt:4.9,rv:15430,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The king of fragrances. Pineapple, birch and musk create an exceptional experience.',reviews:[{nm:'Nadia',rt:5,tx:'The best in the world without competition'}]},
+    {id:'cr1',ar:'Creed Aventus',nm:'Aventus EDP',em:'👑',rt:4.9,rv:15430,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The king of fragrances. Pineapple, birch and musk create an exceptional experience.',reviews:[{nm:'Nadia',rt:5,tx:'The best in the world without competition'}]},
   ],
   kayali:[
     {id:'ka1',ar:'Kayali Vanilla 28',nm:'Vanilla 28 EDP',em:'🍦',rt:4.6,rv:5430,links:{SEPHORA:'https://sephora.com'},desc:'Warm, velvety vanilla with a hint of musk.',reviews:[{nm:'Salma',rt:5,tx:'Smells like candy, loved by everyone'}]},
   ],
   mac:[
-    {id:'mc1',ar:'Ruby Woo Lipstick',nm:'Ruby Woo Lipstick',em:'💋',rt:4.8,rv:32100,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The iconic lipstick. Classic captivating matte red with exceptional staying power.',reviews:[{nm:'Heba',rt:5,tx:'The eternal icon of makeup'},{nm:'Yosra',rt:5,tx:'Lasts all day'}]},
+    {id:'mc1',ar:'Ruby Woo Lipstick',nm:'Ruby Woo Lipstick',em:'💋',rt:4.8,rv:32100,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The iconic lipstick. Classic captivating matte red with exceptional staying power.',reviews:[{nm:'Heba',rt:5,tx:'The eternal icon of makeup'},{nm:'Yosra',rt:5,tx:'Lasts all day'}]},
     {id:'mc2',ar:'Fix+ Spray',nm:'MAC Fix+ Setting Spray',em:'💧',rt:4.7,rv:18700,links:{SEPHORA:'https://sephora.com'},desc:'Makeup setting spray. Gives skin hydration and freshness while setting makeup.',reviews:[{nm:'Rania',rt:4,tx:'A must-have in any makeup bag'}]},
   ],
   nars:[
-    {id:'na1',ar:'NARS Blush Orgasm',nm:'NARS Orgasm Blush',em:'🌷',rt:4.7,rv:24500,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The worlds most famous blush. Warm peachy tone with a soft golden shimmer.',reviews:[{nm:'Susan',rt:5,tx:'Everyone who sees it asks about it!'},{nm:'Miyar',rt:5,tx:'I have bought it 4 times and will not stop'}]},
+    {id:'na1',ar:'NARS Blush Orgasm',nm:'NARS Orgasm Blush',em:'🌷',rt:4.7,rv:24500,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The worlds most famous blush. Warm peachy tone with a soft golden shimmer.',reviews:[{nm:'Susan',rt:5,tx:'Everyone who sees it asks about it!'},{nm:'Miyar',rt:5,tx:'I have bought it 4 times and will not stop'}]},
   ],
   ct:[
     {id:'ct1',ar:'Hollywood Filter',nm:'Charlotte Tilbury Hollywood Flawless Filter',em:'🌟',rt:4.8,rv:16700,links:{SEPHORA:'https://sephora.com'},desc:'The secret to glowing skin. Gives a cinematic radiance, used as primer or foundation.',reviews:[{nm:'Layla',rt:5,tx:'Makes skin look professional'}]},
     {id:'ct2',ar:'Matte Revolution',nm:'Matte Revolution Lipstick',em:'💄',rt:4.7,rv:9800,links:{SEPHORA:'https://sephora.com'},desc:'Soft matte lipstick that does not dry out the lips.',reviews:[{nm:'Dana',rt:4,tx:'The colors are absolutely amazing'}]},
   ],
   huda:[
-    {id:'hb1',ar:'Desert Dusk Palette',nm:'Huda Beauty Desert Dusk Palette',em:'🎨',rt:4.8,rv:19800,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The legendary eyeshadow palette. 18 shades of matte, metallic and glitter.',reviews:[{nm:'Mona',rt:5,tx:'There is nothing more beautiful, ever'}]},
+    {id:'hb1',ar:'Desert Dusk Palette',nm:'Huda Beauty Desert Dusk Palette',em:'🎨',rt:4.8,rv:19800,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The legendary eyeshadow palette. 18 shades of matte, metallic and glitter.',reviews:[{nm:'Mona',rt:5,tx:'There is nothing more beautiful, ever'}]},
   ],
   fenty:[
-    {id:'fb1',ar:'Pro Filter Foundation',nm:'Fenty Pro Filt\'r Foundation',em:'🌟',rt:4.6,rv:28900,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The revolutionary foundation. 50 shades to suit every skin tone. Full and breathable coverage.',reviews:[{nm:'Noha',rt:5,tx:'The first foundation that perfectly matches my skin tone'}]},
+    {id:'fb1',ar:'Pro Filter Foundation',nm:'Fenty Pro Filt\'r Foundation',em:'🌟',rt:4.6,rv:28900,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The revolutionary foundation. 50 shades to suit every skin tone. Full and breathable coverage.',reviews:[{nm:'Noha',rt:5,tx:'The first foundation that perfectly matches my skin tone'}]},
   ],
   rare:[
     {id:'rb1',ar:'Soft Pinch Liquid Blush',nm:'Rare Beauty Soft Pinch Liquid Blush',em:'💕',rt:4.8,rv:17600,links:{SEPHORA:'https://sephora.com'},desc:'The iconic liquid blush. One drop is enough to illuminate the entire face.',reviews:[{nm:'Iman',rt:5,tx:'Crazy good! I bought it for all my friends'}]},
   ],
   estee:[
-    {id:'el1',ar:'Advanced Night Repair',nm:'Estée Lauder Advanced Night Repair',em:'🌙',rt:4.9,rv:41200,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The worlds most famous serum. Renews skin overnight and reduces wrinkles with advanced technology.',reviews:[{nm:'Nasrin',rt:5,tx:'Used it for 10 years and won\'t stop'},{nm:'Wafaa',rt:5,tx:'Noticeably reduces dark spots'}]},
+    {id:'el1',ar:'Advanced Night Repair',nm:'Estée Lauder Advanced Night Repair',em:'🌙',rt:4.9,rv:41200,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The worlds most famous serum. Renews skin overnight and reduces wrinkles with advanced technology.',reviews:[{nm:'Nasrin',rt:5,tx:'Used it for 10 years and won\'t stop'},{nm:'Wafaa',rt:5,tx:'Noticeably reduces dark spots'}]},
   ],
   lamer:[
-    {id:'lm1',ar:'Crème de La Mer',nm:'La Mer Crème de la Mer',em:'🌊',rt:4.8,rv:12300,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The king of face creams. Derived from sea kelp extract. Gives skin royal softness.',reviews:[{nm:'Alaa',rt:5,tx:'Worth every penny! My skin has transformed'}]},
+    {id:'lm1',ar:'Crème de La Mer',nm:'La Mer Crème de la Mer',em:'🌊',rt:4.8,rv:12300,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The king of face creams. Derived from sea kelp extract. Gives skin royal softness.',reviews:[{nm:'Alaa',rt:5,tx:'Worth every penny! My skin has transformed'}]},
   ],
   lancome:[
-    {id:'lc1',ar:'Génifique Serum',nm:'Lancôme Génifique Serum',em:'💎',rt:4.7,rv:22400,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The legendary glow serum. Restores skin youth with probiotics and hyaluronic acid.',reviews:[{nm:'Zahraa',rt:5,tx:'The best serum I have ever tried'}]},
+    {id:'lc1',ar:'Génifique Serum',nm:'Lancôme Génifique Serum',em:'💎',rt:4.7,rv:22400,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The legendary glow serum. Restores skin youth with probiotics and hyaluronic acid.',reviews:[{nm:'Zahraa',rt:5,tx:'The best serum I have ever tried'}]},
   ],
   kera:[
-    {id:'kr1',ar:'Elixir Ultime Oil',nm:'Kérastase Elixir Ultime Oil',em:'✨',rt:4.8,rv:12300,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The royal hair care oil. A blend of 4 noble oils that gives shine and softness.',reviews:[{nm:'Aya',rt:5,tx:'Hair has completely transformed'}]},
+    {id:'kr1',ar:'Elixir Ultime Oil',nm:'Kérastase Elixir Ultime Oil',em:'✨',rt:4.8,rv:12300,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The royal hair care oil. A blend of 4 noble oils that gives shine and softness.',reviews:[{nm:'Aya',rt:5,tx:'Hair has completely transformed'}]},
   ],
   olaplex:[
-    {id:'ol1',ar:'Olaplex No.3',nm:'Olaplex No.3 Hair Perfector',em:'💪',rt:4.8,rv:56700,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The hair repair miracle. Rebuilds broken bonds inside hair strands.',reviews:[{nm:'Najlaa',rt:5,tx:'Saved my hair from chemical damage'},{nm:'Rana',rt:5,tx:'Results from the very first use!'}]},
+    {id:'ol1',ar:'Olaplex No.3',nm:'Olaplex No.3 Hair Perfector',em:'💪',rt:4.8,rv:56700,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The hair repair miracle. Rebuilds broken bonds inside hair strands.',reviews:[{nm:'Najlaa',rt:5,tx:'Saved my hair from chemical damage'},{nm:'Rana',rt:5,tx:'Results from the very first use!'}]},
   ],
   moroc:[
-    {id:'mo1',ar:'Argan Oil',nm:'Moroccanoil Treatment',em:'🥜',rt:4.9,rv:43200,links:{SEPHORA:'https://sephora.com',amazon:'https://amazon.com'},desc:'The original argan oil revolution. Moisturizes, shines and protects hair with a very distinctive scent.',reviews:[{nm:'Basma',rt:5,tx:'The gold standard of hair oils'}]},
+    {id:'mo1',ar:'Argan Oil',nm:'Moroccanoil Treatment',em:'🥜',rt:4.9,rv:43200,links:{SEPHORA:'https://sephora.com',amazon:'https://www.amazon.co.uk/s?tag=rosivabeauty-21&k='},desc:'The original argan oil revolution. Moisturizes, shines and protects hair with a very distinctive scent.',reviews:[{nm:'Basma',rt:5,tx:'The gold standard of hair oils'}]},
   ],
 };
 
@@ -3820,8 +3980,10 @@ function renderBrandProdCard(p, b){
   const el = makeProductCard(name, b.nm, img, ingr, labels);
   if(!el) return el;
   el.dataset.name = name.toLowerCase();
-  // override onclick لإضافة brand
   el.onclick = ()=> openProdDetail({name, brand:b.nm, img, ingr, labels});
+  // override زر السلة ليمرر اسم البراند للعمولة
+  const cartBtn = el.querySelector('.obf-card-cart');
+  if(cartBtn) cartBtn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name, b.nm); };
   return el;
 }
 
@@ -4908,7 +5070,7 @@ function toggleTheme(){
 init();
 applyTheme();
 initSplash();
-const AMZN_TAG = 'YOUR-TAG-HERE'; // ضع كود عمولة أمازون الخاص بك هنا (Amazon Associates) أو اتركه كما هو لتعطيل العمولة
+const AMZN_TAG = 'rosivabeauty-21'; // Amazon UK Associates
 let obfLoading = false;
 let obfPage = 1;
 let obfHasMore = true;
@@ -5028,7 +5190,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   cartBtn.className = 'obf-card-cart';
   cartBtn.title = 'شراء';
   cartBtn.innerHTML = '<i class="fa-solid fa-cart-shopping"></i>';
-  cartBtn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name); };
+  cartBtn.onclick = (e)=>{ e.stopPropagation(); buyOnAmazon(name, brand); };
   footer.appendChild(link);
   footer.appendChild(cartBtn);
   body.appendChild(footer);
@@ -5055,6 +5217,25 @@ function renderOBFCards(prods, append){
       grid.appendChild(c);
     }
   });
+}
+
+function showDiscoverSkeleton(count=6){
+  const grid = document.getElementById('obf-grid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  for(let i=0;i<count;i++){
+    const card = document.createElement('div');
+    card.className = 'obf-skeleton';
+    card.style.animationDelay = (i*0.05)+'s';
+    card.innerHTML = `
+      <div class="obf-skeleton-img"></div>
+      <div style="padding:10px 0 12px">
+        <div class="obf-skeleton-line" style="width:55%;margin-bottom:8px"></div>
+        <div class="obf-skeleton-line" style="width:85%"></div>
+        <div class="obf-skeleton-line" style="width:70%;margin-top:6px"></div>
+      </div>`;
+    grid.appendChild(card);
+  }
 }
 
 function searchOBFCat(cat, el){
@@ -5376,8 +5557,7 @@ async function fetchOBFSmart(params, reset=false, categoryKey=''){
   if(reset){
     obfLoading=false; obfPage=1; obfHasMore=true;
     obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    document.getElementById('obf-grid').innerHTML=
-      '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div></div>';
+    showDiscoverSkeleton(6);
   }
   if(categoryKey){
     // 1) كاش localStorage أولاً (أسرع)
@@ -5524,11 +5704,19 @@ async function fetchBrandPage(b, page, append){
   const term = b.search || b.nm;
   const brandSlug = term.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
+  // skeleton فقط عند أول تحميل
+  if(!append && page===1){
+    container.innerHTML='';
+    for(let i=0;i<6;i++){
+      container.innerHTML+=`<div class="obf-skeleton"><div class="obf-skeleton-img"></div><div style="padding:10px 0 12px"><div class="obf-skeleton-line" style="width:55%"></div><div class="obf-skeleton-line" style="width:85%;margin-top:6px"></div></div></div>`;
+    }
+  }
+
   // ── Makeup API أولاً (صور أعلى جودة) — لبراندات المكياج المغطاة فقط، صفحة أولى بس
   if(page===1 && !append && b.cat==='Makeup'){
     const mkProds = await fetchFromMakeupAPI(term);
     if(mkProds.length>=4){
-      container.innerHTML='';
+      container.innerHTML=''; // امسح الـ skeleton
       const filtered = await qFilterProducts(mkProds, bdSeenSet, 40, true);
       filtered.forEach(p=>{
         const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
@@ -5641,7 +5829,11 @@ async function fetchBrandPage(b, page, append){
       if(!b._retried){
         b._retried=true;
         bdLoading=false;
-        container.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:11px;color:var(--dim);margin-top:8px">Retrying...</div></div>';
+        // skeleton أثناء إعادة المحاولة
+        container.innerHTML='';
+        for(let i=0;i<4;i++){
+          container.innerHTML+=`<div class="obf-skeleton"><div class="obf-skeleton-img"></div><div style="padding:10px 0 12px"><div class="obf-skeleton-line" style="width:55%"></div><div class="obf-skeleton-line" style="width:85%;margin-top:6px"></div></div></div>`;
+        }
         setTimeout(()=>fetchBrandPage(b,1,false), 2000);
         return;
       }
@@ -5830,7 +6022,7 @@ function openProdDetail(p){
 
   // ربط شريط الإجراء السفلي الثابت
   const safeName = p.name.replace(/'/g,"\\'");
-  document.getElementById('pdm-cta-main').onclick = ()=> buyOnAmazon(p.name);
+  document.getElementById('pdm-cta-main').onclick = ()=> buyOnAmazon(p.name, p.brand||'');
   document.getElementById('pdm-cta-bag').onclick  = ()=> searchSephora(p.name);
 
   modal.classList.add('open');
@@ -5972,9 +6164,12 @@ function closeOBFMod(e){
     document.getElementById('obf-mov').style.display='none';
 }
 
-function buyOnAmazon(productName){
-  const tag = AMZN_TAG !== 'YOUR-TAG-HERE' ? `&tag=${AMZN_TAG}` : '';
-  const url = `https://www.amazon.com/s?k=${encodeURIComponent(productName)}${tag}`;
+function buyOnAmazon(productName, brand=''){
+  // بناء استعلام بحث أدق (اسم المنتج + البراند إن وُجد)
+  const query = (brand && !productName.toLowerCase().includes(brand.toLowerCase()))
+    ? `${brand} ${productName}`.trim()
+    : productName.trim();
+  const url = `https://www.amazon.co.uk/s?k=${encodeURIComponent(query)}&tag=${AMZN_TAG}&ref=rosiva_app`;
   if(window.Capacitor) window.open(url,'_system');
   else window.open(url,'_blank');
 }
