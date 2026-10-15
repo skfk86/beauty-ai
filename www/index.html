@@ -16,7 +16,7 @@
   --bg:#04020A;--bg2:#090510;--card:#110B18;--card2:#1A1124;
   --border:#281638;--rose:#B8426A;--rose2:#D46082;
   --rose-d:rgba(184,66,106,.16);--gold:#B87230;--gold2:#D8944C;
-  --gold-d:rgba(184,114,48,.13);--text:#EEE6EC;--dim:#7A6070;--muted:#30183A;
+  --gold-d:rgba(184,114,48,.13);--text:#EEE6EC;--dim:#A08A98;--muted:#30183A;
   --success:#4caf50;--success-d:rgba(76,175,80,.12);
   --error:#e06060;--error-d:rgba(224,96,96,.12);
   --warning:#ff9900;--warning-d:rgba(255,153,0,.12);
@@ -1098,8 +1098,8 @@ body.light-mode .cat-pill{ color:var(--text); }
 .bc:active .bc-logo{filter:brightness(1.05)}
 .bc-logo-fb{
   width:100%;height:100%;display:flex;align-items:center;
-  justify-content:center;font-size:13px;font-weight:900;
-  letter-spacing:-.5px;color:rgba(255,255,255,.7);
+  justify-content:center;font-size:20px;font-weight:900;
+  letter-spacing:.06em;color:#E7B57E;font-family:Georgia,'Times New Roman',serif;
   padding:10px;text-align:center;line-height:1.3;
 }
 /* وضع 5 أعمدة — بدون نص تحت الصورة */
@@ -3082,134 +3082,117 @@ html.lang-en .pitem:active{transform:translateX(2px)}
     </div>
   </div>
 
-<!-- ══ VIP SUBSCRIPTION MODAL — Obsidian Luxe Paywall ══ -->
-<div id="vip-modal" style="display:none;position:fixed;inset:0;z-index:990" onclick="if(event.target===this)closeVipModal()">
-  <!-- Backdrop -->
-  <div style="position:absolute;inset:0;background:rgba(4,2,10,.92);backdrop-filter:blur(16px)"></div>
+<!-- ══ VIP SUBSCRIPTION MODAL — Paywall v2 ══ -->
+<div id="vip-modal" class="pw" style="display:none" onclick="if(event.target===this||event.target.classList.contains('pw-scrim'))closeVipModal()">
+  <div class="pw-scrim"></div>
+  <div class="pw-sheet" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+    <div class="pw-grab"></div>
+    <button class="pw-x" onclick="closeVipModal()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
 
-  <!-- Panel -->
-  <div style="position:absolute;bottom:0;left:0;right:0;border-radius:28px 28px 0 0;overflow:hidden;max-height:92vh;overflow-y:auto">
-
-    <!-- Aurora top section -->
-    <div style="position:relative;padding:36px 24px 28px;background:linear-gradient(160deg,#0E0816 0%,#1C0E28 40%,#0A0510 100%);overflow:hidden">
-      <!-- mesh blobs -->
-      <div style="position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(184,66,106,.25) 0%,transparent 70%);top:-60px;right:-40px;animation:vip-pulse 4s ease-in-out infinite"></div>
-      <div style="position:absolute;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(184,114,48,.18) 0%,transparent 70%);bottom:-40px;left:-30px;animation:vip-pulse 4s ease-in-out infinite 2s"></div>
-
-      <!-- crown icon -->
-      <div style="position:relative;z-index:2;text-align:center">
-        <div style="width:64px;height:64px;margin:0 auto 16px;background:linear-gradient(135deg,rgba(216,148,76,.15),rgba(184,66,106,.1));border:1px solid rgba(216,148,76,.3);border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(216,148,76,.12)">
-          <svg width="30" height="26" viewBox="0 0 30 26" fill="none">
-            <path d="M2 22L5 10L10 16L15 4L20 16L25 10L28 22H2Z" fill="url(#cg)" stroke="rgba(216,148,76,.4)" stroke-width=".8" stroke-linejoin="round"/>
-            <rect x="2" y="22" width="26" height="3" rx="1.5" fill="url(#cg2)"/>
-            <defs>
-              <linearGradient id="cg" x1="2" y1="4" x2="28" y2="22" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#E09A58"/>
-                <stop offset="100%" stop-color="#B87230"/>
-              </linearGradient>
-              <linearGradient id="cg2" x1="2" y1="22" x2="28" y2="25" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#B87230"/>
-                <stop offset="100%" stop-color="#E09A58"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div style="font-size:22px;font-weight:900;color:#EEE6EC;letter-spacing:-.4px;margin-bottom:6px">Rosiva VIP</div>
-        <div style="font-size:12px;color:rgba(216,148,76,.8);letter-spacing:.18em;text-transform:uppercase;font-weight:600">تجربة جمال لا حدود لها</div>
+    <div class="pw-hero">
+      <div class="pw-glow"></div>
+      <div class="pw-crown">
+        <svg width="30" height="26" viewBox="0 0 30 26" fill="none" aria-hidden="true">
+          <path d="M2 22L5 10L10 16L15 4L20 16L25 10L28 22H2Z" fill="url(#pwcg)"/>
+          <rect x="2" y="22" width="26" height="3" rx="1.5" fill="url(#pwcg)"/>
+          <defs><linearGradient id="pwcg" x1="2" y1="4" x2="28" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#F2C08A"/><stop offset="1" stop-color="#B87230"/></linearGradient></defs>
+        </svg>
       </div>
-
-      <!-- features — bold & impactful -->
-      <div style="position:relative;z-index:2;margin-top:20px;display:flex;flex-direction:column;gap:8px">
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
-          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(184,66,106,.3),rgba(160,40,80,.2));border:1px solid rgba(184,66,106,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(184,66,106,.2)">
-            <i class="fa-solid fa-infinity" style="font-size:16px;color:#E8809A"></i>
-          </div>
-          <div>
-            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">تحليلات AI بلا حدود</div>
-            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">بدل 5 تحليلات يومياً — اسألي كل ما تريدين</div>
-          </div>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
-          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(216,148,76,.25),rgba(184,114,48,.15));border:1px solid rgba(216,148,76,.4);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(216,148,76,.15)">
-            <i class="fa-solid fa-wand-magic-sparkles" style="font-size:15px;color:var(--gold2)"></i>
-          </div>
-          <div>
-            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">توصيات شخصية متقدمة</div>
-            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">تحليل بشرتك وعطرك وروتينك الكامل</div>
-          </div>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
-          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(96,192,208,.2),rgba(64,160,180,.1));border:1px solid rgba(96,192,208,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(96,192,208,.12)">
-            <i class="fa-solid fa-bolt" style="font-size:15px;color:#70D0E0"></i>
-          </div>
-          <div>
-            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">ردود فورية وأسرع</div>
-            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">أولوية في قائمة الانتظار مع نماذج AI المتقدمة</div>
-          </div>
-        </div>
-        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
-          <div style="width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,rgba(180,120,220,.2),rgba(140,80,200,.1));border:1px solid rgba(180,120,220,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 20px rgba(180,120,220,.12)">
-            <i class="fa-solid fa-crown" style="font-size:14px;color:#C090E8"></i>
-          </div>
-          <div>
-            <div style="font-size:14px;font-weight:900;color:#F0E8EC;letter-spacing:-.2px">وصول حصري للمزايا الجديدة</div>
-            <div style="font-size:11.5px;color:rgba(240,232,236,.5);margin-top:2px;line-height:1.5">كوني أول من يجرّب كل ميزة قبل الجميع</div>
-          </div>
-        </div>
-      </div>
+      <div class="pw-eyebrow">ROSIVA VIP</div>
+      <h2 class="pw-title" id="pw-title">خبيرة جمالك الشخصية<br><span>بلا حدود</span></h2>
     </div>
 
-    <!-- Pricing cards -->
-    <div style="background:#09060F;padding:20px 18px 8px;display:flex;flex-direction:column;gap:10px">
+    <div class="pw-body">
+      <div id="vip-status-box" class="pw-status" style="display:none"></div>
 
-      <div id="vip-status-box" style="display:none;background:linear-gradient(135deg,rgba(216,148,76,.1),rgba(184,66,106,.08));border:1px solid rgba(216,148,76,.3);border-radius:16px;padding:14px;text-align:center;color:var(--gold2);font-size:13px;font-weight:700;letter-spacing:.03em"></div>
+      <div id="vip-sub-row">
+        <ul class="pw-feats">
+          <li><i class="fa-solid fa-infinity"></i><div><b>أسئلة ذكاء اصطناعي بلا حدود</b><span>بدلاً من 5 أسئلة يومياً في الخطة المجانية</span></div></li>
+          <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>تحليل كل منتج تهتمين به</b><span>المكونات، لمن يناسب، وبدائل أوفر — متى شئتِ</span></div></li>
+          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير Rosiva</b><span>اشتراكك يموّل ميزات ومنتجات جديدة باستمرار</span></div></li>
+        </ul>
 
-      <div id="vip-sub-row" style="display:flex;flex-direction:column;gap:10px">
-
-        <!-- yearly card — elevated -->
-        <div style="position:relative">
-          <div style="position:absolute;top:-9px;right:16px;z-index:2;background:linear-gradient(90deg,var(--rose),var(--gold));color:#fff;font-size:9.5px;font-weight:800;padding:3px 10px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase">الأفضل قيمةً · شهران مجاناً</div>
-          <button onclick="purchaseVip('yearly')" style="width:100%;background:linear-gradient(160deg,#1A0E24,#120A1C);border:1px solid rgba(216,148,76,.35);border-radius:18px;padding:18px 16px;cursor:pointer;text-align:right;box-shadow:0 0 30px rgba(216,148,76,.1),inset 0 1px 0 rgba(255,255,255,.05)">
-            <div style="display:flex;justify-content:space-between;align-items:center">
-              <div style="text-align:left">
-                <div style="font-size:11px;color:var(--gold2);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px">سنوي</div>
-                <div style="font-size:22px;font-weight:900;color:#EEE6EC;letter-spacing:-.5px" id="vip-price-yearly">£34.99</div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-                <div style="font-size:13px;font-weight:800;color:#EEE6EC">اشتراك سنوي</div>
-                <div style="font-size:11px;color:var(--dim)">وفّري مقارنةً بالشهري</div>
-                <i class="fa-solid fa-chevron-left" style="color:var(--gold2);font-size:11px;margin-top:2px"></i>
-              </div>
-            </div>
+        <div class="pw-plans" role="radiogroup" aria-label="اختاري الخطة">
+          <button class="pw-plan on" data-plan="yearly" role="radio" aria-checked="true" onclick="selectVipPlan('yearly')">
+            <span class="pw-tag" id="vip-save-badge">الأوفر</span>
+            <span class="pw-radio"></span>
+            <span class="pw-plan-txt"><b>سنوي</b><small id="vip-yearly-permonth">يُدفع مرة واحدة سنوياً</small></span>
+            <span class="pw-price"><b id="vip-price-yearly">£34.99</b><small>/ سنة</small></span>
+          </button>
+          <button class="pw-plan" data-plan="monthly" role="radio" aria-checked="false" onclick="selectVipPlan('monthly')">
+            <span class="pw-radio"></span>
+            <span class="pw-plan-txt"><b>شهري</b><small>مرونة كاملة</small></span>
+            <span class="pw-price"><b id="vip-price-monthly">£4.99</b><small>/ شهر</small></span>
           </button>
         </div>
 
-        <!-- monthly card -->
-        <button onclick="purchaseVip('monthly')" style="width:100%;background:#110C18;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;cursor:pointer;text-align:right">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div style="text-align:left">
-              <div style="font-size:11px;color:var(--dim);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px">شهري</div>
-              <div style="font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.3px" id="vip-price-monthly">£4.99</div>
-            </div>
-            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-              <div style="font-size:13px;font-weight:700;color:var(--text)">اشتراك شهري</div>
-              <div style="font-size:11px;color:var(--dim)">ألغِ في أي وقت</div>
-              <i class="fa-solid fa-chevron-left" style="color:var(--dim);font-size:11px;margin-top:2px"></i>
-            </div>
-          </div>
+        <button class="pw-cta vip-plan-btn" id="pw-cta" data-plan="cta" onclick="purchaseVip(_vipSelectedPlan)">
+          <span class="pw-cta-lbl">اشتركي في VIP</span><span class="pw-spin"></span>
         </button>
+        <p class="pw-legal">يتجدد الاشتراك تلقائياً بنفس السعر حتى تلغيه. يمكنك الإلغاء في أي وقت من إعدادات اشتراكات Google Play قبل 24 ساعة على الأقل من موعد التجديد.</p>
       </div>
 
-      <!-- restore + close -->
-      <div style="display:flex;justify-content:center;gap:20px;padding:12px 0 4px">
-        <button onclick="restoreVipPurchases()" style="background:none;border:none;color:var(--dim);font-size:11.5px;font-family:'Cairo',sans-serif;cursor:pointer;padding:6px">استعادة المشتريات</button>
-        <span style="color:var(--border);line-height:2">|</span>
-        <button onclick="closeVipModal()" style="background:none;border:none;color:var(--dim);font-size:11.5px;font-family:'Cairo',sans-serif;cursor:pointer;padding:6px">إغلاق</button>
+      <div class="pw-links">
+        <button onclick="restoreVipPurchases()">استعادة المشتريات</button><i></i>
+        <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener">الخصوصية</a>
       </div>
-      <div style="height:env(safe-area-inset-bottom,0px);min-height:8px"></div>
+      <div style="height:env(safe-area-inset-bottom,0px)"></div>
     </div>
   </div>
 </div>
+<style>
+.pw{position:fixed;inset:0;z-index:990;display:flex;align-items:flex-end;justify-content:center}
+.pw-scrim{position:absolute;inset:0;background:rgba(4,2,10,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:pwFade .3s ease}
+.pw-sheet{position:relative;width:100%;max-width:520px;max-height:94vh;overflow-y:auto;background:#0B0712;border:1px solid rgba(255,255,255,.06);border-bottom:0;border-radius:28px 28px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.6);animation:pwUp .42s var(--ease-out);overscroll-behavior:contain}
+@keyframes pwUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes pwFade{from{opacity:0}to{opacity:1}}
+.pw-grab{width:38px;height:4px;border-radius:4px;background:rgba(255,255,255,.14);margin:10px auto 0}
+.pw-x{position:absolute;top:14px;left:14px;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.07);color:rgba(238,230,236,.75);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pw-hero{position:relative;text-align:center;padding:22px 24px 6px;overflow:hidden}
+.pw-glow{position:absolute;inset:-40% -20% auto;height:260px;background:radial-gradient(50% 60% at 50% 40%,rgba(216,148,76,.22),transparent 70%),radial-gradient(40% 50% at 70% 30%,rgba(184,66,106,.22),transparent 70%);pointer-events:none}
+.pw-crown{position:relative;width:62px;height:62px;margin:0 auto 14px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(242,192,138,.16),rgba(184,66,106,.08));border:1px solid rgba(216,148,76,.35);box-shadow:0 10px 30px rgba(216,148,76,.18),inset 0 1px 0 rgba(255,255,255,.08)}
+.pw-eyebrow{position:relative;font-size:11px;font-weight:800;letter-spacing:.32em;color:var(--gold2);margin-bottom:6px}
+.pw-title{position:relative;margin:0;font-size:24px;line-height:1.35;font-weight:900;color:#F4ECF1;letter-spacing:-.3px}
+.pw-title span{background:linear-gradient(90deg,#F2C08A,#E8809A);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pw-body{padding:18px 18px 10px}
+.pw-feats{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:14px}
+.pw-feats li{display:flex;gap:12px;align-items:flex-start}
+.pw-feats li>i{flex-shrink:0;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#F2C08A;background:rgba(216,148,76,.12);border:1px solid rgba(216,148,76,.22)}
+.pw-feats b{display:block;font-size:14px;font-weight:800;color:#F0E8EC;line-height:1.4}
+.pw-feats span{display:block;font-size:12px;color:rgba(238,230,236,.55);line-height:1.5;margin-top:1px}
+.pw-plans{display:flex;flex-direction:column;gap:10px}
+.pw-plan{position:relative;width:100%;display:flex;align-items:center;gap:12px;text-align:right;font-family:inherit;padding:16px;border-radius:18px;background:#120C1A;border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:border-color var(--dur-base),background var(--dur-base),transform var(--dur-fast)}
+.pw-plan:active{transform:scale(.985)}
+.pw-plan.on{background:linear-gradient(160deg,#1E1029,#140B1D);border-color:rgba(216,148,76,.75);box-shadow:0 0 0 4px rgba(216,148,76,.08)}
+.pw-radio{flex-shrink:0;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.25);position:relative;transition:border-color var(--dur-base)}
+.pw-plan.on .pw-radio{border-color:#E0A462}
+.pw-plan.on .pw-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:linear-gradient(135deg,#F2C08A,#C9803C)}
+.pw-plan-txt{flex:1;display:flex;flex-direction:column}
+.pw-plan-txt b{font-size:15px;font-weight:800;color:#F0E8EC}
+.pw-plan-txt small{font-size:11.5px;color:rgba(238,230,236,.55);margin-top:1px}
+.pw-price{display:flex;flex-direction:column;align-items:flex-start;direction:ltr}
+.pw-price b{font-size:18px;font-weight:900;color:#F4ECF1;letter-spacing:-.3px}
+.pw-price small{font-size:11px;color:rgba(238,230,236,.5)}
+.pw-tag{position:absolute;top:-10px;right:16px;font-size:10.5px;font-weight:800;color:#1A0E08;padding:3px 10px;border-radius:99px;background:linear-gradient(90deg,#F2C08A,#E0A462)}
+.pw-cta{position:relative;width:100%;margin-top:16px;border:0;border-radius:16px;padding:16px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(100deg,var(--rose),#C9803C);box-shadow:0 10px 28px rgba(184,66,106,.35);transition:transform var(--dur-fast),opacity var(--dur-base)}
+.pw-cta:active{transform:scale(.985)}
+.pw-cta:disabled{cursor:default}
+.pw-spin{display:none;width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:pwSpin .8s linear infinite;margin:0 auto}
+.pw-cta.is-loading .pw-cta-lbl{display:none}.pw-cta.is-loading .pw-spin{display:block}
+@keyframes pwSpin{to{transform:rotate(360deg)}}
+.pw-legal{margin:12px 4px 0;font-size:10.5px;line-height:1.7;color:rgba(238,230,236,.42);text-align:center}
+.pw-links{display:flex;justify-content:center;align-items:center;gap:14px;padding:14px 0 6px}
+.pw-links button,.pw-links a{background:none;border:0;padding:6px;font-family:inherit;font-size:12px;font-weight:700;color:rgba(238,230,236,.6);text-decoration:none;cursor:pointer}
+.pw-links i{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25)}
+.pw-status{margin-bottom:6px;padding:16px;border-radius:18px;text-align:center;background:linear-gradient(135deg,rgba(216,148,76,.1),rgba(184,66,106,.08));border:1px solid rgba(216,148,76,.3);color:var(--gold2)}
+body.light .pw-sheet{background:#FFF9FB;border-color:rgba(0,0,0,.06)}
+body.light .pw-title,body.light .pw-feats b,body.light .pw-plan-txt b,body.light .pw-price b{color:#2A1420}
+body.light .pw-feats span,body.light .pw-plan-txt small,body.light .pw-price small,body.light .pw-legal,body.light .pw-links button,body.light .pw-links a{color:rgba(42,20,32,.6)}
+body.light .pw-plan{background:#fff;border-color:rgba(0,0,0,.1)}
+body.light .pw-plan.on{background:#FFF4E8;border-color:#D8944C}
+body.light .pw-radio{border-color:rgba(0,0,0,.25)}
+body.light .pw-x{background:rgba(0,0,0,.06);color:#5A3A4A}
+</style>
 
 <style>
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -3832,7 +3815,7 @@ function renderBrands(showAll=false){
         <div class="bc-banner">
           <img class="bc-logo" src="https://www.google.com/s2/favicons?domain=${b.domain}&sz=256" alt="${b.nm}"
             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
+          <div class="bc-logo-fb" style="display:none">${_brandMono(b.nm)}</div>
         </div>
       </div>`).join('');
     if(viewAllBtn) viewAllBtn.style.display='none';
@@ -3847,7 +3830,7 @@ function renderBrands(showAll=false){
       <div class="bc-banner">
         <img class="bc-logo" src="https://www.google.com/s2/favicons?domain=${b.domain}&sz=256" alt="${b.nm}"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="bc-logo-fb" style="display:none">${b.nm.replace(/ (Beauty|Cosmetics|Fragrances|Oil)$/i,'').substring(0,4)}</div>
+        <div class="bc-logo-fb" style="display:none">${_brandMono(b.nm)}</div>
       </div>
       <div class="bc-body">
         <div class="bc-name">${b.nm}</div>
@@ -4524,22 +4507,18 @@ async function _aiQuotaCount(){
   return count;
 }
 async function isVipActive(){
-  // المصدر الأساسي: Firestore (مرتبط بالحساب — الأكثر أماناً)
+  // 1) الحالة في الذاكرة (تُحدَّث من Google Play عند الفتح والعودة للتطبيق)
+  const st = _vipGetState();
+  if(st) return _vipStateActive(st);
+  // 2) Firestore (للأجهزة بدون Play أو قبل اكتمال المزامنة)
   if(window._authUser && window._fsGetVipStatus){
     try{
       const fsInfo = await window._fsGetVipStatus(window._authUser.uid);
-      if(fsInfo && fsInfo.isPremium && fsInfo.premiumExpiry)
-        return new Date(fsInfo.premiumExpiry) > new Date();
+      if(fsInfo){ _vipSetState(Object.assign({uid:window._authUser.uid}, fsInfo), false); return _vipStateActive(fsInfo); }
     }catch(e){}
-    return false; // مسجّل دخول + ما في Firestore = غير مشترك
+    return false;
   }
-  // بديل: localStorage (للزوّار فقط — مع تحقق uid)
-  try{
-    const info = JSON.parse(localStorage.getItem('rosivaVip')||'null');
-    if(!info || !info.isPremium || !info.premiumExpiry) return false;
-    if(info.uid && window._authUser && info.uid !== window._authUser.uid) return false;
-    return new Date(info.premiumExpiry) > new Date();
-  }catch(e){ return false; }
+  return false; // الاشتراك يتطلب تسجيل الدخول
 }
 async function _aiQuotaRemaining(){
   if(await isVipActive()) return Infinity;
@@ -4554,124 +4533,273 @@ async function _aiQuotaConsume(){
   return Math.max(0,AI_DAILY_LIMIT-count);
 }
 
+// حروف أولى أنيقة لشعار البراند الاحتياطي (YSL، CH، FB…)
+function _brandMono(nm){
+  const clean=String(nm||'').replace(/\b(Beauty|Cosmetics|Fragrances|Oil|Paris|London|New York)\b/gi,'').trim();
+  const words=clean.split(/[\s&.\-]+/).filter(Boolean);
+  if(!words.length) return '•';
+  if(words.length===1) return words[0].length<=4&&words[0]===words[0].toUpperCase()?words[0]:words[0].slice(0,2).toUpperCase();
+  return (words[0][0]+words[1][0]).toUpperCase();
+}
+
 // ══ Google Play Billing — Custom BillingPlugin (Java) ══
+// مصدر الحقيقة: Google Play. عند فتح التطبيق والعودة إليه نسأل Play عن الاشتراكات
+// الفعّالة؛ إن وُجد اشتراك → VIP، وإن لم يوجد (والاستعلام نجح) → يُلغى VIP.
+// Firestore + localStorage مجرد نسخة مخبّأة للعمل بدون إنترنت.
 const VIP_PRODUCTS = { monthly:'rosiva_premium_monthly', yearly:'rosiva_premium_yearly' };
+const VIP_OFFLINE_GRACE_DAYS = 3; // مهلة إضافية بدون اتصال قبل اعتبار الاشتراك منتهياً
 let _NP = null;
-let _purchaseIntentActive = false; // حماية: الـ purchasesUpdate يشتغل فقط عند نية شراء حقيقية
+let _vipBusy = false;           // يمنع الضغط المزدوج على الشراء
+let _vipSyncing = null;         // وعد المزامنة الجارية (لمنع التكرار)
+let _vipMem = null;             // الحالة الحالية في الذاكرة
+
+function _vipStateActive(st){
+  if(!st || !st.isPremium || !st.premiumExpiry) return false;
+  const exp = new Date(st.premiumExpiry).getTime() + VIP_OFFLINE_GRACE_DAYS*864e5;
+  return exp > Date.now();
+}
+function _vipGetState(){
+  const uid = window._authUser ? window._authUser.uid : null;
+  if(!uid) return null;
+  if(_vipMem && _vipMem.uid === uid) return _vipMem;
+  try{
+    const info = JSON.parse(localStorage.getItem('rosivaVip')||'null');
+    if(info && info.uid === uid){ _vipMem = info; return info; }
+  }catch(e){}
+  return null;
+}
+async function _vipSetState(info, persistRemote=true){
+  _vipMem = info;
+  try{ localStorage.setItem('rosivaVip', JSON.stringify(info)); }catch(e){}
+  if(persistRemote && window._authUser && window._fsSetVipStatus && info.uid === window._authUser.uid){
+    try{ await window._fsSetVipStatus(info.uid, info); }catch(e){}
+  }
+  updateVipUI();
+}
+function _vipClearLocal(){ _vipMem = null; try{ localStorage.removeItem('rosivaVip'); }catch(e){} }
+
+// معرّف مُجزّأ للحساب يُرسل لـ Google Play لربط الاشتراك بحساب Rosiva
+async function _vipAccountHash(uid){
+  try{
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('rosiva:'+uid));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }catch(e){ return ''; }
+}
+
+// تاريخ التجديد القادم المتوقع انطلاقاً من تاريخ الشراء الأصلي
+function _vipNextRenewal(purchaseTime, plan){
+  const d = new Date(purchaseTime || Date.now());
+  const now = Date.now();
+  let guard = 0;
+  do{
+    if(plan==='yearly') d.setFullYear(d.getFullYear()+1); else d.setMonth(d.getMonth()+1);
+  }while(d.getTime() <= now && ++guard < 600);
+  return d;
+}
+
+function _isValidVipPurchase(p){
+  if(!p) return false;
+  const id = p.productIdentifier || p.productId || '';
+  return !!p.purchaseToken && (id === VIP_PRODUCTS.monthly || id === VIP_PRODUCTS.yearly);
+}
+
+// يختار الاشتراك الأفضل من قائمة Play ويتحقق أنه لهذا الحساب
+async function _vipPickForAccount(purchases){
+  const uid = window._authUser && window._authUser.uid;
+  if(!uid) return { purchase:null, otherAccount:false };
+  const hash = await _vipAccountHash(uid);
+  const valid = (purchases||[]).filter(_isValidVipPurchase);
+  // الأفضلية للسنوي
+  valid.sort((a,b)=> (b.productIdentifier===VIP_PRODUCTS.yearly) - (a.productIdentifier===VIP_PRODUCTS.yearly));
+  const mine = valid.find(p => !p.obfuscatedAccountId || p.obfuscatedAccountId === hash);
+  return { purchase: mine || null, otherAccount: !mine && valid.length > 0 };
+}
+
+async function _vipActivateFrom(purchase){
+  const productId = purchase.productIdentifier || purchase.productId;
+  const plan = productId===VIP_PRODUCTS.yearly ? 'yearly' : 'monthly';
+  const info = {
+    uid: window._authUser.uid,
+    isPremium: true,
+    premiumPlan: plan,
+    premiumProductId: productId,
+    premiumExpiry: _vipNextRenewal(purchase.purchaseTime, plan).toISOString(),
+    purchaseToken: purchase.purchaseToken || '',
+    orderId: purchase.orderId || '',
+    autoRenewing: purchase.isAutoRenewing !== false,
+    verifiedAt: new Date().toISOString()
+  };
+  const wasActive = _vipStateActive(_vipGetState());
+  await _vipSetState(info);
+  return !wasActive;
+}
+
+async function _vipDeactivate(){
+  const st = _vipGetState();
+  if(!st || !st.isPremium) return;
+  await _vipSetState({ uid:window._authUser.uid, isPremium:false, premiumPlan:null, premiumProductId:null,
+    premiumExpiry:null, purchaseToken:'', orderId:'', autoRenewing:false, verifiedAt:new Date().toISOString() });
+}
+
+// مزامنة صامتة مع Google Play
+function syncVipWithPlay(){
+  if(!_NP || !window._authUser) return Promise.resolve();
+  if(_vipSyncing) return _vipSyncing;
+  _vipSyncing = (async()=>{
+    try{
+      const fn = _NP.getActiveSubscriptions ? 'getActiveSubscriptions' : 'restoreTransactions';
+      const res = await _NP[fn]();
+      const { purchase } = await _vipPickForAccount(res && res.purchases);
+      if(purchase) await _vipActivateFrom(purchase);
+      else await _vipDeactivate(); // Play أكّد: لا اشتراك فعّال
+    }catch(e){ /* بدون اتصال أو Play غير جاهز: نبقي الحالة المخبّأة */ }
+    finally{ _vipSyncing = null; }
+  })();
+  return _vipSyncing;
+}
 
 async function initVipBilling(){
   try{
     const plugins = window.Capacitor && window.Capacitor.Plugins;
-    if(!plugins || !plugins.BillingPlugin){ return; }
+    if(!plugins || !plugins.BillingPlugin) return;
+    if(_NP) return;
     _NP = plugins.BillingPlugin;
-    try{
-      const res = await _NP.getProducts({
-        productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly]
-      });
-      if(res && res.products){
-        res.products.forEach(p=>{
-          const elId = p.productIdentifier===VIP_PRODUCTS.monthly
-            ?'vip-price-monthly':'vip-price-yearly';
-          const el=document.getElementById(elId);
-          if(el && p.localizedPrice) el.textContent=p.localizedPrice;
-        });
-      }
-    }catch(e){ console.warn('getProducts:',e); }
 
-    // ⚠️ هذا الـ listener يشتغل فقط لو المستخدم بدأ شراء فعلياً من الواجهة
-    _NP.addListener('purchasesUpdate',(data)=>{
-      if(!_purchaseIntentActive) return; // تجاهل الأحداث العشوائية
-      _purchaseIntentActive = false;
-      if(data && data.purchases && data.purchases.length){
-        const p = data.purchases.find(x => _isValidVipPurchase(x));
-        if(p) _onVipConfirmed(p);
+    const loadPrices = async()=>{
+      try{
+        const res = await _NP.getProducts({ productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly] });
+        const prices = {};
+        (res && res.products || []).forEach(p=>{
+          prices[p.productIdentifier] = p;
+          const el = document.getElementById(p.productIdentifier===VIP_PRODUCTS.monthly ? 'vip-price-monthly' : 'vip-price-yearly');
+          if(el && p.localizedPrice) el.textContent = p.localizedPrice;
+        });
+        // نسبة التوفير الحقيقية للخطة السنوية
+        const m = prices[VIP_PRODUCTS.monthly], y = prices[VIP_PRODUCTS.yearly];
+        if(m && y && m.priceMicros && y.priceMicros && m.currency === y.currency){
+          const save = Math.round((1 - y.priceMicros/(m.priceMicros*12))*100);
+          const sv = document.getElementById('vip-save-badge');
+          if(sv && save > 0) sv.textContent = 'وفّري '+save+'%';
+          const pm = document.getElementById('vip-yearly-permonth');
+          if(pm){ let per; try{ per=new Intl.NumberFormat('en',{style:'currency',currency:y.currency}).format(y.priceMicros/12e6); }catch(e){ per=(y.priceMicros/12e6).toFixed(2)+' '+y.currency; } pm.textContent='أي '+per+' شهرياً فقط'; }
+        }
+      }catch(e){ console.warn('getProducts:',e); }
+    };
+
+    // أي شراء مكتمل يصل من Play (حتى لو انقطع التطبيق أثناء الدفع) يُعالج هنا
+    _NP.addListener('purchasesUpdate', async(data)=>{
+      if(!window._authUser) return;
+      const { purchase } = await _vipPickForAccount(data && data.purchases);
+      if(purchase && await _vipActivateFrom(purchase)){
+        showToast('🎉 تم تفعيل اشتراك VIP بنجاح!');
+        closeVipModal();
       }
     });
+    _NP.addListener('billingReady', ()=>{ loadPrices(); syncVipWithPlay(); });
+
+    await loadPrices();
+    syncVipWithPlay();
   }catch(e){ console.error('initVipBilling:',e); }
 }
 
-// التحقق من صحة الشراء قبل أي تفعيل
-function _isValidVipPurchase(p){
-  if(!p) return false;
-  const id = p.productIdentifier || p.productId || '';
-  const token = p.purchaseToken || '';
-  // لازم يكون أحد منتجاتنا وعنده token
-  return token.length > 0 && (id === VIP_PRODUCTS.monthly || id === VIP_PRODUCTS.yearly);
+let _vipSelectedPlan = 'yearly';
+function selectVipPlan(plan){
+  _vipSelectedPlan = plan==='monthly' ? 'monthly' : 'yearly';
+  document.querySelectorAll('.pw-plan').forEach(b=>{
+    const on = b.dataset.plan===_vipSelectedPlan;
+    b.classList.toggle('on', on); b.setAttribute('aria-checked', on?'true':'false');
+  });
+}
+function _vipSetBusy(on){
+  _vipBusy = on;
+  document.querySelectorAll('.vip-plan-btn,.pw-plan').forEach(b=>{ b.disabled = on; });
+  const cta = document.getElementById('pw-cta');
+  if(cta) cta.classList.toggle('is-loading', on);
 }
 
 async function purchaseVip(plan){
-  if(!window._authUser){ showToast('سجّلي الدخول أولاً لتفعيل الاشتراك 👤'); return; }
-  if(!_NP){ showToast('نظام الدفع لسه ما جهز، حاولي بعد لحظات'); setTimeout(initVipBilling,1000); return; }
+  if(_vipBusy) return;
+  if(!window._authUser){
+    showToast('سجّلي الدخول أولاً لتفعيل الاشتراك 👤');
+    closeVipModal();
+    if(typeof window.showAuthScreenGlobal==='function') window.showAuthScreenGlobal();
+    return;
+  }
+  if(!_NP){
+    if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())){
+      showToast('الاشتراك متاح من تطبيق Rosiva على Google Play'); return;
+    }
+    showToast('نظام الدفع يجهز الآن، حاولي بعد لحظات'); initVipBilling(); return;
+  }
+  if(_vipStateActive(_vipGetState())){ showToast('اشتراكك VIP فعّال بالفعل 👑'); return; }
+  _vipSetBusy(true);
   try{
-    _purchaseIntentActive = true; // فعّل وضع الشراء
-    const res = await _NP.purchaseProduct({ productIdentifier:VIP_PRODUCTS[plan] });
-    _purchaseIntentActive = false;
-    // تحقق من الـ purchase قبل التفعيل
-    if(res && res.purchases){
-      const valid = res.purchases.find(p => _isValidVipPurchase(p));
-      if(valid) await _onVipConfirmed(valid);
+    const res = await _NP.purchaseProduct({
+      productIdentifier: VIP_PRODUCTS[plan],
+      obfuscatedAccountId: await _vipAccountHash(window._authUser.uid)
+    });
+    const { purchase } = await _vipPickForAccount(res && res.purchases);
+    if(purchase && await _vipActivateFrom(purchase)){
+      showToast('🎉 تم تفعيل اشتراك VIP بنجاح!');
+      closeVipModal();
     }
   }catch(e){
-    _purchaseIntentActive = false;
-    if(e.message!=='USER_CANCELLED') showToast('تعذّر إتمام الشراء، تأكدي من الاتصال بالإنترنت');
-  }
+    const code = e && (e.code || e.message);
+    if(code==='USER_CANCELLED') {/* صامت */}
+    else if(code==='PENDING') showToast('الدفع قيد المعالجة ⏳ سيتفعّل VIP تلقائياً عند اكتماله');
+    else if(code==='ALREADY_OWNED'){ showToast('لديكِ اشتراك بالفعل، جاري الاستعادة…'); await restoreVipPurchases(); }
+    else if(code==='NOT_READY') showToast('خدمة Google Play غير متاحة الآن، حاولي بعد قليل');
+    else if(code==='NOT_FOUND') showToast('الخطة غير متاحة حالياً، حاولي لاحقاً');
+    else showToast('تعذّر إتمام الشراء، تأكدي من الاتصال بالإنترنت');
+  }finally{ _vipSetBusy(false); }
 }
 
 async function restoreVipPurchases(){
-  if(!_NP){ showToast('نظام الدفع لسه ما جهز'); return; }
+  if(!window._authUser){ showToast('سجّلي الدخول أولاً لاستعادة اشتراكك 👤'); return; }
+  if(!_NP){ showToast('الاستعادة متاحة من تطبيق Rosiva على Google Play'); return; }
   try{
     const res = await _NP.restoreTransactions();
-    if(res && res.purchases && res.purchases.length){
-      // فقط purchases صالحة بمنتجاتنا وعندها token
-      const valid = res.purchases.find(p => _isValidVipPurchase(p));
-      if(valid){
-        await _onVipConfirmed(valid);
-      } else {
-        showToast('لا توجد اشتراكات نشطة مرتبطة بهذا الحساب');
-      }
-    } else {
-      showToast('لا توجد مشتريات سابقة لاستعادتها');
+    const { purchase, otherAccount } = await _vipPickForAccount(res && res.purchases);
+    if(purchase){
+      await _vipActivateFrom(purchase);
+      showToast('✅ تمت استعادة اشتراك VIP');
+      closeVipModal();
+    }else if(otherAccount){
+      showToast('هذا الاشتراك مرتبط بحساب Rosiva آخر — سجّلي الدخول بذلك الحساب');
+    }else if(res && res.hasPending){
+      showToast('لديكِ دفعة قيد المعالجة ⏳ سيتفعّل VIP عند اكتمالها');
+    }else{
+      await _vipDeactivate();
+      showToast('لا يوجد اشتراك فعّال على حساب Google Play هذا');
     }
   }catch(e){ showToast('تعذّرت الاستعادة، تأكدي من الاتصال بالإنترنت'); }
 }
 
-async function _onVipConfirmed(purchase){
-  const productId = purchase.productIdentifier || purchase.productId;
-  if(!productId) return;
-  const plan = productId===VIP_PRODUCTS.yearly?'yearly':'monthly';
-  const expiry = new Date();
-  if(plan==='yearly') expiry.setFullYear(expiry.getFullYear()+1);
-  else expiry.setMonth(expiry.getMonth()+1);
-  const info = {
-    isPremium:true, premiumPlan:plan,
-    premiumExpiry:expiry.toISOString(),
-    premiumProductId:productId,
-    purchaseToken:purchase.purchaseToken||'',
-    uid:window._authUser?.uid||''
-  };
-  try{ localStorage.setItem('rosivaVip',JSON.stringify(info)); }catch(e){}
-  // ربط الاشتراك بالحساب في Firestore
-  if(window._authUser && window._fsSetVipStatus){
-    await window._fsSetVipStatus(window._authUser.uid, info);
-  }
-  showToast('🎉 تم تفعيل اشتراك VIP بنجاح!');
-  closeVipModal(); updateVipUI();
+function manageVipSubscription(){
+  const st = _vipGetState();
+  const sku = st && st.premiumProductId ? '&sku='+encodeURIComponent(st.premiumProductId) : '';
+  window.open('https://play.google.com/store/account/subscriptions?package=com.rosiva.app'+sku, '_system');
 }
+
+// عند العودة للتطبيق: إعادة المزامنة (تلتقط الإلغاء أو التجديد أو الدفع المعلّق)
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState==='visible') syncVipWithPlay();
+});
 
 async function openVipModal(){
   const modal=document.getElementById('vip-modal');
   if(!modal) return;
-  modal.style.display='block';
+  modal.style.display='flex';
+  selectVipPlan(_vipSelectedPlan);
   const statusBox=document.getElementById('vip-status-box');
   const subRow=document.getElementById('vip-sub-row');
   const active=await isVipActive();
   if(active){
-    let info=null;
-    if(window._authUser&&window._fsGetVipStatus) info=await window._fsGetVipStatus(window._authUser.uid);
-    if(!info){ try{ info=JSON.parse(localStorage.getItem('rosivaVip')||'null'); }catch(e){} }
+    const info=_vipGetState();
     const expiry=info?.premiumExpiry?new Date(info.premiumExpiry):null;
     const dateStr=expiry?expiry.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}):'';
     const plan=info?.premiumPlan==='yearly'?'سنوي':'شهري';
+    const renews=info?.autoRenewing!==false;
     const daysLeft=expiry?Math.ceil((expiry-new Date())/(1000*60*60*24)):0;
     if(statusBox){
       statusBox.style.display='block';
@@ -4686,18 +4814,19 @@ async function openVipModal(){
           </div>
         </div>
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div style="font-size:11px;color:rgba(240,232,236,.5)">ينتهي في</div>
+          <div style="font-size:11px;color:rgba(240,232,236,.5)">${renews?'التجديد القادم':'ينتهي في'}</div>
           <div style="font-size:12px;font-weight:800;color:var(--text)">${dateStr}</div>
         </div>
         <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:8px">
           <div style="width:6px;height:6px;border-radius:50%;background:#4caf50;animation:pulse-dot 2s infinite;flex-shrink:0"></div>
-          <div style="font-size:11.5px;color:#6fcf97;font-weight:700">${daysLeft} يوم متبقي — تحليلات AI بلا حدود ✨</div>
-        </div>`;
+          <div style="font-size:11.5px;color:#6fcf97;font-weight:700">${renews?'يتجدد تلقائياً':daysLeft+' يوم متبقي'} — تحليلات AI بلا حدود ✨</div>
+        </div>
+        <button onclick="manageVipSubscription()" style="margin-top:10px;width:100%;background:none;border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px;color:var(--dim);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer">إدارة الاشتراك أو إلغاؤه</button>`;
     }
     if(subRow) subRow.style.display='none';
   }else{
     if(statusBox) statusBox.style.display='none';
-    if(subRow) subRow.style.display='flex';
+    if(subRow) subRow.style.display='block';
   }
 }
 function closeVipModal(){ const m=document.getElementById('vip-modal'); if(m) m.style.display='none'; }
@@ -4744,8 +4873,9 @@ async function doAI(text){
   if((await _aiQuotaRemaining())<=0){
     const isRTL = !document.documentElement.classList.contains('lang-en');
     showToast(isRTL
-      ? `⏳ وصلت للحد اليومي للذكاء الاصطناعي (${AI_DAILY_LIMIT} أسئلة). حاول مجدداً غداً!`
+      ? `⏳ وصلت للحد اليومي للذكاء الاصطناعي (${AI_DAILY_LIMIT} أسئلة). اشتركي في VIP لأسئلة بلا حدود 👑`
       : `⏳ You've used today's daily limit (${AI_DAILY_LIMIT} questions). Try again tomorrow!`);
+    if(typeof openVipModal==='function') setTimeout(openVipModal, 600);
     return;
   }
 
@@ -6573,13 +6703,13 @@ function _updateQuickChips(){
       const snap=await getDoc(doc(db,'users',uid));
       if(snap.exists()){
         const d=snap.data();
-        if(d.isPremium) return {isPremium:true,premiumPlan:d.premiumPlan,premiumExpiry:d.premiumExpiry,premiumProductId:d.premiumProductId};
+        if('isPremium' in d) return {isPremium:!!d.isPremium,premiumPlan:d.premiumPlan||null,premiumExpiry:d.premiumExpiry||null,premiumProductId:d.premiumProductId||null,autoRenewing:d.autoRenewing!==false,verifiedAt:d.vipVerifiedAt||null};
       }
-      return null;
+      return {isPremium:false};
     }catch(e){ return null; }
   };
   window._fsSetVipStatus = async function(uid,info){
-    try{ await setDoc(doc(db,'users',uid),{isPremium:!!info.isPremium,premiumPlan:info.premiumPlan||null,premiumExpiry:info.premiumExpiry||null,premiumProductId:info.premiumProductId||null},{merge:true}); }catch(e){}
+    try{ await setDoc(doc(db,'users',uid),{isPremium:!!info.isPremium,premiumPlan:info.premiumPlan||null,premiumExpiry:info.premiumExpiry||null,premiumProductId:info.premiumProductId||null,purchaseToken:info.purchaseToken||null,orderId:info.orderId||null,autoRenewing:!!info.autoRenewing,vipVerifiedAt:info.verifiedAt||null},{merge:true}); }catch(e){}
   };
   /*
     FIRESTORE SECURITY RULES (ضعها بـ Firebase Console → Firestore → Rules):
@@ -6775,6 +6905,7 @@ function _updateQuickChips(){
   let _authStateReady = false;
   onAuthStateChanged(auth, (user)=>{
     window._authUser = user;
+    if(user){ if(typeof updateVipUI==='function') updateVipUI(); if(typeof syncVipWithPlay==='function') syncVipWithPlay(); }
     if(typeof updateProfAuthBtn === 'function') updateProfAuthBtn();
     if(typeof updateProfView === 'function') updateProfView();
 
@@ -6792,7 +6923,7 @@ function _updateQuickChips(){
       if(appEl && appEl.style.display === 'flex'){
         hideAuthScreen();
         // عند تسجيل الخروج: امسح حالة VIP المحلية (تبقى بـ Firestore للمشتركين الحقيقيين)
-        localStorage.removeItem('rosivaVip');
+        if(typeof _vipClearLocal==='function') _vipClearLocal();
         updateVipUI();
         if(typeof navTo === 'function') navTo('prof');
       }
