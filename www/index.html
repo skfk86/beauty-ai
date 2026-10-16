@@ -2514,7 +2514,48 @@ body{font-family:var(--font-ui);background:var(--v-bg)}
 .lm-lockup--xl{font-size:56px;gap:14px;letter-spacing:0 !important;background:none !important;-webkit-text-fill-color:currentColor !important;color:var(--v-ink) !important}
 .lm-lockup--xl .lm-mark{width:64px;height:64px}
 #auth-screen .lm-mark{width:40px;height:40px;color:#F3E7D3}
-#auth-screen .auth-bg-blob{display:none}
+
+/* ══ AUTH — Lamsa ══ */
+#auth-screen.au{position:fixed;inset:0;z-index:980;overflow-y:auto;background:var(--v-bg);display:none;flex-direction:column}
+.au-top{position:relative;padding:calc(env(safe-area-inset-top,0px) + 56px) 24px 64px;text-align:center;background:#1E2747;color:#F3E7D3;overflow:hidden}
+.au-top::before{content:'';position:absolute;inset:0;opacity:.18;pointer-events:none;
+  background:radial-gradient(circle,#E58A5A 1.6px,transparent 2px) 0 0/22px 22px,radial-gradient(circle,#E58A5A 1.6px,transparent 2px) 11px 11px/22px 22px;
+  -webkit-mask:linear-gradient(to bottom,#000,transparent 85%);mask:linear-gradient(to bottom,#000,transparent 85%)}
+.au-close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 14px);left:14px;width:38px;height:38px;border-radius:50%;border:0;
+  background:rgba(243,231,211,.1);color:#F3E7D3;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.au-brand{position:relative;display:inline-flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:44px;font-weight:700;line-height:1}
+.au-brand .lm-mark{width:48px;height:48px;color:#F3E7D3}
+.au-brand .lm-mark circle{fill:#E58A5A}
+.au-tag{position:relative;margin:12px 0 0;font-size:15px;color:rgba(243,231,211,.75)}
+.au-sheet{position:relative;flex:1;margin-top:-28px;padding:22px 20px calc(env(safe-area-inset-bottom,0px) + 24px);
+  background:var(--v-bg);border-radius:28px 28px 0 0;max-width:520px;width:100%;align-self:center}
+#auth-screen .au-tabs{background:var(--v-raised);border:0;border-radius:14px;padding:4px;margin-bottom:22px}
+#auth-screen .auth-tab{font-size:14px;font-weight:600;color:var(--v-mist);border-radius:10px;padding:10px 0}
+#auth-screen .auth-tab.on{color:var(--v-ink)}
+#auth-screen .auth-tab-indicator{background:var(--v-surface);box-shadow:0 1px 3px rgba(0,0,0,.18);border-radius:10px}
+.au-field{margin-bottom:16px}
+.au-field label{display:block;font-size:13px;font-weight:600;color:var(--v-ink);margin:0 2px 6px}
+.au-label-row{display:flex;align-items:baseline;justify-content:space-between}
+.au-link{background:none;border:0;padding:0 2px 6px;font-size:13px;font-weight:600;color:var(--v-rose);cursor:pointer}
+#auth-screen .au-field input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--v-line);background:var(--v-surface);
+  color:var(--v-ink);font-size:16px;transition:border-color .15s}
+#auth-screen .au-field input[dir=ltr]{text-align:left}
+#auth-screen .au-field input:focus{outline:none;border-color:var(--v-rose)}
+#auth-screen .au-field input::placeholder{color:var(--v-faint)}
+.au-pass{position:relative}
+html:not(.lang-en) #auth-screen #auth-pass:placeholder-shown,html:not(.lang-en) #auth-screen #auth-name:placeholder-shown{direction:rtl;text-align:right}
+#auth-screen .au-pass input{padding-left:50px}
+#auth-screen .au-eye{left:8px;right:auto;width:38px;height:38px;color:var(--v-mist)}
+.au-error{background:rgba(224,96,96,.1);color:#E07A7A;border:1px solid rgba(224,96,96,.3);border-radius:12px;padding:10px 12px;font-size:13px;margin:0 0 14px;text-align:center}
+.au-agree{display:flex;align-items:flex-start;gap:10px;margin:4px 0 20px;cursor:pointer;font-size:13px;line-height:1.7;color:var(--v-mist)}
+.au-agree input{width:18px;height:18px;margin-top:3px;flex-shrink:0;accent-color:var(--v-rose)}
+.au-agree a{color:var(--v-rose);font-weight:600;text-decoration:none}
+#auth-screen .au-submit{border-radius:14px;padding:16px;font-size:16px;font-weight:700;background:var(--v-rose-deep);color:#FFF6EA;box-shadow:none}
+body.light-mode #auth-screen .au-submit{background:#A8461F}
+html.lang-en #auth-submit-icon{transform:scaleX(-1)}
+.au-guest{display:block;margin:14px auto 0;background:none;border:0;padding:10px;font-size:14px;font-weight:600;color:var(--v-mist);cursor:pointer}
+.au-foot{margin:18px 0 0;text-align:center;font-size:12px;color:var(--v-faint)}
+
 .lm-word-auth{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--v-ink)}
 button,input,textarea,select{font-family:inherit}
 :focus-visible{outline:2px solid var(--v-rose);outline-offset:2px;border-radius:6px}
@@ -3327,73 +3368,57 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
 <div id="loader"><div class="spin"></div><div style="font-size:12px;color:var(--dim)">Loading...</div></div>
 <div class="toast" id="toast"></div>
 
-<!-- AUTH SCREEN (Firebase) -->
-<div id="auth-screen" style="display:none;position:fixed;inset:0;z-index:980;background:var(--bg);overflow-x:hidden;overflow-y:auto">
-  <div class="auth-bg-blob" style="width:260px;height:260px;background:var(--rose);top:-60px;right:-80px"></div>
-  <div class="auth-bg-blob" style="width:220px;height:220px;background:var(--gold2);bottom:0;left:-70px"></div>
-  <div style="position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 22px;">
-    <div style="width:100%;max-width:380px;">
-      <div style="text-align:center;margin-bottom:26px">
-        <div style="width:76px;height:76px;border-radius:24px;background:#1E2747;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:var(--shadow-glow)">
-          <svg class="lm-mark" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 90V58a28 31 0 0 1 56 0v32"/><path d="M32 90V60a18 21 0 0 1 36 0v22"/><path d="M42 86V62a8 10 0 0 1 16 0v12"/><circle cx="50" cy="12" r="3.4"/><circle cx="39.5" cy="15.5" r="2.5"/><circle cx="60.5" cy="15.5" r="2.5"/></svg>
-        </div>
-        <div class="lm-word-auth">لمسة</div>
-        <div style="font-size:12.5px;color:var(--dim);margin-top:5px" id="auth-tagline" data-i18n="auth.tagline">مستشارتكِ الذكية في الجمال</div>
+<!-- AUTH SCREEN (Firebase) — Lamsa -->
+<div id="auth-screen" class="au" style="display:none">
+  <header class="au-top">
+    <button type="button" class="au-close" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <div class="au-brand"><svg class="lm-mark" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 90V58a28 31 0 0 1 56 0v32"/><path d="M32 90V60a18 21 0 0 1 36 0v22"/><path d="M42 86V62a8 10 0 0 1 16 0v12"/><circle cx="50" cy="12" r="3.4"/><circle cx="39.5" cy="15.5" r="2.5"/><circle cx="60.5" cy="15.5" r="2.5"/></svg><span>لمسة</span></div>
+    <p class="au-tag" id="auth-tagline" data-i18n="auth.tagline">مستشارتكِ الذكية في الجمال</p>
+  </header>
+
+  <main class="au-sheet">
+    <div class="auth-tabs au-tabs" role="tablist">
+      <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
+      <button class="auth-tab on" id="auth-tab-login" role="tab" onclick="setAuthMode('login')" data-i18n="auth.login.tab">تسجيل الدخول</button>
+      <button class="auth-tab" id="auth-tab-signup" role="tab" onclick="setAuthMode('signup')" data-i18n="auth.signup.tab">حساب جديد</button>
+    </div>
+
+    <div id="auth-name-wrap" class="auth-field au-field" style="display:none">
+      <label for="auth-name">الاسم</label>
+      <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="كيف نناديكِ؟" autocomplete="name">
+    </div>
+
+    <div class="auth-field au-field">
+      <label for="auth-email">البريد الإلكتروني</label>
+      <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email">
+    </div>
+
+    <div class="auth-field au-field">
+      <div class="au-label-row">
+        <label for="auth-pass">كلمة المرور</label>
+        <button type="button" id="auth-forgot-wrap" class="au-link" onclick="handleForgotPassword()">نسيتِ كلمة المرور؟</button>
       </div>
-
-      <div class="auth-card">
-        <!-- TABS -->
-        <div class="auth-tabs">
-          <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
-          <button class="auth-tab on" id="auth-tab-login" onclick="setAuthMode('login')" data-i18n="auth.login.tab">تسجيل الدخول</button>
-          <button class="auth-tab" id="auth-tab-signup" onclick="setAuthMode('signup')" data-i18n="auth.signup.tab">حساب جديد</button>
-        </div>
-
-        <!-- NAME (signup only) -->
-        <div id="auth-name-wrap" class="auth-field" style="display:none">
-          <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="اسمك" autocomplete="name" />
-          <i class="fa-solid fa-user"></i>
-        </div>
-
-        <!-- EMAIL -->
-        <div class="auth-field">
-          <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="البريد الإلكتروني" dir="ltr" autocomplete="email" style="text-align:left;padding-right:16px;padding-left:44px" />
-          <i class="fa-solid fa-envelope" style="right:auto;left:16px"></i>
-        </div>
-
-        <!-- PASSWORD -->
-        <div class="auth-field">
-          <input id="auth-pass" type="password" placeholder="كلمة المرور" dir="ltr" autocomplete="current-password" style="text-align:left;padding-right:16px;padding-left:72px" />
-          <i class="fa-solid fa-lock" style="right:auto;left:16px"></i>
-          <button type="button" class="auth-field-eye" onclick="toggleAuthPassVis()" aria-label="إظهار/إخفاء كلمة المرور" style="left:42px">
-            <i class="fa-regular fa-eye" id="auth-pass-icon"></i>
-          </button>
-        </div>
-
-        <div id="auth-forgot-wrap" style="text-align:left;margin-bottom:16px;margin-top:-2px">
-          <span onclick="handleForgotPassword()" style="font-size:11.5px;color:var(--gold2);cursor:pointer;font-weight:700">نسيتِ كلمة المرور؟</span>
-        </div>
-
-        <div id="auth-error" style="display:none;background:var(--error-d);color:var(--error);border:1px solid rgba(224,96,96,.3);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;margin-bottom:14px;text-align:center"></div>
-
-        <label style="display:flex;align-items:flex-start;gap:8px;margin-bottom:18px;cursor:pointer;user-select:none">
-          <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--rose);flex-shrink:0;cursor:pointer" />
-          <span style="font-size:11.5px;color:var(--dim);line-height:1.7">
-            أوافق على <span onclick="event.preventDefault();navTo('prof');setTimeout(openPrivacy,300)" style="color:var(--gold2);cursor:pointer;font-weight:700">سياسة الخصوصية</span> وشروط استخدام لمسة
-          </span>
-        </label>
-
-        <button id="auth-submit-btn" class="auth-submit" onclick="handleAuthSubmit()">
-          <span id="auth-submit-label">تسجيل الدخول</span>
-          <i class="fa-solid fa-arrow-left-long" id="auth-submit-icon"></i>
-        </button>
-      </div>
-
-      <div style="text-align:center;margin-top:20px;font-size:11px;color:var(--muted)">
-        Gilgamesh LLC — Lamsa © 2026
+      <div class="au-pass">
+        <input id="auth-pass" type="password" placeholder="6 أحرف على الأقل" dir="ltr" autocomplete="current-password">
+        <button type="button" class="auth-field-eye au-eye" onclick="toggleAuthPassVis()" aria-label="إظهار أو إخفاء كلمة المرور"><i class="fa-regular fa-eye" id="auth-pass-icon"></i></button>
       </div>
     </div>
-  </div>
+
+    <div id="auth-error" class="au-error" role="alert" style="display:none"></div>
+
+    <label class="au-agree">
+      <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()">
+      <span>أوافق على <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">سياسة الخصوصية</a> وشروط استخدام لمسة</span>
+    </label>
+
+    <button id="auth-submit-btn" class="auth-submit au-submit" onclick="handleAuthSubmit()">
+      <span id="auth-submit-label">تسجيل الدخول</span>
+      <i class="fa-solid fa-arrow-left" id="auth-submit-icon"></i>
+    </button>
+
+    <button type="button" class="au-guest" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()">المتابعة بدون حساب</button>
+    <p class="au-foot">Gilgamesh LLC — لمسة © 2026</p>
+  </main>
 </div>
 
 <script>
@@ -6606,7 +6631,7 @@ const TRANSLATIONS = {
     'sb.fragrance':'عطور','sb.skincare':'عناية بالبشرة','sb.hair':'عناية بالشعر',
     'sb.account':'الحساب','sb.myaccount':'حسابي','sb.vip':'اشتراك VIP','sb.coming':'قريباً',
     'auth.login.tab':'تسجيل الدخول','auth.signup.tab':'حساب جديد',
-    'auth.name.ph':'اسمك','auth.email.ph':'البريد الإلكتروني','auth.pass.ph':'كلمة المرور',
+    'auth.name.ph':'كيف نناديكِ؟','auth.email.ph':'name@example.com','auth.pass.ph':'كلمة المرور',
     'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'مستشارتكِ الذكية في الجمال',
     'auth.submit.login':'تسجيل الدخول','auth.submit.signup':'إنشاء حساب',
     'misc.viewprod':'عرض المنتج في المتجر',
@@ -6663,7 +6688,7 @@ const TRANSLATIONS = {
     'sb.fragrance':'Fragrances','sb.skincare':'Skincare','sb.hair':'Hair Care',
     'sb.account':'Account','sb.myaccount':'My Account','sb.vip':'VIP Subscription','sb.coming':'Coming Soon',
     'auth.login.tab':'Sign In','auth.signup.tab':'New Account',
-    'auth.name.ph':'Your name','auth.email.ph':'Email address','auth.pass.ph':'Password',
+    'auth.name.ph':'What should we call you?','auth.email.ph':'name@example.com','auth.pass.ph':'Password',
     'auth.forgot':'Forgot password?','auth.tagline':'Your smart beauty advisor',
     'auth.submit.login':'Sign In','auth.submit.signup':'Create Account',
     'misc.viewprod':'View Product in Store',
@@ -6779,7 +6804,7 @@ function _updateQuickChips(){
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
   import {
     getFirestore, collection, query, where, limit,
-    getDocs, setDoc, getDoc, doc
+    getDocs, setDoc, getDoc, doc, deleteDoc
   } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
   import {
     getAuth,
@@ -6928,8 +6953,8 @@ function _updateQuickChips(){
   window.deleteAllUserData = async function(){
     const isRTL = !document.documentElement.classList.contains('lang-en');
     const msg1 = isRTL
-      ? 'سيتم حذف جميع بياناتك نهائياً (المفضلة، الإعدادات، الحساب) ولا يمكن التراجع عن هذا. هل أنتِ متأكدة؟'
-      : 'This will permanently delete all your data (favorites, settings, account) and cannot be undone. Are you sure?';
+      ? 'سيتم حذف جميع بياناتك نهائياً (المفضلة، الإعدادات، الحساب) ولا يمكن التراجع عن هذا.\n\nملاحظة: إن كان لديكِ اشتراك VIP فألغيه من Google Play، فحذف الحساب لا يوقف التجديد.\n\nهل أنتِ متأكدة؟'
+      : 'This will permanently delete all your data (favorites, settings, account) and cannot be undone.\n\nNote: if you have a VIP subscription, cancel it in Google Play — deleting your account does not stop renewal.\n\nAre you sure?';
     const msg2 = isRTL
       ? 'تأكيد أخير: سيتم حذف حسابك وكل بياناتك المحلية للأبد. استمرار؟'
       : 'Final confirmation: your account and all local data will be deleted forever. Continue?';
@@ -6938,6 +6963,9 @@ function _updateQuickChips(){
 
     let accountDeleteFailed = false;
     if(auth.currentUser){
+      // احذفي سجل المستخدمة في Firestore أولاً (الاشتراك، عداد الأسئلة) — قبل حذف الحساب
+      // لأن قواعد الأمان تتطلب أن تكون مسجّلة الدخول لحذف مستندها
+      try{ await deleteDoc(doc(db,'users',auth.currentUser.uid)); }catch(e){}
       try{
         await deleteUser(auth.currentUser);
       }catch(e){
@@ -7013,7 +7041,7 @@ function _updateQuickChips(){
       window.setAuthMode(window._authMode);
       window._authMode = null;
     }
-    $('auth-screen').style.display = 'block';
+    $('auth-screen').style.display = 'flex';
   }
   function hideAuthScreen(){
     $('auth-screen').style.display = 'none';
@@ -7037,7 +7065,7 @@ function _updateQuickChips(){
     if(typeof updateProfView === 'function') updateProfView();
 
     if(user){
-      const wasAuthVisible = $('auth-screen').style.display === 'block';
+      const wasAuthVisible = $('auth-screen').style.display === 'flex';
       hideAuthScreen();
       if(wasAuthVisible){
         const appEl = $('app');
