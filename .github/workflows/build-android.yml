@@ -70,9 +70,9 @@ jobs:
       - name: Generate icons
         run: |
           npx capacitor-assets generate --android \
-            --iconBackgroundColor '#0e0512' \
-            --iconBackgroundColorDark '#0e0512' \
-            --icon www/assets/rosiva-logo.jpg || true
+            --iconBackgroundColor '#1E2747' \
+            --iconBackgroundColorDark '#1E2747' \
+            --icon www/assets/lamsa-logo.png || true
 
       - name: Sync Capacitor Android project
         run: npx cap sync android

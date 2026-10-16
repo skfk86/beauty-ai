@@ -5,18 +5,18 @@
 <meta name="theme-color" content="#07010a" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#fdf8fb" media="(prefers-color-scheme: light)">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Rosiva</title>
-<link rel="icon" type="image/jpeg" href="assets/rosiva-logo.jpg">
-<link rel="apple-touch-icon" href="assets/rosiva-logo.jpg">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Amiri:wght@400;700&family=Cairo:wght@400;700;900&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<title>Lamsa</title>
+<link rel="icon" type="image/svg+xml" href="assets/lamsa-mark.svg">
+<link rel="apple-touch-icon" href="assets/lamsa-logo.png">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Reem+Kufi:wght@500;600;700&family=Cairo:wght@400;700;900&family=Playfair+Display:wght@400;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
 :root{
   /* ── Obsidian Luxe — Dark ── */
-  --bg:#04020A;--bg2:#090510;--card:#110B18;--card2:#1A1124;
-  --border:#281638;--rose:#B8426A;--rose2:#D46082;
-  --rose-d:rgba(184,66,106,.16);--gold:#B87230;--gold2:#D8944C;
-  --gold-d:rgba(184,114,48,.13);--text:#EEE6EC;--dim:#A08A98;--muted:#30183A;
+  --bg:#0A0D1C;--bg2:#0F1428;--card:#182040;--card2:#212A50;
+  --border:#2A3358;--rose:#B5532A;--rose2:#E58A5A;
+  --rose-d:rgba(181,83,42,.16);--gold:#B8862F;--gold2:#E3B862;
+  --gold-d:rgba(184,134,47,.13);--text:#F3E7D3;--dim:#B7AE9F;--muted:#3A4166;
   --success:#4caf50;--success-d:rgba(76,175,80,.12);
   --error:#e06060;--error-d:rgba(224,96,96,.12);
   --warning:#ff9900;--warning-d:rgba(255,153,0,.12);
@@ -40,20 +40,20 @@
 body.theme-transitioning *{transition:background .3s,color .3s,border-color .3s !important}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
 body.light-mode{
-  --bg:#FAF6FA;--bg2:#F2EAF4;--card:#FFFFFF;--card2:#F7F0F8;
-  --border:#E0D0E8;--rose:#A03060;--rose2:#C04876;
-  --rose-d:rgba(160,48,96,.1);--gold:#8A5020;--gold2:#A86830;
-  --gold-d:rgba(138,80,32,.09);--text:#140816;--dim:#6A4860;--muted:#D8C0D0;
-  --shadow-sm:0 2px 10px rgba(60,0,40,.08);
-  --shadow-md:0 4px 24px rgba(60,0,40,.12);
-  --shadow-lg:0 8px 40px rgba(60,0,40,.15);
+  --bg:#FBF6EC;--bg2:#F2E8D8;--card:#FFFFFF;--card2:#F7EEDF;
+  --border:#E0D2BC;--rose:#A03060;--rose2:#C04876;
+  --rose-d:rgba(150,62,28,.1);--gold:#8A5020;--gold2:#A86830;
+  --gold-d:rgba(130,95,35,.09);--text:#141A36;--dim:#6A4860;--muted:#D8C0D0;
+  --shadow-sm:0 2px 10px rgba(30,20,10,.08);
+  --shadow-md:0 4px 24px rgba(30,20,10,.12);
+  --shadow-lg:0 8px 40px rgba(30,20,10,.15);
 }
 /* ── Light mode overrides for hardcoded elements ── */
 body.light-mode .bnav{
   background:rgba(245,240,245,.97) !important;
-  border-top:1px solid #e0cce0 !important;
+  border-top:1px solid #E0D0B8 !important;
 }
-body.light-mode .ni-lb{color:#705060}
+body.light-mode .ni-lb{color:#8A8090}
 body.light-mode .ni.act .ni-lb{color:#c03060}
 body.light-mode .hdr-menu{
   background:rgba(240,235,240,.15) !important;
@@ -64,8 +64,8 @@ body.light-mode .hdr-vip{
 }
 body.light-mode .sb{
   background:#ffffff !important;
-  border-left:1px solid #e0d0e8 !important;
-  box-shadow:-8px 0 32px rgba(80,0,40,.12) !important;
+  border-left:1px solid #E0D2BC !important;
+  box-shadow:-8px 0 32px rgba(40,22,10,.12) !important;
 }
 body.light-mode .sb-ov.open{background:rgba(0,0,0,.4)}
 body.light-mode .mov{background:rgba(255,255,255,.85)}
@@ -87,26 +87,26 @@ body.light-mode .pvl{color:var(--dim)}
 body.light-mode .screen{background:var(--bg)}
 body.light-mode .mic-btn{
   background:linear-gradient(145deg,var(--rose),#a02050) !important;
-  box-shadow:0 0 0 8px rgba(192,48,94,.1),0 8px 24px rgba(192,48,94,.3) !important;
+  box-shadow:0 0 0 8px rgba(168,70,31,.1),0 8px 24px rgba(168,70,31,.3) !important;
 }
 body.light-mode .mic-btn i{color:#ffffff !important}
 body.light-mode .mic-btn.rec{
-  box-shadow:0 0 35px rgba(192,48,96,.4),inset 0 1px 0 rgba(255,255,255,.5) !important;
+  box-shadow:0 0 35px rgba(168,70,31,.4),inset 0 1px 0 rgba(255,255,255,.5) !important;
 }
 .mic-btn.speaking{
   background:linear-gradient(135deg,#c47830,#e09050)!important;
-  box-shadow:0 0 0 8px rgba(196,120,48,.3),0 0 0 16px rgba(196,120,48,.15)!important;
+  box-shadow:0 0 0 8px rgba(190,140,55,.3),0 0 0 16px rgba(190,140,55,.15)!important;
   animation:pulse-gold 0.7s ease-in-out infinite!important;
 }
 body.light-mode 
 body.light-mode .sp-name{color:#1a0a18}
-body.light-mode .sp-sub{color:#705060}
-body.light-mode .sp-tag{color:#705060}
-body.light-mode .sp-feat-lb{color:#705060}
+body.light-mode .sp-sub{color:#8A8090}
+body.light-mode .sp-tag{color:#8A8090}
+body.light-mode .sp-feat-lb{color:#8A8090}
 body.light-mode .sp-feat-ic{background:rgba(0,0,0,.06)}
 body.light-mode .sp-logo{
   background:rgba(255,255,255,.8);
-  box-shadow:0 0 30px rgba(192,48,96,.2);
+  box-shadow:0 0 30px rgba(168,70,31,.2);
 }
 body.light-mode .hdr-back{color:var(--text)}
 body.light-mode .hdr-ttl{color:var(--text)}
@@ -146,28 +146,28 @@ body.light-mode .ft.on{
   color:#fff;
 }
 body.light-mode .sb-key-row{
-  background:#f8f0f8;
-  border:1.5px solid #e8d4e8;
+  background:#F7EEDF;
+  border:1.5px solid #E8D9C2;
   border-radius:12px;
 }
 body.light-mode .sb-key-inp{
-  color:#160818 !important;
+  color:#141A36 !important;
   background:transparent !important;
 }
 body.light-mode .sb-key-inp::placeholder{
   color:#9a7088 !important;
 }
-body.light-mode .sb-logo-txt{color:#d04472}
+body.light-mode .sb-logo-txt{color:#B5532A}
 body.light-mode .sb-hd{color:#9a7088}
-body.light-mode .sb-item-name{color:#160818}
-body.light-mode .sb-item-badge{background:#f0d8e8;color:#d04472}
+body.light-mode .sb-item-name{color:#141A36}
+body.light-mode .sb-item-badge{background:#f0d8e8;color:#B5532A}
 body.light-mode .sb-close{
   background:#f5eef7 !important;
-  color:#160818 !important;
-  border:1px solid #e8d4e8 !important;
+  color:#141A36 !important;
+  border:1px solid #E8D9C2 !important;
 }
 body.light-mode .sb-key-save{
-  background:linear-gradient(135deg,#c0305e,#d04472) !important;
+  background:linear-gradient(135deg,#c0305e,#B5532A) !important;
   color:#fff !important;
 }
 body.light-mode .sb-item{color:var(--text)}
@@ -188,10 +188,10 @@ body{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;color:var(--text);-we
 
 /* ─── SPLASH SCREEN ─── */
 #ob::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 70% 80%,rgba(208,66,114,.18) 0%,transparent 60%);
+  background:radial-gradient(ellipse at 70% 80%,rgba(196,98,52,.18) 0%,transparent 60%);
   animation:pulse-bg 4s ease-in-out infinite}
 #ob::after{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 20% 70%,rgba(196,136,96,.1) 0%,transparent 50%);
+  background:radial-gradient(ellipse at 20% 70%,rgba(205,160,100,.1) 0%,transparent 50%);
   animation:pulse-bg 4s ease-in-out infinite 2s}
 @keyframes pulse-bg{0%,100%{opacity:.4}50%{opacity:1}}
 @keyframes sp-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.2);opacity:0}}
@@ -214,9 +214,9 @@ body{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;color:var(--text);-we
 /* ─── HEADER — Premium Glass ─── */
 .hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 8px;
   position:sticky;top:0;z-index:10;
-  background:rgba(4,2,10,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  background:rgba(10,13,28,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.04);}
-body.light-mode .hdr{background:rgba(250,246,250,.9);border-bottom:1px solid rgba(0,0,0,.05);}
+body.light-mode .hdr{background:rgba(251,246,236,.9);border-bottom:1px solid rgba(0,0,0,.05);}
 .hdr-menu{width:38px;height:38px;border-radius:var(--r-sm);
   background:rgba(255,255,255,.04);
   border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;
@@ -228,35 +228,35 @@ body.light-mode .hdr{background:rgba(250,246,250,.9);border-bottom:1px solid rgb
   display:flex;flex-direction:column;align-items:center;letter-spacing:-.3px}
 .hdr-title .ht-main{font-size:17px;font-weight:900;letter-spacing:-.4px}
 .hdr-vip{
-  background:linear-gradient(135deg,#1E1108,#2C1A0A);
-  border:1px solid rgba(216,148,76,.5);color:var(--gold2);
+  background:linear-gradient(135deg,#1E1108,#2C1E0A);
+  border:1px solid rgba(227,184,98,.5);color:var(--gold2);
   padding:5px 13px;border-radius:var(--r-full);font-size:11.5px;font-weight:800;
   font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;
   flex-shrink:0;
-  box-shadow:0 0 16px rgba(184,114,48,.18),inset 0 1px 0 rgba(255,255,255,.06);
+  box-shadow:0 0 16px rgba(184,134,47,.18),inset 0 1px 0 rgba(255,255,255,.06);
   transition:transform var(--dur-fast),box-shadow var(--dur-fast);
   position:relative;overflow:hidden;
 }
 .hdr-vip:active{transform:scale(.94);box-shadow:none}
 body.light-mode .hdr-vip{
   background:linear-gradient(135deg,#FFF3E0,#FFE4B5);
-  border:1px solid rgba(184,114,48,.5);
+  border:1px solid rgba(184,134,47,.5);
   color:var(--gold);
-  box-shadow:0 2px 10px rgba(138,80,32,.15);
+  box-shadow:0 2px 10px rgba(130,95,35,.15);
 }
 
 /* ══ VIP MODAL — Light Mode ══ */
 body.light-mode #vip-modal > div:nth-child(2){
-  background:#FAF6FA !important;
+  background:#FBF6EC !important;
 }
-body.light-mode #vip-modal [style*="#0E0816"],
-body.light-mode #vip-modal [style*="#1C0E28"],
-body.light-mode #vip-modal [style*="#0A0510"],
-body.light-mode #vip-modal [style*="#09060F"]{
-  background:#FDF0F6 !important;
+body.light-mode #vip-modal [style*="#121834"],
+body.light-mode #vip-modal [style*="#1C2448"],
+body.light-mode #vip-modal [style*="#0F1428"],
+body.light-mode #vip-modal [style*="#0F1428"]{
+  background:#FBF1E4 !important;
 }
 body.light-mode #vip-modal .vip-aurora-top{
-  background:linear-gradient(160deg,#FDF0F6 0%,#F5E8F5 40%,#F8F0FA 100%) !important;
+  background:linear-gradient(160deg,#FBF1E4 0%,#F5E8F5 40%,#F8F0FA 100%) !important;
 }
 /* VIP features rows */
 body.light-mode #vip-modal [style*="rgba(255,255,255,.04)"]{
@@ -264,53 +264,53 @@ body.light-mode #vip-modal [style*="rgba(255,255,255,.04)"]{
   border-color:rgba(0,0,0,.07) !important;
 }
 /* VIP pricing cards */
-body.light-mode #vip-modal [style*="#1A0E24"],
-body.light-mode #vip-modal [style*="#120A1C"],
-body.light-mode #vip-modal [style*="#110C18"]{
+body.light-mode #vip-modal [style*="#1E2650"],
+body.light-mode #vip-modal [style*="#161D3C"],
+body.light-mode #vip-modal [style*="#182040"]{
   background:#FFFFFF !important;
-  border-color:rgba(160,48,96,.2) !important;
+  border-color:rgba(150,62,28,.2) !important;
 }
 /* VIP crown box */
-body.light-mode #vip-modal [style*="rgba(17,11,24"]{
+body.light-mode #vip-modal [style*="rgba(24,32,64"]{
   background:rgba(250,240,248,.95) !important;
 }
 /* VIP text colors */
-body.light-mode #vip-modal [style*="color:#EEE6EC"],
-body.light-mode #vip-modal [style*="color:#F0E8EC"]{
-  color:#140816 !important;
+body.light-mode #vip-modal [style*="color:#F3E7D3"],
+body.light-mode #vip-modal [style*="color:#F3E7D3"]{
+  color:#141A36 !important;
 }
-body.light-mode #vip-modal [style*="color:rgba(240,232,236,.5)"]{
+body.light-mode #vip-modal [style*="color:rgba(243,231,211,.5)"]{
   color:rgba(20,8,22,.45) !important;
 }
-body.light-mode #vip-modal [style*="color:rgba(240,232,236,.5)"],
-body.light-mode #vip-modal [style*="color:rgba(216,148,76,.8)"]{
+body.light-mode #vip-modal [style*="color:rgba(243,231,211,.5)"],
+body.light-mode #vip-modal [style*="color:rgba(227,184,98,.8)"]{
   color:var(--gold) !important;
 }
 /* VIP status box in light mode */
 body.light-mode #vip-status-box{
-  background:linear-gradient(135deg,rgba(184,114,48,.08),rgba(160,48,96,.06)) !important;
-  border-color:rgba(184,114,48,.25) !important;
+  background:linear-gradient(135deg,rgba(184,134,47,.08),rgba(150,62,28,.06)) !important;
+  border-color:rgba(184,134,47,.25) !important;
   color:var(--gold) !important;
 }
 
 /* ══ AI CHAT — Light Mode ══ */
 body.light-mode .ai-chat-card{ background:#FFFFFF; border-color:var(--border); }
-body.light-mode .ai-input-bar{ background:#F7F0F8; border-color:var(--border); }
+body.light-mode .ai-input-bar{ background:#F7EEDF; border-color:var(--border); }
 body.light-mode .ai-quick-chip{
-  background:#F2EAF4; color:var(--dim);
-  border-color:rgba(160,48,96,.15);
+  background:#F2E8D8; color:var(--dim);
+  border-color:rgba(150,62,28,.15);
 }
 body.light-mode .ai-quick-chip:active{
   background:var(--rose-d); border-color:var(--rose);
 }
 /* AI header gradient in light mode */
 body.light-mode .ai-chat-hdr,
-body.light-mode [style*="rgba(184,66,106,.1)"][style*="rgba(184,114,48,.06)"]{
-  background:linear-gradient(135deg,rgba(160,48,96,.07),rgba(184,114,48,.04)) !important;
-  border-color:rgba(160,48,96,.1) !important;
+body.light-mode [style*="rgba(181,83,42,.1)"][style*="rgba(184,134,47,.06)"]{
+  background:linear-gradient(135deg,rgba(150,62,28,.07),rgba(184,134,47,.04)) !important;
+  border-color:rgba(150,62,28,.1) !important;
 }
 body.light-mode .ai-chat-reply{
-  background:#F7F0F8;
+  background:#F7EEDF;
   color:var(--text);
   border-radius:16px;
   padding:12px 14px;
@@ -322,22 +322,22 @@ body.light-mode .ai-chat-reply .dots span{
 /* ══ PRODUCT CARDS — Light Mode ══ */
 body.light-mode .obf-card{
   background:#FFFFFF;
-  border-color:rgba(200,180,210,.35);
-  box-shadow:0 2px 12px rgba(80,0,40,.07);
+  border-color:rgba(200,190,170,.35);
+  box-shadow:0 2px 12px rgba(40,22,10,.07);
 }
 body.light-mode .obf-card-img{
-  background:#F5EEF8;
+  background:#F6EDE0;
 }
 body.light-mode .obf-card-badge{
-  background:rgba(250,246,250,.9);
+  background:rgba(251,246,236,.9);
   color:var(--rose);
-  border-color:rgba(160,48,96,.2);
+  border-color:rgba(150,62,28,.2);
 }
-body.light-mode .obf-card-name{ color:#140816; }
+body.light-mode .obf-card-name{ color:#141A36; }
 body.light-mode .obf-card-brand{ color:var(--rose); }
 body.light-mode .obf-card-link{ color:var(--dim); }
 body.light-mode .obf-card-fav{
-  background:rgba(250,246,250,.85);
+  background:rgba(251,246,236,.85);
   color:rgba(0,0,0,.25);
   border-color:rgba(0,0,0,.08);
 }
@@ -345,10 +345,10 @@ body.light-mode .obf-card-fav{
 /* ══ AI PRODUCT RECOMMENDATION CARDS — Light Mode ══ */
 body.light-mode #ai-prod-recs .obf-card{
   background:#FFFFFF;
-  border-color:rgba(200,180,210,.3);
-  box-shadow:0 2px 10px rgba(80,0,40,.06);
+  border-color:rgba(200,190,170,.3);
+  box-shadow:0 2px 10px rgba(40,22,10,.06);
 }
-body.light-mode #ai-prod-recs .obf-card-img{ background:#F5EEF8; }
+body.light-mode #ai-prod-recs .obf-card-img{ background:#F6EDE0; }
 body.light-mode #ai-prod-recs [style*="var(--card)"]{
   background:#FFFFFF !important;
 }
@@ -369,7 +369,7 @@ body.light-mode #ai-prod-recs [style*="var(--card)"]{
   animation:shimmer-dark 1.5s ease-in-out infinite;
 }
 body.light-mode .skeleton-box{
-  background:linear-gradient(90deg,#EDE0F0 25%,rgba(255,255,255,.8) 50%,#EDE0F0 75%);
+  background:linear-gradient(90deg,#EDE1CB 25%,rgba(255,255,255,.8) 50%,#EDE1CB 75%);
   background-size:200% 100%;
   animation:shimmer-light 1.5s ease-in-out infinite;
 }
@@ -394,13 +394,13 @@ body.light-mode .skeleton-box{
   background-size:200% 100%;
   animation:shimmer-dark 1.4s ease-in-out infinite .1s;
 }
-body.light-mode .obf-skeleton{ background:#FFF; border-color:rgba(200,180,210,.3); }
+body.light-mode .obf-skeleton{ background:#FFF; border-color:rgba(200,190,170,.3); }
 body.light-mode .obf-skeleton-img{
-  background:linear-gradient(90deg,#EDE0F0 25%,rgba(255,255,255,.8) 50%,#EDE0F0 75%);
+  background:linear-gradient(90deg,#EDE1CB 25%,rgba(255,255,255,.8) 50%,#EDE1CB 75%);
   background-size:200% 100%;
 }
 body.light-mode .obf-skeleton-line{
-  background:linear-gradient(90deg,#E8D8EE 25%,rgba(255,255,255,.8) 50%,#E8D8EE 75%);
+  background:linear-gradient(90deg,#E8DAC4 25%,rgba(255,255,255,.8) 50%,#E8DAC4 75%);
   background-size:200% 100%;
 }
 
@@ -424,14 +424,14 @@ body.light-mode .obf-skeleton-line{
 .ai-chat-hdr{
   display:flex;align-items:center;gap:10px;
   padding:12px 16px 10px;
-  background:linear-gradient(135deg,rgba(214,61,110,.12) 0%,rgba(196,136,96,.08) 100%);
+  background:linear-gradient(135deg,rgba(181,83,42,.12) 0%,rgba(205,160,100,.08) 100%);
   border-bottom:1px solid var(--border);
 }
 .ai-chat-avatar{
   width:34px;height:34px;border-radius:var(--r-md);flex-shrink:0;
   background:linear-gradient(135deg,var(--rose),var(--gold));
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 12px rgba(214,61,110,.3);
+  box-shadow:0 0 12px rgba(181,83,42,.3);
 }
 .ai-chat-avatar i{color:#fff;font-size:15px}
 .ai-chat-meta{flex:1;min-width:0}
@@ -442,14 +442,14 @@ body.light-mode .obf-skeleton-line{
 
 /* light mode island nav */
 body.light-mode nav.bnav > .ni-island{
-  background:rgba(250,246,250,.92);border-color:rgba(0,0,0,.08);
+  background:rgba(251,246,236,.92);border-color:rgba(0,0,0,.08);
   box-shadow:0 8px 32px rgba(0,0,0,.12);
 }
 body.light-mode .ni-ic i{color:rgba(0,0,0,.25)}
 body.light-mode .ni.on .ni-ic i{color:var(--rose)}
 body.light-mode .ni-lb{color:rgba(0,0,0,.25)}
 body.light-mode .ni.on .ni-lb{color:var(--rose)}
-body.light-mode .bnav{background:linear-gradient(to top,rgba(250,246,250,.98) 40%,transparent)}
+body.light-mode .bnav{background:linear-gradient(to top,rgba(251,246,236,.98) 40%,transparent)}
 
 /* منطقة الرد */
 .ai-chat-body{
@@ -505,7 +505,7 @@ body.light-mode .bnav{background:linear-gradient(to top,rgba(250,246,250,.98) 40
   font-size:13px;line-height:1.8;margin:3px 0;
 }
 .ai-fmt-emoji-line .ai-fmt-em{font-size:15px;flex-shrink:0}
-body.light-mode .ai-fmt-tip{background:linear-gradient(135deg,rgba(192,48,94,.07),rgba(154,92,40,.06))}
+body.light-mode .ai-fmt-tip{background:linear-gradient(135deg,rgba(168,70,31,.07),rgba(150,110,40,.06))}
 /* dots loading */
 .ai-chat-body .dots{padding:4px 0}
 
@@ -522,7 +522,7 @@ body.light-mode .ai-fmt-tip{background:linear-gradient(135deg,rgba(192,48,94,.07
   cursor:pointer;white-space:nowrap;
   transition:all var(--dur-fast);
 }
-.ai-quick-chip:active{transform:scale(.95);background:var(--rose-d);border-color:rgba(214,61,110,.4);color:var(--rose2)}
+.ai-quick-chip:active{transform:scale(.95);background:var(--rose-d);border-color:rgba(181,83,42,.4);color:var(--rose2)}
 
 /* شريط الإدخال */
 .ai-input-bar{
@@ -541,7 +541,7 @@ body.light-mode .ai-fmt-tip{background:linear-gradient(135deg,rgba(192,48,94,.07
   width:34px;height:34px;border-radius:var(--r-md);flex-shrink:0;
   background:linear-gradient(135deg,var(--rose),var(--gold));
   border:none;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;box-shadow:0 2px 8px rgba(214,61,110,.3);
+  cursor:pointer;box-shadow:0 2px 8px rgba(181,83,42,.3);
   transition:transform var(--dur-fast),box-shadow var(--dur-fast);
 }
 .ai-send-btn:active{transform:scale(.9);box-shadow:none}
@@ -596,7 +596,7 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
   font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;cursor:pointer;white-space:nowrap;flex-shrink:0;
   background:var(--card);border:1px solid var(--border);color:var(--dim);
   transition:all var(--dur-fast)}
-.ft.on{background:var(--rose-d);border-color:rgba(214,61,110,.5);color:var(--rose2)}
+.ft.on{background:var(--rose-d);border-color:rgba(181,83,42,.5);color:var(--rose2)}
 .ft:active{opacity:.75}
 
 /* BRAND GRID — Premium 2-col */
@@ -618,7 +618,7 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
 .bc-body{padding:10px 8px 12px}
 .bc-name{font-size:12px;font-weight:800;color:var(--text);margin-bottom:6px;letter-spacing:-.1px}
 .bc-cat{font-size:9px;color:var(--gold2);background:var(--gold-d);
-  border:1px solid rgba(196,136,96,.2);padding:2px 8px;border-radius:var(--r-full);
+  border:1px solid rgba(205,160,100,.2);padding:2px 8px;border-radius:var(--r-full);
   display:inline-block;font-weight:700;letter-spacing:.3px}
 .view-all{margin:14px 16px 20px;background:var(--card);border:1px solid var(--border);
   border-radius:var(--r-md);padding:14px;display:flex;align-items:center;justify-content:center;
@@ -637,7 +637,7 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
   justify-content:center;font-size:14px;font-weight:900;box-shadow:0 8px 28px rgba(0,0,0,.5)}
 .bd-name{font-size:24px;font-weight:900;color:var(--text)}
 .bd-cat-badge{font-size:11px;color:var(--rose2);background:var(--rose-d);
-  border:1px solid rgba(208,66,114,.3);padding:4px 14px;border-radius:12px}
+  border:1px solid rgba(196,98,52,.3);padding:4px 14px;border-radius:12px}
 .ai-card{margin:0 18px 16px;background:var(--card);border:1px solid var(--border);border-radius:13px;padding:14px}
 .ai-card-hd{font-size:12px;font-weight:700;color:var(--gold2);margin-bottom:10px;
   display:flex;align-items:center;gap:6px}
@@ -695,7 +695,7 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
 .vp-speed{font-size:11px;color:var(--dim);background:var(--card2);
   border:1px solid var(--border);border-radius:8px;padding:3px 8px}
 .ask-btn i{color:var(--rose2)}
-.ask-btn{width:100%;background:var(--rose-d);border:1px solid rgba(208,66,114,.4);
+.ask-btn{width:100%;background:var(--rose-d);border:1px solid rgba(196,98,52,.4);
   border-radius:12px;padding:12px;display:flex;align-items:center;justify-content:center;
   gap:8px;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;font-size:13px;font-weight:800;
   color:var(--rose2);cursor:pointer;margin:12px 0}
@@ -774,7 +774,7 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
 .key-inp{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-md);
   padding:11px 13px;color:var(--text);font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;font-size:12px;
   outline:none;text-align:left;margin-bottom:10px;transition:border-color var(--dur-fast)}
-.key-inp:focus{border-color:rgba(214,61,110,.5)}
+.key-inp:focus{border-color:rgba(181,83,42,.5)}
 .save-btn{width:100%;background:linear-gradient(135deg,var(--rose),var(--gold));
   border:none;border-radius:var(--r-md);padding:12px;color:#fff;
   font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;
@@ -803,12 +803,12 @@ body.light-mode .ai-quick-chip{background:var(--card2);color:var(--dim);border-c
   display:flex;justify-content:center;align-items:flex-end;
   padding:0 20px calc(env(safe-area-inset-bottom,0px) + 10px) 20px;
   z-index:200;pointer-events:none;
-  background:linear-gradient(to top,rgba(4,2,10,.95) 40%,transparent);
+  background:linear-gradient(to top,rgba(10,13,28,.95) 40%,transparent);
 }
 nav.bnav > .ni-island{
   display:flex;align-items:center;justify-content:space-around;
   width:100%;max-width:360px;
-  background:rgba(17,11,24,.88);
+  background:rgba(24,32,64,.88);
   backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);
   border:1px solid rgba(255,255,255,.07);
   border-radius:26px;padding:8px 6px;
@@ -831,8 +831,8 @@ nav.bnav > .ni-island{
 }
 .ni-ic i{ font-size:17px;color:rgba(255,255,255,.3);transition:color var(--dur-base); }
 .ni.on .ni-ic{
-  background:linear-gradient(135deg,rgba(184,66,106,.25),rgba(184,114,48,.15));
-  box-shadow:0 0 16px rgba(184,66,106,.2);
+  background:linear-gradient(135deg,rgba(181,83,42,.25),rgba(184,134,47,.15));
+  box-shadow:0 0 16px rgba(181,83,42,.2);
 }
 .ni.on .ni-ic i{ color:var(--rose2); }
 .ni-lb{
@@ -977,22 +977,22 @@ nav.bnav > .ni-island{
 /* ══ SPLASH — Cinematic Ink Reveal ══ */
 #ob{
   position:fixed;inset:0;z-index:999;overflow:hidden;
-  background:#04020A;
+  background:#0A0D1C;
   display:flex;align-items:center;justify-content:center;
 }
-body.light-mode #ob{ background:#FAF6FA; }
+body.light-mode #ob{ background:#FBF6EC; }
 
 /* ambient background orbs */
 #ob::before{
   content:'';position:absolute;
   width:400px;height:400px;border-radius:50%;
-  background:radial-gradient(circle,rgba(184,66,106,.12) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(181,83,42,.12) 0%,transparent 70%);
   top:-80px;right:-80px;animation:ob-orb 6s ease-in-out infinite;
 }
 #ob::after{
   content:'';position:absolute;
   width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(184,114,48,.09) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(184,134,47,.09) 0%,transparent 70%);
   bottom:-60px;left:-60px;animation:ob-orb 6s ease-in-out infinite 3s;
 }
 @keyframes ob-orb{0%,100%{transform:scale(1) translate(0,0);opacity:.6}50%{transform:scale(1.2) translate(10px,-10px);opacity:1}}
@@ -1013,7 +1013,7 @@ body.light-mode #ob{ background:#FAF6FA; }
   animation:sp-reveal 1s cubic-bezier(.16,1,.3,1) forwards;
   opacity:0;
 }
-body.light-mode .sp-word{ color:#140816; }
+body.light-mode .sp-word{ color:#141A36; }
 @keyframes sp-reveal{
   0%{opacity:0;transform:translateY(20px) skewY(2deg)}
   100%{opacity:1;transform:translateY(0) skewY(0)}
@@ -1099,7 +1099,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 .bc-logo-fb{
   width:100%;height:100%;display:flex;align-items:center;
   justify-content:center;font-size:20px;font-weight:900;
-  letter-spacing:.06em;color:#E7B57E;font-family:Georgia,'Times New Roman',serif;
+  letter-spacing:.06em;color:#1E2747;font-family:Georgia,'Times New Roman',serif;
   padding:10px;text-align:center;line-height:1.3;
 }
 /* وضع 5 أعمدة — بدون نص تحت الصورة */
@@ -1137,7 +1137,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 /* توهّج خلفي ناعم خلف اللوغو */
 .bd-hero-glow{
   position:absolute;inset:0;z-index:1;
-  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(214,61,110,.12) 0%,transparent 70%);
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(181,83,42,.12) 0%,transparent 70%);
 }
 .bd-hero-logo-wrap{
   position:relative;z-index:2;
@@ -1158,7 +1158,7 @@ body.light-mode .cat-pill{ color:var(--text); }
   font-size:9px;font-weight:800;letter-spacing:2.5px;
   text-transform:uppercase;color:var(--gold2);
   padding:4px 14px;background:var(--gold-d);border-radius:var(--r-full);
-  border:1px solid rgba(196,136,96,.2);
+  border:1px solid rgba(205,160,100,.2);
 }
 
 /* ══ PRODUCT CARDS — Discover Grid ══ */
@@ -1194,7 +1194,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 .pdm-header > *{ pointer-events:all; }
 .pdm-back{
   width:38px;height:38px;border-radius:50%;
-  background:rgba(4,2,10,.55);
+  background:rgba(10,13,28,.55);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   display:flex;align-items:center;justify-content:center;
@@ -1211,7 +1211,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 }
 .pdm-fav-btn{
   width:38px;height:38px;border-radius:50%;
-  background:rgba(4,2,10,.55);
+  background:rgba(10,13,28,.55);
   border:1px solid rgba(255,255,255,.12);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   display:flex;align-items:center;justify-content:center;
@@ -1299,7 +1299,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 }
 .pdm-buy-primary:active{transform:scale(.97)}
 .pdm-buy-secondary{
-  width:100%;border:1.5px solid rgba(214,61,110,.5);border-radius:var(--r-md);padding:13px;
+  width:100%;border:1.5px solid rgba(181,83,42,.5);border-radius:var(--r-md);padding:13px;
   background:var(--rose-d);color:var(--rose2);font-size:13px;font-weight:800;
   font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;cursor:pointer;
   display:flex;align-items:center;justify-content:center;gap:8px;
@@ -1336,16 +1336,16 @@ body.light-mode .cat-pill{ color:var(--text); }
 /* AI Analysis Card — Premium Signature */
 .pdm-ai-card{
   margin:0 16px 16px;border-radius:var(--r-xl);
-  background:linear-gradient(135deg,rgba(24,14,26,.98),rgba(34,19,38,.95));
-  border:1px solid rgba(208,66,114,.2);padding:18px;
-  box-shadow:0 0 28px rgba(214,61,110,.06),var(--shadow-md);
+  background:linear-gradient(135deg,rgba(24,32,64,.98),rgba(33,42,80,.95));
+  border:1px solid rgba(196,98,52,.2);padding:18px;
+  box-shadow:0 0 28px rgba(181,83,42,.06),var(--shadow-md);
 }
 .pdm-ai-hd{
   display:flex;align-items:center;gap:8px;margin-bottom:12px;
 }
 .pdm-ai-badge{
   display:inline-flex;align-items:center;gap:5px;
-  background:var(--gold-d);border:1px solid rgba(196,136,96,.2);
+  background:var(--gold-d);border:1px solid rgba(205,160,100,.2);
   border-radius:var(--r-full);padding:3px 10px;
   font-size:10px;font-weight:800;color:var(--gold2);letter-spacing:.5px;
 }
@@ -1361,7 +1361,7 @@ body.light-mode .cat-pill{ color:var(--text); }
 }
 .pdm-ai-btn:active{transform:scale(.96)}
 .pdm-ai-btn.speak{background:var(--card);color:var(--gold2);border:1px solid var(--border)}
-.pdm-ai-btn.ask{background:var(--rose-d);color:var(--rose2);border:1px solid rgba(208,66,114,.2)}
+.pdm-ai-btn.ask{background:var(--rose-d);color:var(--rose2);border:1px solid rgba(196,98,52,.2)}
 
 /* Stars & Rating */
 .pdm-rating{display:flex;align-items:center;gap:6px;margin-bottom:4px}
@@ -1386,13 +1386,13 @@ body.light-mode .cat-pill{ color:var(--text); }
 /* Light mode */
 body.light-mode .obf-card,
 body.light-mode .bc{background:#fff}
-body.light-mode .pdm-gallery{background:#f8f0f8}
+body.light-mode .pdm-gallery{background:#F7EEDF}
 body.light-mode .pdm-buy-primary{box-shadow:0 4px 16px rgba(255,153,0,.25)}
 body.light-mode .pdm-header{background:rgba(255,248,255,.96)}
 
 
 /* ════════════════════════════════════
-   ROSIVA UI/UX DESIGN SYSTEM v2
+   LAMSA UI/UX DESIGN SYSTEM v2
 ════════════════════════════════════ */
 
 /* ── Global Typography ── */
@@ -1425,8 +1425,8 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;fon
 }
 .hdr-vip{
   font-size:11px;font-weight:700;padding:7px 12px;border-radius:20px;
-  background:linear-gradient(135deg,var(--gold-d),rgba(200,144,74,.2));
-  border:1px solid rgba(200,144,74,.35);color:var(--gold2);
+  background:linear-gradient(135deg,var(--gold-d),rgba(214,170,90,.2));
+  border:1px solid rgba(214,170,90,.35);color:var(--gold2);
   cursor:pointer;letter-spacing:.3px;
 }
 
@@ -1452,23 +1452,23 @@ h1,h2,h3,.font-display{font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;fon
   background:linear-gradient(145deg,var(--rose),#a02058);
   border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 0 8px rgba(214,61,110,.12),
-             0 0 0 16px rgba(214,61,110,.06),
-             0 8px 24px rgba(214,61,110,.4);
+  box-shadow:0 0 0 8px rgba(181,83,42,.12),
+             0 0 0 16px rgba(181,83,42,.06),
+             0 8px 24px rgba(181,83,42,.4);
   transition:transform .15s,box-shadow .15s;
 }
 .mic-btn i{color:#fff;font-size:28px}
 .mic-btn:active,.mic-btn.rec{
   transform:scale(1.08);
-  box-shadow:0 0 0 10px rgba(214,61,110,.2),
-             0 0 0 22px rgba(214,61,110,.08),
-             0 8px 32px rgba(214,61,110,.5);
+  box-shadow:0 0 0 10px rgba(181,83,42,.2),
+             0 0 0 22px rgba(181,83,42,.08),
+             0 8px 32px rgba(181,83,42,.5);
 }
 body.light-mode .mic-btn{
   background:linear-gradient(145deg,var(--rose),#a02050) !important;
-  box-shadow:0 0 0 8px rgba(192,48,94,.1),
-             0 0 0 16px rgba(192,48,94,.05),
-             0 8px 24px rgba(192,48,94,.3) !important;
+  box-shadow:0 0 0 8px rgba(168,70,31,.1),
+             0 0 0 16px rgba(168,70,31,.05),
+             0 8px 24px rgba(168,70,31,.3) !important;
 }
 
 /* ── AI Response Box ── */
@@ -1535,7 +1535,7 @@ body.light-mode .bnav{
 }
 .ft.on{
   background:var(--rose);border-color:var(--rose);
-  color:#fff;box-shadow:0 4px 12px rgba(214,61,110,.35);
+  color:#fff;box-shadow:0 4px 12px rgba(181,83,42,.35);
 }
 body.light-mode .ft{background:var(--card);color:var(--dim);border-color:var(--border)}
 body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose)}
@@ -1567,10 +1567,10 @@ body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose
 .obf-card:active .obf-card-img img{ transform:scale(1.04); }
 .obf-card-badge{
   position:absolute;top:8px;right:8px;z-index:3;
-  background:rgba(4,2,10,.7);color:var(--rose2);
+  background:rgba(10,13,28,.7);color:var(--rose2);
   font-size:8px;font-weight:800;letter-spacing:.5px;
   padding:3px 8px;border-radius:var(--r-full);
-  backdrop-filter:blur(8px);border:1px solid rgba(184,66,106,.3);
+  backdrop-filter:blur(8px);border:1px solid rgba(181,83,42,.3);
 }
 .obf-card-body{ padding:10px 12px 13px; }
 .obf-card-brand{
@@ -1597,19 +1597,19 @@ body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose
 .obf-card-fav{
   position:absolute;top:8px;left:8px;z-index:5;
   width:30px;height:30px;border-radius:50%;
-  background:rgba(4,2,10,.6);backdrop-filter:blur(8px);
+  background:rgba(10,13,28,.6);backdrop-filter:blur(8px);
   border:1px solid rgba(255,255,255,.1);
   display:flex;align-items:center;justify-content:center;
   color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;
   transition:color var(--dur-fast),background var(--dur-fast);
 }
-.obf-card-fav.on{ color:var(--rose2); background:rgba(184,66,106,.2); }
+.obf-card-fav.on{ color:var(--rose2); background:rgba(181,83,42,.2); }
 .obf-card-cart{
   width:32px;height:32px;flex-shrink:0;border:none;border-radius:50%;
   background:linear-gradient(135deg,var(--rose),var(--gold));
   color:#fff;font-size:12px;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;box-shadow:0 3px 10px rgba(184,66,106,.35);
+  cursor:pointer;box-shadow:0 3px 10px rgba(181,83,42,.35);
   transition:transform var(--dur-fast),box-shadow var(--dur-fast);
 }
 .obf-card-cart:active{ transform:scale(.88); box-shadow:none; }
@@ -1641,7 +1641,7 @@ body.light-mode .ft.on{background:var(--rose);color:#fff;border-color:var(--rose
   top:6px;left:6px;
 }
 body.light-mode #obf-grid .obf-card{
-  background:#fff;box-shadow:0 2px 10px rgba(60,0,40,.08);
+  background:#fff;box-shadow:0 2px 10px rgba(30,20,10,.08);
 }
 
 /* ── Brand products grid — 2-col clean ── */
@@ -1661,13 +1661,13 @@ body.light-mode #obf-grid .obf-card{
 #bd-ai-recs-grid .obf-card-sub{ display:none; }
 #bd-ai-recs-grid .obf-card-footer{ display:none; }
 #bd-ai-recs-grid .obf-card-fav{
-  color:var(--dim);background:rgba(4,2,10,.5);
+  color:var(--dim);background:rgba(10,13,28,.5);
   width:26px;height:26px;font-size:11px;
 }
 #bd-ai-recs-grid .obf-card-fav.on{ color:var(--rose); }
 
 body.light-mode .obf-card-fav{
-  background:rgba(250,246,250,.8);color:rgba(0,0,0,.3);border-color:rgba(0,0,0,.1);
+  background:rgba(251,246,236,.8);color:rgba(0,0,0,.3);border-color:rgba(0,0,0,.1);
 }
 
 /* ── Section Label ── */
@@ -1759,7 +1759,7 @@ body.light-mode .srch input{color:var(--text) !important}
 body.light-mode .bc,
 body.light-mode .obf-card{
   background:#fff;
-  box-shadow:0 2px 12px rgba(80,0,40,.07);
+  box-shadow:0 2px 12px rgba(40,22,10,.07);
 }
 body.light-mode .bc:active,
 body.light-mode .obf-card:active{box-shadow:none}
@@ -1802,8 +1802,8 @@ body.light-mode .obf-card:active{box-shadow:none}
 
 
 body.light-mode .pdm-ai-card{
-  background:linear-gradient(135deg,rgba(192,48,94,.08),rgba(154,92,40,.06));
-  border:1px solid rgba(192,48,94,.2);
+  background:linear-gradient(135deg,rgba(168,70,31,.08),rgba(150,110,40,.06));
+  border:1px solid rgba(168,70,31,.2);
 }
 body.light-mode .pdm-ai-hd{color:var(--gold2)}
 body.light-mode .pdm-ai-text{color:var(--text)}
@@ -1811,7 +1811,7 @@ body.light-mode .pdm-ai-btn.speak{
   background:var(--card2);color:var(--gold2);border:1px solid var(--border);
 }
 body.light-mode .pdm-ai-btn.ask{
-  background:rgba(192,48,94,.1);color:var(--rose);
+  background:rgba(168,70,31,.1);color:var(--rose);
 }
 body.light-mode .pdm-section{
   background:var(--card);
@@ -1827,7 +1827,7 @@ body.light-mode .pdm-buy-primary{
   background:linear-gradient(135deg,#e47911,#ff9900);
 }
 body.light-mode .pdm-buy-secondary{
-  background:rgba(192,48,94,.06);
+  background:rgba(168,70,31,.06);
   border-color:var(--rose);color:var(--rose);
 }
 body.light-mode .pdm-brand-badge{
@@ -1841,7 +1841,7 @@ body.light-mode .pdm-tag{
 
 .pdm-fav-btn{
   width:44px;height:44px;border-radius:22px;
-  background:var(--rose-d);border:1.5px solid rgba(208,66,114,.3);
+  background:var(--rose-d);border:1.5px solid rgba(196,98,52,.3);
   display:flex;align-items:center;justify-content:center;
   cursor:pointer;color:var(--rose2);font-size:18px;
   transition:all .2s;flex-shrink:0;
@@ -1849,12 +1849,12 @@ body.light-mode .pdm-tag{
 .pdm-fav-btn.saved{
   background:var(--rose);border-color:var(--rose);
   color:#fff;
-  box-shadow:0 0 0 4px rgba(214,61,110,.2);
+  box-shadow:0 0 0 4px rgba(181,83,42,.2);
 }
 .pdm-fav-btn:active{transform:scale(.9)}
 body.light-mode .pdm-fav-btn{
-  background:rgba(192,48,94,.1);
-  border-color:rgba(192,48,94,.3);
+  background:rgba(168,70,31,.1);
+  border-color:rgba(168,70,31,.3);
 }
 body.light-mode .pdm-fav-btn.saved{
   background:var(--rose);color:#fff;
@@ -1863,64 +1863,64 @@ body.light-mode .pdm-fav-btn.saved{
 /* ── Light mode: ALL input fields ── */
 body.light-mode .txt-row{
   background:#ffffff !important;
-  border-color:#e8d4e8 !important;
-  box-shadow:0 2px 8px rgba(80,0,40,.06);
+  border-color:#E8D9C2 !important;
+  box-shadow:0 2px 8px rgba(40,22,10,.06);
 }
 body.light-mode .txt-row input{
-  color:#160818 !important;
+  color:#141A36 !important;
   background:transparent !important;
 }
 body.light-mode .txt-row input::placeholder{color:#c0a0b8 !important}
 body.light-mode .txt-send{color:var(--rose) !important}
 
 body.light-mode .key-inp{
-  background:#f8f0f8 !important;
-  border-color:#e0cce0 !important;
-  color:#160818 !important;
+  background:#F7EEDF !important;
+  border-color:#E0D0B8 !important;
+  color:#141A36 !important;
 }
-body.light-mode .key-inp::placeholder{color:#b090a8 !important}
+body.light-mode .key-inp::placeholder{color:#B0A48E !important}
 body.light-mode .key-inp:focus{border-color:var(--rose) !important}
 body.light-mode .key-box{
   background:#ffffff !important;
-  border-color:#e8d4e8 !important;
+  border-color:#E8D9C2 !important;
 }
 
 body.light-mode .srch-box,
 body.light-mode .srch{
   background:#ffffff !important;
-  border-color:#e8d4e8 !important;
+  border-color:#E8D9C2 !important;
 }
 body.light-mode .srch-box input,
 body.light-mode #obf-srch,
 body.light-mode #b-srch,
 body.light-mode #txt-in{
-  color:#160818 !important;
+  color:#141A36 !important;
   background:transparent !important;
 }
 body.light-mode #obf-srch::placeholder,
 body.light-mode #b-srch::placeholder,
-body.light-mode #txt-in::placeholder{color:#b090a8 !important}
+body.light-mode #txt-in::placeholder{color:#B0A48E !important}
 
 body.light-mode .sb-key-inp{
-  color:#160818 !important;
-  background:#f8f0f8 !important;
+  color:#141A36 !important;
+  background:#F7EEDF !important;
 }
-body.light-mode .sb-key-inp::placeholder{color:#b090a8 !important}
+body.light-mode .sb-key-inp::placeholder{color:#B0A48E !important}
 body.light-mode .sb-key-row{
   background:#f0e8f0 !important;
-  border:1.5px solid #e0cce0 !important;
+  border:1.5px solid #E0D0B8 !important;
   border-radius:12px;
 }
 body.light-mode input,
 body.light-mode textarea{
-  color:#160818 !important;
+  color:#141A36 !important;
 }
 
 /* ══ PRODUCT CARD REDESIGN — cart action instead of price/rating ══ */
 .obf-card-fav{
   position:absolute;top:6px;right:6px;z-index:5;
   width:26px;height:26px;border-radius:50%;
-  background:rgba(10,3,12,.55);backdrop-filter:blur(4px);
+  background:rgba(10,13,28,.55);backdrop-filter:blur(4px);
   border:1px solid rgba(255,255,255,.12);
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-size:12px;cursor:pointer;
@@ -1954,7 +1954,7 @@ body.light-mode textarea{
   box-shadow:none;
 }
 .pdm-ic-float{
-  background:rgba(10,3,12,.45);backdrop-filter:blur(6px);
+  background:rgba(10,13,28,.45);backdrop-filter:blur(6px);
   border:1px solid rgba(255,255,255,.14);color:#fff;
 }
 .pdm-ic-float.saved{background:var(--rose);border-color:var(--rose)}
@@ -1964,7 +1964,7 @@ body.light-mode .pdm-ic-float{
 
 /* ── Gallery v2 ── */
 .pdm-gallery-v2{
-  min-height:340px;background:radial-gradient(circle at 50% 35%,rgba(214,61,110,.10),transparent 60%),var(--bg);
+  min-height:340px;background:radial-gradient(circle at 50% 35%,rgba(181,83,42,.10),transparent 60%),var(--bg);
   border-bottom:none;display:flex;align-items:center;justify-content:center;padding-top:10px;
 }
 .pdm-gallery-v2 .pdm-gallery-img{
@@ -2025,7 +2025,7 @@ body.light-mode .pdm-ic-float{
   background:linear-gradient(135deg,var(--rose),var(--gold));
   color:#fff;font-size:14px;font-weight:800;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;
   display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
-  box-shadow:0 8px 24px rgba(214,61,110,.35);
+  box-shadow:0 8px 24px rgba(181,83,42,.35);
 }
 .pdm-cta-main:active{transform:scale(.97)}
 .pdm-body{padding-bottom:94px}
@@ -2058,9 +2058,9 @@ body.light-mode .pdm-ic-float{
 .bdv-meta-lb{font-size:9.5px;color:var(--dim);margin-top:1px}
 
 .bdv-ai-card{
-  margin:18px 18px 0;background:linear-gradient(135deg,rgba(24,14,26,.95),rgba(34,19,38,.95));
-  border:1px solid rgba(214,61,110,.2);border-radius:var(--r-xl);padding:16px;
-  display:flex;align-items:center;gap:14px;box-shadow:0 0 30px rgba(214,61,110,.06),var(--shadow-md);
+  margin:18px 18px 0;background:linear-gradient(135deg,rgba(24,32,64,.95),rgba(33,42,80,.95));
+  border:1px solid rgba(181,83,42,.2);border-radius:var(--r-xl);padding:16px;
+  display:flex;align-items:center;gap:14px;box-shadow:0 0 30px rgba(181,83,42,.06),var(--shadow-md);
 }
 .bdv-ai-left{flex:1;min-width:0}
 .bdv-ai-hd{display:flex;align-items:center;gap:7px;margin-bottom:8px}
@@ -2142,7 +2142,7 @@ body.light-mode .pdm-ic-float{
 }
 #bd-prods .obf-card-fav{
   position:absolute;top:8px;left:8px;z-index:3;
-  background:rgba(10,3,12,.4);border-radius:50%;width:26px;height:26px;
+  background:rgba(10,13,28,.4);border-radius:50%;width:26px;height:26px;
   display:flex;align-items:center;justify-content:center;color:#fff;
 }
 #bd-prods .obf-card-fav.on{color:var(--rose)}
@@ -2189,7 +2189,7 @@ body.light-mode .pdm-ic-float{
 }
 #fav-grid .obf-card-fav,#fav-trending .obf-card-fav{
   position:absolute;top:8px;right:8px;z-index:3;
-  background:rgba(10,3,12,.45);border-radius:50%;width:26px;height:26px;
+  background:rgba(10,13,28,.45);border-radius:50%;width:26px;height:26px;
   display:flex;align-items:center;justify-content:center;color:#fff;
 }
 #fav-grid .obf-card-fav.on,#fav-trending .obf-card-fav.on{color:var(--rose)}
@@ -2220,7 +2220,7 @@ body.light-mode .pdm-ic-float{
 .auth-tab.on{color:#fff}
 .auth-tab-indicator{
   position:absolute;top:4px;bottom:4px;right:4px;width:calc(50% - 4px);border-radius:var(--r-full);
-  background:linear-gradient(135deg,var(--rose),var(--rose2));box-shadow:0 3px 12px rgba(214,61,110,.35);
+  background:linear-gradient(135deg,var(--rose),var(--rose2));box-shadow:0 3px 12px rgba(181,83,42,.35);
   transition:transform var(--dur-base) var(--ease-out);z-index:0;
 }
 .auth-field{position:relative;margin-bottom:13px}
@@ -2244,7 +2244,7 @@ body.light-mode .pdm-ic-float{
 .auth-submit{
   width:100%;padding:15px;border:none;border-radius:var(--r-md);
   background:linear-gradient(135deg,var(--rose),var(--rose2));color:#fff;font-weight:900;
-  font-size:14.5px;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(214,61,110,.3);
+  font-size:14.5px;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(181,83,42,.3);
   display:flex;align-items:center;justify-content:center;gap:8px;transition:transform var(--dur-fast),opacity var(--dur-fast);
 }
 .auth-submit:active{transform:scale(.97)}
@@ -2282,14 +2282,14 @@ html.lang-en .hdr-menu span{display:block}
 /* عمق أكبر للخلفية العامة — mesh gradient هادئ بدل اللون الفلات */
 html,body{
   background:
-    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(214,61,110,.05) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(200,144,74,.045) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(181,83,42,.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(214,170,90,.045) 0%, transparent 60%),
     var(--bg);
 }
 body.light-mode{
   background:
-    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(192,48,94,.035) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(154,92,40,.03) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(168,70,31,.035) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 100%, rgba(150,110,40,.03) 0%, transparent 60%),
     var(--bg);
 }
 
@@ -2300,7 +2300,7 @@ body.light-mode{
 .hdr-vip{position:relative;overflow:hidden}
 .hdr-vip::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(115deg,transparent 30%,rgba(255,220,160,.35) 48%,rgba(255,220,160,.55) 52%,transparent 70%);
+  background:linear-gradient(115deg,transparent 30%,rgba(240,215,165,.35) 48%,rgba(240,215,165,.55) 52%,transparent 70%);
   background-size:200% 100%;background-position:200% 0;
   animation:vip-shine 3.6s ease-in-out infinite;
   animation-delay:1.2s;pointer-events:none;
@@ -2313,7 +2313,7 @@ body.light-mode{
 /* حلقات الشاشة الافتتاحية — تدور بدل ما تنبض فقط، إحساس أكثر فخامة */
 .sp-ring{
   border:1.5px solid transparent;
-  border-image:conic-gradient(from 0deg,rgba(208,66,114,.5),rgba(200,144,74,.35),rgba(208,66,114,.5)) 1;
+  border-image:conic-gradient(from 0deg,rgba(196,98,52,.5),rgba(214,170,90,.35),rgba(196,98,52,.5)) 1;
   animation:sp-pulse 2.4s ease-in-out infinite, sp-rotate 12s linear infinite;
 }
 .sp-ring2{animation:sp-pulse 2.4s ease-in-out infinite .8s, sp-rotate 18s linear infinite reverse}
@@ -2326,7 +2326,7 @@ body.light-mode{
   transition:transform var(--dur-fast) var(--ease-out),
              box-shadow var(--dur-base) var(--ease-out);
 }
-.bc:active{box-shadow:var(--shadow-md),0 0 0 1px rgba(214,61,110,.25)}
+.bc:active{box-shadow:var(--shadow-md),0 0 0 1px rgba(181,83,42,.25)}
 .bc::after{
   content:'';position:absolute;inset:0;opacity:0;
   background:linear-gradient(125deg,transparent 40%,rgba(255,255,255,.09) 50%,transparent 60%);
@@ -2346,7 +2346,7 @@ body.light-mode{
 .ni.on::before{opacity:1;transform:scale(1)}
 
 /* أيقونة شعار السايدبار — توهج محيطي هادئ */
-.sb-logo-ic{box-shadow:0 4px 16px rgba(214,61,110,.35),0 0 0 1px rgba(255,255,255,.06) inset}
+.sb-logo-ic{box-shadow:0 4px 16px rgba(181,83,42,.35),0 0 0 1px rgba(255,255,255,.06) inset}
 
 @media (prefers-reduced-motion: reduce){
   .hdr-vip::after,.sp-ring,.sp-ring2{animation:none !important}
@@ -2381,7 +2381,7 @@ body.light-mode{
 .pdm-ai-card{position:relative}
 .pdm-ai-card::before{
   content:'';position:absolute;inset:-1px;border-radius:inherit;z-index:-1;
-  background:linear-gradient(135deg,rgba(214,61,110,.35),rgba(200,144,74,.2));
+  background:linear-gradient(135deg,rgba(181,83,42,.35),rgba(214,170,90,.2));
   opacity:.5;
 }
 
@@ -2432,8 +2432,8 @@ html.lang-en .sb-item.active::before{right:auto;left:0}
 .auth-card{animation:cardIn .45s var(--ease-out)}
 
 /* الحقول — توهج خفيف حول الحقل عند التركيز بدل تغيير اللون بس */
-.auth-field input{box-shadow:0 0 0 0 rgba(214,61,110,0);transition:border-color var(--dur-fast),background var(--dur-fast),box-shadow var(--dur-base)}
-.auth-field input:focus{box-shadow:0 0 0 4px rgba(214,61,110,.12)}
+.auth-field input{box-shadow:0 0 0 0 rgba(181,83,42,0);transition:border-color var(--dur-fast),background var(--dur-fast),box-shadow var(--dur-base)}
+.auth-field input:focus{box-shadow:0 0 0 4px rgba(181,83,42,.12)}
 
 /* زر المفضلة — نبضة صغيرة عند الضغط */
 .fav-btn{transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
@@ -2478,32 +2478,85 @@ html.lang-en .pitem:active{transform:translateX(2px)}
 }
 
 /* ════════════════════════════════════════════════════════════════
-   ROSIVA DESIGN SYSTEM v3 — "Velvet"
-   الطبقة الأخيرة: تعلو كل الطبقات السابقة. عدّلي الهوية من هنا فقط.
-   - Amiri للعناوين (هوية عربية كلاسيكية)، IBM Plex Sans Arabic للواجهة
-   - لون تمييز واحد (وردي كوارتز)، والشامبين محجوز لـ VIP فقط
-   - مقياس زوايا واحد 10/16/24، بلا تدرجات زخرفية على البطاقات
+   LAMSA DESIGN SYSTEM v4 — "Henna & Indigo"
+   هوية سودانية: نيلة التوب (الداكن)، رمل (الفاتح)، حنّاء (التمييز)،
+   ذهب الدخن (VIP فقط). Reem Kufi للعناوين، IBM Plex Sans Arabic للواجهة.
    ════════════════════════════════════════════════════════════════ */
 :root{
   --font-ui:'IBM Plex Sans Arabic','Cairo',system-ui,sans-serif;
-  --font-display:'Amiri','IBM Plex Sans Arabic',serif;
-  --v-bg:#120A10; --v-surface:#1B1218; --v-raised:#241820; --v-line:rgba(246,237,241,.09);
-  --v-ink:#F6EDF1; --v-mist:#B9A4B0; --v-faint:#7E6A76;
-  --v-rose:#E9A6B8; --v-rose-deep:#B44A6E; --v-rose-wash:rgba(233,166,184,.12);
-  --v-champ:#E6C79C;
+  --font-display:'Reem Kufi','IBM Plex Sans Arabic',sans-serif;
+  --v-bg:#0F1428; --v-surface:#182040; --v-raised:#212A50; --v-line:rgba(243,231,211,.10);
+  --v-ink:#F3E7D3; --v-mist:#BDB3A3; --v-faint:#8C8698;
+  --v-rose:#E58A5A; --v-rose-deep:#B5532A; --v-rose-wash:rgba(229,138,90,.14);
+  --v-champ:#E3B862;
   --v-r-s:10px; --v-r-m:16px; --v-r-l:24px;
 }
 body:not(.light-mode){
-  --bg:var(--v-bg); --bg2:#170E15; --card:var(--v-surface); --card2:var(--v-raised);
-  --border:#2E2029; --text:var(--v-ink); --dim:var(--v-mist); --muted:var(--v-faint);
+  --bg:var(--v-bg); --bg2:#131A34; --card:var(--v-surface); --card2:var(--v-raised);
+  --border:#2A3358; --text:var(--v-ink); --dim:var(--v-mist); --muted:var(--v-faint);
   --rose:var(--v-rose-deep); --rose2:var(--v-rose); --rose-d:var(--v-rose-wash);
-  --gold2:var(--v-champ);
+  --gold:#B8862F; --gold2:var(--v-champ); --gold-d:rgba(227,184,98,.13);
 }
 body.light-mode{
-  --v-bg:#FBF6F7; --v-surface:#FFFFFF; --v-raised:#F6EDF0; --v-line:rgba(58,26,42,.10);
-  --v-ink:#2B1621; --v-mist:#6E5562; --v-faint:#9C8591; --v-rose:#A63E62; --v-rose-wash:rgba(166,62,98,.09);
+  --v-bg:#F3EAD9; --v-surface:#FFFBF3; --v-raised:#EDE1CB; --v-line:rgba(30,39,71,.12);
+  --v-ink:#1E2747; --v-mist:#5E5A6B; --v-faint:#8D8576; --v-rose:#A8461F; --v-rose-deep:#A8461F; --v-rose-wash:rgba(168,70,31,.10);
+  --v-champ:#9A6B12;
+  --bg:var(--v-bg); --bg2:#EFE4D0; --card:var(--v-surface); --card2:var(--v-raised);
+  --border:#E0D2BA; --text:var(--v-ink); --dim:var(--v-mist); --muted:var(--v-faint);
+  --rose:var(--v-rose); --rose2:var(--v-rose); --rose-d:var(--v-rose-wash); --gold2:var(--v-champ);
 }
 body{font-family:var(--font-ui);background:var(--v-bg)}
+.lm-mark{width:1em;height:1em;stroke:currentColor;stroke-width:6}
+.lm-mark circle{fill:var(--v-rose);stroke:none}
+.lm-lockup{display:inline-flex;align-items:center;gap:8px;color:var(--v-ink);font-family:var(--font-display);font-weight:700;font-size:24px;line-height:1}
+.lm-lockup .lm-mark{width:26px;height:26px}
+.lm-lockup span{transform:translateY(-1px)}
+.lm-lockup--xl{font-size:56px;gap:14px;letter-spacing:0 !important;background:none !important;-webkit-text-fill-color:currentColor !important;color:var(--v-ink) !important}
+.lm-lockup--xl .lm-mark{width:64px;height:64px}
+#auth-screen .lm-mark{width:40px;height:40px;color:#F3E7D3}
+
+/* ══ AUTH — Lamsa ══ */
+#auth-screen.au{position:fixed;inset:0;z-index:980;overflow-y:auto;background:var(--v-bg);display:none;flex-direction:column}
+.au-top{position:relative;padding:calc(env(safe-area-inset-top,0px) + 56px) 24px 64px;text-align:center;background:#1E2747;color:#F3E7D3;overflow:hidden}
+.au-top::before{content:'';position:absolute;inset:0;opacity:.18;pointer-events:none;
+  background:radial-gradient(circle,#E58A5A 1.6px,transparent 2px) 0 0/22px 22px,radial-gradient(circle,#E58A5A 1.6px,transparent 2px) 11px 11px/22px 22px;
+  -webkit-mask:linear-gradient(to bottom,#000,transparent 85%);mask:linear-gradient(to bottom,#000,transparent 85%)}
+.au-close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 14px);left:14px;width:38px;height:38px;border-radius:50%;border:0;
+  background:rgba(243,231,211,.1);color:#F3E7D3;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.au-brand{position:relative;display:inline-flex;align-items:center;gap:12px;font-family:var(--font-display);font-size:44px;font-weight:700;line-height:1}
+.au-brand .lm-mark{width:48px;height:48px;color:#F3E7D3}
+.au-brand .lm-mark circle{fill:#E58A5A}
+.au-tag{position:relative;margin:12px 0 0;font-size:15px;color:rgba(243,231,211,.75)}
+.au-sheet{position:relative;flex:1;margin-top:-28px;padding:22px 20px calc(env(safe-area-inset-bottom,0px) + 24px);
+  background:var(--v-bg);border-radius:28px 28px 0 0;max-width:520px;width:100%;align-self:center}
+#auth-screen .au-tabs{background:var(--v-raised);border:0;border-radius:14px;padding:4px;margin-bottom:22px}
+#auth-screen .auth-tab{font-size:14px;font-weight:600;color:var(--v-mist);border-radius:10px;padding:10px 0}
+#auth-screen .auth-tab.on{color:var(--v-ink)}
+#auth-screen .auth-tab-indicator{background:var(--v-surface);box-shadow:0 1px 3px rgba(0,0,0,.18);border-radius:10px}
+.au-field{margin-bottom:16px}
+.au-field label{display:block;font-size:13px;font-weight:600;color:var(--v-ink);margin:0 2px 6px}
+.au-label-row{display:flex;align-items:baseline;justify-content:space-between}
+.au-link{background:none;border:0;padding:0 2px 6px;font-size:13px;font-weight:600;color:var(--v-rose);cursor:pointer}
+#auth-screen .au-field input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--v-line);background:var(--v-surface);
+  color:var(--v-ink);font-size:16px;transition:border-color .15s}
+#auth-screen .au-field input[dir=ltr]{text-align:left}
+#auth-screen .au-field input:focus{outline:none;border-color:var(--v-rose)}
+#auth-screen .au-field input::placeholder{color:var(--v-faint)}
+.au-pass{position:relative}
+html:not(.lang-en) #auth-screen #auth-pass:placeholder-shown,html:not(.lang-en) #auth-screen #auth-name:placeholder-shown{direction:rtl;text-align:right}
+#auth-screen .au-pass input{padding-left:50px}
+#auth-screen .au-eye{left:8px;right:auto;width:38px;height:38px;color:var(--v-mist)}
+.au-error{background:rgba(224,96,96,.1);color:#E07A7A;border:1px solid rgba(224,96,96,.3);border-radius:12px;padding:10px 12px;font-size:13px;margin:0 0 14px;text-align:center}
+.au-agree{display:flex;align-items:flex-start;gap:10px;margin:4px 0 20px;cursor:pointer;font-size:13px;line-height:1.7;color:var(--v-mist)}
+.au-agree input{width:18px;height:18px;margin-top:3px;flex-shrink:0;accent-color:var(--v-rose)}
+.au-agree a{color:var(--v-rose);font-weight:600;text-decoration:none}
+#auth-screen .au-submit{border-radius:14px;padding:16px;font-size:16px;font-weight:700;background:var(--v-rose-deep);color:#FFF6EA;box-shadow:none}
+body.light-mode #auth-screen .au-submit{background:#A8461F}
+html.lang-en #auth-submit-icon{transform:scaleX(-1)}
+.au-guest{display:block;margin:14px auto 0;background:none;border:0;padding:10px;font-size:14px;font-weight:600;color:var(--v-mist);cursor:pointer}
+.au-foot{margin:18px 0 0;text-align:center;font-size:12px;color:var(--v-faint)}
+
+.lm-word-auth{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--v-ink)}
 button,input,textarea,select{font-family:inherit}
 :focus-visible{outline:2px solid var(--v-rose);outline-offset:2px;border-radius:6px}
 
@@ -2517,9 +2570,11 @@ button,input,textarea,select{font-family:inherit}
 
 /* ── Home ── */
 .h-greet{padding:18px 20px 4px}
+.h-greet::after{content:'';display:block;width:34px;height:8px;margin-top:12px;
+  background:radial-gradient(circle,var(--v-rose) 2.6px,transparent 3px) 0 50%/12px 8px repeat-x}
 .h-hello{margin:0 0 2px;font-size:14px;color:var(--v-mist);font-weight:500}
-.h-title{margin:0;font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1.25;color:var(--v-ink);letter-spacing:0}
-html.lang-en .h-title{font-family:'Playfair Display',serif;font-size:30px}
+.h-title{margin:0;font-family:var(--font-display);font-weight:600;font-size:32px;line-height:1.4;color:var(--v-ink);letter-spacing:0}
+html.lang-en .h-title{font-family:'Fraunces','Playfair Display',serif;font-size:30px}
 
 .h-ai{margin:18px 16px 0;background:var(--v-surface);border:1px solid var(--v-line);border-radius:var(--v-r-l);overflow:hidden}
 .h-ai-top{display:flex;align-items:center;gap:10px;padding:14px 16px 4px}
@@ -2539,7 +2594,7 @@ html.lang-en .h-title{font-family:'Playfair Display',serif;font-size:30px}
 #app .h-chips .ai-quick-chip:active{background:var(--v-rose-wash);border-color:var(--v-rose);color:var(--v-rose)}
 #app .h-ask{display:flex;align-items:center;gap:8px;margin:0 10px 10px;padding:6px 6px 6px 6px;background:var(--v-bg);
   border:1px solid var(--v-line);border-radius:99px;box-shadow:none}
-#app .h-ask:focus-within{border-color:rgba(233,166,184,.5)}
+#app .h-ask:focus-within{border-color:rgba(229,138,90,.5)}
 #app .h-ask input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--v-ink);font-size:15px;padding:8px 12px}
 #app .h-ask input::placeholder{color:var(--v-faint)}
 #app .h-ask .ai-send-btn{flex-shrink:0;width:38px;height:38px;border-radius:50%;border:0;background:var(--v-rose);
@@ -2555,9 +2610,9 @@ html.lang-en .h-sec-t{font-family:'Playfair Display',serif;font-size:20px}
   padding:18px;background:var(--v-surface);border:1px solid var(--v-line);border-radius:var(--v-r-l);cursor:pointer;
   transition:transform .15s}
 .h-feat:active{transform:scale(.99)}
-.h-feat-logo{grid-row:1/3;width:72px;height:72px;border-radius:var(--v-r-m);background:#F6EDF1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.h-feat-logo{grid-row:1/3;width:72px;height:72px;border-radius:var(--v-r-m);background:#F6EBDA;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .h-feat-logo img{width:70%;height:70%;object-fit:contain}
-.h-feat-mono{font-family:Georgia,serif;font-size:22px;font-weight:700;color:#5A2A40;letter-spacing:.04em}
+.h-feat-mono{font-family:Georgia,serif;font-size:22px;font-weight:700;color:#1E2747;letter-spacing:.04em}
 .h-feat-txt{display:flex;flex-direction:column;min-width:0}
 .h-feat-badge{font-size:12px;color:var(--v-rose);font-weight:600}
 .h-feat-name{font-size:20px;font-weight:700;color:var(--v-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
@@ -2571,7 +2626,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
   background:var(--v-surface);border:1px solid var(--v-line);border-radius:var(--v-r-m);color:var(--v-ink);
   font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s,border-color .15s}
 .h-cat i{font-size:18px;color:var(--v-rose)}
-.h-cat:active{transform:scale(.97);border-color:rgba(233,166,184,.45)}
+.h-cat:active{transform:scale(.97);border-color:rgba(229,138,90,.45)}
 
 /* ── Search + filters ── */
 #app .srch{background:var(--v-surface);border:1px solid var(--v-line);border-radius:99px;box-shadow:none;margin:10px 16px}
@@ -2583,10 +2638,10 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 
 /* ── Brand cards ── */
 #app .bc{background:var(--v-surface);border:1px solid var(--v-line);border-radius:var(--v-r-m);box-shadow:none}
-#app .bc-banner{background:#F6EDF1}
+#app .bc-banner{background:#F6EBDA}
 #app .bc-name{font-size:13px;font-weight:600;color:var(--v-ink)}
 #app .bc-cat{font-size:11px;color:var(--v-mist);background:none;border:0;padding:0;letter-spacing:0;text-transform:none}
-#app .bc-logo-fb{color:#5A2A40}
+#app .bc-logo-fb{color:#1E2747}
 
 /* ── Product cards ── */
 #app .obf-card{background:var(--v-surface);border:1px solid var(--v-line);border-radius:var(--v-r-m);box-shadow:none}
@@ -2609,6 +2664,17 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 #app .ni-dot{display:none}
 #app .ni::before{display:none}
 #brands-hero{display:none !important}
+#app .obf-card-img.lm-tile{position:relative;display:flex;align-items:center;justify-content:center;background:var(--v-raised) !important}
+#app .obf-card-img.lm-tile--skincare{background:linear-gradient(160deg,#E9DCC6,#D9C6A6) !important}
+#app .obf-card-img.lm-tile--makeup{background:linear-gradient(160deg,#EBCDBB,#D9A98E) !important}
+#app .obf-card-img.lm-tile--haircare{background:linear-gradient(160deg,#D8D2C2,#BDB49C) !important}
+#app .obf-card-img.lm-tile--fragrances{background:linear-gradient(160deg,#C9CCE0,#A9AECB) !important}
+.lm-tile-mono{font-family:Georgia,serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:#1E2747}
+.lm-tile-ic{position:absolute;bottom:10px;left:10px;font-size:13px;color:rgba(30,39,71,.55)}
+#app .obf-card-name{unicode-bidi:plaintext;text-align:right}
+html.lang-en #app .obf-card-name{text-align:left}
+#app .obf-card-maker{font-size:11px;font-weight:600;color:var(--v-rose);margin-bottom:2px;direction:ltr;text-align:right}
+html.lang-en #app .obf-card-maker{text-align:left}
 #app .hdr{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--v-bg) 97%,transparent);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 #app .bc-name{unicode-bidi:plaintext}
@@ -2653,9 +2719,9 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
   </div>
 
   <div class="sp-wrap">
-    <div class="sp-word">ROSIVA</div>
+    <div class="sp-word lm-lockup lm-lockup--xl"><svg class="lm-mark" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 90V58a28 31 0 0 1 56 0v32"/><path d="M32 90V60a18 21 0 0 1 36 0v22"/><path d="M42 86V62a8 10 0 0 1 16 0v12"/><circle cx="50" cy="12" r="3.4"/><circle cx="39.5" cy="15.5" r="2.5"/><circle cx="60.5" cy="15.5" r="2.5"/></svg><span>لمسة</span></div>
     <div class="sp-line"></div>
-    <div class="sp-tagline">مساعدتكِ الذكية في عالم الجمال</div>
+    <div class="sp-tagline">مستشارتكِ الذكية في الجمال</div>
   </div>
 </div>
 
@@ -2669,7 +2735,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
     <!-- ── Header ── -->
     <div class="hdr" style="padding:10px 18px 6px">
       <div class="hdr-menu" onclick="openSB()" aria-label="القائمة"><span></span><span></span><span></span></div>
-      <div style="font-family:'Playfair Display',serif;font-size:19px;font-weight:700;letter-spacing:.12em;color:var(--text)">ROSIVA</div>
+      <div class="lm-lockup"><svg class="lm-mark" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 90V58a28 31 0 0 1 56 0v32"/><path d="M32 90V60a18 21 0 0 1 36 0v22"/><path d="M42 86V62a8 10 0 0 1 16 0v12"/><circle cx="50" cy="12" r="3.4"/><circle cx="39.5" cy="15.5" r="2.5"/><circle cx="60.5" cy="15.5" r="2.5"/></svg><span>لمسة</span></div>
       <button class="hdr-vip" onclick="openVipModal()"><i class="fa-solid fa-crown"></i> VIP</button>
     </div>
 
@@ -2680,10 +2746,10 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
     </section>
 
     <!-- ── AI consultant ── -->
-    <section class="h-ai" aria-label="Rosiva AI">
+    <section class="h-ai" aria-label="Lamsa AI">
       <header class="h-ai-top">
         <span class="h-ai-av"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
-        <span class="h-ai-who"><b>Rosiva AI</b><small data-i18n="home.ai.status">مستشارتك للجمال</small></span>
+        <span class="h-ai-who"><b>لمسة</b><small data-i18n="home.ai.status">مستشارتك للجمال</small></span>
         <button id="ai-chat-clear" class="h-ai-clear" onclick="clearAIChat()" aria-label="محادثة جديدة" style="display:none"><i class="fa-solid fa-rotate-left"></i></button>
       </header>
       <div class="ai-chat-body" id="ai-chat-body">
@@ -2720,7 +2786,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
         <div id="hero-logo-wrap" class="h-feat-logo"><img id="hero-img" src="" alt="" style="opacity:0;transition:opacity .6s"></div>
         <div class="h-feat-txt">
           <span id="hero-badge" class="h-feat-badge" data-i18n="home.hero.badge">براند مختار</span>
-          <span id="hero-name" class="h-feat-name">Rosiva</span>
+          <span id="hero-name" class="h-feat-name">Lamsa</span>
           <span id="hero-cat" class="h-feat-cat">Beauty &amp; Fragrance</span>
         </div>
         <span class="h-feat-go"><span data-i18n="home.hero.btn">تصفّحي المنتجات</span><i class="fa-solid fa-arrow-left"></i></span>
@@ -2764,27 +2830,27 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
       <div class="ft" onclick="setF('Hair',this)" data-i18n="brands.filter.hair">شعر</div>
     </div>
 
-    <!-- Hero Card روزيفا — يظهر فقط في وضع "الكل" -->
+    <!-- Hero Card لمسة — يظهر فقط في وضع "الكل" -->
     <div id="brands-hero" style="margin:0 14px 12px;border-radius:var(--r-xl);overflow:hidden;
       cursor:pointer;position:relative;height:175px;
-      background:linear-gradient(135deg,#1a0c1e 0%,#0e0512 60%,#120818 100%);
-      box-shadow:0 0 40px rgba(214,61,110,.12),var(--shadow-lg);
+      background:linear-gradient(135deg,#1a0c1e 0%,#0F1428 60%,#120818 100%);
+      box-shadow:0 0 40px rgba(181,83,42,.12),var(--shadow-lg);
       animation:cardIn var(--dur-slow) var(--ease-out) backwards"
       onclick="navTo('home')">
       <!-- خلفية نجوم خفيفة -->
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(214,61,110,.08) 0%,transparent 70%)"></div>
-      <!-- شعار روزيفا -->
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(181,83,42,.08) 0%,transparent 70%)"></div>
+      <!-- شعار لمسة -->
       <div style="position:absolute;inset:0;display:flex;flex-direction:column;
         align-items:center;justify-content:center;gap:4px">
-        <img loading="lazy" src="assets/rosiva-logo.jpg" alt="Rosiva"
+        <img loading="lazy" src="assets/lamsa-logo.png" alt="لمسة"
           style="width:96px;height:96px;border-radius:22px;object-fit:cover;
-          box-shadow:0 8px 28px rgba(214,61,110,.4);margin-bottom:4px">
+          box-shadow:0 8px 28px rgba(181,83,42,.4);margin-bottom:4px">
         <div style="font-size:9px;letter-spacing:3px;color:rgba(200,160,180,.6);
           text-transform:uppercase;font-weight:700">Beauty Assistant</div>
       </div>
       <!-- شارة NEW -->
       <div style="position:absolute;top:12px;left:14px;
-        background:rgba(196,136,74,.15);border:1px solid rgba(196,136,74,.3);
+        background:rgba(214,170,90,.15);border:1px solid rgba(214,170,90,.3);
         border-radius:var(--r-full);padding:3px 10px;
         font-size:9px;font-weight:800;color:var(--gold2);letter-spacing:1.5px">NEW</div>
     </div>
@@ -2933,14 +2999,14 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 
     <!-- Profile hero -->
     <div class="p-hero" style="margin:8px 16px 0;background:var(--card);border:1px solid var(--v-line);border-radius:24px;padding:20px 18px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(184,66,106,.15) 0%,transparent 70%)"></div>
-      <div style="position:absolute;bottom:-20px;left:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(184,114,48,.1) 0%,transparent 70%)"></div>
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(181,83,42,.15) 0%,transparent 70%)"></div>
+      <div style="position:absolute;bottom:-20px;left:-20px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(184,134,47,.1) 0%,transparent 70%)"></div>
       <div style="position:relative;z-index:1;display:flex;align-items:center;gap:14px">
         <div style="width:52px;height:52px;border-radius:50%;background:var(--v-rose-wash);display:flex;align-items:center;justify-content:center;flex-shrink:0">
           <i class="fa-solid fa-user" style="color:var(--v-rose);font-size:20px"></i>
         </div>
         <div>
-          <div style="font-size:16px;font-weight:900;letter-spacing:-.3px;color:var(--text)" id="prof-username">مستخدمة روزيفا</div>
+          <div style="font-size:16px;font-weight:900;letter-spacing:-.3px;color:var(--text)" id="prof-username">مستخدمة لمسة</div>
           <div style="font-size:11px;color:var(--dim);margin-top:3px" id="prof-email">خصوصيتكِ هي أولويتنا</div>
         </div>
       </div>
@@ -2954,7 +3020,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
       <div style="font-size:13.5px;font-weight:800;margin-bottom:5px;color:var(--text)">تصفّحين كضيفة</div>
       <div style="font-size:11.5px;color:var(--dim);margin-bottom:16px;line-height:1.8">سجّلي الدخول لحفظ تحليلاتك والمزامنة بين أجهزتك</div>
       <div style="display:flex;flex-direction:column;gap:8px">
-        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='login';window.showAuthScreenGlobal();}" style="background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;border:none;border-radius:14px;padding:13px;font-size:13px;font-weight:800;cursor:pointer;width:100%;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;box-shadow:0 4px 16px rgba(184,66,106,.3)">
+        <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='login';window.showAuthScreenGlobal();}" style="background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;border:none;border-radius:14px;padding:13px;font-size:13px;font-weight:800;cursor:pointer;width:100%;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;box-shadow:0 4px 16px rgba(181,83,42,.3)">
           <i class="fa-solid fa-right-to-bracket"></i> تسجيل الدخول
         </button>
         <button onclick="if(typeof window.showAuthScreenGlobal==='function'){window._authMode='signup';window.showAuthScreenGlobal();}" style="background:rgba(255,255,255,.04);color:var(--text);border:1px solid var(--border);border-radius:14px;padding:13px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif">
@@ -2971,7 +3037,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
           <i class="fa-solid fa-robot" style="color:#4caf50;font-size:13px"></i>
         </div>
         <div style="flex:1">
-          <div style="font-size:12.5px;font-weight:800;color:var(--text)" data-i18n="prof.ai.label">مساعدة Rosiva الذكية</div>
+          <div style="font-size:12.5px;font-weight:800;color:var(--text)" data-i18n="prof.ai.label">مساعدة لمسة الذكية</div>
           <div style="font-size:10.5px;color:#4caf50;font-weight:700;margin-top:1px" data-i18n="prof.ai.badge">مفعّلة ✓</div>
         </div>
       </div>
@@ -3016,7 +3082,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
         </span>
         <input type="text" id="obf-srch" data-i18n-ph="discover.search" placeholder="ابحثي عن أي منتج..." dir="rtl"
           style="background:none;border:none;outline:none;color:var(--text);font-size:13px;font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;flex:1;text-align:right"
-          onfocus="document.getElementById('obf-srch-wrap').style.borderColor='rgba(214,61,110,.5)'"
+          onfocus="document.getElementById('obf-srch-wrap').style.borderColor='rgba(181,83,42,.5)'"
           onblur="document.getElementById('obf-srch-wrap').style.borderColor='var(--border)'"
           onkeydown="if(event.key==='Enter')searchOBF()">
         <span id="obf-srch-clear" onclick="document.getElementById('obf-srch').value='';this.style.display='none'"
@@ -3025,14 +3091,12 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
     </div>
     <!-- Category Pills -->
     <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('make-up',this)" data-i18n="discover.cat.makeup">ماكياج</div>
-      <div class="ft" onclick="searchOBFCat('fragrances',this)" data-i18n="discover.cat.fragrance">عطور</div>
-      <div class="ft" onclick="searchOBFCat('women-fragrance',this)" data-i18n="discover.cat.women">👩 عطر نسائي</div>
-      <div class="ft" onclick="searchOBFCat('men-fragrance',this)" data-i18n="discover.cat.men">👨 عطر رجالي</div>
+      <div class="ft on" onclick="searchOBFCat('all',this)" data-i18n="discover.cat.all">الكل</div>
       <div class="ft" onclick="searchOBFCat('facial-care',this)" data-i18n="discover.cat.skin">بشرة</div>
+      <div class="ft" onclick="searchOBFCat('make-up',this)" data-i18n="discover.cat.makeup">ماكياج</div>
       <div class="ft" onclick="searchOBFCat('hair-care',this)" data-i18n="discover.cat.hair">شعر</div>
-      <div class="ft" onclick="searchOBFCat('lip-gloss',this)" data-i18n="discover.cat.lips">💋 شفاه</div>
-      <div class="ft" onclick="searchOBFCat('nail-polish',this)" data-i18n="discover.cat.nails">💅 أظافر</div>
+      <div class="ft" onclick="searchOBFCat('fragrances',this)" data-i18n="discover.cat.fragrance">عطور</div>
+      <div class="ft" onclick="searchOBFCat('lip-gloss',this)" data-i18n="discover.cat.lips">شفاه</div>
     </div>
     <!-- Products Grid -->
     <div id="obf-grid"></div>
@@ -3127,16 +3191,16 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
     <div class="sb-head">
       <div class="sb-logo">
         <div class="sb-logo-ic" style="overflow:hidden;padding:0">
-          <img loading="lazy" src="assets/rosiva-logo.jpg" alt="Rosiva" style="width:100%;height:100%;object-fit:cover">
+          <img src="assets/lamsa-logo.png" alt="لمسة" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div>
-          <div class="sb-logo-txt">Rosiva</div>
+          <div class="sb-logo-txt">Lamsa</div>
           <div class="sb-logo-sub">Your Smart Beauty Assistant</div>
         </div>
       </div>
       <div style="padding:14px 16px 0">
         <div style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--gold2);text-transform:uppercase;margin-bottom:8px">
-          <i class="fa-solid fa-robot"></i> Rosiva AI
+          <i class="fa-solid fa-robot"></i> Lamsa AI
         </div>
         <div style="display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:9px 12px">
           <i class="fa-solid fa-circle-check" style="color:#4caf50;font-size:13px"></i>
@@ -3188,7 +3252,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
       </div>
     </div>
     <div class="sb-foot">
-      <div class="sb-version">Rosiva</div>
+      <div class="sb-version">Lamsa</div>
     </div>
   </div>
 
@@ -3205,10 +3269,10 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
         <svg width="30" height="26" viewBox="0 0 30 26" fill="none" aria-hidden="true">
           <path d="M2 22L5 10L10 16L15 4L20 16L25 10L28 22H2Z" fill="url(#pwcg)"/>
           <rect x="2" y="22" width="26" height="3" rx="1.5" fill="url(#pwcg)"/>
-          <defs><linearGradient id="pwcg" x1="2" y1="4" x2="28" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#F2C08A"/><stop offset="1" stop-color="#B87230"/></linearGradient></defs>
+          <defs><linearGradient id="pwcg" x1="2" y1="4" x2="28" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#EED19A"/><stop offset="1" stop-color="#B8862F"/></linearGradient></defs>
         </svg>
       </div>
-      <div class="pw-eyebrow">ROSIVA VIP</div>
+      <div class="pw-eyebrow">لمسة VIP</div>
       <h2 class="pw-title" id="pw-title">خبيرة جمالك الشخصية<br><span>بلا حدود</span></h2>
     </div>
 
@@ -3219,7 +3283,7 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
         <ul class="pw-feats">
           <li><i class="fa-solid fa-infinity"></i><div><b>أسئلة ذكاء اصطناعي بلا حدود</b><span>بدلاً من 5 أسئلة يومياً في الخطة المجانية</span></div></li>
           <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>تحليل كل منتج تهتمين به</b><span>المكونات، لمن يناسب، وبدائل أوفر — متى شئتِ</span></div></li>
-          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير Rosiva</b><span>اشتراكك يموّل ميزات ومنتجات جديدة باستمرار</span></div></li>
+          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير لمسة</b><span>اشتراكك يموّل ميزات ومنتجات جديدة باستمرار</span></div></li>
         </ul>
 
         <div class="pw-plans" role="radiogroup" aria-label="اختاري الخطة">
@@ -3252,56 +3316,56 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 </div>
 <style>
 .pw{position:fixed;inset:0;z-index:990;display:flex;align-items:flex-end;justify-content:center}
-.pw-scrim{position:absolute;inset:0;background:rgba(4,2,10,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:pwFade .3s ease}
-.pw-sheet{position:relative;width:100%;max-width:520px;max-height:94vh;overflow-y:auto;background:#0B0712;border:1px solid rgba(255,255,255,.06);border-bottom:0;border-radius:28px 28px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.6);animation:pwUp .42s var(--ease-out);overscroll-behavior:contain}
+.pw-scrim{position:absolute;inset:0;background:rgba(10,13,28,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:pwFade .3s ease}
+.pw-sheet{position:relative;width:100%;max-width:520px;max-height:94vh;overflow-y:auto;background:#121834;border:1px solid rgba(255,255,255,.06);border-bottom:0;border-radius:28px 28px 0 0;box-shadow:0 -20px 60px rgba(0,0,0,.6);animation:pwUp .42s var(--ease-out);overscroll-behavior:contain}
 @keyframes pwUp{from{transform:translateY(100%)}to{transform:none}}
 @keyframes pwFade{from{opacity:0}to{opacity:1}}
 .pw-grab{width:38px;height:4px;border-radius:4px;background:rgba(255,255,255,.14);margin:10px auto 0}
-.pw-x{position:absolute;top:14px;left:14px;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.07);color:rgba(238,230,236,.75);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pw-x{position:absolute;top:14px;left:14px;z-index:3;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.07);color:rgba(243,231,211,.75);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .pw-hero{position:relative;text-align:center;padding:22px 24px 6px;overflow:hidden}
-.pw-glow{position:absolute;inset:-40% -20% auto;height:260px;background:radial-gradient(50% 60% at 50% 40%,rgba(216,148,76,.22),transparent 70%),radial-gradient(40% 50% at 70% 30%,rgba(184,66,106,.22),transparent 70%);pointer-events:none}
-.pw-crown{position:relative;width:62px;height:62px;margin:0 auto 14px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(242,192,138,.16),rgba(184,66,106,.08));border:1px solid rgba(216,148,76,.35);box-shadow:0 10px 30px rgba(216,148,76,.18),inset 0 1px 0 rgba(255,255,255,.08)}
-.pw-eyebrow{position:relative;font-size:11px;font-weight:800;letter-spacing:.32em;color:var(--gold2);margin-bottom:6px}
-.pw-title{position:relative;margin:0;font-size:24px;line-height:1.35;font-weight:900;color:#F4ECF1;letter-spacing:-.3px}
-.pw-title span{background:linear-gradient(90deg,#F2C08A,#E8809A);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.pw-glow{position:absolute;inset:-40% -20% auto;height:260px;background:radial-gradient(50% 60% at 50% 40%,rgba(227,184,98,.22),transparent 70%),radial-gradient(40% 50% at 70% 30%,rgba(181,83,42,.22),transparent 70%);pointer-events:none}
+.pw-crown{position:relative;width:62px;height:62px;margin:0 auto 14px;border-radius:20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,rgba(242,192,138,.16),rgba(181,83,42,.08));border:1px solid rgba(227,184,98,.35);box-shadow:0 10px 30px rgba(227,184,98,.18),inset 0 1px 0 rgba(255,255,255,.08)}
+.pw-eyebrow{position:relative;font-size:14px;font-weight:700;letter-spacing:0;font-family:var(--font-display);color:var(--gold2);margin-bottom:6px}
+.pw-title{position:relative;margin:0;font-size:24px;line-height:1.35;font-weight:900;color:#F5EADB;letter-spacing:-.3px}
+.pw-title span{color:var(--v-rose)}
 .pw-body{padding:18px 18px 10px}
 .pw-feats{list-style:none;margin:0 0 18px;padding:0;display:flex;flex-direction:column;gap:14px}
 .pw-feats li{display:flex;gap:12px;align-items:flex-start}
-.pw-feats li>i{flex-shrink:0;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#F2C08A;background:rgba(216,148,76,.12);border:1px solid rgba(216,148,76,.22)}
-.pw-feats b{display:block;font-size:14px;font-weight:800;color:#F0E8EC;line-height:1.4}
-.pw-feats span{display:block;font-size:12px;color:rgba(238,230,236,.55);line-height:1.5;margin-top:1px}
+.pw-feats li>i{flex-shrink:0;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#EED19A;background:rgba(227,184,98,.12);border:1px solid rgba(227,184,98,.22)}
+.pw-feats b{display:block;font-size:14px;font-weight:800;color:#F3E7D3;line-height:1.4}
+.pw-feats span{display:block;font-size:12px;color:rgba(243,231,211,.55);line-height:1.5;margin-top:1px}
 .pw-plans{display:flex;flex-direction:column;gap:10px}
-.pw-plan{position:relative;width:100%;display:flex;align-items:center;gap:12px;text-align:right;font-family:inherit;padding:16px;border-radius:18px;background:#120C1A;border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:border-color var(--dur-base),background var(--dur-base),transform var(--dur-fast)}
+.pw-plan{position:relative;width:100%;display:flex;align-items:center;gap:12px;text-align:right;font-family:inherit;padding:16px;border-radius:18px;background:#182040;border:1.5px solid rgba(255,255,255,.08);cursor:pointer;transition:border-color var(--dur-base),background var(--dur-base),transform var(--dur-fast)}
 .pw-plan:active{transform:scale(.985)}
-.pw-plan.on{background:linear-gradient(160deg,#1E1029,#140B1D);border-color:rgba(216,148,76,.75);box-shadow:0 0 0 4px rgba(216,148,76,.08)}
+.pw-plan.on{background:linear-gradient(160deg,#232C55,#1A2246);border-color:rgba(227,184,98,.75);box-shadow:0 0 0 4px rgba(227,184,98,.08)}
 .pw-radio{flex-shrink:0;width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.25);position:relative;transition:border-color var(--dur-base)}
-.pw-plan.on .pw-radio{border-color:#E0A462}
-.pw-plan.on .pw-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:linear-gradient(135deg,#F2C08A,#C9803C)}
+.pw-plan.on .pw-radio{border-color:#E3B862}
+.pw-plan.on .pw-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:linear-gradient(135deg,#EED19A,#C9973E)}
 .pw-plan-txt{flex:1;display:flex;flex-direction:column}
-.pw-plan-txt b{font-size:15px;font-weight:800;color:#F0E8EC}
-.pw-plan-txt small{font-size:11.5px;color:rgba(238,230,236,.55);margin-top:1px}
+.pw-plan-txt b{font-size:15px;font-weight:800;color:#F3E7D3}
+.pw-plan-txt small{font-size:11.5px;color:rgba(243,231,211,.55);margin-top:1px}
 .pw-price{display:flex;flex-direction:column;align-items:flex-start;direction:ltr}
-.pw-price b{font-size:18px;font-weight:900;color:#F4ECF1;letter-spacing:-.3px}
-.pw-price small{font-size:11px;color:rgba(238,230,236,.5)}
-.pw-tag{position:absolute;top:-10px;right:16px;font-size:10.5px;font-weight:800;color:#1A0E08;padding:3px 10px;border-radius:99px;background:linear-gradient(90deg,#F2C08A,#E0A462)}
-.pw-cta{position:relative;width:100%;margin-top:16px;border:0;border-radius:16px;padding:16px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(100deg,var(--rose),#C9803C);box-shadow:0 10px 28px rgba(184,66,106,.35);transition:transform var(--dur-fast),opacity var(--dur-base)}
+.pw-price b{font-size:18px;font-weight:900;color:#F5EADB;letter-spacing:-.3px}
+.pw-price small{font-size:11px;color:rgba(243,231,211,.5)}
+.pw-tag{position:absolute;top:-10px;right:16px;font-size:10.5px;font-weight:800;color:#1A1206;padding:3px 10px;border-radius:99px;background:linear-gradient(90deg,#EED19A,#E3B862)}
+.pw-cta{position:relative;width:100%;margin-top:16px;border:0;border-radius:16px;padding:16px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(100deg,var(--rose),#C9973E);box-shadow:0 10px 28px rgba(181,83,42,.35);transition:transform var(--dur-fast),opacity var(--dur-base)}
 .pw-cta:active{transform:scale(.985)}
 .pw-cta:disabled{cursor:default}
 .pw-spin{display:none;width:18px;height:18px;border-radius:50%;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:pwSpin .8s linear infinite;margin:0 auto}
 .pw-cta.is-loading .pw-cta-lbl{display:none}.pw-cta.is-loading .pw-spin{display:block}
 @keyframes pwSpin{to{transform:rotate(360deg)}}
-.pw-legal{margin:12px 4px 0;font-size:10.5px;line-height:1.7;color:rgba(238,230,236,.42);text-align:center}
+.pw-legal{margin:12px 4px 0;font-size:10.5px;line-height:1.7;color:rgba(243,231,211,.42);text-align:center}
 .pw-links{display:flex;justify-content:center;align-items:center;gap:14px;padding:14px 0 6px}
-.pw-links button,.pw-links a{background:none;border:0;padding:6px;font-family:inherit;font-size:12px;font-weight:700;color:rgba(238,230,236,.6);text-decoration:none;cursor:pointer}
+.pw-links button,.pw-links a{background:none;border:0;padding:6px;font-family:inherit;font-size:12px;font-weight:700;color:rgba(243,231,211,.6);text-decoration:none;cursor:pointer}
 .pw-links i{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.25)}
-.pw-status{margin-bottom:6px;padding:16px;border-radius:18px;text-align:center;background:linear-gradient(135deg,rgba(216,148,76,.1),rgba(184,66,106,.08));border:1px solid rgba(216,148,76,.3);color:var(--gold2)}
-body.light-mode .pw-sheet{background:#FFF9FB;border-color:rgba(0,0,0,.06)}
-body.light-mode .pw-title,body.light-mode .pw-feats b,body.light-mode .pw-plan-txt b,body.light-mode .pw-price b{color:#2A1420}
+.pw-status{margin-bottom:6px;padding:16px;border-radius:18px;text-align:center;background:linear-gradient(135deg,rgba(227,184,98,.1),rgba(181,83,42,.08));border:1px solid rgba(227,184,98,.3);color:var(--gold2)}
+body.light-mode .pw-sheet{background:#FFFBF3;border-color:rgba(0,0,0,.06)}
+body.light-mode .pw-title,body.light-mode .pw-feats b,body.light-mode .pw-plan-txt b,body.light-mode .pw-price b{color:#1E2747}
 body.light-mode .pw-feats span,body.light-mode .pw-plan-txt small,body.light-mode .pw-price small,body.light-mode .pw-legal,body.light-mode .pw-links button,body.light-mode .pw-links a{color:rgba(42,20,32,.6)}
 body.light-mode .pw-plan{background:#fff;border-color:rgba(0,0,0,.1)}
-body.light-mode .pw-plan.on{background:#FFF4E8;border-color:#D8944C}
+body.light-mode .pw-plan.on{background:#FBEBD8;border-color:#E3B862}
 body.light-mode .pw-radio{border-color:rgba(0,0,0,.25)}
-body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#5A3A4A}
+body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
 </style>
 
 <style>
@@ -3313,83 +3377,67 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#5A3A4A}
 <div id="loader"><div class="spin"></div><div style="font-size:12px;color:var(--dim)">Loading...</div></div>
 <div class="toast" id="toast"></div>
 
-<!-- AUTH SCREEN (Firebase) -->
-<div id="auth-screen" style="display:none;position:fixed;inset:0;z-index:980;background:var(--bg);overflow-x:hidden;overflow-y:auto">
-  <div class="auth-bg-blob" style="width:260px;height:260px;background:var(--rose);top:-60px;right:-80px"></div>
-  <div class="auth-bg-blob" style="width:220px;height:220px;background:var(--gold2);bottom:0;left:-70px"></div>
-  <div style="position:relative;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 22px;">
-    <div style="width:100%;max-width:380px;">
-      <div style="text-align:center;margin-bottom:26px">
-        <div style="width:76px;height:76px;border-radius:24px;background:linear-gradient(135deg,var(--rose),var(--gold2));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:var(--shadow-glow)">
-          <i class="fa-solid fa-spa" style="font-size:32px;color:#fff"></i>
-        </div>
-        <div style="font-size:24px;font-weight:900;color:var(--text);letter-spacing:.3px">Rosiva</div>
-        <div style="font-size:12.5px;color:var(--dim);margin-top:5px" id="auth-tagline" data-i18n="auth.tagline">دليلكِ الذكي لعالم الجمال ✨</div>
+<!-- AUTH SCREEN (Firebase) — Lamsa -->
+<div id="auth-screen" class="au" style="display:none">
+  <header class="au-top">
+    <button type="button" class="au-close" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+    <div class="au-brand"><svg class="lm-mark" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 90V58a28 31 0 0 1 56 0v32"/><path d="M32 90V60a18 21 0 0 1 36 0v22"/><path d="M42 86V62a8 10 0 0 1 16 0v12"/><circle cx="50" cy="12" r="3.4"/><circle cx="39.5" cy="15.5" r="2.5"/><circle cx="60.5" cy="15.5" r="2.5"/></svg><span>لمسة</span></div>
+    <p class="au-tag" id="auth-tagline" data-i18n="auth.tagline">مستشارتكِ الذكية في الجمال</p>
+  </header>
+
+  <main class="au-sheet">
+    <div class="auth-tabs au-tabs" role="tablist">
+      <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
+      <button class="auth-tab on" id="auth-tab-login" role="tab" onclick="setAuthMode('login')" data-i18n="auth.login.tab">تسجيل الدخول</button>
+      <button class="auth-tab" id="auth-tab-signup" role="tab" onclick="setAuthMode('signup')" data-i18n="auth.signup.tab">حساب جديد</button>
+    </div>
+
+    <div id="auth-name-wrap" class="auth-field au-field" style="display:none">
+      <label for="auth-name">الاسم</label>
+      <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="كيف نناديكِ؟" autocomplete="name">
+    </div>
+
+    <div class="auth-field au-field">
+      <label for="auth-email">البريد الإلكتروني</label>
+      <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email">
+    </div>
+
+    <div class="auth-field au-field">
+      <div class="au-label-row">
+        <label for="auth-pass">كلمة المرور</label>
+        <button type="button" id="auth-forgot-wrap" class="au-link" onclick="handleForgotPassword()">نسيتِ كلمة المرور؟</button>
       </div>
-
-      <div class="auth-card">
-        <!-- TABS -->
-        <div class="auth-tabs">
-          <div class="auth-tab-indicator" id="auth-tab-indicator"></div>
-          <button class="auth-tab on" id="auth-tab-login" onclick="setAuthMode('login')" data-i18n="auth.login.tab">تسجيل الدخول</button>
-          <button class="auth-tab" id="auth-tab-signup" onclick="setAuthMode('signup')" data-i18n="auth.signup.tab">حساب جديد</button>
-        </div>
-
-        <!-- NAME (signup only) -->
-        <div id="auth-name-wrap" class="auth-field" style="display:none">
-          <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="اسمك" autocomplete="name" />
-          <i class="fa-solid fa-user"></i>
-        </div>
-
-        <!-- EMAIL -->
-        <div class="auth-field">
-          <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="البريد الإلكتروني" dir="ltr" autocomplete="email" style="text-align:left;padding-right:16px;padding-left:44px" />
-          <i class="fa-solid fa-envelope" style="right:auto;left:16px"></i>
-        </div>
-
-        <!-- PASSWORD -->
-        <div class="auth-field">
-          <input id="auth-pass" type="password" placeholder="كلمة المرور" dir="ltr" autocomplete="current-password" style="text-align:left;padding-right:16px;padding-left:72px" />
-          <i class="fa-solid fa-lock" style="right:auto;left:16px"></i>
-          <button type="button" class="auth-field-eye" onclick="toggleAuthPassVis()" aria-label="إظهار/إخفاء كلمة المرور" style="left:42px">
-            <i class="fa-regular fa-eye" id="auth-pass-icon"></i>
-          </button>
-        </div>
-
-        <div id="auth-forgot-wrap" style="text-align:left;margin-bottom:16px;margin-top:-2px">
-          <span onclick="handleForgotPassword()" style="font-size:11.5px;color:var(--gold2);cursor:pointer;font-weight:700">نسيتِ كلمة المرور؟</span>
-        </div>
-
-        <div id="auth-error" style="display:none;background:var(--error-d);color:var(--error);border:1px solid rgba(224,96,96,.3);border-radius:var(--r-sm);padding:10px 12px;font-size:12px;margin-bottom:14px;text-align:center"></div>
-
-        <label style="display:flex;align-items:flex-start;gap:8px;margin-bottom:18px;cursor:pointer;user-select:none">
-          <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()" style="margin-top:2px;width:16px;height:16px;accent-color:var(--rose);flex-shrink:0;cursor:pointer" />
-          <span style="font-size:11.5px;color:var(--dim);line-height:1.7">
-            أوافق على <span onclick="event.preventDefault();navTo('prof');setTimeout(openPrivacy,300)" style="color:var(--gold2);cursor:pointer;font-weight:700">سياسة الخصوصية</span> وشروط استخدام روزيفا
-          </span>
-        </label>
-
-        <button id="auth-submit-btn" class="auth-submit" onclick="handleAuthSubmit()">
-          <span id="auth-submit-label">تسجيل الدخول</span>
-          <i class="fa-solid fa-arrow-left-long" id="auth-submit-icon"></i>
-        </button>
-      </div>
-
-      <div style="text-align:center;margin-top:20px;font-size:11px;color:var(--muted)">
-        Gilgamesh LLC — Rosiva © 2026
+      <div class="au-pass">
+        <input id="auth-pass" type="password" placeholder="6 أحرف على الأقل" dir="ltr" autocomplete="current-password">
+        <button type="button" class="auth-field-eye au-eye" onclick="toggleAuthPassVis()" aria-label="إظهار أو إخفاء كلمة المرور"><i class="fa-regular fa-eye" id="auth-pass-icon"></i></button>
       </div>
     </div>
-  </div>
+
+    <div id="auth-error" class="au-error" role="alert" style="display:none"></div>
+
+    <label class="au-agree">
+      <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()">
+      <span>أوافق على <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">سياسة الخصوصية</a> وشروط استخدام لمسة</span>
+    </label>
+
+    <button id="auth-submit-btn" class="auth-submit au-submit" onclick="handleAuthSubmit()">
+      <span id="auth-submit-label">تسجيل الدخول</span>
+      <i class="fa-solid fa-arrow-left" id="auth-submit-icon"></i>
+    </button>
+
+    <button type="button" class="au-guest" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()">المتابعة بدون حساب</button>
+    <p class="au-foot">Gilgamesh LLC — لمسة © 2026</p>
+  </main>
 </div>
 
 <script>
 // ══ GLOBAL ERROR HANDLERS ══
 window.onerror = function(msg, src, line, col, err){
-  console.warn('[Rosiva Error]', msg, 'line:', line);
+  console.warn('[Lamsa Error]', msg, 'line:', line);
   return true; // منع ظهور خطأ في console للمستخدم
 };
 window.addEventListener('unhandledrejection', function(e){
-  console.warn('[Rosiva Promise]', e.reason);
+  console.warn('[Lamsa Promise]', e.reason);
   e.preventDefault();
 });
 // كشف الاتصال بالإنترنت وإشعار المستخدم
@@ -3714,7 +3762,7 @@ function buildVPWave(){
 
 
 // ══ INIT ══
-// ══ ROSIVA NETWORK ERROR UI ══
+// ══ LAMSA NETWORK ERROR UI ══
 function showNetworkError(container, retryFn){
   const isRTL = !document.documentElement.classList.contains('lang-en');
   const isOffline = !navigator.onLine;
@@ -3737,7 +3785,7 @@ function showNetworkError(container, retryFn){
     </div>`;
 }
 
-// ══ ROSIVA LIGHTWEIGHT PRODUCT CACHE (localStorage) ══
+// ══ LAMSA LIGHTWEIGHT PRODUCT CACHE (localStorage) ══
 const LS_CACHE_TTL = 43200000; // 12 ساعة
 function lsCacheSet(key, prods){
   try{
@@ -3769,7 +3817,7 @@ function initHeroCard(){
   const dayIdx = Math.floor(Date.now()/(1000*60*60*24)) % BRANDS.length;
   const brand = BRANDS[dayIdx];
   if(!brand)return;
-  document.getElementById('hero-name').textContent = brand.ar||brand.nm||'Rosiva';
+  document.getElementById('hero-name').textContent = brand.ar||brand.nm||'Lamsa';
   document.getElementById('hero-cat').textContent = brand.cat||'Beauty';
   if(brand.domain){
     const img = document.getElementById('hero-img');
@@ -3853,7 +3901,7 @@ function navTo(s){
     const grid = document.getElementById('obf-grid');
     const firstTab = document.querySelector('#obf-ftabs .ft');
     if(!grid.innerHTML.trim() || grid.innerHTML.includes('No results')){
-      if(firstTab) searchOBFCat('make-up', firstTab);
+      if(firstTab) searchOBFCat('all', firstTab);
     }
     // Infinite scroll for Discover — IntersectionObserver (أكثر استقراراً من حساب موضع السكرول)
     setupDiscoverInfiniteScroll();
@@ -3904,7 +3952,7 @@ function renderBrands(showAll=false){
   const grid=document.getElementById('b-grid');
   const viewAllBtn=document.getElementById('view-all-btn');
 
-  // Hero Card روزيفا — تظهر فقط في وضع "الكل" بدون فلتر أو بحث
+  // Hero Card لمسة — تظهر فقط في وضع "الكل" بدون فلتر أو بحث
   const heroBox=document.getElementById('brands-hero');
   if(heroBox){
     heroBox.style.display=(curFilter==='All'&&!q&&!showAll)?'block':'none';
@@ -3972,13 +4020,12 @@ function setF(cat,el){
 async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
-  const logoImg=document.getElementById('bd-logo-img');
   const logoWrap=document.getElementById('bd-logo');
+  let logoImg=null;
   // Try favicon, then text fallback (صندوق أبيض بحرف العلامة كما في المرجع)
   function tryLogo(urls, idx){
     if(idx>=urls.length){
-      logoImg.style.display='none';
-      logoWrap.innerHTML=`<div style="font-size:15px;font-weight:900;letter-spacing:-.5px;color:#111;text-align:center;line-height:1.2">${curBrand.nm.toUpperCase()}</div>`;
+      logoWrap.innerHTML=`<div style="font-family:Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.04em;color:#1E2747;text-align:center">${_brandMono(curBrand.nm)}</div>`;
       return;
     }
     logoImg.src=urls[idx];
@@ -3986,6 +4033,7 @@ async function openBrand(id){
   }
   logoWrap.innerHTML='<img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">';
   const freshLogoImg=document.getElementById('bd-logo-img');
+  logoImg=freshLogoImg;
   freshLogoImg.alt=curBrand.nm;
   freshLogoImg.style.display='block';
   freshLogoImg.onerror=()=>tryLogo([],1);
@@ -4100,23 +4148,7 @@ function renderBrandProdCard(p, b){
 
 // ── يجلب عيّنة سريعة من منتجات البراند الحقيقية (نفس مصادر OBF) لتأسيس توصيات حقيقية عليها ──
 async function fetchBrandProductsQuick(b){
-  const term = b.search || b.nm;
-  const urls = [
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`,
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`
-  ];
-  for(const url of urls){
-    try{
-      const controller = new AbortController();
-      const timer = setTimeout(()=>controller.abort(), 8000);
-      const res = await fetch(url, {signal: controller.signal});
-      clearTimeout(timer);
-      const data = await res.json();
-      const prods = (data.products||[]).filter(p=>p.product_name && qIsGoodImgUrl(p.image_front_display_url||p.image_url||''));
-      if(prods.length) return prods.slice(0,8);
-    }catch(e){}
-  }
-  return [];
+  return catalogFind({brand:b.search||b.nm, limit:8});
 }
 
 async function loadBrAI(b){
@@ -4136,7 +4168,7 @@ async function loadBrAI(b){
     const realProds = await fetchBrandProductsQuick(b);
     const namesList = realProds.map(p=>p.product_name).slice(0,8).join(' | ');
 
-    const sys = `أنتِ Rosiva AI، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (اسم البراند، نوع المنتجات، الفئة المستهدفة) لتمييزها بصرياً.`;
+    const sys = `أنتِ "لمسة"، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة. استخدمي تنسيق Markdown: ضعي ** حول الكلمات والمصطلحات المهمة (اسم البراند، نوع المنتجات، الفئة المستهدفة) لتمييزها بصرياً.`;
     const prompt = realProds.length
       ? `لدى براند "${b.nm}" (${b.cat}) هذه المنتجات الحقيقية المتوفرة في التطبيق: ${namesList}.\nرشّحي 2-3 منها بالاسم تحديداً مع سبب مختصر لكل ترشيح ولمن يناسب، ضمن نص قصير وودود. لا تذكري أي منتج غير مذكور في القائمة أعلاه.`
       : `قدّمي تحليلاً موجزاً لبراند "${b.nm}" في مجال ${b.cat}: تاريخه وما يميزه وأشهر منتجاته ولمن يناسب.`;
@@ -4249,7 +4281,7 @@ async function loadPrAI(p,b){
   try{
     const r=await callGemini(
       `Explain this product "${p.ar}" (${p.nm}) from the ${b.nm} brand in the ${b.cat} category. Product type and function, key ingredients or scent elements, optimal usage, who it suits (skin type or occasion), price range, pros and cons.`,
-      'أنتِ Rosiva AI، خبيرة جمال ومستشارة منتجات محترفة. لديكِ معرفة دقيقة بمكونات منتجات الجمال وفوائدها الحقيقية وكيفية استخدامها ومن تناسب. أجيبي باللغة العربية بأسلوب ودي وعلمي في 4-5 جمل مفيدة.'
+      'أنتِ "لمسة"، خبيرة جمال ومستشارة منتجات محترفة. لديكِ معرفة دقيقة بمكونات منتجات الجمال وفوائدها الحقيقية وكيفية استخدامها ومن تناسب. أجيبي باللغة العربية بأسلوب ودي وعلمي في 4-5 جمل مفيدة.'
     );
     lastPrInfo=r;
     document.getElementById('pm-ai').innerHTML=`<div class="ai-card-txt">${formatAIText(r)}</div>`;
@@ -4362,25 +4394,13 @@ function renderFavs(){
 async function _loadFavTrending(){
   const box=document.getElementById('fav-trending');
   if(!box)return;
-  box.innerHTML=Array(4).fill(0).map((_,i)=>`
-    <div class="obf-card" style="animation:none;pointer-events:none">
-      <div class="obf-card-img" style="background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.15}s"></div>
-      <div style="padding:10px 12px"><div style="height:9px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.2}s;width:70%;margin-bottom:6px"></div><div style="height:8px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.25}s;width:45%"></div></div>
-    </div>`).join('');
-  try{
-    const res=await fetch('https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=make-up&json=true&page=1&page_size=8&fields=code,product_name,brands,image_front_display_url&nocache=1');
-    const data=await res.json();
-    const prods=(data.products||[]).filter(p=>{
-      const img=(p.image_front_display_url||'');
-      return p.product_name && qIsGoodImgUrl(img);
-    }).slice(0,4);
-    box.innerHTML='';
-    prods.forEach((p,i)=>{
-      const c=makeProductCard(p.product_name,(p.brands||'').split(',')[0],p.image_front_display_url,'','',p.code);
-      if(c){c.style.animationDelay=(i*50)+'ms';box.appendChild(c);}
-    });
-    if(!box.children.length)box.parentElement.style.display='none';
-  }catch(e){box.parentElement.style.display='none';}
+  box.innerHTML='';
+  const picks=['lm01','lm05','lm55','lm68'];
+  LAMSA_CATALOG.filter(x=>picks.includes(x.id)).map(_catToObf).forEach((p,i)=>{
+    const c=makeProductCard(p.product_name,p.brands,'','','',p.code);
+    if(c){c.style.animationDelay=(i*50)+'ms';box.appendChild(c);}
+  });
+  if(!box.children.length)box.parentElement.style.display='none';
 }
 
 function clearFavs(){
@@ -4396,7 +4416,7 @@ let liveIsPlaying = false;
 // ── تعريف أداة (function) البحث عن المنتجات ──
 const PRODUCT_TOOL_DECL = {
   name:'search_beauty_products',
-  description:'تبحث عن منتجات تجميل وعناية حقيقية داخل قاعدة بيانات تطبيق Rosiva (Open Beauty Facts) لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
+  description:'تبحث عن منتجات تجميل وعناية حقيقية داخل مختارات تطبيق لمسة لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
   parameters:{
     type:'OBJECT',
     properties:{
@@ -4416,7 +4436,7 @@ async function toggleVoice(){
   if(speaking){
     stopSpeech();
     document.getElementById('mic-btn').classList.remove('rec','speaking');
-    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    document.getElementById('vh').textContent='اضغطي للتحدث مع لمسة';
     return;
   }
 
@@ -4426,7 +4446,7 @@ async function toggleVoice(){
     if(_sttRecognition) _sttRecognition.stop();
     document.getElementById('mic-btn').classList.remove('rec');
     setWaveIdle(true);
-    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    document.getElementById('vh').textContent='اضغطي للتحدث مع لمسة';
     return;
   }
 
@@ -4440,7 +4460,7 @@ async function toggleVoice(){
   isRec=true;
   document.getElementById('mic-btn').classList.add('rec');
   setWaveIdle(false);
-  document.getElementById('vh').textContent='روسيفا تستمع إليكِ... 👂';
+  document.getElementById('vh').textContent='لمسة تستمع إليكِ... 👂';
 
   const rec = new SpeechRec();
   _sttRecognition = rec;
@@ -4454,7 +4474,7 @@ async function toggleVoice(){
     _sttRecognition=null;
     document.getElementById('mic-btn').classList.remove('rec');
     setWaveIdle(true);
-    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    document.getElementById('vh').textContent='اضغطي للتحدث مع لمسة';
     if(txt){
       document.getElementById('txt-in').value='';
       await doAI(txt);
@@ -4466,7 +4486,7 @@ async function toggleVoice(){
     _sttRecognition=null;
     document.getElementById('mic-btn').classList.remove('rec');
     setWaveIdle(true);
-    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    document.getElementById('vh').textContent='اضغطي للتحدث مع لمسة';
     if(e.error !== 'aborted') showToast('لم يتم التعرف على الصوت — حاولي مجدداً');
   };
 
@@ -4476,7 +4496,7 @@ async function toggleVoice(){
     _sttRecognition=null;
     document.getElementById('mic-btn').classList.remove('rec');
     setWaveIdle(true);
-    document.getElementById('vh').textContent='اضغطي للتحدث مع روزيفا';
+    document.getElementById('vh').textContent='اضغطي للتحدث مع لمسة';
   };
 
   rec.start();
@@ -4688,7 +4708,7 @@ async function _vipSetState(info, persistRemote=true){
 }
 function _vipClearLocal(){ _vipMem = null; try{ localStorage.removeItem('rosivaVip'); }catch(e){} }
 
-// معرّف مُجزّأ للحساب يُرسل لـ Google Play لربط الاشتراك بحساب Rosiva
+// معرّف مُجزّأ للحساب يُرسل لـ Google Play لربط الاشتراك بحساب لمسة
 async function _vipAccountHash(uid){
   try{
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('rosiva:'+uid));
@@ -4837,7 +4857,7 @@ async function purchaseVip(plan){
   }
   if(!_NP){
     if(!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())){
-      showToast('الاشتراك متاح من تطبيق Rosiva على Google Play'); return;
+      showToast('الاشتراك متاح من تطبيق لمسة على Google Play'); return;
     }
     showToast('نظام الدفع يجهز الآن، حاولي بعد لحظات'); initVipBilling(); return;
   }
@@ -4866,7 +4886,7 @@ async function purchaseVip(plan){
 
 async function restoreVipPurchases(){
   if(!window._authUser){ showToast('سجّلي الدخول أولاً لاستعادة اشتراكك 👤'); return; }
-  if(!_NP){ showToast('الاستعادة متاحة من تطبيق Rosiva على Google Play'); return; }
+  if(!_NP){ showToast('الاستعادة متاحة من تطبيق لمسة على Google Play'); return; }
   try{
     const res = await _NP.restoreTransactions();
     const { purchase, otherAccount } = await _vipPickForAccount(res && res.purchases);
@@ -4875,7 +4895,7 @@ async function restoreVipPurchases(){
       showToast('✅ تمت استعادة اشتراك VIP');
       closeVipModal();
     }else if(otherAccount){
-      showToast('هذا الاشتراك مرتبط بحساب Rosiva آخر — سجّلي الدخول بذلك الحساب');
+      showToast('هذا الاشتراك مرتبط بحساب لمسة آخر — سجّلي الدخول بذلك الحساب');
     }else if(res && res.hasPending){
       showToast('لديكِ دفعة قيد المعالجة ⏳ سيتفعّل VIP عند اكتمالها');
     }else{
@@ -4915,16 +4935,16 @@ async function openVipModal(){
       statusBox.style.display='block';
       statusBox.innerHTML=`
         <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px">
-          <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--rose));display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(216,148,76,.4)">
+          <div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--rose));display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(227,184,98,.4)">
             <i class="fa-solid fa-crown" style="color:#fff;font-size:18px"></i>
           </div>
           <div style="text-align:right">
             <div style="font-size:16px;font-weight:900;color:var(--gold2);letter-spacing:-.2px">أنتِ VIP 👑</div>
-            <div style="font-size:11px;color:rgba(216,148,76,.7);font-weight:600">اشتراك ${plan} نشط</div>
+            <div style="font-size:11px;color:rgba(227,184,98,.7);font-weight:600">اشتراك ${plan} نشط</div>
           </div>
         </div>
         <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <div style="font-size:11px;color:rgba(240,232,236,.5)">${renews?'التجديد القادم':'ينتهي في'}</div>
+          <div style="font-size:11px;color:rgba(243,231,211,.5)">${renews?'التجديد القادم':'ينتهي في'}</div>
           <div style="font-size:12px;font-weight:800;color:var(--text)">${dateStr}</div>
         </div>
         <div style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:8px">
@@ -4945,9 +4965,9 @@ function updateVipUI(){
     document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none');
     document.querySelectorAll('.hdr-vip').forEach(btn=>{
       if(a){
-        btn.style.background='linear-gradient(135deg,#1A0E08,#2C1A0A)';
-        btn.style.borderColor='rgba(216,148,76,.8)';
-        btn.style.boxShadow='0 0 20px rgba(216,148,76,.3)';
+        btn.style.background='linear-gradient(135deg,#1A1206,#2C1E0A)';
+        btn.style.borderColor='rgba(227,184,98,.8)';
+        btn.style.boxShadow='0 0 20px rgba(227,184,98,.3)';
         btn.innerHTML='<i class="fa-solid fa-crown"></i> VIP ✓';
       } else {
         btn.innerHTML='<i class="fa-solid fa-crown"></i> VIP';
@@ -5007,7 +5027,7 @@ async function doAI(text){
 
   try{
     const {text:r, products} = await callGeminiWithProductTool(text,
-      `أنتِ Rosiva AI، مساعدة الجمال الذكية داخل تطبيق Rosiva. ${t('misc.ai.lang')} بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.`);
+      `أنتِ "لمسة"، مساعدة الجمال الذكية داخل تطبيق لمسة. ${t('misc.ai.lang')} بأسلوب ودي وخبير ومختصر. خبرتكِ تشمل المكياج والعطور والعناية بالبشرة والشعر. قاعدة مهمة: عندما يطلب المستخدم منتجاً أو يصف مشكلة، لا تقترحي أبداً أسماء منتجات من خارج التطبيق. اسأليه أولاً: "هل تريدين أعرض لك منتجات مناسبة من داخل التطبيق؟" وفقط بعد موافقته الصريحة استدعي دالة search_beauty_products لجلب منتجات حقيقية وعرضها له. ممنوع تماماً قول "تفضلي" أو ذكر منتجات قبل استدعاء الدالة فعلياً والحصول على نتيجتها — لو لم تستدعي الدالة فلن يظهر أي منتج للمستخدم إطلاقاً. إذا خرج السؤال عن عالم الجمال وجّهي بلطف.`);
     lastResp=r;
     if(reply) reply.innerHTML=formatAIText(r);
     document.getElementById('ai-txt').textContent=r;
@@ -5338,32 +5358,147 @@ let obfCatParamsList = []; // قائمة params للفئة الحالية
 let obfCatParamsIdx  = 0;  // الـ param الحالي
 
 async function searchOBF(){
-  const raw = document.getElementById('obf-srch').value.trim();
-  if(!raw){ showToast('اكتبي اسم المنتج'); return; }
+  const q = document.getElementById('obf-srch').value.trim();
+  if(!q){ showToast('اكتبي اسم المنتج أو نوعه'); return; }
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
-
-  // قاعدة Open Beauty Facts أغلب أسماء منتجاتها إنجليزية/لاتينية —
-  // لو الكتابة عربية وفيه مفتاح Gemini، نترجم مصطلح البحث بصمت قبل إرساله
-  let q = raw;
-  const isArabic = /[\u0600-\u06FF]/.test(raw);
-  if(isArabic && apiKey){
-    try{
-      const translated = await callGemini(
-        `حوّلي مصطلح البحث هذا لكلمة أو كلمتين بحث إنجليزية مناسبة لقاعدة بيانات منتجات تجميل عالمية، بدون أي شرح أو علامات تنصيص: "${raw}"`
-      );
-      if(translated && translated.trim()) q = translated.trim().replace(/["'.]/g,'');
-    }catch(e){ /* فشل الترجمة — نكمل بالنص الأصلي بدل كسر البحث */ }
+  _renderCatalogGrid(catalogFind({q}), q);
+}
+function _renderCatalogGrid(prods, q){
+  const grid=document.getElementById('obf-grid');
+  obfHasMore=false; obfLoading=false;
+  const lm=document.getElementById('obf-load-more'); if(lm) lm.style.display='none';
+  if(!prods.length){
+    const ar=!document.documentElement.classList.contains('lang-en');
+    const qq=String(q||'').replace(/[<>"&]/g,'');
+    grid.innerHTML=`<div class="rv-error" style="grid-column:1/-1"><div class="rv-error-anim"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="rv-error-title">${ar?'لا يوجد هذا المنتج في مختارات لمسة':'Not in Lamsa picks yet'}</div>
+      <div class="rv-error-sub">${ar?'جربي كلمة أخرى، أو ابحثي عنه مباشرة في Amazon.':'Try another word, or search Amazon directly.'}</div>
+      ${qq?`<button class="rv-error-btn" onclick="buyOnAmazon('${qq.replace(/'/g,"\\'")}','')">${ar?'ابحثي في Amazon':'Search Amazon'}</button>`:''}</div>`;
+    return;
   }
+  renderOBFCards(prods,false);
+}
 
-  fetchOBF(`search_terms=${encodeURIComponent(q)}`, true);
+// ══════════════════════════════════════════════════════
+// كتالوج لمسة — منتجات مختارة يدوياً (بديل Open Beauty Facts)
+// المصدر: data/catalog.json — لإضافة منتج عدّلي الملف ثم انسخي السطر هنا.
+// c: skincare | makeup | haircare | fragrances   s: lip | nail | women | men
+// ══════════════════════════════════════════════════════
+const LAMSA_CATALOG = [
+{"id": "lm01", "b": "CeraVe", "n": "CeraVe Hydrating Facial Cleanser", "c": "skincare", "s": "", "d": "غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.", "k": "غسول منظف cleanser بشرة جافة حساسة"},
+{"id": "lm02", "b": "Paula's Choice", "n": "Paula's Choice 2% BHA Liquid Exfoliant", "c": "skincare", "s": "", "d": "مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.", "k": "مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant"},
+{"id": "lm03", "b": "Neutrogena", "n": "Neutrogena Hydro Boost Water Gel", "c": "skincare", "s": "", "d": "مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.", "k": "مرطب ترطيب جل دهنية moisturizer"},
+{"id": "lm04", "b": "The Ordinary", "n": "The Ordinary Niacinamide 10% + Zinc 1%", "c": "skincare", "s": "", "d": "سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.", "k": "سيروم نياسيناميد مسام توحيد لون دهنية serum"},
+{"id": "lm05", "b": "EltaMD", "n": "EltaMD UV Clear SPF 46", "c": "skincare", "s": "", "d": "واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.", "k": "واقي شمس حماية حبوب sunscreen spf"},
+{"id": "lm06", "b": "COSRX", "n": "COSRX Snail Mucin 96% Power Essence", "c": "skincare", "s": "", "d": "إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.", "k": "ايسنس حلزون ترطيب كوري essence"},
+{"id": "lm07", "b": "Laneige", "n": "Laneige Lip Sleeping Mask", "c": "makeup", "s": "lip", "d": "ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.", "k": "شفايف شفاه ماسك ترطيب lip"},
+{"id": "lm08", "b": "La Roche-Posay", "n": "La Roche-Posay Toleriane Double Repair", "c": "skincare", "s": "", "d": "مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.", "k": "مرطب حساسة سيراميد moisturizer"},
+{"id": "lm09", "b": "Biodance", "n": "Biodance Bio-Collagen Real Deep Mask", "c": "skincare", "s": "", "d": "ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.", "k": "ماسك كولاجين ترطيب نضارة كوري mask"},
+{"id": "lm10", "b": "Medicube", "n": "Medicube Zero Pore Pad 2.0", "c": "skincare", "s": "", "d": "فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.", "k": "تونر فوط مسام تقشير toner pads كوري"},
+{"id": "lm11", "b": "TruSkin", "n": "TruSkin Vitamin C Face Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.", "k": "سيروم فيتامين سي تفتيح بقع اشراقة vitamin c"},
+{"id": "lm12", "b": "CeraVe", "n": "CeraVe Eye Repair Cream", "c": "skincare", "s": "", "d": "كريم للعين يخفف الهالات السوداء والانتفاخ.", "k": "كريم عين هالات سوداء انتفاخ eye cream"},
+{"id": "lm13", "b": "First Aid Beauty", "n": "First Aid Beauty KP Bump Eraser", "c": "skincare", "s": "", "d": "مقشر للجسم يخفف النتوءات والجلد الخشن.", "k": "جسم مقشر نتوءات خشونة body scrub"},
+{"id": "lm14", "b": "Olay", "n": "Olay Regenerist Micro-Sculpting Cream", "c": "skincare", "s": "", "d": "كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.", "k": "تجاعيد مضاد شيخوخة كريم anti aging"},
+{"id": "lm15", "b": "Kiehl's", "n": "Kiehl's Ultra Facial Cream", "c": "skincare", "s": "", "d": "مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.", "k": "مرطب يومي ترطيب moisturizer"},
+{"id": "lm16", "b": "PanOxyl", "n": "PanOxyl Acne Foaming Wash 10%", "c": "skincare", "s": "", "d": "غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.", "k": "غسول حب الشباب حبوب بنزويل acne wash"},
+{"id": "lm17", "b": "Aquaphor", "n": "Aquaphor Healing Ointment", "c": "skincare", "s": "", "d": "مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.", "k": "مرهم جفاف تشقق شفايف جافة جدا ointment"},
+{"id": "lm18", "b": "Bio-Oil", "n": "Bio-Oil Skincare Oil", "c": "skincare", "s": "", "d": "زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.", "k": "زيت ندبات تشققات علامات تمدد oil"},
+{"id": "lm19", "b": "Differin", "n": "Differin Adapalene Gel 0.1%", "c": "skincare", "s": "", "d": "جل أدابالين لعلاج حب الشباب ومنع ظهوره.", "k": "حب الشباب حبوب ريتينويد adapalene"},
+{"id": "lm20", "b": "Tatcha", "n": "Tatcha The Water Cream", "c": "skincare", "s": "", "d": "مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.", "k": "مرطب خفيف دهنية فاخر moisturizer"},
+{"id": "lm21", "b": "Glow Recipe", "n": "Glow Recipe Watermelon Glow Niacinamide Dew Drops", "c": "skincare", "s": "", "d": "سيروم بالنياسيناميد والبطيخ لإشراقة ندية.", "k": "سيروم اشراقة نضارة نياسيناميد glow"},
+{"id": "lm22", "b": "Cetaphil", "n": "Cetaphil Gentle Skin Cleanser", "c": "skincare", "s": "", "d": "غسول لطيف جداً للبشرة الحساسة والجافة.", "k": "غسول لطيف حساسة جافة cleanser"},
+{"id": "lm23", "b": "La Roche-Posay", "n": "La Roche-Posay Anthelios SPF 60", "c": "skincare", "s": "", "d": "واقي شمس سائل خفيف جداً بحماية عالية.", "k": "واقي شمس حماية عالية sunscreen spf"},
+{"id": "lm24", "b": "Clinique", "n": "Clinique Smart Clinical Repair Eye Cream", "c": "skincare", "s": "", "d": "كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.", "k": "كريم عين تجاعيد خطوط eye cream"},
+{"id": "lm25", "b": "Sunday Riley", "n": "Sunday Riley Good Genes", "c": "skincare", "s": "", "d": "علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.", "k": "تقشير لاكتيك اشراقة تجديد"},
+{"id": "lm26", "b": "Dr. Jart+", "n": "Dr. Jart+ Cicapair Tiger Grass", "c": "skincare", "s": "", "d": "كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.", "k": "احمرار تهدئة مصحح لون سيكا"},
+{"id": "lm27", "b": "SkinCeuticals", "n": "SkinCeuticals C E Ferulic", "c": "skincare", "s": "", "d": "سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.", "k": "سيروم فيتامين سي مضاد اكسدة فاخر"},
+{"id": "lm28", "b": "Mighty Patch", "n": "Mighty Patch Original", "c": "skincare", "s": "", "d": "لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.", "k": "لصقات حبوب حب الشباب pimple patch"},
+{"id": "lm29", "b": "Anua", "n": "Anua Heartleaf Pore Control Cleansing Oil", "c": "skincare", "s": "", "d": "زيت منظف يذيب المكياج والدهون وينظف المسام.", "k": "زيت منظف مزيل مكياج مسام كوري cleansing oil"},
+{"id": "lm30", "b": "Torriden", "n": "Torriden DIVE-IN Hyaluronic Acid Serum", "c": "skincare", "s": "", "d": "سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.", "k": "سيروم ترطيب هيالورونيك كوري"},
+{"id": "lm31", "b": "Dr. Althea", "n": "Dr. Althea 345 Relief Cream", "c": "skincare", "s": "", "d": "كريم مهدئ للبشرة الحساسة والمتهيجة.", "k": "مهدئ حساسة تهيج كريم كوري"},
+{"id": "lm32", "b": "Mediheal", "n": "Mediheal Tea Tree Essential Mask", "c": "skincare", "s": "", "d": "ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.", "k": "ماسك ورقي شجرة الشاي حبوب sheet mask"},
+{"id": "lm33", "b": "SK-II", "n": "SK-II Facial Treatment Essence", "c": "skincare", "s": "", "d": "إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.", "k": "ايسنس فاخر تجديد صفاء"},
+{"id": "lm34", "b": "Estée Lauder", "n": "Estée Lauder Advanced Night Repair", "c": "skincare", "s": "", "d": "سيروم ليلي يدعم تجدد البشرة أثناء النوم.", "k": "سيروم ليلي تجديد تجاعيد فاخر night"},
+{"id": "lm35", "b": "Neutrogena", "n": "Neutrogena Rapid Wrinkle Repair", "c": "skincare", "s": "", "d": "كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.", "k": "ريتينول تجاعيد خطوط retinol"},
+{"id": "lm36", "b": "L'Oréal Paris", "n": "L'Oréal Revitalift Vitamin C Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي نقي لإشراقة البشرة.", "k": "سيروم فيتامين سي اشراقة"},
+{"id": "lm37", "b": "CeraVe", "n": "CeraVe PM Facial Moisturizing Lotion", "c": "skincare", "s": "", "d": "مرطب ليلي خفيف بالنياسيناميد والسيراميد.", "k": "مرطب ليلي خفيف نياسيناميد"},
+{"id": "lm38", "b": "Mario Badescu", "n": "Mario Badescu Drying Lotion", "c": "skincare", "s": "", "d": "علاج موضعي يجفف الحبوب بين ليلة وضحاها.", "k": "حبوب علاج موضعي حب الشباب"},
+{"id": "lm39", "b": "Thayers", "n": "Thayers Witch Hazel Toner", "c": "skincare", "s": "", "d": "تونر خالٍ من الكحول بالبندق الساحر وماء الورد.", "k": "تونر بندق ساحر ورد مسام toner"},
+{"id": "lm40", "b": "Aveeno", "n": "Aveeno Daily Moisturizing Lotion", "c": "skincare", "s": "", "d": "لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.", "k": "لوشن جسم شوفان ترطيب جافة body"},
+{"id": "lm41", "b": "Eucerin", "n": "Eucerin Advanced Repair Cream", "c": "skincare", "s": "", "d": "كريم للبشرة الجافة جداً والخشنة.", "k": "كريم جفاف شديد خشونة جسم"},
+{"id": "lm42", "b": "Garnier", "n": "Garnier Micellar Cleansing Water", "c": "skincare", "s": "", "d": "ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.", "k": "ميسيلار مزيل مكياج منظف micellar"},
+{"id": "lm43", "b": "SkinMedica", "n": "SkinMedica HA5 Hydrator", "c": "skincare", "s": "", "d": "مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.", "k": "ترطيب هيالورونيك فاخر"},
+{"id": "lm44", "b": "Obagi", "n": "Obagi Nu-Derm Foaming Gel", "c": "skincare", "s": "", "d": "غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.", "k": "غسول دهنية طبي"},
+{"id": "lm45", "b": "SKIN1004", "n": "SKIN1004 Madagascar Centella Ampoule", "c": "skincare", "s": "", "d": "أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.", "k": "سنتيلا تهدئة امبول كوري"},
+{"id": "lm46", "b": "Beauty of Joseon", "n": "Beauty of Joseon Relief Sun SPF 50+", "c": "skincare", "s": "", "d": "واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.", "k": "واقي شمس كوري ارز sunscreen"},
+{"id": "lm47", "b": "Haruharu Wonder", "n": "Haruharu Wonder Black Rice Toner", "c": "skincare", "s": "", "d": "تونر بالأرز الأسود وحمض الهيالورونيك.", "k": "تونر ارز اسود ترطيب كوري"},
+{"id": "lm48", "b": "Caudalie", "n": "Caudalie Vinoperfect Radiance Serum", "c": "skincare", "s": "", "d": "سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.", "k": "بقع داكنة تفتيح توحيد لون سيروم"},
+{"id": "lm49", "b": "Peach Slices", "n": "Peach Slices Snail Rescue Serum", "c": "skincare", "s": "", "d": "سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.", "k": "سيروم حلزون حبوب"},
+{"id": "lm50", "b": "Maybelline", "n": "Maybelline Lash Sensational Sky High Mascara", "c": "makeup", "s": "", "d": "ماسكارا تطويل بفرشاة مرنة لرموش أطول.", "k": "ماسكارا رموش تطويل mascara"},
+{"id": "lm51", "b": "essence", "n": "essence Lash Princess Mascara", "c": "makeup", "s": "", "d": "ماسكارا بتأثير الرموش الصناعية وسعر مناسب.", "k": "ماسكارا رموش كثافة mascara"},
+{"id": "lm52", "b": "Julep", "n": "Julep Eyeshadow 101 Stick", "c": "makeup", "s": "", "d": "ظل عيون كريمي على شكل قلم مقاوم للماء.", "k": "ظل عيون قلم مقاوم للماء eyeshadow"},
+{"id": "lm53", "b": "Neutrogena", "n": "Neutrogena Makeup Remover Wipes", "c": "makeup", "s": "", "d": "مناديل مزيلة للمكياج حتى المقاوم للماء.", "k": "مزيل مكياج مناديل wipes"},
+{"id": "lm54", "b": "COVERGIRL", "n": "COVERGIRL Clean Invisible Foundation", "c": "makeup", "s": "", "d": "كريم أساس خفيف بمظهر طبيعي.", "k": "فاونديشن كريم اساس foundation"},
+{"id": "lm55", "b": "NYX", "n": "NYX Butter Gloss", "c": "makeup", "s": "lip", "d": "ملمع شفايف ناعم غير لزج بألوان كثيرة.", "k": "قلوس ملمع شفايف شفاه gloss lip"},
+{"id": "lm56", "b": "e.l.f.", "n": "e.l.f. Halo Glow Liquid Filter", "c": "makeup", "s": "", "d": "مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.", "k": "هايلايتر توهج اشراقة glow"},
+{"id": "lm57", "b": "L'Oréal Paris", "n": "L'Oréal Lumi Glotion", "c": "makeup", "s": "", "d": "مرطب ملوّن يضيف إشراقة طبيعية للبشرة.", "k": "اشراقة توهج مرطب ملون glow"},
+{"id": "lm58", "b": "Benefit", "n": "Benefit The POREfessional Primer", "c": "makeup", "s": "", "d": "برايمر يخفي المسام ويثبت المكياج.", "k": "برايمر مسام تثبيت primer"},
+{"id": "lm59", "b": "IT Cosmetics", "n": "IT Cosmetics CC+ Cream SPF 50", "c": "makeup", "s": "", "d": "كريم CC بتغطية كاملة وحماية من الشمس.", "k": "سي سي كريم تغطية فاونديشن cc cream"},
+{"id": "lm60", "b": "Revlon", "n": "Revlon ColorStay Eyeliner", "c": "makeup", "s": "", "d": "آيلاينر مقاوم للماء يدوم 24 ساعة.", "k": "ايلاينر كحل مقاوم للماء eyeliner"},
+{"id": "lm61", "b": "Real Techniques", "n": "Real Techniques Miracle Complexion Sponge", "c": "makeup", "s": "", "d": "إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.", "k": "اسفنجة بيوتي بلندر دمج sponge"},
+{"id": "lm62", "b": "Milani", "n": "Milani Make It Last Setting Spray", "c": "makeup", "s": "", "d": "بخاخ تثبيت يحافظ على المكياج طوال اليوم.", "k": "بخاخ تثبيت مكياج setting spray"},
+{"id": "lm63", "b": "Laura Mercier", "n": "Laura Mercier Translucent Setting Powder", "c": "makeup", "s": "", "d": "بودرة شفافة لتثبيت المكياج دون تكتل.", "k": "بودرة تثبيت شفافة powder"},
+{"id": "lm64", "b": "Urban Decay", "n": "Urban Decay Naked3 Palette", "c": "makeup", "s": "", "d": "باليت ظلال عيون بدرجات الوردي الدافئ.", "k": "باليت ظلال عيون palette"},
+{"id": "lm65", "b": "Nizoral", "n": "Nizoral Anti-Dandruff Shampoo", "c": "haircare", "s": "", "d": "شامبو بالكيتوكونازول 1% لمكافحة القشرة.", "k": "شامبو قشرة فروة الرأس shampoo"},
+{"id": "lm66", "b": "Olaplex", "n": "Olaplex No. 3 Hair Perfector", "c": "haircare", "s": "", "d": "علاج يصلح روابط الشعر التالف قبل الغسل.", "k": "شعر تالف علاج اصلاح هيشان olaplex"},
+{"id": "lm67", "b": "Moroccanoil", "n": "Moroccanoil Treatment", "c": "haircare", "s": "", "d": "زيت أرغان للشعر يمنحه نعومة ولمعاناً.", "k": "زيت ارغان شعر لمعان نعومة"},
+{"id": "lm68", "b": "Mielle", "n": "Mielle Rosemary Mint Scalp & Hair Oil", "c": "haircare", "s": "", "d": "زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.", "k": "زيت اكليل الجبل روزماري تساقط تقوية شعر"},
+{"id": "lm69", "b": "Revlon", "n": "Revlon One-Step Volumizer", "c": "haircare", "s": "", "d": "فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.", "k": "سشوار فرشاة تصفيف شعر"},
+{"id": "lm70", "b": "Gucci", "n": "Gucci Bloom Eau de Parfum", "c": "fragrances", "s": "women", "d": "عطر نسائي زهري غني بالياسمين ومسك الروم.", "k": "عطر نسائي زهري ياسمين perfume"},
+{"id": "lm71", "b": "Ralph Lauren", "n": "Ralph Lauren Polo Blue", "c": "fragrances", "s": "men", "d": "عطر رجالي منعش بنفحات مائية.", "k": "عطر رجالي منعش cologne"},
+{"id": "lm72", "b": "Dior", "n": "Dior Sauvage", "c": "fragrances", "s": "men", "d": "عطر رجالي قوي بنفحات البرغموت والعنبر.", "k": "عطر رجالي قوي سوفاج perfume"},
+{"id": "lm73", "b": "Beetles", "n": "Beetles Gel Nail Polish Kit", "c": "makeup", "s": "nail", "d": "مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.", "k": "مناكير طلاء اظافر جل nail"}
+];
+const _CAT_LABEL = {skincare:'عناية بالبشرة', makeup:'مكياج', haircare:'عناية بالشعر', fragrances:'عطور'};
+function _catNorm(t){
+  return String(t||'').toLowerCase()
+    .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ًٌٍَُِّْـ]/g,'')
+    .replace(/['’.+\-]/g,' ').replace(/\s+/g,' ').trim();
+}
+// يحوّل منتج الكتالوج لنفس الشكل الذي تستخدمه البطاقات والشاشات
+function _catToObf(x){
+  return { code:x.id, product_name:x.n, brands:x.b, image_front_display_url:'', image_url:'',
+    ingredients_text:'', labels:'', _cat:x.c, _sub:x.s, _desc:x.d };
+}
+// بحث موحّد: q نص حر (عربي/إنجليزي)، cat فئة، sub فئة فرعية، brand اسم براند
+function catalogFind({q='', cat='', sub='', brand='', limit=0}={}){
+  let list = LAMSA_CATALOG;
+  if(cat) list = list.filter(x=>x.c===cat);
+  if(sub) list = list.filter(x=>x.s===sub);
+  if(brand){
+    const b=_catNorm(brand).replace(/ (beauty|cosmetics|paris|parfums?)$/,'');
+    list = list.filter(x=>{ const xb=_catNorm(x.b); return xb===b || xb.startsWith(b) || b.startsWith(xb); });
+  }
+  if(q){
+    const words=_catNorm(q).split(' ').filter(w=>w.length>1);
+    const scored=list.map(x=>{
+      const hay=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||''));
+      const sc=words.reduce((a,w)=>a+(hay.includes(w)?1:0),0);
+      return {x,sc};
+    }).filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc);
+    list=scored.map(o=>o.x);
+  }
+  if(limit) list=list.slice(0,limit);
+  return list.map(_catToObf);
+}
+function _catByName(name){
+  const n=_catNorm(name); return LAMSA_CATALOG.find(x=>_catNorm(x.n)===n)||null;
 }
 
 // ══ PRODUCT CARD FACTORY ══
 function makeProductCard(name, brand, img, ingr, labels, code){
   // فلتر الصور السيئة — استخدام الفلتر المشترك
   img = qIsGoodImgUrl(img) ? img : '';
-  // إخفاء البطاقة كلياً إذا لا صورة
-  if(!img) return null;
   // إخفاء البطاقات اللي المستخدم حظرها يدوياً (صورة محتواها خاطئ مثلاً)
   if(code && blockedProducts.has(code)) return null;
 
@@ -5387,8 +5522,15 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   fb.style.display = 'none';
   fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:22px;color:var(--dim)"></i>';
   imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; imgWrap.style.animation = 'none'; imgWrap.style.background = 'none'; };
-  imgWrap.appendChild(imgEl);
-  imgWrap.appendChild(fb);
+  if(img){ imgWrap.appendChild(imgEl); imgWrap.appendChild(fb); }
+  else {
+    // بطاقة بدون صورة: حرفا البراند + أيقونة الفئة (تصميم موحّد بدل صور غير دقيقة)
+    const ce=_catByName(name);
+    const icon={skincare:'fa-droplet',makeup:'fa-palette',haircare:'fa-scissors',fragrances:'fa-spray-can-sparkles'}[ce&&ce.c]||'fa-wand-magic-sparkles';
+    imgWrap.style.animation='none'; imgWrap.style.background='';
+    imgWrap.classList.add('lm-tile','lm-tile--'+((ce&&ce.c)||'x'));
+    imgWrap.innerHTML=`<span class="lm-tile-mono">${_brandMono(brand||name)}</span><i class="fa-solid ${icon} lm-tile-ic"></i>`;
+  }
   el.appendChild(imgWrap);
 
   // زر مفضلة (heart) — أعلى يمين البطاقة كاملة
@@ -5416,7 +5558,8 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   el.appendChild(favBtn);
 
   // محتوى البطاقة (اسم + تصنيف + مكونات + رابط التفاصيل)
-  const {cat} = guessArabicDesc(name, labels);
+  const _ce = _catByName(name);
+  const {cat} = _ce ? {cat:_CAT_LABEL[_ce.c]} : guessArabicDesc(name, labels);
   const chips = parseIngrChips(ingr);
 
   const body = document.createElement('div');
@@ -5425,6 +5568,10 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   const nm = document.createElement('div');
   nm.className = 'obf-card-name';
   nm.textContent = name;
+  const bnm = document.createElement('div');
+  bnm.className = 'obf-card-maker';
+  bnm.textContent = brand || (_ce && _ce.b) || '';
+  body.appendChild(bnm);
   body.appendChild(nm);
 
   const br = document.createElement('div');
@@ -5434,7 +5581,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
 
   const sub = document.createElement('div');
   sub.className = 'obf-card-sub';
-  sub.textContent = chips.length ? chips.join(' · ') : 'مكونات طبيعية خفيفة';
+  sub.textContent = _ce ? _ce.d : (chips.length ? chips.join(' · ') : '');
   body.appendChild(sub);
 
   // صف سفلي: رابط "عرض التفاصيل" + زر سلة/شراء
@@ -5497,29 +5644,14 @@ function showDiscoverSkeleton(count=6){
 
 function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
-  el.classList.add('on');
-
-  // كل فئة لها عدة params نجربها بالتتالي عبر صفحات متعددة
-  const catParams = {
-    'make-up':         ['search_terms=foundation','search_terms=concealer','search_terms=lipstick'],
-    'fragrances':      ['search_terms=perfume','search_terms=fragrance','search_terms=eau+de+parfum'],
-    'women-fragrance': ['search_terms=women+perfume','search_terms=femme+parfum','search_terms=floral+fragrance','search_terms=eau+de+parfum+woman'],
-    'men-fragrance':   ['search_terms=men+cologne','search_terms=homme+parfum','search_terms=aftershave','search_terms=eau+de+toilette+men','search_terms=woody+fragrance'],
-    'facial-care':     ['search_terms=moisturizer','search_terms=face+serum','search_terms=sunscreen','search_terms=toner'],
-    'hair-care':       ['search_terms=shampoo','search_terms=conditioner','search_terms=hair+mask'],
-    'lip-gloss':       ['search_terms=lipstick','search_terms=lip+gloss','search_terms=lip+balm'],
-    'nail-polish':     ['search_terms=nail+polish','search_terms=nail+color'],
+  if(el) el.classList.add('on');
+  const map={
+    'all':{}, 'make-up':{cat:'makeup'}, 'fragrances':{cat:'fragrances'},
+    'women-fragrance':{cat:'fragrances',sub:'women'}, 'men-fragrance':{cat:'fragrances',sub:'men'},
+    'facial-care':{cat:'skincare'}, 'hair-care':{cat:'haircare'},
+    'lip-gloss':{cat:'makeup',sub:'lip'}, 'nail-polish':{cat:'makeup',sub:'nail'},
   };
-
-  const params = catParams[cat] || [`search_terms=${encodeURIComponent(cat.replace('-',' '))}`];
-  const _catKeyMap = {
-    'make-up':'makeup','fragrances':'fragrances','women-fragrance':'fragrances',
-    'men-fragrance':'fragrances','facial-care':'skincare','hair-care':'haircare',
-    'lip-gloss':'makeup','nail-polish':'makeup',
-  };
-  obfCatParamsList = params;
-  obfCatParamsIdx  = 0;
-  fetchOBFSmart(params[0], true, _catKeyMap[cat]||'');
+  _renderCatalogGrid(catalogFind(map[cat]||{q:cat}), '');
 }
 
 // ══ AI PRODUCT RECOMMENDATION ENGINE ══
@@ -5552,26 +5684,7 @@ function detectDeny(text){
 
 // ── بحث مباشر في OBF بكلمات الاستعلام اللي يحددها الموديل نفسه (بدون نداء Gemini إضافي) ──
 async function fetchOBFByQuery(query){
-  const seen = new Set();
-  let all = [];
-  const tries = [query, ...String(query).split(/\s+/).filter(w=>w.length>2)].slice(0,3);
-  for(const term of tries){
-    if(all.length >= 6) break;
-    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
-    try{
-      const res = await fetch(url);
-      const data = await res.json();
-      (data.products||[]).forEach(p=>{
-        if(!p.product_name) return;
-        const key = p.code||p.product_name;
-        if(seen.has(key)) return;
-        if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
-        seen.add(key);
-        all.push(p);
-      });
-    }catch(e){}
-  }
-  return all.slice(0,6);
+  return catalogFind({q:query, limit:6});
 }
 
 // ── المنفّذ الفعلي لأداة search_beauty_products — يرجع منتجات حقيقية + ملخص نصي يُرسَل لـ Gemini كـ functionResponse ──
@@ -5584,39 +5697,7 @@ async function execProductSearchTool(query){
 }
 
 async function searchProductsForQuery(userQuery){
-  if(!apiKey) return [];
-  try{
-    // استخرج كلمات بحث من الطلب
-    const extractRes = await callGemini(
-      `المستخدم يبحث عن: "${userQuery}"\nاستخرج كلمات بحث إنجليزية لقاعدة بيانات منتجات تجميل.\nأجب بـ JSON فقط بدون أي نص آخر:\n{"terms":["word1","word2","word3"]}`,
-      ''
-    );
-    let terms = [];
-    try{
-      const clean = extractRes.replace(/```json|```/g,'').trim();
-      terms = JSON.parse(clean).terms || [];
-    }catch(e){ terms = [userQuery.split(' ')[0]]; }
-
-    // ابحث في OBF بعدة كلمات واجمع النتائج
-    const seen = new Set();
-    let all = [];
-    for(const term of terms.slice(0,3)){
-      const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
-      try{
-        const res = await fetch(url);
-        const data = await res.json();
-        (data.products||[]).forEach(p=>{
-          if(!p.product_name) return;
-          const key = p.code||p.product_name;
-          if(seen.has(key)) return;
-          if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
-          seen.add(key);
-          all.push(p);
-        });
-      }catch(e){}
-    }
-    return all.slice(0,6);
-  }catch(e){ return []; }
+  return catalogFind({q:userQuery, limit:6});
 }
 
 function showAIProductCards(prods){
@@ -5781,24 +5862,7 @@ async function fsGetByBrand(brandSlug, n=20){
 }
 
 function fsCacheProducts(prods){
-  try{
-    const db=window._fsDb; if(!db||!prods.length) return;
-    for(const p of prods.slice(0,15)){
-      const id=(p.code||'').trim(); if(!id) continue;
-      setDoc(doc(db,'products',id),{
-        code:id,
-        name:p.product_name||'',
-        brand:(p.brands||'').split(',')[0].trim(),
-        brand_slug:(p.brands||'').split(',')[0].trim().toLowerCase().replace(/[^a-z0-9]+/g,'-'),
-        category:_detectProdCat(p),
-        image_url:p.image_front_display_url||p.image_url||'',
-        ingredients:(p.ingredients_text||'').substring(0,500),
-        labels:(p.labels_tags||[]).slice(0,10),
-        source:'openbeautyfacts',
-        updated_at:new Date().toISOString(),
-      },{merge:true}).catch(()=>{});
-    }
-  }catch(e){}
+  // أُوقف: كان يحفظ منتجات Open Beauty Facts في Firestore
 }
 
 function _detectProdCat(p){
@@ -5811,106 +5875,16 @@ function _detectProdCat(p){
 }
 
 async function fetchOBFSmart(params, reset=false, categoryKey=''){
-  if(reset){
-    obfLoading=false; obfPage=1; obfHasMore=true;
-    obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    showDiscoverSkeleton(6);
-  }
-  if(categoryKey){
-    // 1) كاش localStorage أولاً (أسرع)
-    const lsCached = lsCacheGet('cat_'+categoryKey);
-    if(lsCached && lsCached.length>=6){
-      renderOBFCards(lsCached, !reset);
-      // refresh في الخلفية بدون spinner
-      fetchOBF(params, false);
-      return;
-    }
-    // 2) Firestore
-    const cached=await fsGetByCategory(categoryKey,20);
-    if(cached.length>=6){
-      renderOBFCards(cached,!reset);
-      lsCacheSet('cat_'+categoryKey, cached);
-      return;
-    }
-  }
-  await fetchOBF(params,reset);
+  return fetchOBF(params, reset);
 }
 
 async function fetchOBF(params, reset=false){
-  if(reset){
-    // إلغاء أي fetch جارٍ وبدء من جديد فوراً
-    obfLoading=false;
-    obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    document.getElementById('obf-grid').innerHTML=
-      '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
-  }
-  if(obfLoading) return;
-  if(!obfHasMore) return;
-  obfLoading=true;
-  const isFirst = reset;
-  const loadMoreEl = document.getElementById('obf-load-more');
-  if(!isFirst && loadMoreEl) loadMoreEl.style.display='block';
-  const collected=[];
-  try{
-    for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
-      const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
-      const res=await fetch(url);
-      const data=await res.json();
-      const total=parseInt(data.count)||0;
-      const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
-      const withImg=allP.filter(p=>{
-        const img=(p.image_front_display_url||p.image_url||'');
-        const notBlocked = !p.code || !blockedProducts.has(p.code);
-        return notBlocked && qIsGoodImgUrl(img);
-      });
-      // بوابات الجودة والتكرار: نفحص فقط المرشحين اللي نجحوا بالفلتر الأولي (أسرع)
-      const passed = await qFilterProducts(withImg, obfSeenSet, 55);
-      collected.push(...passed);
-      obfLoadedCount=(obfLoadedCount||0)+allP.length;
-      obfPage++;
-      // وقف لو رجعت صفحة غير مكتملة أو تجاوزنا العدد الكلي
-      if(allP.length<PAGE_SIZE || (total>0 && obfLoadedCount>=total)){
-        // جرب الـ param التالي في القائمة إن وُجد
-        obfCatParamsIdx = (obfCatParamsIdx||0) + 1;
-        if(obfCatParamsList && obfCatParamsIdx < obfCatParamsList.length){
-          obfCurrentParams = obfCatParamsList[obfCatParamsIdx];
-          obfPage = 1;
-          obfLoadedCount = 0;
-          obfHasMore = true; // استمر بالـ param الجديد
-        } else {
-          obfHasMore = false; // انتهت كل الـ params
-        }
-      }
-    }
-
-    const prods=collected.slice(0,PAGE_SIZE);
-
-    if(!prods.length && isFirst){
-      const isRTL2 = !document.documentElement.classList.contains('lang-en');
-      document.getElementById('obf-grid').innerHTML=
-        `<div class="rv-error"><div class="rv-error-anim">🔍</div><div class="rv-error-title">${isRTL2?'لا توجد نتائج':'No results found'}</div><div class="rv-error-sub">${isRTL2?'جربي كلمة بحث مختلفة':'Try a different keyword'}</div></div>`;
-    } else if(prods.length){
-      renderOBFCards(prods, !isFirst);
-      fsCacheProducts(prods);
-      // ✅ كاش خفيف في localStorage
-      if(isFirst && obfCatParamsIdx!==undefined){
-        lsCacheSet('discover_'+obfCurrentParams.substring(0,40), prods);
-      }
-    }
-  }catch(e){
-    if(isFirst){
-      const grid = document.getElementById('obf-grid');
-      // ✅ حاول عرض البيانات المحفوظة قبل إظهار الخطأ
-      const cachedFallback = lsCacheGet('discover_'+obfCurrentParams.substring(0,40));
-      if(cachedFallback && cachedFallback.length){
-        renderOBFCards(cachedFallback, false);
-      } else {
-        showNetworkError(grid, ()=>fetchOBF(obfCurrentParams, true));
-      }
-    }
-  }
-  if(loadMoreEl) loadMoreEl.style.display='none';
-  obfLoading=false;
+  // كان يجلب من Open Beauty Facts — الآن من كتالوج لمسة المحلي
+  if(!reset) return;
+  const m=String(params||'').match(/search_terms=([^&]*)/);
+  const q=m?decodeURIComponent(m[1].replace(/\+/g,' ')):'';
+  obfCurrentParams=params;
+  _renderCatalogGrid(q?catalogFind({q}):catalogFind(), q);
 }
 
 
@@ -5927,31 +5901,7 @@ const MAKEUP_API_BRAND_MAP = {
 };
 
 async function fetchFromMakeupAPI(brandTerm){
-  const key = (brandTerm||'').toLowerCase().trim();
-  const slug = MAKEUP_API_BRAND_MAP[key];
-  if(!slug) return []; // البراند مش موجود في تغطية Makeup API
-  try{
-    const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 8000);
-    const res = await fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${encodeURIComponent(slug)}`, {signal:controller.signal});
-    clearTimeout(timer);
-    const data = await res.json();
-    if(!Array.isArray(data)) return [];
-    // تحويل شكل بيانات Makeup API لنفس شكل OpenBeautyFacts المستخدم في باقي التطبيق
-    return data
-      .filter(p=>p.name && p.image_link)
-      .map(p=>({
-        code: 'mkapi_'+p.id,
-        product_name: p.name,
-        brands: p.brand||brandTerm,
-        image_front_display_url: p.image_link,
-        image_url: p.image_link,
-        ingredients_text: p.description||'',
-        ingredients_text_en: p.description||'',
-        labels_tags: (p.tag_list||[]).map(t=>'en:'+t),
-        _mkSource: true,
-      }));
-  }catch(e){ return []; }
+  return []; // أُزيل: Makeup API كانت تعيد صوراً وروابط غير موثوقة
 }
 
 async function fetchBrandPage(b, page, append){
@@ -5969,142 +5919,19 @@ async function fetchBrandPage(b, page, append){
     }
   }
 
-  // ── Makeup API أولاً (صور أعلى جودة) — لبراندات المكياج المغطاة فقط، صفحة أولى بس
-  if(page===1 && !append && b.cat==='Makeup'){
-    const mkProds = await fetchFromMakeupAPI(term);
-    if(mkProds.length>=4){
-      container.innerHTML=''; // امسح الـ skeleton
-      const filtered = await qFilterProducts(mkProds, bdSeenSet, 40, true);
-      filtered.forEach(p=>{
-        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
-      });
-      bdHasMore=false; // Makeup API مش فيها pagination بالبراند
-      bdPage=2;
-      if(filtered.length) lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
-      bdLoading=false;
-      return;
-    }
+  // ── كتالوج لمسة (بدل Open Beauty Facts) ──
+  const prods = catalogFind({brand:term});
+  if(!append) container.innerHTML='';
+  if(!prods.length){
+    const ar=!document.documentElement.classList.contains('lang-en');
+    const safe=String(b.nm||'').replace(/'/g,"\\'");
+    container.innerHTML=`<div style="grid-column:1/-1;padding:24px 12px;text-align:center">
+      <div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:12px">${ar?'لم نضف منتجات هذا البراند إلى مختارات لمسة بعد.':'No Lamsa picks for this brand yet.'}</div>
+      <button class="rv-error-btn" onclick="buyOnAmazon('','${safe}')">${ar?'تصفّحي منتجاته في Amazon':'Browse it on Amazon'}</button></div>`;
+  } else {
+    prods.forEach(p=>{ const c=renderBrandProdCard(p,b); if(c) container.appendChild(c); });
   }
-
-  // ── Firestore-first: الصفحة الأولى فقط
-  if(page===1 && !append){
-    const cached=await fsGetByBrand(brandSlug,20);
-    if(cached.length>=4){
-      container.innerHTML='';
-      cached.forEach(p=>{
-        const c=makeProductCard(
-          p.product_name||'Product',
-          (p.brands||'').split(',')[0].trim(),
-          p.image_front_display_url||'',
-          (p.ingredients_text||'').substring(0,800),
-          p.labels_tags||[], p.code
-        );
-        if(c) container.appendChild(c);
-      });
-      bdLoading=false;
-      return;
-    }
-  }
-  // ── fallback للـ API ──
-  const brandSlugNoHyphen = term.toLowerCase().replace(/[^a-z0-9]+/g,'');
-
-  // قائمة URLs نجربها بالترتيب حتى نجد نتائج
-  const urlCandidates = [
-    // 1. brand tag endpoint - openbeautyfacts
-    `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlug)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&page_size=${BRAND_PAGE_SIZE}`,
-    // 2. brand tag بدون hyphens
-    `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlugNoHyphen)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&page_size=${BRAND_PAGE_SIZE}`,
-    // 3. tagtype brand search - openbeautyfacts (الأكثر دقةً)
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 4. search_terms عام - openbeautyfacts
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 5. tagtype brand - openproductsfacts (مصدر بديل أشمل)
-    `https://world.openproductsfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 6. أول كلمة فقط - openbeautyfacts
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term.split(' ')[0])}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-  ];
-
-  // عند الصفحة الأولى فقط نجرب كل الـ candidates — بعدها نستخدم الـ URL الناجح
-  const isFirstPage = page === 1;
-  if(!isFirstPage && b._workingUrl){
-    urlCandidates.splice(0, urlCandidates.length,
-      b._workingUrl.replace(/\/(\d+)\.json/, `/${page}.json`)
-                   .replace(/[&?]page=\d+/, '')
-                   .replace(/page=\d+/, `page=${page}`) + (b._workingUrl.includes('page=') ? '' : `&page=${page}`)
-    );
-  }
-  try{
-    let prods=[], total=0;
-    const seenCodes=new Set();
-    // جرب كل URL candidate — اجمع النتائج من أكثر من source
-    for(const candidateUrl of urlCandidates){
-      if(prods.length >= BRAND_PAGE_SIZE) break;
-      try{
-        const controller = new AbortController();
-        const timer = setTimeout(()=>controller.abort(), 8000);
-        const res=await fetch(candidateUrl, {signal: controller.signal});
-        clearTimeout(timer);
-        const data=await res.json();
-        if(!total) total=parseInt(data.count)||0;
-        const raw=(data.products||[]).filter(p=>{
-          if(!p.product_name||!p.product_name.trim()) return false;
-          const code=p.code||p.product_name;
-          if(seenCodes.has(code)) return false;
-          seenCodes.add(code);
-          return true;
-        });
-        if(raw.length>0){
-          prods=[...prods,...raw];
-          if(isFirstPage && !b._workingUrl) b._workingUrl=candidateUrl;
-        }
-      }catch(innerErr){ continue; }
-    }
-    if(!prods.length && !append){
-      container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand</div>';
-      bdHasMore=false;
-    } else {
-      if(!append) container.innerHTML='';
-      prods.forEach(p=>{
-        if(!qIsGoodImgUrl(p.image_front_display_url)) p.image_front_display_url='';
-        if(!qIsGoodImgUrl(p.image_url)) p.image_url='';
-      });
-      // بوابات الجودة والتكرار (بدون تحليل canvas — نكتفي بفلتر الرابط)
-      const filtered = await qFilterProducts(prods, bdSeenSet, 40, true);
-      filtered.forEach(p=>{
-        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
-      });
-      bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
-      bdPage=page+1;
-      // ✅ حفظ خفيف في localStorage (صفحة أولى فقط)
-      if(page===1 && filtered.length){
-        lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
-      }
-    }
-  }catch(e){
-    if(!append){
-      // Retry once after 2 seconds
-      if(!b._retried){
-        b._retried=true;
-        bdLoading=false;
-        // skeleton أثناء إعادة المحاولة
-        container.innerHTML='';
-        for(let i=0;i<4;i++){
-          container.innerHTML+=`<div class="obf-skeleton"><div class="obf-skeleton-img"></div><div style="padding:10px 0 12px"><div class="obf-skeleton-line" style="width:55%"></div><div class="obf-skeleton-line" style="width:85%;margin-top:6px"></div></div></div>`;
-        }
-        setTimeout(()=>fetchBrandPage(b,1,false), 2000);
-        return;
-      }
-      // ✅ عرض الكاش المحفوظ إن وجد
-      const bKey = 'brand_'+(b.search||b.nm||'').substring(0,30);
-      const bCached = lsCacheGet(bKey);
-      if(bCached && bCached.length){
-        container.innerHTML='';
-        bCached.forEach(p=>{ const c=renderBrandProdCard(p,b); if(c) container.appendChild(c); });
-      } else {
-        showNetworkError(container, ()=>loadBrandProdsOBF(bdCurrentBrand));
-      }
-    }
-  }
+  bdHasMore=false;
   bdLoading=false;
 }
 
@@ -6233,12 +6060,12 @@ function openProdDetail(p){
       <div id="pdm-ai-text" style="display:none;font-size:13.5px;line-height:2;color:var(--text);margin-bottom:14px"></div>
       <button id="pdm-analyze-btn" onclick="loadProdAI(currentProd)"
         style="width:100%;border:none;border-radius:18px;padding:15px 20px;cursor:pointer;
-               background:linear-gradient(135deg,rgba(184,66,106,.18),rgba(184,114,48,.12));
-               border:1px solid rgba(184,66,106,.25);
+               background:linear-gradient(135deg,rgba(181,83,42,.18),rgba(184,134,47,.12));
+               border:1px solid rgba(181,83,42,.25);
                display:flex;align-items:center;justify-content:center;gap:10px;
                font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;font-size:14px;font-weight:800;
                color:var(--rose2);transition:transform .15s,box-shadow .15s;
-               box-shadow:0 4px 20px rgba(184,66,106,.1)">
+               box-shadow:0 4px 20px rgba(181,83,42,.1)">
         <i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i>
         <span>حللي المنتج بالذكاء الاصطناعي ✨</span>
       </button>
@@ -6292,8 +6119,8 @@ function openProdDetail(p){
   if(aiText){ aiText.style.display='none'; aiText.innerHTML=''; }
   if(aiBtn){
     aiBtn.style.opacity='1'; aiBtn.style.pointerEvents='all';
-    aiBtn.style.background='linear-gradient(135deg,rgba(184,66,106,.18),rgba(184,114,48,.12))';
-    aiBtn.style.borderColor='rgba(184,66,106,.25)';
+    aiBtn.style.background='linear-gradient(135deg,rgba(181,83,42,.18),rgba(184,134,47,.12))';
+    aiBtn.style.borderColor='rgba(181,83,42,.25)';
     aiBtn.style.color='var(--rose2)';
     aiBtn.style.padding='15px 20px';
     aiBtn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i><span>حللي المنتج بالذكاء الاصطناعي ✨</span>';
@@ -6337,9 +6164,11 @@ function shareProdLink(){
 
 // تخمين وصف عربي قصير للمنتج بحسب اسمه/تصنيفاته (لا تتوفر أوصاف من OBF غالباً)
 function guessArabicDesc(name, labels){
+  const _ce = typeof _catByName==='function' ? _catByName(name) : null;
+  if(_ce) return {cat:_CAT_LABEL[_ce.c], desc:_ce.d};
   const n = (name||'').toLowerCase();
   const l = (labels||'').toLowerCase();
-  let cat = 'مكياج', desc = 'منتج تجميل مختار بعناية ضمن تشكيلة Rosiva لإطلالة طبيعية ومتقنة.';
+  let cat = 'مكياج', desc = 'منتج تجميل مختار بعناية ضمن تشكيلة لمسة لإطلالة طبيعية ومتقنة.';
   if(/foundation|fond de teint/.test(n)){
     cat='كريم أساس'; desc='كريم أساس يوحّد لون البشرة ويغطي العيوب بدرجة تغطية متوسطة إلى كاملة، مع لمسة نهائية مطفية تدوم طويلاً.';
   } else if(/concealer/.test(n)){
@@ -6403,7 +6232,7 @@ async function loadProdAI(p){
   el.style.display='none';
 
   try{
-    const sys = `أنتِ Rosiva AI، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء. استخدمي تنسيق Markdown: ضعي ** حول الكلمات المهمة.`;
+    const sys = `أنتِ "لمسة"، خبيرة جمال محترفة. ${t('misc.ai.lang')} في 3-4 جمل مختصرة تغطي: ما هو هذا المنتج، فوائده الرئيسية، لمن يناسب، وهل يستحق الشراء. استخدمي تنسيق Markdown: ضعي ** حول الكلمات المهمة.`;
     const prompt = `Analyze this beauty product: "${p.name}"${p.brand?' by '+p.brand:''}. ${p.ingr?'Key ingredients: '+p.ingr.substring(0,200):''}`;
     const text = await callGemini(prompt, sys);
 
@@ -6502,7 +6331,7 @@ function updateProfView(){
     // مستخدم مسجّل
     if(guestBox) guestBox.style.display='none';
     if(authBox)  authBox.style.display='block';
-    if(usernameEl) usernameEl.textContent = window._authUser.displayName || 'مستخدمة روزيفا';
+    if(usernameEl) usernameEl.textContent = window._authUser.displayName || 'مستخدمة لمسة';
     if(emailEl)    emailEl.textContent    = window._authUser.email || '';
     if(authBtn){
       authBtn.innerHTML=`<i class="fa-solid fa-arrow-right-from-bracket"></i> ${t('prof.logout')}`;
@@ -6574,7 +6403,7 @@ const TRANSLATIONS = {
     'favs.empty.btn':'اكتشفي المنتجات','favs.trending':'منتجات قد تعجبكِ',
     'favs.count.suffix':' منتج محفوظ',
     'prof.title':'حسابي',
-    'prof.ai.label':'مساعدة Rosiva الذكية',
+    'prof.ai.label':'مساعدة لمسة الذكية',
     'prof.ai.status':'الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨',
     'prof.ai.badge':'مفعّلة',
     'prof.item.model':'نموذج الذكاء الاصطناعي','prof.item.voice':'لغة الصوت',
@@ -6585,15 +6414,15 @@ const TRANSLATIONS = {
     'discover.title':'اكتشفي','discover.search':'ابحثي عن أي منتج...',
     'discover.cat.makeup':'ماكياج','discover.cat.fragrance':'عطور',
     'discover.cat.women':'عطر نسائي','discover.cat.men':'عطر رجالي',
-    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر',
+    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر','discover.cat.all':'الكل',
     'discover.cat.lips':'شفاه','discover.cat.nails':'أظافر',
     'sb.nav':'التنقل','sb.home':'الرئيسية','sb.brands':'البراندات العالمية',
     'sb.favs':'مفضلتي','sb.cats':'التصنيفات','sb.makeup':'ماكياج',
     'sb.fragrance':'عطور','sb.skincare':'عناية بالبشرة','sb.hair':'عناية بالشعر',
     'sb.account':'الحساب','sb.myaccount':'حسابي','sb.vip':'اشتراك VIP','sb.coming':'قريباً',
     'auth.login.tab':'تسجيل الدخول','auth.signup.tab':'حساب جديد',
-    'auth.name.ph':'اسمك','auth.email.ph':'البريد الإلكتروني','auth.pass.ph':'كلمة المرور',
-    'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'دليلكِ الذكي لعالم الجمال ✨',
+    'auth.name.ph':'كيف نناديكِ؟','auth.email.ph':'name@example.com','auth.pass.ph':'كلمة المرور',
+    'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'مستشارتكِ الذكية في الجمال',
     'auth.submit.login':'تسجيل الدخول','auth.submit.signup':'إنشاء حساب',
     'misc.viewprod':'عرض المنتج في المتجر',
     'misc.ai.active':'الذكاء الاصطناعي مفعّل ويعمل تلقائياً',
@@ -6631,7 +6460,7 @@ const TRANSLATIONS = {
     'favs.empty.btn':'Explore Products','favs.trending':'Products you might like',
     'favs.count.suffix':' saved',
     'prof.title':'Account',
-    'prof.ai.label':'Rosiva Smart Assistant',
+    'prof.ai.label':'Lamsa Smart Assistant',
     'prof.ai.status':'AI ready and working automatically — no setup needed ✨',
     'prof.ai.badge':'Active',
     'prof.item.model':'AI Model','prof.item.voice':'Voice Language',
@@ -6642,15 +6471,15 @@ const TRANSLATIONS = {
     'discover.title':'Discover','discover.search':'Search any product...',
     'discover.cat.makeup':'Makeup','discover.cat.fragrance':'Fragrances',
     'discover.cat.women':'Women\'s Scent','discover.cat.men':'Men\'s Scent',
-    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair',
+    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair','discover.cat.all':'All',
     'discover.cat.lips':'Lips','discover.cat.nails':'Nails',
     'sb.nav':'Navigation','sb.home':'Home','sb.brands':'Global Brands',
     'sb.favs':'My Favorites','sb.cats':'Categories','sb.makeup':'Makeup',
     'sb.fragrance':'Fragrances','sb.skincare':'Skincare','sb.hair':'Hair Care',
     'sb.account':'Account','sb.myaccount':'My Account','sb.vip':'VIP Subscription','sb.coming':'Coming Soon',
     'auth.login.tab':'Sign In','auth.signup.tab':'New Account',
-    'auth.name.ph':'Your name','auth.email.ph':'Email address','auth.pass.ph':'Password',
-    'auth.forgot':'Forgot password?','auth.tagline':'Your smart guide to the beauty world ✨',
+    'auth.name.ph':'What should we call you?','auth.email.ph':'name@example.com','auth.pass.ph':'Password',
+    'auth.forgot':'Forgot password?','auth.tagline':'Your smart beauty advisor',
     'auth.submit.login':'Sign In','auth.submit.signup':'Create Account',
     'misc.viewprod':'View Product in Store',
     'misc.ai.active':'AI is active and working automatically',
@@ -6765,7 +6594,7 @@ function _updateQuickChips(){
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
   import {
     getFirestore, collection, query, where, limit,
-    getDocs, setDoc, getDoc, doc
+    getDocs, setDoc, getDoc, doc, deleteDoc
   } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
   import {
     getAuth,
@@ -6914,8 +6743,8 @@ function _updateQuickChips(){
   window.deleteAllUserData = async function(){
     const isRTL = !document.documentElement.classList.contains('lang-en');
     const msg1 = isRTL
-      ? 'سيتم حذف جميع بياناتك نهائياً (المفضلة، الإعدادات، الحساب) ولا يمكن التراجع عن هذا. هل أنتِ متأكدة؟'
-      : 'This will permanently delete all your data (favorites, settings, account) and cannot be undone. Are you sure?';
+      ? 'سيتم حذف جميع بياناتك نهائياً (المفضلة، الإعدادات، الحساب) ولا يمكن التراجع عن هذا.\n\nملاحظة: إن كان لديكِ اشتراك VIP فألغيه من Google Play، فحذف الحساب لا يوقف التجديد.\n\nهل أنتِ متأكدة؟'
+      : 'This will permanently delete all your data (favorites, settings, account) and cannot be undone.\n\nNote: if you have a VIP subscription, cancel it in Google Play — deleting your account does not stop renewal.\n\nAre you sure?';
     const msg2 = isRTL
       ? 'تأكيد أخير: سيتم حذف حسابك وكل بياناتك المحلية للأبد. استمرار؟'
       : 'Final confirmation: your account and all local data will be deleted forever. Continue?';
@@ -6924,6 +6753,9 @@ function _updateQuickChips(){
 
     let accountDeleteFailed = false;
     if(auth.currentUser){
+      // احذفي سجل المستخدمة في Firestore أولاً (الاشتراك، عداد الأسئلة) — قبل حذف الحساب
+      // لأن قواعد الأمان تتطلب أن تكون مسجّلة الدخول لحذف مستندها
+      try{ await deleteDoc(doc(db,'users',auth.currentUser.uid)); }catch(e){}
       try{
         await deleteUser(auth.currentUser);
       }catch(e){
@@ -6999,7 +6831,7 @@ function _updateQuickChips(){
       window.setAuthMode(window._authMode);
       window._authMode = null;
     }
-    $('auth-screen').style.display = 'block';
+    $('auth-screen').style.display = 'flex';
   }
   function hideAuthScreen(){
     $('auth-screen').style.display = 'none';
@@ -7023,7 +6855,7 @@ function _updateQuickChips(){
     if(typeof updateProfView === 'function') updateProfView();
 
     if(user){
-      const wasAuthVisible = $('auth-screen').style.display === 'block';
+      const wasAuthVisible = $('auth-screen').style.display === 'flex';
       hideAuthScreen();
       if(wasAuthVisible){
         const appEl = $('app');
