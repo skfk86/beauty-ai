@@ -2664,6 +2664,17 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 #app .ni-dot{display:none}
 #app .ni::before{display:none}
 #brands-hero{display:none !important}
+#app .obf-card-img.lm-tile{position:relative;display:flex;align-items:center;justify-content:center;background:var(--v-raised) !important}
+#app .obf-card-img.lm-tile--skincare{background:linear-gradient(160deg,#E9DCC6,#D9C6A6) !important}
+#app .obf-card-img.lm-tile--makeup{background:linear-gradient(160deg,#EBCDBB,#D9A98E) !important}
+#app .obf-card-img.lm-tile--haircare{background:linear-gradient(160deg,#D8D2C2,#BDB49C) !important}
+#app .obf-card-img.lm-tile--fragrances{background:linear-gradient(160deg,#C9CCE0,#A9AECB) !important}
+.lm-tile-mono{font-family:Georgia,serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:#1E2747}
+.lm-tile-ic{position:absolute;bottom:10px;left:10px;font-size:13px;color:rgba(30,39,71,.55)}
+#app .obf-card-name{unicode-bidi:plaintext;text-align:right}
+html.lang-en #app .obf-card-name{text-align:left}
+#app .obf-card-maker{font-size:11px;font-weight:600;color:var(--v-rose);margin-bottom:2px;direction:ltr;text-align:right}
+html.lang-en #app .obf-card-maker{text-align:left}
 #app .hdr{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--v-bg) 97%,transparent);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
 #app .bc-name{unicode-bidi:plaintext}
@@ -3080,14 +3091,12 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
     </div>
     <!-- Category Pills -->
     <div class="ftabs" id="obf-ftabs">
-      <div class="ft on" onclick="searchOBFCat('make-up',this)" data-i18n="discover.cat.makeup">ماكياج</div>
-      <div class="ft" onclick="searchOBFCat('fragrances',this)" data-i18n="discover.cat.fragrance">عطور</div>
-      <div class="ft" onclick="searchOBFCat('women-fragrance',this)" data-i18n="discover.cat.women">👩 عطر نسائي</div>
-      <div class="ft" onclick="searchOBFCat('men-fragrance',this)" data-i18n="discover.cat.men">👨 عطر رجالي</div>
+      <div class="ft on" onclick="searchOBFCat('all',this)" data-i18n="discover.cat.all">الكل</div>
       <div class="ft" onclick="searchOBFCat('facial-care',this)" data-i18n="discover.cat.skin">بشرة</div>
+      <div class="ft" onclick="searchOBFCat('make-up',this)" data-i18n="discover.cat.makeup">ماكياج</div>
       <div class="ft" onclick="searchOBFCat('hair-care',this)" data-i18n="discover.cat.hair">شعر</div>
-      <div class="ft" onclick="searchOBFCat('lip-gloss',this)" data-i18n="discover.cat.lips">💋 شفاه</div>
-      <div class="ft" onclick="searchOBFCat('nail-polish',this)" data-i18n="discover.cat.nails">💅 أظافر</div>
+      <div class="ft" onclick="searchOBFCat('fragrances',this)" data-i18n="discover.cat.fragrance">عطور</div>
+      <div class="ft" onclick="searchOBFCat('lip-gloss',this)" data-i18n="discover.cat.lips">شفاه</div>
     </div>
     <!-- Products Grid -->
     <div id="obf-grid"></div>
@@ -3892,7 +3901,7 @@ function navTo(s){
     const grid = document.getElementById('obf-grid');
     const firstTab = document.querySelector('#obf-ftabs .ft');
     if(!grid.innerHTML.trim() || grid.innerHTML.includes('No results')){
-      if(firstTab) searchOBFCat('make-up', firstTab);
+      if(firstTab) searchOBFCat('all', firstTab);
     }
     // Infinite scroll for Discover — IntersectionObserver (أكثر استقراراً من حساب موضع السكرول)
     setupDiscoverInfiniteScroll();
@@ -4011,13 +4020,12 @@ function setF(cat,el){
 async function openBrand(id){
   curBrand=BRANDS.find(b=>b.id===id);if(!curBrand)return;
   prevScreen=curScreen;
-  const logoImg=document.getElementById('bd-logo-img');
   const logoWrap=document.getElementById('bd-logo');
+  let logoImg=null;
   // Try favicon, then text fallback (صندوق أبيض بحرف العلامة كما في المرجع)
   function tryLogo(urls, idx){
     if(idx>=urls.length){
-      logoImg.style.display='none';
-      logoWrap.innerHTML=`<div style="font-size:15px;font-weight:900;letter-spacing:-.5px;color:#111;text-align:center;line-height:1.2">${curBrand.nm.toUpperCase()}</div>`;
+      logoWrap.innerHTML=`<div style="font-family:Georgia,serif;font-size:22px;font-weight:700;letter-spacing:.04em;color:#1E2747;text-align:center">${_brandMono(curBrand.nm)}</div>`;
       return;
     }
     logoImg.src=urls[idx];
@@ -4025,6 +4033,7 @@ async function openBrand(id){
   }
   logoWrap.innerHTML='<img id="bd-logo-img" src="" alt="" style="width:100%;height:100%;object-fit:contain">';
   const freshLogoImg=document.getElementById('bd-logo-img');
+  logoImg=freshLogoImg;
   freshLogoImg.alt=curBrand.nm;
   freshLogoImg.style.display='block';
   freshLogoImg.onerror=()=>tryLogo([],1);
@@ -4139,23 +4148,7 @@ function renderBrandProdCard(p, b){
 
 // ── يجلب عيّنة سريعة من منتجات البراند الحقيقية (نفس مصادر OBF) لتأسيس توصيات حقيقية عليها ──
 async function fetchBrandProductsQuick(b){
-  const term = b.search || b.nm;
-  const urls = [
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`,
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=20&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`
-  ];
-  for(const url of urls){
-    try{
-      const controller = new AbortController();
-      const timer = setTimeout(()=>controller.abort(), 8000);
-      const res = await fetch(url, {signal: controller.signal});
-      clearTimeout(timer);
-      const data = await res.json();
-      const prods = (data.products||[]).filter(p=>p.product_name && qIsGoodImgUrl(p.image_front_display_url||p.image_url||''));
-      if(prods.length) return prods.slice(0,8);
-    }catch(e){}
-  }
-  return [];
+  return catalogFind({brand:b.search||b.nm, limit:8});
 }
 
 async function loadBrAI(b){
@@ -4401,25 +4394,13 @@ function renderFavs(){
 async function _loadFavTrending(){
   const box=document.getElementById('fav-trending');
   if(!box)return;
-  box.innerHTML=Array(4).fill(0).map((_,i)=>`
-    <div class="obf-card" style="animation:none;pointer-events:none">
-      <div class="obf-card-img" style="background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200% 100%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.15}s"></div>
-      <div style="padding:10px 12px"><div style="height:9px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.2}s;width:70%;margin-bottom:6px"></div><div style="height:8px;border-radius:6px;background:linear-gradient(90deg,var(--card) 25%,var(--card2) 50%,var(--card) 75%);background-size:200%;animation:shimmer 1.4s ease-in-out infinite;animation-delay:${i*0.25}s;width:45%"></div></div>
-    </div>`).join('');
-  try{
-    const res=await fetch('https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=make-up&json=true&page=1&page_size=8&fields=code,product_name,brands,image_front_display_url&nocache=1');
-    const data=await res.json();
-    const prods=(data.products||[]).filter(p=>{
-      const img=(p.image_front_display_url||'');
-      return p.product_name && qIsGoodImgUrl(img);
-    }).slice(0,4);
-    box.innerHTML='';
-    prods.forEach((p,i)=>{
-      const c=makeProductCard(p.product_name,(p.brands||'').split(',')[0],p.image_front_display_url,'','',p.code);
-      if(c){c.style.animationDelay=(i*50)+'ms';box.appendChild(c);}
-    });
-    if(!box.children.length)box.parentElement.style.display='none';
-  }catch(e){box.parentElement.style.display='none';}
+  box.innerHTML='';
+  const picks=['lm01','lm05','lm55','lm68'];
+  LAMSA_CATALOG.filter(x=>picks.includes(x.id)).map(_catToObf).forEach((p,i)=>{
+    const c=makeProductCard(p.product_name,p.brands,'','','',p.code);
+    if(c){c.style.animationDelay=(i*50)+'ms';box.appendChild(c);}
+  });
+  if(!box.children.length)box.parentElement.style.display='none';
 }
 
 function clearFavs(){
@@ -4435,7 +4416,7 @@ let liveIsPlaying = false;
 // ── تعريف أداة (function) البحث عن المنتجات ──
 const PRODUCT_TOOL_DECL = {
   name:'search_beauty_products',
-  description:'تبحث عن منتجات تجميل وعناية حقيقية داخل قاعدة بيانات تطبيق لمسة (Open Beauty Facts) لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
+  description:'تبحث عن منتجات تجميل وعناية حقيقية داخل مختارات تطبيق لمسة لعرضها للمستخدم كبطاقات منتج. استخدميها فقط بعد موافقة المستخدم الصريحة على عرض المنتجات.',
   parameters:{
     type:'OBJECT',
     properties:{
@@ -5377,32 +5358,147 @@ let obfCatParamsList = []; // قائمة params للفئة الحالية
 let obfCatParamsIdx  = 0;  // الـ param الحالي
 
 async function searchOBF(){
-  const raw = document.getElementById('obf-srch').value.trim();
-  if(!raw){ showToast('اكتبي اسم المنتج'); return; }
+  const q = document.getElementById('obf-srch').value.trim();
+  if(!q){ showToast('اكتبي اسم المنتج أو نوعه'); return; }
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
-
-  // قاعدة Open Beauty Facts أغلب أسماء منتجاتها إنجليزية/لاتينية —
-  // لو الكتابة عربية وفيه مفتاح Gemini، نترجم مصطلح البحث بصمت قبل إرساله
-  let q = raw;
-  const isArabic = /[\u0600-\u06FF]/.test(raw);
-  if(isArabic && apiKey){
-    try{
-      const translated = await callGemini(
-        `حوّلي مصطلح البحث هذا لكلمة أو كلمتين بحث إنجليزية مناسبة لقاعدة بيانات منتجات تجميل عالمية، بدون أي شرح أو علامات تنصيص: "${raw}"`
-      );
-      if(translated && translated.trim()) q = translated.trim().replace(/["'.]/g,'');
-    }catch(e){ /* فشل الترجمة — نكمل بالنص الأصلي بدل كسر البحث */ }
+  _renderCatalogGrid(catalogFind({q}), q);
+}
+function _renderCatalogGrid(prods, q){
+  const grid=document.getElementById('obf-grid');
+  obfHasMore=false; obfLoading=false;
+  const lm=document.getElementById('obf-load-more'); if(lm) lm.style.display='none';
+  if(!prods.length){
+    const ar=!document.documentElement.classList.contains('lang-en');
+    const qq=String(q||'').replace(/[<>"&]/g,'');
+    grid.innerHTML=`<div class="rv-error" style="grid-column:1/-1"><div class="rv-error-anim"><i class="fa-solid fa-magnifying-glass"></i></div>
+      <div class="rv-error-title">${ar?'لا يوجد هذا المنتج في مختارات لمسة':'Not in Lamsa picks yet'}</div>
+      <div class="rv-error-sub">${ar?'جربي كلمة أخرى، أو ابحثي عنه مباشرة في Amazon.':'Try another word, or search Amazon directly.'}</div>
+      ${qq?`<button class="rv-error-btn" onclick="buyOnAmazon('${qq.replace(/'/g,"\\'")}','')">${ar?'ابحثي في Amazon':'Search Amazon'}</button>`:''}</div>`;
+    return;
   }
+  renderOBFCards(prods,false);
+}
 
-  fetchOBF(`search_terms=${encodeURIComponent(q)}`, true);
+// ══════════════════════════════════════════════════════
+// كتالوج لمسة — منتجات مختارة يدوياً (بديل Open Beauty Facts)
+// المصدر: data/catalog.json — لإضافة منتج عدّلي الملف ثم انسخي السطر هنا.
+// c: skincare | makeup | haircare | fragrances   s: lip | nail | women | men
+// ══════════════════════════════════════════════════════
+const LAMSA_CATALOG = [
+{"id": "lm01", "b": "CeraVe", "n": "CeraVe Hydrating Facial Cleanser", "c": "skincare", "s": "", "d": "غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.", "k": "غسول منظف cleanser بشرة جافة حساسة"},
+{"id": "lm02", "b": "Paula's Choice", "n": "Paula's Choice 2% BHA Liquid Exfoliant", "c": "skincare", "s": "", "d": "مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.", "k": "مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant"},
+{"id": "lm03", "b": "Neutrogena", "n": "Neutrogena Hydro Boost Water Gel", "c": "skincare", "s": "", "d": "مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.", "k": "مرطب ترطيب جل دهنية moisturizer"},
+{"id": "lm04", "b": "The Ordinary", "n": "The Ordinary Niacinamide 10% + Zinc 1%", "c": "skincare", "s": "", "d": "سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.", "k": "سيروم نياسيناميد مسام توحيد لون دهنية serum"},
+{"id": "lm05", "b": "EltaMD", "n": "EltaMD UV Clear SPF 46", "c": "skincare", "s": "", "d": "واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.", "k": "واقي شمس حماية حبوب sunscreen spf"},
+{"id": "lm06", "b": "COSRX", "n": "COSRX Snail Mucin 96% Power Essence", "c": "skincare", "s": "", "d": "إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.", "k": "ايسنس حلزون ترطيب كوري essence"},
+{"id": "lm07", "b": "Laneige", "n": "Laneige Lip Sleeping Mask", "c": "makeup", "s": "lip", "d": "ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.", "k": "شفايف شفاه ماسك ترطيب lip"},
+{"id": "lm08", "b": "La Roche-Posay", "n": "La Roche-Posay Toleriane Double Repair", "c": "skincare", "s": "", "d": "مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.", "k": "مرطب حساسة سيراميد moisturizer"},
+{"id": "lm09", "b": "Biodance", "n": "Biodance Bio-Collagen Real Deep Mask", "c": "skincare", "s": "", "d": "ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.", "k": "ماسك كولاجين ترطيب نضارة كوري mask"},
+{"id": "lm10", "b": "Medicube", "n": "Medicube Zero Pore Pad 2.0", "c": "skincare", "s": "", "d": "فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.", "k": "تونر فوط مسام تقشير toner pads كوري"},
+{"id": "lm11", "b": "TruSkin", "n": "TruSkin Vitamin C Face Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.", "k": "سيروم فيتامين سي تفتيح بقع اشراقة vitamin c"},
+{"id": "lm12", "b": "CeraVe", "n": "CeraVe Eye Repair Cream", "c": "skincare", "s": "", "d": "كريم للعين يخفف الهالات السوداء والانتفاخ.", "k": "كريم عين هالات سوداء انتفاخ eye cream"},
+{"id": "lm13", "b": "First Aid Beauty", "n": "First Aid Beauty KP Bump Eraser", "c": "skincare", "s": "", "d": "مقشر للجسم يخفف النتوءات والجلد الخشن.", "k": "جسم مقشر نتوءات خشونة body scrub"},
+{"id": "lm14", "b": "Olay", "n": "Olay Regenerist Micro-Sculpting Cream", "c": "skincare", "s": "", "d": "كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.", "k": "تجاعيد مضاد شيخوخة كريم anti aging"},
+{"id": "lm15", "b": "Kiehl's", "n": "Kiehl's Ultra Facial Cream", "c": "skincare", "s": "", "d": "مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.", "k": "مرطب يومي ترطيب moisturizer"},
+{"id": "lm16", "b": "PanOxyl", "n": "PanOxyl Acne Foaming Wash 10%", "c": "skincare", "s": "", "d": "غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.", "k": "غسول حب الشباب حبوب بنزويل acne wash"},
+{"id": "lm17", "b": "Aquaphor", "n": "Aquaphor Healing Ointment", "c": "skincare", "s": "", "d": "مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.", "k": "مرهم جفاف تشقق شفايف جافة جدا ointment"},
+{"id": "lm18", "b": "Bio-Oil", "n": "Bio-Oil Skincare Oil", "c": "skincare", "s": "", "d": "زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.", "k": "زيت ندبات تشققات علامات تمدد oil"},
+{"id": "lm19", "b": "Differin", "n": "Differin Adapalene Gel 0.1%", "c": "skincare", "s": "", "d": "جل أدابالين لعلاج حب الشباب ومنع ظهوره.", "k": "حب الشباب حبوب ريتينويد adapalene"},
+{"id": "lm20", "b": "Tatcha", "n": "Tatcha The Water Cream", "c": "skincare", "s": "", "d": "مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.", "k": "مرطب خفيف دهنية فاخر moisturizer"},
+{"id": "lm21", "b": "Glow Recipe", "n": "Glow Recipe Watermelon Glow Niacinamide Dew Drops", "c": "skincare", "s": "", "d": "سيروم بالنياسيناميد والبطيخ لإشراقة ندية.", "k": "سيروم اشراقة نضارة نياسيناميد glow"},
+{"id": "lm22", "b": "Cetaphil", "n": "Cetaphil Gentle Skin Cleanser", "c": "skincare", "s": "", "d": "غسول لطيف جداً للبشرة الحساسة والجافة.", "k": "غسول لطيف حساسة جافة cleanser"},
+{"id": "lm23", "b": "La Roche-Posay", "n": "La Roche-Posay Anthelios SPF 60", "c": "skincare", "s": "", "d": "واقي شمس سائل خفيف جداً بحماية عالية.", "k": "واقي شمس حماية عالية sunscreen spf"},
+{"id": "lm24", "b": "Clinique", "n": "Clinique Smart Clinical Repair Eye Cream", "c": "skincare", "s": "", "d": "كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.", "k": "كريم عين تجاعيد خطوط eye cream"},
+{"id": "lm25", "b": "Sunday Riley", "n": "Sunday Riley Good Genes", "c": "skincare", "s": "", "d": "علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.", "k": "تقشير لاكتيك اشراقة تجديد"},
+{"id": "lm26", "b": "Dr. Jart+", "n": "Dr. Jart+ Cicapair Tiger Grass", "c": "skincare", "s": "", "d": "كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.", "k": "احمرار تهدئة مصحح لون سيكا"},
+{"id": "lm27", "b": "SkinCeuticals", "n": "SkinCeuticals C E Ferulic", "c": "skincare", "s": "", "d": "سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.", "k": "سيروم فيتامين سي مضاد اكسدة فاخر"},
+{"id": "lm28", "b": "Mighty Patch", "n": "Mighty Patch Original", "c": "skincare", "s": "", "d": "لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.", "k": "لصقات حبوب حب الشباب pimple patch"},
+{"id": "lm29", "b": "Anua", "n": "Anua Heartleaf Pore Control Cleansing Oil", "c": "skincare", "s": "", "d": "زيت منظف يذيب المكياج والدهون وينظف المسام.", "k": "زيت منظف مزيل مكياج مسام كوري cleansing oil"},
+{"id": "lm30", "b": "Torriden", "n": "Torriden DIVE-IN Hyaluronic Acid Serum", "c": "skincare", "s": "", "d": "سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.", "k": "سيروم ترطيب هيالورونيك كوري"},
+{"id": "lm31", "b": "Dr. Althea", "n": "Dr. Althea 345 Relief Cream", "c": "skincare", "s": "", "d": "كريم مهدئ للبشرة الحساسة والمتهيجة.", "k": "مهدئ حساسة تهيج كريم كوري"},
+{"id": "lm32", "b": "Mediheal", "n": "Mediheal Tea Tree Essential Mask", "c": "skincare", "s": "", "d": "ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.", "k": "ماسك ورقي شجرة الشاي حبوب sheet mask"},
+{"id": "lm33", "b": "SK-II", "n": "SK-II Facial Treatment Essence", "c": "skincare", "s": "", "d": "إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.", "k": "ايسنس فاخر تجديد صفاء"},
+{"id": "lm34", "b": "Estée Lauder", "n": "Estée Lauder Advanced Night Repair", "c": "skincare", "s": "", "d": "سيروم ليلي يدعم تجدد البشرة أثناء النوم.", "k": "سيروم ليلي تجديد تجاعيد فاخر night"},
+{"id": "lm35", "b": "Neutrogena", "n": "Neutrogena Rapid Wrinkle Repair", "c": "skincare", "s": "", "d": "كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.", "k": "ريتينول تجاعيد خطوط retinol"},
+{"id": "lm36", "b": "L'Oréal Paris", "n": "L'Oréal Revitalift Vitamin C Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي نقي لإشراقة البشرة.", "k": "سيروم فيتامين سي اشراقة"},
+{"id": "lm37", "b": "CeraVe", "n": "CeraVe PM Facial Moisturizing Lotion", "c": "skincare", "s": "", "d": "مرطب ليلي خفيف بالنياسيناميد والسيراميد.", "k": "مرطب ليلي خفيف نياسيناميد"},
+{"id": "lm38", "b": "Mario Badescu", "n": "Mario Badescu Drying Lotion", "c": "skincare", "s": "", "d": "علاج موضعي يجفف الحبوب بين ليلة وضحاها.", "k": "حبوب علاج موضعي حب الشباب"},
+{"id": "lm39", "b": "Thayers", "n": "Thayers Witch Hazel Toner", "c": "skincare", "s": "", "d": "تونر خالٍ من الكحول بالبندق الساحر وماء الورد.", "k": "تونر بندق ساحر ورد مسام toner"},
+{"id": "lm40", "b": "Aveeno", "n": "Aveeno Daily Moisturizing Lotion", "c": "skincare", "s": "", "d": "لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.", "k": "لوشن جسم شوفان ترطيب جافة body"},
+{"id": "lm41", "b": "Eucerin", "n": "Eucerin Advanced Repair Cream", "c": "skincare", "s": "", "d": "كريم للبشرة الجافة جداً والخشنة.", "k": "كريم جفاف شديد خشونة جسم"},
+{"id": "lm42", "b": "Garnier", "n": "Garnier Micellar Cleansing Water", "c": "skincare", "s": "", "d": "ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.", "k": "ميسيلار مزيل مكياج منظف micellar"},
+{"id": "lm43", "b": "SkinMedica", "n": "SkinMedica HA5 Hydrator", "c": "skincare", "s": "", "d": "مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.", "k": "ترطيب هيالورونيك فاخر"},
+{"id": "lm44", "b": "Obagi", "n": "Obagi Nu-Derm Foaming Gel", "c": "skincare", "s": "", "d": "غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.", "k": "غسول دهنية طبي"},
+{"id": "lm45", "b": "SKIN1004", "n": "SKIN1004 Madagascar Centella Ampoule", "c": "skincare", "s": "", "d": "أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.", "k": "سنتيلا تهدئة امبول كوري"},
+{"id": "lm46", "b": "Beauty of Joseon", "n": "Beauty of Joseon Relief Sun SPF 50+", "c": "skincare", "s": "", "d": "واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.", "k": "واقي شمس كوري ارز sunscreen"},
+{"id": "lm47", "b": "Haruharu Wonder", "n": "Haruharu Wonder Black Rice Toner", "c": "skincare", "s": "", "d": "تونر بالأرز الأسود وحمض الهيالورونيك.", "k": "تونر ارز اسود ترطيب كوري"},
+{"id": "lm48", "b": "Caudalie", "n": "Caudalie Vinoperfect Radiance Serum", "c": "skincare", "s": "", "d": "سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.", "k": "بقع داكنة تفتيح توحيد لون سيروم"},
+{"id": "lm49", "b": "Peach Slices", "n": "Peach Slices Snail Rescue Serum", "c": "skincare", "s": "", "d": "سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.", "k": "سيروم حلزون حبوب"},
+{"id": "lm50", "b": "Maybelline", "n": "Maybelline Lash Sensational Sky High Mascara", "c": "makeup", "s": "", "d": "ماسكارا تطويل بفرشاة مرنة لرموش أطول.", "k": "ماسكارا رموش تطويل mascara"},
+{"id": "lm51", "b": "essence", "n": "essence Lash Princess Mascara", "c": "makeup", "s": "", "d": "ماسكارا بتأثير الرموش الصناعية وسعر مناسب.", "k": "ماسكارا رموش كثافة mascara"},
+{"id": "lm52", "b": "Julep", "n": "Julep Eyeshadow 101 Stick", "c": "makeup", "s": "", "d": "ظل عيون كريمي على شكل قلم مقاوم للماء.", "k": "ظل عيون قلم مقاوم للماء eyeshadow"},
+{"id": "lm53", "b": "Neutrogena", "n": "Neutrogena Makeup Remover Wipes", "c": "makeup", "s": "", "d": "مناديل مزيلة للمكياج حتى المقاوم للماء.", "k": "مزيل مكياج مناديل wipes"},
+{"id": "lm54", "b": "COVERGIRL", "n": "COVERGIRL Clean Invisible Foundation", "c": "makeup", "s": "", "d": "كريم أساس خفيف بمظهر طبيعي.", "k": "فاونديشن كريم اساس foundation"},
+{"id": "lm55", "b": "NYX", "n": "NYX Butter Gloss", "c": "makeup", "s": "lip", "d": "ملمع شفايف ناعم غير لزج بألوان كثيرة.", "k": "قلوس ملمع شفايف شفاه gloss lip"},
+{"id": "lm56", "b": "e.l.f.", "n": "e.l.f. Halo Glow Liquid Filter", "c": "makeup", "s": "", "d": "مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.", "k": "هايلايتر توهج اشراقة glow"},
+{"id": "lm57", "b": "L'Oréal Paris", "n": "L'Oréal Lumi Glotion", "c": "makeup", "s": "", "d": "مرطب ملوّن يضيف إشراقة طبيعية للبشرة.", "k": "اشراقة توهج مرطب ملون glow"},
+{"id": "lm58", "b": "Benefit", "n": "Benefit The POREfessional Primer", "c": "makeup", "s": "", "d": "برايمر يخفي المسام ويثبت المكياج.", "k": "برايمر مسام تثبيت primer"},
+{"id": "lm59", "b": "IT Cosmetics", "n": "IT Cosmetics CC+ Cream SPF 50", "c": "makeup", "s": "", "d": "كريم CC بتغطية كاملة وحماية من الشمس.", "k": "سي سي كريم تغطية فاونديشن cc cream"},
+{"id": "lm60", "b": "Revlon", "n": "Revlon ColorStay Eyeliner", "c": "makeup", "s": "", "d": "آيلاينر مقاوم للماء يدوم 24 ساعة.", "k": "ايلاينر كحل مقاوم للماء eyeliner"},
+{"id": "lm61", "b": "Real Techniques", "n": "Real Techniques Miracle Complexion Sponge", "c": "makeup", "s": "", "d": "إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.", "k": "اسفنجة بيوتي بلندر دمج sponge"},
+{"id": "lm62", "b": "Milani", "n": "Milani Make It Last Setting Spray", "c": "makeup", "s": "", "d": "بخاخ تثبيت يحافظ على المكياج طوال اليوم.", "k": "بخاخ تثبيت مكياج setting spray"},
+{"id": "lm63", "b": "Laura Mercier", "n": "Laura Mercier Translucent Setting Powder", "c": "makeup", "s": "", "d": "بودرة شفافة لتثبيت المكياج دون تكتل.", "k": "بودرة تثبيت شفافة powder"},
+{"id": "lm64", "b": "Urban Decay", "n": "Urban Decay Naked3 Palette", "c": "makeup", "s": "", "d": "باليت ظلال عيون بدرجات الوردي الدافئ.", "k": "باليت ظلال عيون palette"},
+{"id": "lm65", "b": "Nizoral", "n": "Nizoral Anti-Dandruff Shampoo", "c": "haircare", "s": "", "d": "شامبو بالكيتوكونازول 1% لمكافحة القشرة.", "k": "شامبو قشرة فروة الرأس shampoo"},
+{"id": "lm66", "b": "Olaplex", "n": "Olaplex No. 3 Hair Perfector", "c": "haircare", "s": "", "d": "علاج يصلح روابط الشعر التالف قبل الغسل.", "k": "شعر تالف علاج اصلاح هيشان olaplex"},
+{"id": "lm67", "b": "Moroccanoil", "n": "Moroccanoil Treatment", "c": "haircare", "s": "", "d": "زيت أرغان للشعر يمنحه نعومة ولمعاناً.", "k": "زيت ارغان شعر لمعان نعومة"},
+{"id": "lm68", "b": "Mielle", "n": "Mielle Rosemary Mint Scalp & Hair Oil", "c": "haircare", "s": "", "d": "زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.", "k": "زيت اكليل الجبل روزماري تساقط تقوية شعر"},
+{"id": "lm69", "b": "Revlon", "n": "Revlon One-Step Volumizer", "c": "haircare", "s": "", "d": "فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.", "k": "سشوار فرشاة تصفيف شعر"},
+{"id": "lm70", "b": "Gucci", "n": "Gucci Bloom Eau de Parfum", "c": "fragrances", "s": "women", "d": "عطر نسائي زهري غني بالياسمين ومسك الروم.", "k": "عطر نسائي زهري ياسمين perfume"},
+{"id": "lm71", "b": "Ralph Lauren", "n": "Ralph Lauren Polo Blue", "c": "fragrances", "s": "men", "d": "عطر رجالي منعش بنفحات مائية.", "k": "عطر رجالي منعش cologne"},
+{"id": "lm72", "b": "Dior", "n": "Dior Sauvage", "c": "fragrances", "s": "men", "d": "عطر رجالي قوي بنفحات البرغموت والعنبر.", "k": "عطر رجالي قوي سوفاج perfume"},
+{"id": "lm73", "b": "Beetles", "n": "Beetles Gel Nail Polish Kit", "c": "makeup", "s": "nail", "d": "مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.", "k": "مناكير طلاء اظافر جل nail"}
+];
+const _CAT_LABEL = {skincare:'عناية بالبشرة', makeup:'مكياج', haircare:'عناية بالشعر', fragrances:'عطور'};
+function _catNorm(t){
+  return String(t||'').toLowerCase()
+    .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ًٌٍَُِّْـ]/g,'')
+    .replace(/['’.+\-]/g,' ').replace(/\s+/g,' ').trim();
+}
+// يحوّل منتج الكتالوج لنفس الشكل الذي تستخدمه البطاقات والشاشات
+function _catToObf(x){
+  return { code:x.id, product_name:x.n, brands:x.b, image_front_display_url:'', image_url:'',
+    ingredients_text:'', labels:'', _cat:x.c, _sub:x.s, _desc:x.d };
+}
+// بحث موحّد: q نص حر (عربي/إنجليزي)، cat فئة، sub فئة فرعية، brand اسم براند
+function catalogFind({q='', cat='', sub='', brand='', limit=0}={}){
+  let list = LAMSA_CATALOG;
+  if(cat) list = list.filter(x=>x.c===cat);
+  if(sub) list = list.filter(x=>x.s===sub);
+  if(brand){
+    const b=_catNorm(brand).replace(/ (beauty|cosmetics|paris|parfums?)$/,'');
+    list = list.filter(x=>{ const xb=_catNorm(x.b); return xb===b || xb.startsWith(b) || b.startsWith(xb); });
+  }
+  if(q){
+    const words=_catNorm(q).split(' ').filter(w=>w.length>1);
+    const scored=list.map(x=>{
+      const hay=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||''));
+      const sc=words.reduce((a,w)=>a+(hay.includes(w)?1:0),0);
+      return {x,sc};
+    }).filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc);
+    list=scored.map(o=>o.x);
+  }
+  if(limit) list=list.slice(0,limit);
+  return list.map(_catToObf);
+}
+function _catByName(name){
+  const n=_catNorm(name); return LAMSA_CATALOG.find(x=>_catNorm(x.n)===n)||null;
 }
 
 // ══ PRODUCT CARD FACTORY ══
 function makeProductCard(name, brand, img, ingr, labels, code){
   // فلتر الصور السيئة — استخدام الفلتر المشترك
   img = qIsGoodImgUrl(img) ? img : '';
-  // إخفاء البطاقة كلياً إذا لا صورة
-  if(!img) return null;
   // إخفاء البطاقات اللي المستخدم حظرها يدوياً (صورة محتواها خاطئ مثلاً)
   if(code && blockedProducts.has(code)) return null;
 
@@ -5426,8 +5522,15 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   fb.style.display = 'none';
   fb.innerHTML = '<i class="fa-solid fa-flask" style="font-size:22px;color:var(--dim)"></i>';
   imgEl.onerror = function(){ this.style.display='none'; fb.style.display='flex'; imgWrap.style.animation = 'none'; imgWrap.style.background = 'none'; };
-  imgWrap.appendChild(imgEl);
-  imgWrap.appendChild(fb);
+  if(img){ imgWrap.appendChild(imgEl); imgWrap.appendChild(fb); }
+  else {
+    // بطاقة بدون صورة: حرفا البراند + أيقونة الفئة (تصميم موحّد بدل صور غير دقيقة)
+    const ce=_catByName(name);
+    const icon={skincare:'fa-droplet',makeup:'fa-palette',haircare:'fa-scissors',fragrances:'fa-spray-can-sparkles'}[ce&&ce.c]||'fa-wand-magic-sparkles';
+    imgWrap.style.animation='none'; imgWrap.style.background='';
+    imgWrap.classList.add('lm-tile','lm-tile--'+((ce&&ce.c)||'x'));
+    imgWrap.innerHTML=`<span class="lm-tile-mono">${_brandMono(brand||name)}</span><i class="fa-solid ${icon} lm-tile-ic"></i>`;
+  }
   el.appendChild(imgWrap);
 
   // زر مفضلة (heart) — أعلى يمين البطاقة كاملة
@@ -5455,7 +5558,8 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   el.appendChild(favBtn);
 
   // محتوى البطاقة (اسم + تصنيف + مكونات + رابط التفاصيل)
-  const {cat} = guessArabicDesc(name, labels);
+  const _ce = _catByName(name);
+  const {cat} = _ce ? {cat:_CAT_LABEL[_ce.c]} : guessArabicDesc(name, labels);
   const chips = parseIngrChips(ingr);
 
   const body = document.createElement('div');
@@ -5464,6 +5568,10 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   const nm = document.createElement('div');
   nm.className = 'obf-card-name';
   nm.textContent = name;
+  const bnm = document.createElement('div');
+  bnm.className = 'obf-card-maker';
+  bnm.textContent = brand || (_ce && _ce.b) || '';
+  body.appendChild(bnm);
   body.appendChild(nm);
 
   const br = document.createElement('div');
@@ -5473,7 +5581,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
 
   const sub = document.createElement('div');
   sub.className = 'obf-card-sub';
-  sub.textContent = chips.length ? chips.join(' · ') : 'مكونات طبيعية خفيفة';
+  sub.textContent = _ce ? _ce.d : (chips.length ? chips.join(' · ') : '');
   body.appendChild(sub);
 
   // صف سفلي: رابط "عرض التفاصيل" + زر سلة/شراء
@@ -5536,29 +5644,14 @@ function showDiscoverSkeleton(count=6){
 
 function searchOBFCat(cat, el){
   document.querySelectorAll('#obf-ftabs .ft').forEach(e=>e.classList.remove('on'));
-  el.classList.add('on');
-
-  // كل فئة لها عدة params نجربها بالتتالي عبر صفحات متعددة
-  const catParams = {
-    'make-up':         ['search_terms=foundation','search_terms=concealer','search_terms=lipstick'],
-    'fragrances':      ['search_terms=perfume','search_terms=fragrance','search_terms=eau+de+parfum'],
-    'women-fragrance': ['search_terms=women+perfume','search_terms=femme+parfum','search_terms=floral+fragrance','search_terms=eau+de+parfum+woman'],
-    'men-fragrance':   ['search_terms=men+cologne','search_terms=homme+parfum','search_terms=aftershave','search_terms=eau+de+toilette+men','search_terms=woody+fragrance'],
-    'facial-care':     ['search_terms=moisturizer','search_terms=face+serum','search_terms=sunscreen','search_terms=toner'],
-    'hair-care':       ['search_terms=shampoo','search_terms=conditioner','search_terms=hair+mask'],
-    'lip-gloss':       ['search_terms=lipstick','search_terms=lip+gloss','search_terms=lip+balm'],
-    'nail-polish':     ['search_terms=nail+polish','search_terms=nail+color'],
+  if(el) el.classList.add('on');
+  const map={
+    'all':{}, 'make-up':{cat:'makeup'}, 'fragrances':{cat:'fragrances'},
+    'women-fragrance':{cat:'fragrances',sub:'women'}, 'men-fragrance':{cat:'fragrances',sub:'men'},
+    'facial-care':{cat:'skincare'}, 'hair-care':{cat:'haircare'},
+    'lip-gloss':{cat:'makeup',sub:'lip'}, 'nail-polish':{cat:'makeup',sub:'nail'},
   };
-
-  const params = catParams[cat] || [`search_terms=${encodeURIComponent(cat.replace('-',' '))}`];
-  const _catKeyMap = {
-    'make-up':'makeup','fragrances':'fragrances','women-fragrance':'fragrances',
-    'men-fragrance':'fragrances','facial-care':'skincare','hair-care':'haircare',
-    'lip-gloss':'makeup','nail-polish':'makeup',
-  };
-  obfCatParamsList = params;
-  obfCatParamsIdx  = 0;
-  fetchOBFSmart(params[0], true, _catKeyMap[cat]||'');
+  _renderCatalogGrid(catalogFind(map[cat]||{q:cat}), '');
 }
 
 // ══ AI PRODUCT RECOMMENDATION ENGINE ══
@@ -5591,26 +5684,7 @@ function detectDeny(text){
 
 // ── بحث مباشر في OBF بكلمات الاستعلام اللي يحددها الموديل نفسه (بدون نداء Gemini إضافي) ──
 async function fetchOBFByQuery(query){
-  const seen = new Set();
-  let all = [];
-  const tries = [query, ...String(query).split(/\s+/).filter(w=>w.length>2)].slice(0,3);
-  for(const term of tries){
-    if(all.length >= 6) break;
-    const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
-    try{
-      const res = await fetch(url);
-      const data = await res.json();
-      (data.products||[]).forEach(p=>{
-        if(!p.product_name) return;
-        const key = p.code||p.product_name;
-        if(seen.has(key)) return;
-        if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
-        seen.add(key);
-        all.push(p);
-      });
-    }catch(e){}
-  }
-  return all.slice(0,6);
+  return catalogFind({q:query, limit:6});
 }
 
 // ── المنفّذ الفعلي لأداة search_beauty_products — يرجع منتجات حقيقية + ملخص نصي يُرسَل لـ Gemini كـ functionResponse ──
@@ -5623,39 +5697,7 @@ async function execProductSearchTool(query){
 }
 
 async function searchProductsForQuery(userQuery){
-  if(!apiKey) return [];
-  try{
-    // استخرج كلمات بحث من الطلب
-    const extractRes = await callGemini(
-      `المستخدم يبحث عن: "${userQuery}"\nاستخرج كلمات بحث إنجليزية لقاعدة بيانات منتجات تجميل.\nأجب بـ JSON فقط بدون أي نص آخر:\n{"terms":["word1","word2","word3"]}`,
-      ''
-    );
-    let terms = [];
-    try{
-      const clean = extractRes.replace(/```json|```/g,'').trim();
-      terms = JSON.parse(clean).terms || [];
-    }catch(e){ terms = [userQuery.split(' ')[0]]; }
-
-    // ابحث في OBF بعدة كلمات واجمع النتائج
-    const seen = new Set();
-    let all = [];
-    for(const term of terms.slice(0,3)){
-      const url = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=1&page_size=30&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,labels_tags&nocache=1`;
-      try{
-        const res = await fetch(url);
-        const data = await res.json();
-        (data.products||[]).forEach(p=>{
-          if(!p.product_name) return;
-          const key = p.code||p.product_name;
-          if(seen.has(key)) return;
-          if(!qIsGoodImgUrl(p.image_front_display_url||p.image_url||'')) return;
-          seen.add(key);
-          all.push(p);
-        });
-      }catch(e){}
-    }
-    return all.slice(0,6);
-  }catch(e){ return []; }
+  return catalogFind({q:userQuery, limit:6});
 }
 
 function showAIProductCards(prods){
@@ -5820,24 +5862,7 @@ async function fsGetByBrand(brandSlug, n=20){
 }
 
 function fsCacheProducts(prods){
-  try{
-    const db=window._fsDb; if(!db||!prods.length) return;
-    for(const p of prods.slice(0,15)){
-      const id=(p.code||'').trim(); if(!id) continue;
-      setDoc(doc(db,'products',id),{
-        code:id,
-        name:p.product_name||'',
-        brand:(p.brands||'').split(',')[0].trim(),
-        brand_slug:(p.brands||'').split(',')[0].trim().toLowerCase().replace(/[^a-z0-9]+/g,'-'),
-        category:_detectProdCat(p),
-        image_url:p.image_front_display_url||p.image_url||'',
-        ingredients:(p.ingredients_text||'').substring(0,500),
-        labels:(p.labels_tags||[]).slice(0,10),
-        source:'openbeautyfacts',
-        updated_at:new Date().toISOString(),
-      },{merge:true}).catch(()=>{});
-    }
-  }catch(e){}
+  // أُوقف: كان يحفظ منتجات Open Beauty Facts في Firestore
 }
 
 function _detectProdCat(p){
@@ -5850,106 +5875,16 @@ function _detectProdCat(p){
 }
 
 async function fetchOBFSmart(params, reset=false, categoryKey=''){
-  if(reset){
-    obfLoading=false; obfPage=1; obfHasMore=true;
-    obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    showDiscoverSkeleton(6);
-  }
-  if(categoryKey){
-    // 1) كاش localStorage أولاً (أسرع)
-    const lsCached = lsCacheGet('cat_'+categoryKey);
-    if(lsCached && lsCached.length>=6){
-      renderOBFCards(lsCached, !reset);
-      // refresh في الخلفية بدون spinner
-      fetchOBF(params, false);
-      return;
-    }
-    // 2) Firestore
-    const cached=await fsGetByCategory(categoryKey,20);
-    if(cached.length>=6){
-      renderOBFCards(cached,!reset);
-      lsCacheSet('cat_'+categoryKey, cached);
-      return;
-    }
-  }
-  await fetchOBF(params,reset);
+  return fetchOBF(params, reset);
 }
 
 async function fetchOBF(params, reset=false){
-  if(reset){
-    // إلغاء أي fetch جارٍ وبدء من جديد فوراً
-    obfLoading=false;
-    obfPage=1; obfHasMore=true; obfCurrentParams=params; obfLoadedCount=0; obfSeenSet=new Set();
-    document.getElementById('obf-grid').innerHTML=
-      '<div style="grid-column:1/-1;text-align:center;padding:40px 0"><div class="dots"><span></span><span></span><span></span></div><div style="font-size:12px;color:var(--dim);margin-top:12px">Loading products...</div></div>';
-  }
-  if(obfLoading) return;
-  if(!obfHasMore) return;
-  obfLoading=true;
-  const isFirst = reset;
-  const loadMoreEl = document.getElementById('obf-load-more');
-  if(!isFirst && loadMoreEl) loadMoreEl.style.display='block';
-  const collected=[];
-  try{
-    for(let tries=0; tries<6 && collected.length<PAGE_SIZE && obfHasMore; tries++){
-      const url=`https://world.openbeautyfacts.org/cgi/search.pl?action=process&${params}&json=true&page=${obfPage}&page_size=${PAGE_SIZE}&fields=code,product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`;
-      const res=await fetch(url);
-      const data=await res.json();
-      const total=parseInt(data.count)||0;
-      const allP=(data.products||[]).filter(p=>p.product_name&&p.product_name.trim());
-      const withImg=allP.filter(p=>{
-        const img=(p.image_front_display_url||p.image_url||'');
-        const notBlocked = !p.code || !blockedProducts.has(p.code);
-        return notBlocked && qIsGoodImgUrl(img);
-      });
-      // بوابات الجودة والتكرار: نفحص فقط المرشحين اللي نجحوا بالفلتر الأولي (أسرع)
-      const passed = await qFilterProducts(withImg, obfSeenSet, 55);
-      collected.push(...passed);
-      obfLoadedCount=(obfLoadedCount||0)+allP.length;
-      obfPage++;
-      // وقف لو رجعت صفحة غير مكتملة أو تجاوزنا العدد الكلي
-      if(allP.length<PAGE_SIZE || (total>0 && obfLoadedCount>=total)){
-        // جرب الـ param التالي في القائمة إن وُجد
-        obfCatParamsIdx = (obfCatParamsIdx||0) + 1;
-        if(obfCatParamsList && obfCatParamsIdx < obfCatParamsList.length){
-          obfCurrentParams = obfCatParamsList[obfCatParamsIdx];
-          obfPage = 1;
-          obfLoadedCount = 0;
-          obfHasMore = true; // استمر بالـ param الجديد
-        } else {
-          obfHasMore = false; // انتهت كل الـ params
-        }
-      }
-    }
-
-    const prods=collected.slice(0,PAGE_SIZE);
-
-    if(!prods.length && isFirst){
-      const isRTL2 = !document.documentElement.classList.contains('lang-en');
-      document.getElementById('obf-grid').innerHTML=
-        `<div class="rv-error"><div class="rv-error-anim">🔍</div><div class="rv-error-title">${isRTL2?'لا توجد نتائج':'No results found'}</div><div class="rv-error-sub">${isRTL2?'جربي كلمة بحث مختلفة':'Try a different keyword'}</div></div>`;
-    } else if(prods.length){
-      renderOBFCards(prods, !isFirst);
-      fsCacheProducts(prods);
-      // ✅ كاش خفيف في localStorage
-      if(isFirst && obfCatParamsIdx!==undefined){
-        lsCacheSet('discover_'+obfCurrentParams.substring(0,40), prods);
-      }
-    }
-  }catch(e){
-    if(isFirst){
-      const grid = document.getElementById('obf-grid');
-      // ✅ حاول عرض البيانات المحفوظة قبل إظهار الخطأ
-      const cachedFallback = lsCacheGet('discover_'+obfCurrentParams.substring(0,40));
-      if(cachedFallback && cachedFallback.length){
-        renderOBFCards(cachedFallback, false);
-      } else {
-        showNetworkError(grid, ()=>fetchOBF(obfCurrentParams, true));
-      }
-    }
-  }
-  if(loadMoreEl) loadMoreEl.style.display='none';
-  obfLoading=false;
+  // كان يجلب من Open Beauty Facts — الآن من كتالوج لمسة المحلي
+  if(!reset) return;
+  const m=String(params||'').match(/search_terms=([^&]*)/);
+  const q=m?decodeURIComponent(m[1].replace(/\+/g,' ')):'';
+  obfCurrentParams=params;
+  _renderCatalogGrid(q?catalogFind({q}):catalogFind(), q);
 }
 
 
@@ -5966,31 +5901,7 @@ const MAKEUP_API_BRAND_MAP = {
 };
 
 async function fetchFromMakeupAPI(brandTerm){
-  const key = (brandTerm||'').toLowerCase().trim();
-  const slug = MAKEUP_API_BRAND_MAP[key];
-  if(!slug) return []; // البراند مش موجود في تغطية Makeup API
-  try{
-    const controller = new AbortController();
-    const timer = setTimeout(()=>controller.abort(), 8000);
-    const res = await fetch(`https://makeup-api.herokuapp.com/api/v1/products.json?brand=${encodeURIComponent(slug)}`, {signal:controller.signal});
-    clearTimeout(timer);
-    const data = await res.json();
-    if(!Array.isArray(data)) return [];
-    // تحويل شكل بيانات Makeup API لنفس شكل OpenBeautyFacts المستخدم في باقي التطبيق
-    return data
-      .filter(p=>p.name && p.image_link)
-      .map(p=>({
-        code: 'mkapi_'+p.id,
-        product_name: p.name,
-        brands: p.brand||brandTerm,
-        image_front_display_url: p.image_link,
-        image_url: p.image_link,
-        ingredients_text: p.description||'',
-        ingredients_text_en: p.description||'',
-        labels_tags: (p.tag_list||[]).map(t=>'en:'+t),
-        _mkSource: true,
-      }));
-  }catch(e){ return []; }
+  return []; // أُزيل: Makeup API كانت تعيد صوراً وروابط غير موثوقة
 }
 
 async function fetchBrandPage(b, page, append){
@@ -6008,142 +5919,19 @@ async function fetchBrandPage(b, page, append){
     }
   }
 
-  // ── Makeup API أولاً (صور أعلى جودة) — لبراندات المكياج المغطاة فقط، صفحة أولى بس
-  if(page===1 && !append && b.cat==='Makeup'){
-    const mkProds = await fetchFromMakeupAPI(term);
-    if(mkProds.length>=4){
-      container.innerHTML=''; // امسح الـ skeleton
-      const filtered = await qFilterProducts(mkProds, bdSeenSet, 40, true);
-      filtered.forEach(p=>{
-        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
-      });
-      bdHasMore=false; // Makeup API مش فيها pagination بالبراند
-      bdPage=2;
-      if(filtered.length) lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
-      bdLoading=false;
-      return;
-    }
+  // ── كتالوج لمسة (بدل Open Beauty Facts) ──
+  const prods = catalogFind({brand:term});
+  if(!append) container.innerHTML='';
+  if(!prods.length){
+    const ar=!document.documentElement.classList.contains('lang-en');
+    const safe=String(b.nm||'').replace(/'/g,"\\'");
+    container.innerHTML=`<div style="grid-column:1/-1;padding:24px 12px;text-align:center">
+      <div style="font-size:14px;color:var(--dim);line-height:1.7;margin-bottom:12px">${ar?'لم نضف منتجات هذا البراند إلى مختارات لمسة بعد.':'No Lamsa picks for this brand yet.'}</div>
+      <button class="rv-error-btn" onclick="buyOnAmazon('','${safe}')">${ar?'تصفّحي منتجاته في Amazon':'Browse it on Amazon'}</button></div>`;
+  } else {
+    prods.forEach(p=>{ const c=renderBrandProdCard(p,b); if(c) container.appendChild(c); });
   }
-
-  // ── Firestore-first: الصفحة الأولى فقط
-  if(page===1 && !append){
-    const cached=await fsGetByBrand(brandSlug,20);
-    if(cached.length>=4){
-      container.innerHTML='';
-      cached.forEach(p=>{
-        const c=makeProductCard(
-          p.product_name||'Product',
-          (p.brands||'').split(',')[0].trim(),
-          p.image_front_display_url||'',
-          (p.ingredients_text||'').substring(0,800),
-          p.labels_tags||[], p.code
-        );
-        if(c) container.appendChild(c);
-      });
-      bdLoading=false;
-      return;
-    }
-  }
-  // ── fallback للـ API ──
-  const brandSlugNoHyphen = term.toLowerCase().replace(/[^a-z0-9]+/g,'');
-
-  // قائمة URLs نجربها بالترتيب حتى نجد نتائج
-  const urlCandidates = [
-    // 1. brand tag endpoint - openbeautyfacts
-    `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlug)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&page_size=${BRAND_PAGE_SIZE}`,
-    // 2. brand tag بدون hyphens
-    `https://world.openbeautyfacts.org/brand/${encodeURIComponent(brandSlugNoHyphen)}/${page}.json?fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&page_size=${BRAND_PAGE_SIZE}`,
-    // 3. tagtype brand search - openbeautyfacts (الأكثر دقةً)
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 4. search_terms عام - openbeautyfacts
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&search_terms=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 5. tagtype brand - openproductsfacts (مصدر بديل أشمل)
-    `https://world.openproductsfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term)}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-    // 6. أول كلمة فقط - openbeautyfacts
-    `https://world.openbeautyfacts.org/cgi/search.pl?action=process&tagtype_0=brands&tag_contains_0=contains&tag_0=${encodeURIComponent(term.split(' ')[0])}&json=true&page=${page}&page_size=${BRAND_PAGE_SIZE}&fields=product_name,brands,image_front_display_url,image_url,ingredients_text,ingredients_text_en,labels,labels_tags&nocache=1`,
-  ];
-
-  // عند الصفحة الأولى فقط نجرب كل الـ candidates — بعدها نستخدم الـ URL الناجح
-  const isFirstPage = page === 1;
-  if(!isFirstPage && b._workingUrl){
-    urlCandidates.splice(0, urlCandidates.length,
-      b._workingUrl.replace(/\/(\d+)\.json/, `/${page}.json`)
-                   .replace(/[&?]page=\d+/, '')
-                   .replace(/page=\d+/, `page=${page}`) + (b._workingUrl.includes('page=') ? '' : `&page=${page}`)
-    );
-  }
-  try{
-    let prods=[], total=0;
-    const seenCodes=new Set();
-    // جرب كل URL candidate — اجمع النتائج من أكثر من source
-    for(const candidateUrl of urlCandidates){
-      if(prods.length >= BRAND_PAGE_SIZE) break;
-      try{
-        const controller = new AbortController();
-        const timer = setTimeout(()=>controller.abort(), 8000);
-        const res=await fetch(candidateUrl, {signal: controller.signal});
-        clearTimeout(timer);
-        const data=await res.json();
-        if(!total) total=parseInt(data.count)||0;
-        const raw=(data.products||[]).filter(p=>{
-          if(!p.product_name||!p.product_name.trim()) return false;
-          const code=p.code||p.product_name;
-          if(seenCodes.has(code)) return false;
-          seenCodes.add(code);
-          return true;
-        });
-        if(raw.length>0){
-          prods=[...prods,...raw];
-          if(isFirstPage && !b._workingUrl) b._workingUrl=candidateUrl;
-        }
-      }catch(innerErr){ continue; }
-    }
-    if(!prods.length && !append){
-      container.innerHTML='<div style="grid-column:1/-1;padding:24px;color:var(--dim);font-size:12px;text-align:center">No products found for this brand</div>';
-      bdHasMore=false;
-    } else {
-      if(!append) container.innerHTML='';
-      prods.forEach(p=>{
-        if(!qIsGoodImgUrl(p.image_front_display_url)) p.image_front_display_url='';
-        if(!qIsGoodImgUrl(p.image_url)) p.image_url='';
-      });
-      // بوابات الجودة والتكرار (بدون تحليل canvas — نكتفي بفلتر الرابط)
-      const filtered = await qFilterProducts(prods, bdSeenSet, 40, true);
-      filtered.forEach(p=>{
-        const c=renderBrandProdCard(p,b); if(c) container.appendChild(c);
-      });
-      bdHasMore=prods.length>=BRAND_PAGE_SIZE||(total>0&&(page*BRAND_PAGE_SIZE)<total);
-      bdPage=page+1;
-      // ✅ حفظ خفيف في localStorage (صفحة أولى فقط)
-      if(page===1 && filtered.length){
-        lsCacheSet('brand_'+(b.search||b.nm||'').substring(0,30), filtered);
-      }
-    }
-  }catch(e){
-    if(!append){
-      // Retry once after 2 seconds
-      if(!b._retried){
-        b._retried=true;
-        bdLoading=false;
-        // skeleton أثناء إعادة المحاولة
-        container.innerHTML='';
-        for(let i=0;i<4;i++){
-          container.innerHTML+=`<div class="obf-skeleton"><div class="obf-skeleton-img"></div><div style="padding:10px 0 12px"><div class="obf-skeleton-line" style="width:55%"></div><div class="obf-skeleton-line" style="width:85%;margin-top:6px"></div></div></div>`;
-        }
-        setTimeout(()=>fetchBrandPage(b,1,false), 2000);
-        return;
-      }
-      // ✅ عرض الكاش المحفوظ إن وجد
-      const bKey = 'brand_'+(b.search||b.nm||'').substring(0,30);
-      const bCached = lsCacheGet(bKey);
-      if(bCached && bCached.length){
-        container.innerHTML='';
-        bCached.forEach(p=>{ const c=renderBrandProdCard(p,b); if(c) container.appendChild(c); });
-      } else {
-        showNetworkError(container, ()=>loadBrandProdsOBF(bdCurrentBrand));
-      }
-    }
-  }
+  bdHasMore=false;
   bdLoading=false;
 }
 
@@ -6376,6 +6164,8 @@ function shareProdLink(){
 
 // تخمين وصف عربي قصير للمنتج بحسب اسمه/تصنيفاته (لا تتوفر أوصاف من OBF غالباً)
 function guessArabicDesc(name, labels){
+  const _ce = typeof _catByName==='function' ? _catByName(name) : null;
+  if(_ce) return {cat:_CAT_LABEL[_ce.c], desc:_ce.d};
   const n = (name||'').toLowerCase();
   const l = (labels||'').toLowerCase();
   let cat = 'مكياج', desc = 'منتج تجميل مختار بعناية ضمن تشكيلة لمسة لإطلالة طبيعية ومتقنة.';
@@ -6624,7 +6414,7 @@ const TRANSLATIONS = {
     'discover.title':'اكتشفي','discover.search':'ابحثي عن أي منتج...',
     'discover.cat.makeup':'ماكياج','discover.cat.fragrance':'عطور',
     'discover.cat.women':'عطر نسائي','discover.cat.men':'عطر رجالي',
-    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر',
+    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر','discover.cat.all':'الكل',
     'discover.cat.lips':'شفاه','discover.cat.nails':'أظافر',
     'sb.nav':'التنقل','sb.home':'الرئيسية','sb.brands':'البراندات العالمية',
     'sb.favs':'مفضلتي','sb.cats':'التصنيفات','sb.makeup':'ماكياج',
@@ -6681,7 +6471,7 @@ const TRANSLATIONS = {
     'discover.title':'Discover','discover.search':'Search any product...',
     'discover.cat.makeup':'Makeup','discover.cat.fragrance':'Fragrances',
     'discover.cat.women':'Women\'s Scent','discover.cat.men':'Men\'s Scent',
-    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair',
+    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair','discover.cat.all':'All',
     'discover.cat.lips':'Lips','discover.cat.nails':'Nails',
     'sb.nav':'Navigation','sb.home':'Home','sb.brands':'Global Brands',
     'sb.favs':'My Favorites','sb.cats':'Categories','sb.makeup':'Makeup',
