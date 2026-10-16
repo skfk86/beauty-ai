@@ -2671,7 +2671,13 @@ html.lang-en .h-feat-go i{transform:scaleX(-1)}
 #app .obf-card-img.lm-tile--fragrances{background:linear-gradient(160deg,#C9CCE0,#A9AECB) !important}
 .lm-tile-mono{font-family:Georgia,serif;font-weight:700;font-size:26px;letter-spacing:.04em;color:#1E2747}
 .lm-tile-ic{position:absolute;bottom:10px;left:10px;font-size:13px;color:rgba(30,39,71,.55)}
-#app .obf-card-name{unicode-bidi:plaintext;text-align:right}
+#app .obf-card-name,#app .h-feat-name,.pdm-name-v2{unicode-bidi:plaintext;text-align:right}
+.pdm-gallery-no-img.lm-tile{flex-direction:column;gap:6px;align-items:center;justify-content:center;width:100%;height:100%;border-radius:0}
+.pdm-noimg-brand{font-size:14px;font-weight:600;color:rgba(30,39,71,.65);direction:ltr}
+.pdm-gallery-no-img.lm-tile--skincare{background:linear-gradient(160deg,#E9DCC6,#D9C6A6)}
+.pdm-gallery-no-img.lm-tile--makeup{background:linear-gradient(160deg,#EBCDBB,#D9A98E)}
+.pdm-gallery-no-img.lm-tile--haircare{background:linear-gradient(160deg,#D8D2C2,#BDB49C)}
+.pdm-gallery-no-img.lm-tile--fragrances{background:linear-gradient(160deg,#C9CCE0,#A9AECB)}
 html.lang-en #app .obf-card-name{text-align:left}
 #app .obf-card-maker{font-size:11px;font-weight:600;color:var(--v-rose);margin-bottom:2px;direction:ltr;text-align:right}
 html.lang-en #app .obf-card-maker{text-align:left}
@@ -2781,7 +2787,7 @@ html.lang-en #app .obf-card-maker{text-align:left}
 
     <!-- ── Brand of the day ── -->
     <section class="h-sec">
-      <h2 class="h-sec-t" data-i18n="home.featured">براند اليوم</h2>
+      <h2 class="h-sec-t" data-i18n="home.featured">منتج اليوم</h2>
       <div id="hero-card" class="h-feat" onclick="heroCardClick()" role="button" tabindex="0">
         <div id="hero-logo-wrap" class="h-feat-logo"><img id="hero-img" src="" alt="" style="opacity:0;transition:opacity .6s"></div>
         <div class="h-feat-txt">
@@ -2801,7 +2807,7 @@ html.lang-en #app .obf-card-maker{text-align:left}
         <button onclick="goF('Fragrances')" class="h-cat"><i class="fa-solid fa-spray-can-sparkles"></i><span data-i18n="home.cat.fragrance">عطور</span></button>
         <button onclick="goF('Skincare')" class="h-cat"><i class="fa-solid fa-droplet"></i><span data-i18n="home.cat.skincare">عناية بالبشرة</span></button>
         <button onclick="goF('Hair')" class="h-cat"><i class="fa-solid fa-scissors"></i><span data-i18n="home.cat.hair">عناية بالشعر</span></button>
-        <button onclick="navTo('brands')" class="h-cat"><i class="fa-solid fa-store"></i><span data-i18n="home.cat.brands">كل البراندات</span></button>
+        <button onclick="navTo('discover')" class="h-cat"><i class="fa-solid fa-store"></i><span data-i18n="home.cat.brands">كل المنتجات</span></button>
         <button onclick="navTo('favs')" class="h-cat"><i class="fa-solid fa-heart"></i><span data-i18n="home.cat.favs">مفضلتي</span></button>
       </div>
     </section>
@@ -3121,10 +3127,6 @@ html.lang-en #app .obf-card-maker{text-align:left}
       <div class="ni-ic"><i class="fa-solid fa-compass"></i></div>
       <div class="ni-lb" data-i18n="nav.discover">اكتشفي</div><div class="ni-dot"></div>
     </div>
-    <div class="ni" id="ni-brands" onclick="navTo('brands')" role="button" aria-label="براندات">
-      <div class="ni-ic"><i class="fa-solid fa-store"></i></div>
-      <div class="ni-lb" data-i18n="nav.brands">براندات</div><div class="ni-dot"></div>
-    </div>
     <div class="ni" id="ni-favs" onclick="navTo('favs')" role="button" aria-label="مفضلتي">
       <div class="ni-ic"><i class="fa-solid fa-heart"></i></div>
       <div class="ni-lb" data-i18n="nav.favs">مفضلتي</div><div class="ni-dot"></div>
@@ -3214,29 +3216,25 @@ html.lang-en #app .obf-card-maker{text-align:left}
         <div class="sb-item-ic"><i class="fa-solid fa-house" style="color:var(--rose2)"></i></div>
         <div class="sb-item-lb" data-i18n="sb.home">Home</div>
       </div>
-      <div class="sb-item" id="sbi-brands" onclick="sbNav('brands')">
-        <div class="sb-item-ic"><i class="fa-solid fa-globe" style="color:var(--gold)"></i></div>
-        <div class="sb-item-lb" data-i18n="sb.brands">Global Brands</div>
-      </div>
       <div class="sb-item" id="sbi-favs" onclick="sbNav('favs')">
         <div class="sb-item-ic"><i class="fa-solid fa-heart" style="color:var(--rose2)"></i></div>
         <div class="sb-item-lb" data-i18n="sb.favs">My Favorites</div>
       </div>
       <div class="sb-divider"></div>
       <div class="sb-section" data-i18n="sb.cats">Categories</div>
-      <div class="sb-item" onclick="sbNav('brands','Makeup')">
+      <div class="sb-item" onclick="goF('Makeup');closeSB()">
         <div class="sb-item-ic"><i class="fa-solid fa-palette" style="color:#e080b0"></i></div>
         <div class="sb-item-lb" data-i18n="sb.makeup">Makeup</div>
       </div>
-      <div class="sb-item" onclick="sbNav('brands','Fragrances')">
+      <div class="sb-item" onclick="goF('Fragrances');closeSB()">
         <div class="sb-item-ic"><i class="fa-solid fa-spray-can-sparkles" style="color:var(--gold2)"></i></div>
         <div class="sb-item-lb" data-i18n="sb.fragrance">Fragrances</div>
       </div>
-      <div class="sb-item" onclick="sbNav('brands','Skincare')">
+      <div class="sb-item" onclick="goF('Skincare');closeSB()">
         <div class="sb-item-ic"><i class="fa-solid fa-droplet" style="color:#60c0d0"></i></div>
         <div class="sb-item-lb" data-i18n="sb.skincare">Skincare</div>
       </div>
-      <div class="sb-item" onclick="sbNav('brands','Hair')">
+      <div class="sb-item" onclick="goF('Hair');closeSB()">
         <div class="sb-item-ic"><i class="fa-solid fa-scissors" style="color:#b090e0"></i></div>
         <div class="sb-item-lb" data-i18n="sb.hair">Hair Care</div>
       </div>
@@ -3430,6 +3428,124 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
   </main>
 </div>
 
+<script>
+// ══════════════════════════════════════════════════════
+// كتالوج لمسة — منتجات مختارة يدوياً (بديل Open Beauty Facts)
+// المصدر: data/catalog.json — لإضافة منتج عدّلي الملف ثم انسخي السطر هنا.
+// c: skincare | makeup | haircare | fragrances   s: lip | nail | women | men
+// ══════════════════════════════════════════════════════
+const LAMSA_CATALOG = [
+{"id": "lm01", "b": "CeraVe", "n": "CeraVe Hydrating Facial Cleanser", "c": "skincare", "s": "", "d": "غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.", "k": "غسول منظف cleanser بشرة جافة حساسة"},
+{"id": "lm02", "b": "Paula's Choice", "n": "Paula's Choice 2% BHA Liquid Exfoliant", "c": "skincare", "s": "", "d": "مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.", "k": "مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant"},
+{"id": "lm03", "b": "Neutrogena", "n": "Neutrogena Hydro Boost Water Gel", "c": "skincare", "s": "", "d": "مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.", "k": "مرطب ترطيب جل دهنية moisturizer"},
+{"id": "lm04", "b": "The Ordinary", "n": "The Ordinary Niacinamide 10% + Zinc 1%", "c": "skincare", "s": "", "d": "سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.", "k": "سيروم نياسيناميد مسام توحيد لون دهنية serum"},
+{"id": "lm05", "b": "EltaMD", "n": "EltaMD UV Clear SPF 46", "c": "skincare", "s": "", "d": "واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.", "k": "واقي شمس حماية حبوب sunscreen spf"},
+{"id": "lm06", "b": "COSRX", "n": "COSRX Snail Mucin 96% Power Essence", "c": "skincare", "s": "", "d": "إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.", "k": "ايسنس حلزون ترطيب كوري essence"},
+{"id": "lm07", "b": "Laneige", "n": "Laneige Lip Sleeping Mask", "c": "makeup", "s": "lip", "d": "ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.", "k": "شفايف شفاه ماسك ترطيب lip"},
+{"id": "lm08", "b": "La Roche-Posay", "n": "La Roche-Posay Toleriane Double Repair", "c": "skincare", "s": "", "d": "مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.", "k": "مرطب حساسة سيراميد moisturizer"},
+{"id": "lm09", "b": "Biodance", "n": "Biodance Bio-Collagen Real Deep Mask", "c": "skincare", "s": "", "d": "ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.", "k": "ماسك كولاجين ترطيب نضارة كوري mask"},
+{"id": "lm10", "b": "Medicube", "n": "Medicube Zero Pore Pad 2.0", "c": "skincare", "s": "", "d": "فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.", "k": "تونر فوط مسام تقشير toner pads كوري"},
+{"id": "lm11", "b": "TruSkin", "n": "TruSkin Vitamin C Face Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.", "k": "سيروم فيتامين سي تفتيح بقع اشراقة vitamin c"},
+{"id": "lm12", "b": "CeraVe", "n": "CeraVe Eye Repair Cream", "c": "skincare", "s": "", "d": "كريم للعين يخفف الهالات السوداء والانتفاخ.", "k": "كريم عين هالات سوداء انتفاخ eye cream"},
+{"id": "lm13", "b": "First Aid Beauty", "n": "First Aid Beauty KP Bump Eraser", "c": "skincare", "s": "", "d": "مقشر للجسم يخفف النتوءات والجلد الخشن.", "k": "جسم مقشر نتوءات خشونة body scrub"},
+{"id": "lm14", "b": "Olay", "n": "Olay Regenerist Micro-Sculpting Cream", "c": "skincare", "s": "", "d": "كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.", "k": "تجاعيد مضاد شيخوخة كريم anti aging"},
+{"id": "lm15", "b": "Kiehl's", "n": "Kiehl's Ultra Facial Cream", "c": "skincare", "s": "", "d": "مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.", "k": "مرطب يومي ترطيب moisturizer"},
+{"id": "lm16", "b": "PanOxyl", "n": "PanOxyl Acne Foaming Wash 10%", "c": "skincare", "s": "", "d": "غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.", "k": "غسول حب الشباب حبوب بنزويل acne wash"},
+{"id": "lm17", "b": "Aquaphor", "n": "Aquaphor Healing Ointment", "c": "skincare", "s": "", "d": "مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.", "k": "مرهم جفاف تشقق شفايف جافة جدا ointment"},
+{"id": "lm18", "b": "Bio-Oil", "n": "Bio-Oil Skincare Oil", "c": "skincare", "s": "", "d": "زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.", "k": "زيت ندبات تشققات علامات تمدد oil"},
+{"id": "lm19", "b": "Differin", "n": "Differin Adapalene Gel 0.1%", "c": "skincare", "s": "", "d": "جل أدابالين لعلاج حب الشباب ومنع ظهوره.", "k": "حب الشباب حبوب ريتينويد adapalene"},
+{"id": "lm20", "b": "Tatcha", "n": "Tatcha The Water Cream", "c": "skincare", "s": "", "d": "مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.", "k": "مرطب خفيف دهنية فاخر moisturizer"},
+{"id": "lm21", "b": "Glow Recipe", "n": "Glow Recipe Watermelon Glow Niacinamide Dew Drops", "c": "skincare", "s": "", "d": "سيروم بالنياسيناميد والبطيخ لإشراقة ندية.", "k": "سيروم اشراقة نضارة نياسيناميد glow"},
+{"id": "lm22", "b": "Cetaphil", "n": "Cetaphil Gentle Skin Cleanser", "c": "skincare", "s": "", "d": "غسول لطيف جداً للبشرة الحساسة والجافة.", "k": "غسول لطيف حساسة جافة cleanser"},
+{"id": "lm23", "b": "La Roche-Posay", "n": "La Roche-Posay Anthelios SPF 60", "c": "skincare", "s": "", "d": "واقي شمس سائل خفيف جداً بحماية عالية.", "k": "واقي شمس حماية عالية sunscreen spf"},
+{"id": "lm24", "b": "Clinique", "n": "Clinique Smart Clinical Repair Eye Cream", "c": "skincare", "s": "", "d": "كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.", "k": "كريم عين تجاعيد خطوط eye cream"},
+{"id": "lm25", "b": "Sunday Riley", "n": "Sunday Riley Good Genes", "c": "skincare", "s": "", "d": "علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.", "k": "تقشير لاكتيك اشراقة تجديد"},
+{"id": "lm26", "b": "Dr. Jart+", "n": "Dr. Jart+ Cicapair Tiger Grass", "c": "skincare", "s": "", "d": "كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.", "k": "احمرار تهدئة مصحح لون سيكا"},
+{"id": "lm27", "b": "SkinCeuticals", "n": "SkinCeuticals C E Ferulic", "c": "skincare", "s": "", "d": "سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.", "k": "سيروم فيتامين سي مضاد اكسدة فاخر"},
+{"id": "lm28", "b": "Mighty Patch", "n": "Mighty Patch Original", "c": "skincare", "s": "", "d": "لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.", "k": "لصقات حبوب حب الشباب pimple patch"},
+{"id": "lm29", "b": "Anua", "n": "Anua Heartleaf Pore Control Cleansing Oil", "c": "skincare", "s": "", "d": "زيت منظف يذيب المكياج والدهون وينظف المسام.", "k": "زيت منظف مزيل مكياج مسام كوري cleansing oil"},
+{"id": "lm30", "b": "Torriden", "n": "Torriden DIVE-IN Hyaluronic Acid Serum", "c": "skincare", "s": "", "d": "سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.", "k": "سيروم ترطيب هيالورونيك كوري"},
+{"id": "lm31", "b": "Dr. Althea", "n": "Dr. Althea 345 Relief Cream", "c": "skincare", "s": "", "d": "كريم مهدئ للبشرة الحساسة والمتهيجة.", "k": "مهدئ حساسة تهيج كريم كوري"},
+{"id": "lm32", "b": "Mediheal", "n": "Mediheal Tea Tree Essential Mask", "c": "skincare", "s": "", "d": "ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.", "k": "ماسك ورقي شجرة الشاي حبوب sheet mask"},
+{"id": "lm33", "b": "SK-II", "n": "SK-II Facial Treatment Essence", "c": "skincare", "s": "", "d": "إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.", "k": "ايسنس فاخر تجديد صفاء"},
+{"id": "lm34", "b": "Estée Lauder", "n": "Estée Lauder Advanced Night Repair", "c": "skincare", "s": "", "d": "سيروم ليلي يدعم تجدد البشرة أثناء النوم.", "k": "سيروم ليلي تجديد تجاعيد فاخر night"},
+{"id": "lm35", "b": "Neutrogena", "n": "Neutrogena Rapid Wrinkle Repair", "c": "skincare", "s": "", "d": "كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.", "k": "ريتينول تجاعيد خطوط retinol"},
+{"id": "lm36", "b": "L'Oréal Paris", "n": "L'Oréal Revitalift Vitamin C Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي نقي لإشراقة البشرة.", "k": "سيروم فيتامين سي اشراقة"},
+{"id": "lm37", "b": "CeraVe", "n": "CeraVe PM Facial Moisturizing Lotion", "c": "skincare", "s": "", "d": "مرطب ليلي خفيف بالنياسيناميد والسيراميد.", "k": "مرطب ليلي خفيف نياسيناميد"},
+{"id": "lm38", "b": "Mario Badescu", "n": "Mario Badescu Drying Lotion", "c": "skincare", "s": "", "d": "علاج موضعي يجفف الحبوب بين ليلة وضحاها.", "k": "حبوب علاج موضعي حب الشباب"},
+{"id": "lm39", "b": "Thayers", "n": "Thayers Witch Hazel Toner", "c": "skincare", "s": "", "d": "تونر خالٍ من الكحول بالبندق الساحر وماء الورد.", "k": "تونر بندق ساحر ورد مسام toner"},
+{"id": "lm40", "b": "Aveeno", "n": "Aveeno Daily Moisturizing Lotion", "c": "skincare", "s": "", "d": "لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.", "k": "لوشن جسم شوفان ترطيب جافة body"},
+{"id": "lm41", "b": "Eucerin", "n": "Eucerin Advanced Repair Cream", "c": "skincare", "s": "", "d": "كريم للبشرة الجافة جداً والخشنة.", "k": "كريم جفاف شديد خشونة جسم"},
+{"id": "lm42", "b": "Garnier", "n": "Garnier Micellar Cleansing Water", "c": "skincare", "s": "", "d": "ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.", "k": "ميسيلار مزيل مكياج منظف micellar"},
+{"id": "lm43", "b": "SkinMedica", "n": "SkinMedica HA5 Hydrator", "c": "skincare", "s": "", "d": "مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.", "k": "ترطيب هيالورونيك فاخر"},
+{"id": "lm44", "b": "Obagi", "n": "Obagi Nu-Derm Foaming Gel", "c": "skincare", "s": "", "d": "غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.", "k": "غسول دهنية طبي"},
+{"id": "lm45", "b": "SKIN1004", "n": "SKIN1004 Madagascar Centella Ampoule", "c": "skincare", "s": "", "d": "أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.", "k": "سنتيلا تهدئة امبول كوري"},
+{"id": "lm46", "b": "Beauty of Joseon", "n": "Beauty of Joseon Relief Sun SPF 50+", "c": "skincare", "s": "", "d": "واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.", "k": "واقي شمس كوري ارز sunscreen"},
+{"id": "lm47", "b": "Haruharu Wonder", "n": "Haruharu Wonder Black Rice Toner", "c": "skincare", "s": "", "d": "تونر بالأرز الأسود وحمض الهيالورونيك.", "k": "تونر ارز اسود ترطيب كوري"},
+{"id": "lm48", "b": "Caudalie", "n": "Caudalie Vinoperfect Radiance Serum", "c": "skincare", "s": "", "d": "سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.", "k": "بقع داكنة تفتيح توحيد لون سيروم"},
+{"id": "lm49", "b": "Peach Slices", "n": "Peach Slices Snail Rescue Serum", "c": "skincare", "s": "", "d": "سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.", "k": "سيروم حلزون حبوب"},
+{"id": "lm50", "b": "Maybelline", "n": "Maybelline Lash Sensational Sky High Mascara", "c": "makeup", "s": "", "d": "ماسكارا تطويل بفرشاة مرنة لرموش أطول.", "k": "ماسكارا رموش تطويل mascara"},
+{"id": "lm51", "b": "essence", "n": "essence Lash Princess Mascara", "c": "makeup", "s": "", "d": "ماسكارا بتأثير الرموش الصناعية وسعر مناسب.", "k": "ماسكارا رموش كثافة mascara"},
+{"id": "lm52", "b": "Julep", "n": "Julep Eyeshadow 101 Stick", "c": "makeup", "s": "", "d": "ظل عيون كريمي على شكل قلم مقاوم للماء.", "k": "ظل عيون قلم مقاوم للماء eyeshadow"},
+{"id": "lm53", "b": "Neutrogena", "n": "Neutrogena Makeup Remover Wipes", "c": "makeup", "s": "", "d": "مناديل مزيلة للمكياج حتى المقاوم للماء.", "k": "مزيل مكياج مناديل wipes"},
+{"id": "lm54", "b": "COVERGIRL", "n": "COVERGIRL Clean Invisible Foundation", "c": "makeup", "s": "", "d": "كريم أساس خفيف بمظهر طبيعي.", "k": "فاونديشن كريم اساس foundation"},
+{"id": "lm55", "b": "NYX", "n": "NYX Butter Gloss", "c": "makeup", "s": "lip", "d": "ملمع شفايف ناعم غير لزج بألوان كثيرة.", "k": "قلوس ملمع شفايف شفاه gloss lip"},
+{"id": "lm56", "b": "e.l.f.", "n": "e.l.f. Halo Glow Liquid Filter", "c": "makeup", "s": "", "d": "مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.", "k": "هايلايتر توهج اشراقة glow"},
+{"id": "lm57", "b": "L'Oréal Paris", "n": "L'Oréal Lumi Glotion", "c": "makeup", "s": "", "d": "مرطب ملوّن يضيف إشراقة طبيعية للبشرة.", "k": "اشراقة توهج مرطب ملون glow"},
+{"id": "lm58", "b": "Benefit", "n": "Benefit The POREfessional Primer", "c": "makeup", "s": "", "d": "برايمر يخفي المسام ويثبت المكياج.", "k": "برايمر مسام تثبيت primer"},
+{"id": "lm59", "b": "IT Cosmetics", "n": "IT Cosmetics CC+ Cream SPF 50", "c": "makeup", "s": "", "d": "كريم CC بتغطية كاملة وحماية من الشمس.", "k": "سي سي كريم تغطية فاونديشن cc cream"},
+{"id": "lm60", "b": "Revlon", "n": "Revlon ColorStay Eyeliner", "c": "makeup", "s": "", "d": "آيلاينر مقاوم للماء يدوم 24 ساعة.", "k": "ايلاينر كحل مقاوم للماء eyeliner"},
+{"id": "lm61", "b": "Real Techniques", "n": "Real Techniques Miracle Complexion Sponge", "c": "makeup", "s": "", "d": "إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.", "k": "اسفنجة بيوتي بلندر دمج sponge"},
+{"id": "lm62", "b": "Milani", "n": "Milani Make It Last Setting Spray", "c": "makeup", "s": "", "d": "بخاخ تثبيت يحافظ على المكياج طوال اليوم.", "k": "بخاخ تثبيت مكياج setting spray"},
+{"id": "lm63", "b": "Laura Mercier", "n": "Laura Mercier Translucent Setting Powder", "c": "makeup", "s": "", "d": "بودرة شفافة لتثبيت المكياج دون تكتل.", "k": "بودرة تثبيت شفافة powder"},
+{"id": "lm64", "b": "Urban Decay", "n": "Urban Decay Naked3 Palette", "c": "makeup", "s": "", "d": "باليت ظلال عيون بدرجات الوردي الدافئ.", "k": "باليت ظلال عيون palette"},
+{"id": "lm65", "b": "Nizoral", "n": "Nizoral Anti-Dandruff Shampoo", "c": "haircare", "s": "", "d": "شامبو بالكيتوكونازول 1% لمكافحة القشرة.", "k": "شامبو قشرة فروة الرأس shampoo"},
+{"id": "lm66", "b": "Olaplex", "n": "Olaplex No. 3 Hair Perfector", "c": "haircare", "s": "", "d": "علاج يصلح روابط الشعر التالف قبل الغسل.", "k": "شعر تالف علاج اصلاح هيشان olaplex"},
+{"id": "lm67", "b": "Moroccanoil", "n": "Moroccanoil Treatment", "c": "haircare", "s": "", "d": "زيت أرغان للشعر يمنحه نعومة ولمعاناً.", "k": "زيت ارغان شعر لمعان نعومة"},
+{"id": "lm68", "b": "Mielle", "n": "Mielle Rosemary Mint Scalp & Hair Oil", "c": "haircare", "s": "", "d": "زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.", "k": "زيت اكليل الجبل روزماري تساقط تقوية شعر"},
+{"id": "lm69", "b": "Revlon", "n": "Revlon One-Step Volumizer", "c": "haircare", "s": "", "d": "فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.", "k": "سشوار فرشاة تصفيف شعر"},
+{"id": "lm70", "b": "Gucci", "n": "Gucci Bloom Eau de Parfum", "c": "fragrances", "s": "women", "d": "عطر نسائي زهري غني بالياسمين ومسك الروم.", "k": "عطر نسائي زهري ياسمين perfume"},
+{"id": "lm71", "b": "Ralph Lauren", "n": "Ralph Lauren Polo Blue", "c": "fragrances", "s": "men", "d": "عطر رجالي منعش بنفحات مائية.", "k": "عطر رجالي منعش cologne"},
+{"id": "lm72", "b": "Dior", "n": "Dior Sauvage", "c": "fragrances", "s": "men", "d": "عطر رجالي قوي بنفحات البرغموت والعنبر.", "k": "عطر رجالي قوي سوفاج perfume"},
+{"id": "lm73", "b": "Beetles", "n": "Beetles Gel Nail Polish Kit", "c": "makeup", "s": "nail", "d": "مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.", "k": "مناكير طلاء اظافر جل nail"}
+];
+const _CAT_LABEL = {skincare:'عناية بالبشرة', makeup:'مكياج', haircare:'عناية بالشعر', fragrances:'عطور'};
+function _catNorm(t){
+  return String(t||'').toLowerCase()
+    .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ًٌٍَُِّْـ]/g,'')
+    .replace(/['’.+\-]/g,' ').replace(/\s+/g,' ').trim();
+}
+// يحوّل منتج الكتالوج لنفس الشكل الذي تستخدمه البطاقات والشاشات
+function _catToObf(x){
+  return { code:x.id, product_name:x.n, brands:x.b, image_front_display_url:x.img||'', image_url:x.img||'',
+    ingredients_text:'', labels:'', _cat:x.c, _sub:x.s, _desc:x.d };
+}
+// بحث موحّد: q نص حر (عربي/إنجليزي)، cat فئة، sub فئة فرعية، brand اسم براند
+function catalogFind({q='', cat='', sub='', brand='', limit=0}={}){
+  let list = LAMSA_CATALOG;
+  if(cat) list = list.filter(x=>x.c===cat);
+  if(sub) list = list.filter(x=>x.s===sub);
+  if(brand){
+    const b=_catNorm(brand).replace(/ (beauty|cosmetics|paris|parfums?)$/,'');
+    list = list.filter(x=>{ const xb=_catNorm(x.b); return xb===b || xb.startsWith(b) || b.startsWith(xb); });
+  }
+  if(q){
+    const words=_catNorm(q).split(' ').filter(w=>w.length>1);
+    const scored=list.map(x=>{
+      const hay=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||''));
+      const sc=words.reduce((a,w)=>a+(hay.includes(w)?1:0),0);
+      return {x,sc};
+    }).filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc);
+    list=scored.map(o=>o.x);
+  }
+  if(limit) list=list.slice(0,limit);
+  return list.map(_catToObf);
+}
+function _catByName(name){
+  const n=_catNorm(name); return LAMSA_CATALOG.find(x=>_catNorm(x.n)===n)||null;
+}
+
+</script>
 <script>
 // ══ GLOBAL ERROR HANDLERS ══
 window.onerror = function(msg, src, line, col, err){
@@ -3812,28 +3928,21 @@ function init(){
 
 // ── Hero Card: براند مميّز ديناميكي يتغيّر كل يوم ──
 function initHeroCard(){
-  if(!BRANDS||!BRANDS.length)return;
-  // اختيار براند بناءً على تاريخ اليوم (يتغيّر يومياً تلقائياً)
-  const dayIdx = Math.floor(Date.now()/(1000*60*60*24)) % BRANDS.length;
-  const brand = BRANDS[dayIdx];
-  if(!brand)return;
-  document.getElementById('hero-name').textContent = brand.ar||brand.nm||'Lamsa';
-  document.getElementById('hero-cat').textContent = brand.cat||'Beauty';
-  if(brand.domain){
-    const img = document.getElementById('hero-img');
-    img.src = `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=256`;
-    img.onload = ()=>{ img.style.opacity='1'; };
-    img.onerror = ()=>{
-      const wrap = document.getElementById('hero-logo-wrap');
-      if(wrap) wrap.innerHTML = `<span class="h-feat-mono">${_brandMono(brand.nm||brand.ar||'R')}</span>`;
-    };
+  if(typeof LAMSA_CATALOG==='undefined'||!LAMSA_CATALOG.length) return;
+  const x = LAMSA_CATALOG[Math.floor(Date.now()/864e5) % LAMSA_CATALOG.length];
+  _heroProd = x;
+  document.getElementById('hero-name').textContent = x.n;
+  document.getElementById('hero-cat').textContent = x.b+' · '+(_CAT_LABEL[x.c]||'');
+  const wrap=document.getElementById('hero-logo-wrap');
+  if(wrap){
+    if(x.img){ wrap.innerHTML=`<img src="${x.img}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<span class=&quot;h-feat-mono&quot;>${_brandMono(x.b)}</span>'">`; }
+    else wrap.innerHTML=`<span class="h-feat-mono">${_brandMono(x.b)}</span>`;
   }
-  _heroBrandId = brand.id;
 }
-let _heroBrandId = null;
+let _heroProd = null;
 
 function heroCardClick(){
-  if(_heroBrandId) openBrand(_heroBrandId);
+  if(_heroProd) openProdDetail({name:_heroProd.n, brand:_heroProd.b, img:_heroProd.img||'', ingr:'', labels:''});
 }
 
 function initSplash(){
@@ -3885,13 +3994,14 @@ function startApp(){
 
 // ══ NAV ══
 function navTo(s){
+  if(s==='brands'||s==='bdet') s='discover'; // صفحة البراندات أُزيلت
   prevScreen=curScreen;
   document.querySelectorAll('.screen').forEach(e=>e.classList.remove('on'));
   const el=document.getElementById('s-'+s);
   if(el){el.classList.add('on');el.scrollTop=0;}
   curScreen=s;
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-  const map={'home':'ni-home','favs':'ni-favs','brands':'ni-brands','prof':'ni-prof','discover':'ni-gifts','bdet':'ni-brands','acct':'ni-prof'};
+  const map={'home':'ni-home','favs':'ni-favs','prof':'ni-prof','discover':'ni-gifts','acct':'ni-prof'};
   const ni=document.getElementById(map[s]);
   if(ni)ni.classList.add('on');
   if(s==='favs')renderFavs();
@@ -3933,10 +4043,12 @@ function setupDiscoverInfiniteScroll(){
 }
 
 function goF(cat){
-  curFilter=cat;
-  navTo('brands');
-  document.querySelectorAll('.ft').forEach(t=>t.classList.toggle('on',t.textContent===cat));
-  renderBrands();
+  const key={Makeup:'make-up',Fragrances:'fragrances',Skincare:'facial-care',Hair:'hair-care'}[cat]||'all';
+  navTo('discover');
+  setTimeout(()=>{
+    const tab=[...document.querySelectorAll('#obf-ftabs .ft')].find(t=>(t.getAttribute('onclick')||'').includes("'"+key+"'"));
+    searchOBFCat(key, tab||null);
+  },60);
 }
 
 function back(){navTo(prevScreen==='bdet'?'brands':prevScreen);}
@@ -5379,122 +5491,6 @@ function _renderCatalogGrid(prods, q){
   renderOBFCards(prods,false);
 }
 
-// ══════════════════════════════════════════════════════
-// كتالوج لمسة — منتجات مختارة يدوياً (بديل Open Beauty Facts)
-// المصدر: data/catalog.json — لإضافة منتج عدّلي الملف ثم انسخي السطر هنا.
-// c: skincare | makeup | haircare | fragrances   s: lip | nail | women | men
-// ══════════════════════════════════════════════════════
-const LAMSA_CATALOG = [
-{"id": "lm01", "b": "CeraVe", "n": "CeraVe Hydrating Facial Cleanser", "c": "skincare", "s": "", "d": "غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.", "k": "غسول منظف cleanser بشرة جافة حساسة"},
-{"id": "lm02", "b": "Paula's Choice", "n": "Paula's Choice 2% BHA Liquid Exfoliant", "c": "skincare", "s": "", "d": "مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.", "k": "مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant"},
-{"id": "lm03", "b": "Neutrogena", "n": "Neutrogena Hydro Boost Water Gel", "c": "skincare", "s": "", "d": "مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.", "k": "مرطب ترطيب جل دهنية moisturizer"},
-{"id": "lm04", "b": "The Ordinary", "n": "The Ordinary Niacinamide 10% + Zinc 1%", "c": "skincare", "s": "", "d": "سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.", "k": "سيروم نياسيناميد مسام توحيد لون دهنية serum"},
-{"id": "lm05", "b": "EltaMD", "n": "EltaMD UV Clear SPF 46", "c": "skincare", "s": "", "d": "واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.", "k": "واقي شمس حماية حبوب sunscreen spf"},
-{"id": "lm06", "b": "COSRX", "n": "COSRX Snail Mucin 96% Power Essence", "c": "skincare", "s": "", "d": "إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.", "k": "ايسنس حلزون ترطيب كوري essence"},
-{"id": "lm07", "b": "Laneige", "n": "Laneige Lip Sleeping Mask", "c": "makeup", "s": "lip", "d": "ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.", "k": "شفايف شفاه ماسك ترطيب lip"},
-{"id": "lm08", "b": "La Roche-Posay", "n": "La Roche-Posay Toleriane Double Repair", "c": "skincare", "s": "", "d": "مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.", "k": "مرطب حساسة سيراميد moisturizer"},
-{"id": "lm09", "b": "Biodance", "n": "Biodance Bio-Collagen Real Deep Mask", "c": "skincare", "s": "", "d": "ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.", "k": "ماسك كولاجين ترطيب نضارة كوري mask"},
-{"id": "lm10", "b": "Medicube", "n": "Medicube Zero Pore Pad 2.0", "c": "skincare", "s": "", "d": "فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.", "k": "تونر فوط مسام تقشير toner pads كوري"},
-{"id": "lm11", "b": "TruSkin", "n": "TruSkin Vitamin C Face Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.", "k": "سيروم فيتامين سي تفتيح بقع اشراقة vitamin c"},
-{"id": "lm12", "b": "CeraVe", "n": "CeraVe Eye Repair Cream", "c": "skincare", "s": "", "d": "كريم للعين يخفف الهالات السوداء والانتفاخ.", "k": "كريم عين هالات سوداء انتفاخ eye cream"},
-{"id": "lm13", "b": "First Aid Beauty", "n": "First Aid Beauty KP Bump Eraser", "c": "skincare", "s": "", "d": "مقشر للجسم يخفف النتوءات والجلد الخشن.", "k": "جسم مقشر نتوءات خشونة body scrub"},
-{"id": "lm14", "b": "Olay", "n": "Olay Regenerist Micro-Sculpting Cream", "c": "skincare", "s": "", "d": "كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.", "k": "تجاعيد مضاد شيخوخة كريم anti aging"},
-{"id": "lm15", "b": "Kiehl's", "n": "Kiehl's Ultra Facial Cream", "c": "skincare", "s": "", "d": "مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.", "k": "مرطب يومي ترطيب moisturizer"},
-{"id": "lm16", "b": "PanOxyl", "n": "PanOxyl Acne Foaming Wash 10%", "c": "skincare", "s": "", "d": "غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.", "k": "غسول حب الشباب حبوب بنزويل acne wash"},
-{"id": "lm17", "b": "Aquaphor", "n": "Aquaphor Healing Ointment", "c": "skincare", "s": "", "d": "مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.", "k": "مرهم جفاف تشقق شفايف جافة جدا ointment"},
-{"id": "lm18", "b": "Bio-Oil", "n": "Bio-Oil Skincare Oil", "c": "skincare", "s": "", "d": "زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.", "k": "زيت ندبات تشققات علامات تمدد oil"},
-{"id": "lm19", "b": "Differin", "n": "Differin Adapalene Gel 0.1%", "c": "skincare", "s": "", "d": "جل أدابالين لعلاج حب الشباب ومنع ظهوره.", "k": "حب الشباب حبوب ريتينويد adapalene"},
-{"id": "lm20", "b": "Tatcha", "n": "Tatcha The Water Cream", "c": "skincare", "s": "", "d": "مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.", "k": "مرطب خفيف دهنية فاخر moisturizer"},
-{"id": "lm21", "b": "Glow Recipe", "n": "Glow Recipe Watermelon Glow Niacinamide Dew Drops", "c": "skincare", "s": "", "d": "سيروم بالنياسيناميد والبطيخ لإشراقة ندية.", "k": "سيروم اشراقة نضارة نياسيناميد glow"},
-{"id": "lm22", "b": "Cetaphil", "n": "Cetaphil Gentle Skin Cleanser", "c": "skincare", "s": "", "d": "غسول لطيف جداً للبشرة الحساسة والجافة.", "k": "غسول لطيف حساسة جافة cleanser"},
-{"id": "lm23", "b": "La Roche-Posay", "n": "La Roche-Posay Anthelios SPF 60", "c": "skincare", "s": "", "d": "واقي شمس سائل خفيف جداً بحماية عالية.", "k": "واقي شمس حماية عالية sunscreen spf"},
-{"id": "lm24", "b": "Clinique", "n": "Clinique Smart Clinical Repair Eye Cream", "c": "skincare", "s": "", "d": "كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.", "k": "كريم عين تجاعيد خطوط eye cream"},
-{"id": "lm25", "b": "Sunday Riley", "n": "Sunday Riley Good Genes", "c": "skincare", "s": "", "d": "علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.", "k": "تقشير لاكتيك اشراقة تجديد"},
-{"id": "lm26", "b": "Dr. Jart+", "n": "Dr. Jart+ Cicapair Tiger Grass", "c": "skincare", "s": "", "d": "كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.", "k": "احمرار تهدئة مصحح لون سيكا"},
-{"id": "lm27", "b": "SkinCeuticals", "n": "SkinCeuticals C E Ferulic", "c": "skincare", "s": "", "d": "سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.", "k": "سيروم فيتامين سي مضاد اكسدة فاخر"},
-{"id": "lm28", "b": "Mighty Patch", "n": "Mighty Patch Original", "c": "skincare", "s": "", "d": "لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.", "k": "لصقات حبوب حب الشباب pimple patch"},
-{"id": "lm29", "b": "Anua", "n": "Anua Heartleaf Pore Control Cleansing Oil", "c": "skincare", "s": "", "d": "زيت منظف يذيب المكياج والدهون وينظف المسام.", "k": "زيت منظف مزيل مكياج مسام كوري cleansing oil"},
-{"id": "lm30", "b": "Torriden", "n": "Torriden DIVE-IN Hyaluronic Acid Serum", "c": "skincare", "s": "", "d": "سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.", "k": "سيروم ترطيب هيالورونيك كوري"},
-{"id": "lm31", "b": "Dr. Althea", "n": "Dr. Althea 345 Relief Cream", "c": "skincare", "s": "", "d": "كريم مهدئ للبشرة الحساسة والمتهيجة.", "k": "مهدئ حساسة تهيج كريم كوري"},
-{"id": "lm32", "b": "Mediheal", "n": "Mediheal Tea Tree Essential Mask", "c": "skincare", "s": "", "d": "ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.", "k": "ماسك ورقي شجرة الشاي حبوب sheet mask"},
-{"id": "lm33", "b": "SK-II", "n": "SK-II Facial Treatment Essence", "c": "skincare", "s": "", "d": "إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.", "k": "ايسنس فاخر تجديد صفاء"},
-{"id": "lm34", "b": "Estée Lauder", "n": "Estée Lauder Advanced Night Repair", "c": "skincare", "s": "", "d": "سيروم ليلي يدعم تجدد البشرة أثناء النوم.", "k": "سيروم ليلي تجديد تجاعيد فاخر night"},
-{"id": "lm35", "b": "Neutrogena", "n": "Neutrogena Rapid Wrinkle Repair", "c": "skincare", "s": "", "d": "كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.", "k": "ريتينول تجاعيد خطوط retinol"},
-{"id": "lm36", "b": "L'Oréal Paris", "n": "L'Oréal Revitalift Vitamin C Serum", "c": "skincare", "s": "", "d": "سيروم فيتامين سي نقي لإشراقة البشرة.", "k": "سيروم فيتامين سي اشراقة"},
-{"id": "lm37", "b": "CeraVe", "n": "CeraVe PM Facial Moisturizing Lotion", "c": "skincare", "s": "", "d": "مرطب ليلي خفيف بالنياسيناميد والسيراميد.", "k": "مرطب ليلي خفيف نياسيناميد"},
-{"id": "lm38", "b": "Mario Badescu", "n": "Mario Badescu Drying Lotion", "c": "skincare", "s": "", "d": "علاج موضعي يجفف الحبوب بين ليلة وضحاها.", "k": "حبوب علاج موضعي حب الشباب"},
-{"id": "lm39", "b": "Thayers", "n": "Thayers Witch Hazel Toner", "c": "skincare", "s": "", "d": "تونر خالٍ من الكحول بالبندق الساحر وماء الورد.", "k": "تونر بندق ساحر ورد مسام toner"},
-{"id": "lm40", "b": "Aveeno", "n": "Aveeno Daily Moisturizing Lotion", "c": "skincare", "s": "", "d": "لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.", "k": "لوشن جسم شوفان ترطيب جافة body"},
-{"id": "lm41", "b": "Eucerin", "n": "Eucerin Advanced Repair Cream", "c": "skincare", "s": "", "d": "كريم للبشرة الجافة جداً والخشنة.", "k": "كريم جفاف شديد خشونة جسم"},
-{"id": "lm42", "b": "Garnier", "n": "Garnier Micellar Cleansing Water", "c": "skincare", "s": "", "d": "ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.", "k": "ميسيلار مزيل مكياج منظف micellar"},
-{"id": "lm43", "b": "SkinMedica", "n": "SkinMedica HA5 Hydrator", "c": "skincare", "s": "", "d": "مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.", "k": "ترطيب هيالورونيك فاخر"},
-{"id": "lm44", "b": "Obagi", "n": "Obagi Nu-Derm Foaming Gel", "c": "skincare", "s": "", "d": "غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.", "k": "غسول دهنية طبي"},
-{"id": "lm45", "b": "SKIN1004", "n": "SKIN1004 Madagascar Centella Ampoule", "c": "skincare", "s": "", "d": "أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.", "k": "سنتيلا تهدئة امبول كوري"},
-{"id": "lm46", "b": "Beauty of Joseon", "n": "Beauty of Joseon Relief Sun SPF 50+", "c": "skincare", "s": "", "d": "واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.", "k": "واقي شمس كوري ارز sunscreen"},
-{"id": "lm47", "b": "Haruharu Wonder", "n": "Haruharu Wonder Black Rice Toner", "c": "skincare", "s": "", "d": "تونر بالأرز الأسود وحمض الهيالورونيك.", "k": "تونر ارز اسود ترطيب كوري"},
-{"id": "lm48", "b": "Caudalie", "n": "Caudalie Vinoperfect Radiance Serum", "c": "skincare", "s": "", "d": "سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.", "k": "بقع داكنة تفتيح توحيد لون سيروم"},
-{"id": "lm49", "b": "Peach Slices", "n": "Peach Slices Snail Rescue Serum", "c": "skincare", "s": "", "d": "سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.", "k": "سيروم حلزون حبوب"},
-{"id": "lm50", "b": "Maybelline", "n": "Maybelline Lash Sensational Sky High Mascara", "c": "makeup", "s": "", "d": "ماسكارا تطويل بفرشاة مرنة لرموش أطول.", "k": "ماسكارا رموش تطويل mascara"},
-{"id": "lm51", "b": "essence", "n": "essence Lash Princess Mascara", "c": "makeup", "s": "", "d": "ماسكارا بتأثير الرموش الصناعية وسعر مناسب.", "k": "ماسكارا رموش كثافة mascara"},
-{"id": "lm52", "b": "Julep", "n": "Julep Eyeshadow 101 Stick", "c": "makeup", "s": "", "d": "ظل عيون كريمي على شكل قلم مقاوم للماء.", "k": "ظل عيون قلم مقاوم للماء eyeshadow"},
-{"id": "lm53", "b": "Neutrogena", "n": "Neutrogena Makeup Remover Wipes", "c": "makeup", "s": "", "d": "مناديل مزيلة للمكياج حتى المقاوم للماء.", "k": "مزيل مكياج مناديل wipes"},
-{"id": "lm54", "b": "COVERGIRL", "n": "COVERGIRL Clean Invisible Foundation", "c": "makeup", "s": "", "d": "كريم أساس خفيف بمظهر طبيعي.", "k": "فاونديشن كريم اساس foundation"},
-{"id": "lm55", "b": "NYX", "n": "NYX Butter Gloss", "c": "makeup", "s": "lip", "d": "ملمع شفايف ناعم غير لزج بألوان كثيرة.", "k": "قلوس ملمع شفايف شفاه gloss lip"},
-{"id": "lm56", "b": "e.l.f.", "n": "e.l.f. Halo Glow Liquid Filter", "c": "makeup", "s": "", "d": "مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.", "k": "هايلايتر توهج اشراقة glow"},
-{"id": "lm57", "b": "L'Oréal Paris", "n": "L'Oréal Lumi Glotion", "c": "makeup", "s": "", "d": "مرطب ملوّن يضيف إشراقة طبيعية للبشرة.", "k": "اشراقة توهج مرطب ملون glow"},
-{"id": "lm58", "b": "Benefit", "n": "Benefit The POREfessional Primer", "c": "makeup", "s": "", "d": "برايمر يخفي المسام ويثبت المكياج.", "k": "برايمر مسام تثبيت primer"},
-{"id": "lm59", "b": "IT Cosmetics", "n": "IT Cosmetics CC+ Cream SPF 50", "c": "makeup", "s": "", "d": "كريم CC بتغطية كاملة وحماية من الشمس.", "k": "سي سي كريم تغطية فاونديشن cc cream"},
-{"id": "lm60", "b": "Revlon", "n": "Revlon ColorStay Eyeliner", "c": "makeup", "s": "", "d": "آيلاينر مقاوم للماء يدوم 24 ساعة.", "k": "ايلاينر كحل مقاوم للماء eyeliner"},
-{"id": "lm61", "b": "Real Techniques", "n": "Real Techniques Miracle Complexion Sponge", "c": "makeup", "s": "", "d": "إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.", "k": "اسفنجة بيوتي بلندر دمج sponge"},
-{"id": "lm62", "b": "Milani", "n": "Milani Make It Last Setting Spray", "c": "makeup", "s": "", "d": "بخاخ تثبيت يحافظ على المكياج طوال اليوم.", "k": "بخاخ تثبيت مكياج setting spray"},
-{"id": "lm63", "b": "Laura Mercier", "n": "Laura Mercier Translucent Setting Powder", "c": "makeup", "s": "", "d": "بودرة شفافة لتثبيت المكياج دون تكتل.", "k": "بودرة تثبيت شفافة powder"},
-{"id": "lm64", "b": "Urban Decay", "n": "Urban Decay Naked3 Palette", "c": "makeup", "s": "", "d": "باليت ظلال عيون بدرجات الوردي الدافئ.", "k": "باليت ظلال عيون palette"},
-{"id": "lm65", "b": "Nizoral", "n": "Nizoral Anti-Dandruff Shampoo", "c": "haircare", "s": "", "d": "شامبو بالكيتوكونازول 1% لمكافحة القشرة.", "k": "شامبو قشرة فروة الرأس shampoo"},
-{"id": "lm66", "b": "Olaplex", "n": "Olaplex No. 3 Hair Perfector", "c": "haircare", "s": "", "d": "علاج يصلح روابط الشعر التالف قبل الغسل.", "k": "شعر تالف علاج اصلاح هيشان olaplex"},
-{"id": "lm67", "b": "Moroccanoil", "n": "Moroccanoil Treatment", "c": "haircare", "s": "", "d": "زيت أرغان للشعر يمنحه نعومة ولمعاناً.", "k": "زيت ارغان شعر لمعان نعومة"},
-{"id": "lm68", "b": "Mielle", "n": "Mielle Rosemary Mint Scalp & Hair Oil", "c": "haircare", "s": "", "d": "زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.", "k": "زيت اكليل الجبل روزماري تساقط تقوية شعر"},
-{"id": "lm69", "b": "Revlon", "n": "Revlon One-Step Volumizer", "c": "haircare", "s": "", "d": "فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.", "k": "سشوار فرشاة تصفيف شعر"},
-{"id": "lm70", "b": "Gucci", "n": "Gucci Bloom Eau de Parfum", "c": "fragrances", "s": "women", "d": "عطر نسائي زهري غني بالياسمين ومسك الروم.", "k": "عطر نسائي زهري ياسمين perfume"},
-{"id": "lm71", "b": "Ralph Lauren", "n": "Ralph Lauren Polo Blue", "c": "fragrances", "s": "men", "d": "عطر رجالي منعش بنفحات مائية.", "k": "عطر رجالي منعش cologne"},
-{"id": "lm72", "b": "Dior", "n": "Dior Sauvage", "c": "fragrances", "s": "men", "d": "عطر رجالي قوي بنفحات البرغموت والعنبر.", "k": "عطر رجالي قوي سوفاج perfume"},
-{"id": "lm73", "b": "Beetles", "n": "Beetles Gel Nail Polish Kit", "c": "makeup", "s": "nail", "d": "مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.", "k": "مناكير طلاء اظافر جل nail"}
-];
-const _CAT_LABEL = {skincare:'عناية بالبشرة', makeup:'مكياج', haircare:'عناية بالشعر', fragrances:'عطور'};
-function _catNorm(t){
-  return String(t||'').toLowerCase()
-    .replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ًٌٍَُِّْـ]/g,'')
-    .replace(/['’.+\-]/g,' ').replace(/\s+/g,' ').trim();
-}
-// يحوّل منتج الكتالوج لنفس الشكل الذي تستخدمه البطاقات والشاشات
-function _catToObf(x){
-  return { code:x.id, product_name:x.n, brands:x.b, image_front_display_url:'', image_url:'',
-    ingredients_text:'', labels:'', _cat:x.c, _sub:x.s, _desc:x.d };
-}
-// بحث موحّد: q نص حر (عربي/إنجليزي)، cat فئة، sub فئة فرعية، brand اسم براند
-function catalogFind({q='', cat='', sub='', brand='', limit=0}={}){
-  let list = LAMSA_CATALOG;
-  if(cat) list = list.filter(x=>x.c===cat);
-  if(sub) list = list.filter(x=>x.s===sub);
-  if(brand){
-    const b=_catNorm(brand).replace(/ (beauty|cosmetics|paris|parfums?)$/,'');
-    list = list.filter(x=>{ const xb=_catNorm(x.b); return xb===b || xb.startsWith(b) || b.startsWith(xb); });
-  }
-  if(q){
-    const words=_catNorm(q).split(' ').filter(w=>w.length>1);
-    const scored=list.map(x=>{
-      const hay=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||''));
-      const sc=words.reduce((a,w)=>a+(hay.includes(w)?1:0),0);
-      return {x,sc};
-    }).filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc);
-    list=scored.map(o=>o.x);
-  }
-  if(limit) list=list.slice(0,limit);
-  return list.map(_catToObf);
-}
-function _catByName(name){
-  const n=_catNorm(name); return LAMSA_CATALOG.find(x=>_catNorm(x.n)===n)||null;
-}
-
 // ══ PRODUCT CARD FACTORY ══
 function makeProductCard(name, brand, img, ingr, labels, code){
   // فلتر الصور السيئة — استخدام الفلتر المشترك
@@ -6024,9 +6020,9 @@ function openProdDetail(p){
     <div class="pdm-gallery pdm-gallery-v2">
       ${p.img ? `<img loading="lazy" src="${p.img}" alt="${p.name}" class="pdm-gallery-img"
           onerror="this.style.display='none';document.getElementById('pdm-no-img').style.display='flex'">` : ''}
-      <div id="pdm-no-img" class="pdm-gallery-no-img" style="display:${p.img?'none':'flex'}">
-        <i class="fa-solid fa-flask" style="font-size:48px;color:var(--dim)"></i>
-        <div style="font-size:12px;margin-top:8px;color:var(--dim)">لا توجد صورة لهذا المنتج</div>
+      <div id="pdm-no-img" class="pdm-gallery-no-img lm-tile lm-tile--${(_catByName(p.name)||{}).c||'x'}" style="display:${p.img?'none':'flex'}">
+        <span class="lm-tile-mono" style="font-size:56px">${_brandMono(p.brand||p.name)}</span>
+        <span class="pdm-noimg-brand">${String(p.brand||'').replace(/</g,'&lt;')}</span>
       </div>
       ${p.img ? `
       <div class="pdm-thumbs">
@@ -6042,11 +6038,11 @@ function openProdDetail(p){
     </div>
 
     <!-- Ingredients -->
-    <div class="pdm-ingr-block">
+    <div class="pdm-ingr-block" style="${(chips.length||(extra&&extra.length)||p.ingr)?'':'display:none'}">
       <div class="pdm-ingr-hd"><span class="pdm-ingr-bar"></span>المكونات</div>
       <div class="pdm-ingr-chips">
         ${chips.length ? chips.map(c=>`<span class="pdm-ingr-chip">🌿 ${c}</span>`).join('')
-          : extra.map(e=>`<span class="pdm-ingr-chip">${e}</span>`).join('') || `<span class="pdm-ingr-chip">✨ تركيبة عالية الجودة</span>`}
+          : (extra||[]).map(e=>`<span class="pdm-ingr-chip">${e}</span>`).join('') || `<span class="pdm-ingr-chip">✨ تركيبة عالية الجودة</span>`}
       </div>
       ${p.ingr ? `
       <div class="pdm-ingr-toggle" onclick="togglePdmSection(this)">
@@ -6165,7 +6161,7 @@ function shareProdLink(){
 // تخمين وصف عربي قصير للمنتج بحسب اسمه/تصنيفاته (لا تتوفر أوصاف من OBF غالباً)
 function guessArabicDesc(name, labels){
   const _ce = typeof _catByName==='function' ? _catByName(name) : null;
-  if(_ce) return {cat:_CAT_LABEL[_ce.c], desc:_ce.d};
+  if(_ce) return {cat:_CAT_LABEL[_ce.c], desc:_ce.d, extra:[]};
   const n = (name||'').toLowerCase();
   const l = (labels||'').toLowerCase();
   let cat = 'مكياج', desc = 'منتج تجميل مختار بعناية ضمن تشكيلة لمسة لإطلالة طبيعية ومتقنة.';
@@ -6381,12 +6377,12 @@ const TRANSLATIONS = {
     'home.ai.status':'مستشارتك للجمال',
     'home.ai.empty':'اسأليني عن منتج، مكوّن، أو روتين يناسبكِ',
     'home.ai.placeholder':'اكتبي سؤالك…',
-    'home.featured':'براند اليوم',
-    'home.hero.badge':'براند مختار','home.hero.btn':'تصفّحي المنتجات',
+    'home.featured':'منتج اليوم',
+    'home.hero.badge':'من مختارات لمسة','home.hero.btn':'عرض التفاصيل',
     'home.cat.title':'تسوّقي حسب الفئة',
     'home.cat.makeup':'ماكياج','home.cat.fragrance':'عطور',
     'home.cat.skincare':'عناية بالبشرة','home.cat.hair':'عناية بالشعر',
-    'home.cat.brands':'كل البراندات','home.cat.favs':'مفضلتي',
+    'home.cat.brands':'كل المنتجات','home.cat.favs':'مفضلتي',
     'home.cat.sub.bp':'براندات ومنتجات','home.cat.sub.ab':'جميع البراندات','home.cat.sub.sv':'المحفوظات',
     'brands.title':'البراندات','brands.search':'ابحثي عن براند...',
     'brands.filter.all':'الكل','brands.filter.makeup':'ماكياج',
@@ -6438,12 +6434,12 @@ const TRANSLATIONS = {
     'home.ai.status':'Your beauty advisor',
     'home.ai.empty':'Ask about a product, an ingredient, or a routine',
     'home.ai.placeholder':'Type your question…',
-    'home.featured':'Brand of the day',
-    'home.hero.badge':'Editor’s pick','home.hero.btn':'Browse products',
+    'home.featured':'Product of the day',
+    'home.hero.badge':'Lamsa pick','home.hero.btn':'View details',
     'home.cat.title':'Shop by category',
     'home.cat.makeup':'Makeup','home.cat.fragrance':'Fragrances',
     'home.cat.skincare':'Skincare','home.cat.hair':'Hair Care',
-    'home.cat.brands':'All brands','home.cat.favs':'Favorites',
+    'home.cat.brands':'All products','home.cat.favs':'Favorites',
     'home.cat.sub.bp':'Brands & Products','home.cat.sub.ab':'All Brands','home.cat.sub.sv':'Saved',
     'brands.title':'Brands','brands.search':'Search brands...',
     'brands.filter.all':'All','brands.filter.makeup':'Makeup',
