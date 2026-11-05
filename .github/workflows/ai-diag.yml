@@ -14,9 +14,21 @@ jobs:
           echo "== models endpoint =="
           curl -s -o m.json -w "HTTP %{http_code}\n" https://api.groq.com/openai/v1/models -H "Authorization: Bearer $K"
           python3 -c "import json;d=json.load(open('m.json'));print('ERROR:',d.get('error')) if 'error' in d else print('available:',sorted(m['id'] for m in d['data']))"
-          for M in llama-3.1-8b-instant meta-llama/llama-4-scout-17b-16e-instruct meta-llama/llama-4-maverick-17b-128e-instruct llama-3.3-70b-versatile; do
-            code=$(curl -s -o r.json -w "%{http_code}" https://api.groq.com/openai/v1/chat/completions \
-              -H "Authorization: Bearer $K" -H "Content-Type: application/json" \
-              -d "{\"model\":\"$M\",\"messages\":[{\"role\":\"user\",\"content\":\"قل مرحبا\"}],\"max_tokens\":10}")
-            echo "$M -> HTTP $code :: $(python3 -c "import json;d=json.load(open('r.json'));print(d['error']['message'][:160] if 'error' in d else d['choices'][0]['message']['content'])")"
-          done
+          cat > t.py <<'PY'
+          import json,os,sys,time,urllib.request
+          K=os.environ['K']
+          tool=[{"type":"function","function":{"name":"search_beauty_products","description":"Search beauty products","parameters":{"type":"object","properties":{"query":{"type":"string"}},"required":["query"]}}}]
+          for M in ["openai/gpt-oss-120b","openai/gpt-oss-20b","qwen/qwen3.8-27b"]:
+            for mode in ["chat","tool"]:
+              body={"model":M,"messages":[{"role":"system","content":"أنتِ مستشارة جمال. أجيبي بالعربية باختصار."},{"role":"user","content":"ما أفضل روتين للبشرة الدهنية؟" if mode=="chat" else "اقترحي لي مرطب للبشرة الجافة"}],"max_tokens":400}
+              if mode=="tool": body["tools"]=tool; body["tool_choice"]="auto"
+              t=time.time()
+              try:
+                r=urllib.request.urlopen(urllib.request.Request("https://api.groq.com/openai/v1/chat/completions",data=json.dumps(body).encode(),headers={"Authorization":"Bearer "+K,"Content-Type":"application/json"}),timeout=60)
+                d=json.load(r); m=d["choices"][0]["message"]
+                out=("TOOL_CALL "+json.dumps(m["tool_calls"][0]["function"],ensure_ascii=False)) if m.get("tool_calls") else (m.get("content") or "")[:300].replace("\n"," ")
+                print(f"{M} [{mode}] {time.time()-t:.1f}s OK :: {out}")
+              except urllib.error.HTTPError as e:
+                print(f"{M} [{mode}] HTTP {e.code} :: {e.read()[:200]}")
+          PY
+          python3 t.py
