@@ -127,8 +127,8 @@
     <h1>سياسة الخصوصية — لمسة</h1>
     <p>مستشارتكِ الذكية في الجمال</p>
     <div class="meta-row">
-      <span class="meta-chip"><i class="fa-regular fa-calendar"></i> آخر تحديث: 16 أكتوبر 2026</span>
-      <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> الإصدار 3.0</span>
+      <span class="meta-chip"><i class="fa-regular fa-calendar"></i> آخر تحديث: 5 نوفمبر 2026</span>
+      <span class="meta-chip"><i class="fa-solid fa-code-branch"></i> الإصدار 3.1</span>
     </div>
   </header>
 
@@ -169,7 +169,7 @@
       <tr><th>النوع</th><th>التفاصيل</th></tr>
       <tr><td>بيانات الحساب<small class="when">عند إنشاء حساب</small></td><td>الاسم والبريد الإلكتروني. كلمة المرور تديرها Firebase Authentication مشفّرة ولا نراها.</td></tr>
       <tr><td>حالة الاشتراك<small class="when">عند الاشتراك في VIP</small></td><td>نوع الخطة (شهري/سنوي)، تاريخ التجديد، رقم الطلب ورمز الشراء من Google Play، وهل التجديد التلقائي مفعّل.</td></tr>
-      <tr><td>عدد أسئلة اليوم<small class="when">عند استخدام المساعد وأنتِ مسجّلة</small></td><td>عدد الأسئلة التي طرحتِها على المساعد اليوم، لتطبيق الحد اليومي المجاني.</td></tr>
+      <tr><td>إجابات اختبار البشرة<small class="when">عند إجراء الاختبار</small></td><td>نوع بشرتك واهتمامك الأساسي، تُحفظ على جهازك فقط لعرض روتينك.</td></tr>
       <tr><td>نص أسئلتك<small class="when">عند السؤال</small></td><td>ما تكتبينه للمساعد يُرسل إلى مزوّد الذكاء الاصطناعي للحصول على الرد (انظري البند 6).</td></tr>
       <tr><td>بيانات الاستخدام والجهاز<small class="when">أثناء استخدام التطبيق</small></td><td>أحداث استخدام مجمّعة، نوع الجهاز ونظام التشغيل، والبلد التقريبي، عبر Firebase Analytics.</td></tr>
     </table>
@@ -195,11 +195,13 @@
     <span class="badge"><i class="fa-solid fa-fire"></i> Firebase (Google)</span>
     <span class="badge"><i class="fa-brands fa-google-play"></i> Google Play</span>
     <span class="badge"><i class="fa-solid fa-robot"></i> Groq</span>
+    <span class="badge"><i class="fa-solid fa-server"></i> Vercel</span>
     <span class="badge"><i class="fa-brands fa-amazon"></i> Amazon Associates</span>
     <ul style="margin-top:14px">
       <li><strong>Firebase Authentication و Firestore و Analytics</strong> (Google LLC): إدارة الحسابات، حفظ حالة الاشتراك وعدد الأسئلة، وتحليل الاستخدام بشكل مجمّع.</li>
       <li><strong>Google Play Billing</strong>: معالجة الاشتراكات والدفع. نرسل إلى Google Play معرّفاً مُشفّراً لحسابك (وليس بريدك أو اسمك) لربط الاشتراك بحسابك في لمسة.</li>
-      <li><strong>Groq</strong>: تشغيل المساعد الذكي (نماذج Llama). يستلم نص أسئلتك فقط، دون اسمك أو بريدك.</li>
+      <li><strong>خادم لمسة (Vercel)</strong>: يمرّر أسئلة المساعد الذكي بعد التحقق من تسجيل الدخول واشتراك VIP. لا يحفظ محتوى أسئلتك.</li>
+      <li><strong>Groq</strong>: يشغّل نماذج الذكاء الاصطناعي. يستلم نص أسئلتك فقط عبر خادم لمسة، دون اسمك أو بريدك.</li>
       <li><strong>Google</strong>: تُحمَّل شعارات البراندات من خدمة أيقونات Google، فيصل إليها عنوان IP لجهازك عند عرض الشعار.</li>
       <li><strong>Amazon Associates</strong>: روابط شراء خارجية (انظري البند 9).</li>
     </ul>
@@ -219,7 +221,7 @@
   <div class="card" id="ai-section">
     <h2><i class="fa-solid fa-wand-magic-sparkles"></i> 6. المساعد الذكي وبياناتك</h2>
     <p>
-      عند سؤال المساعد يُرسل نص رسالتك، مع الرسائل السابقة في المحادثة نفسها، إلى Groq لتوليد الرد.
+      المساعد الذكي متاح لمشتركات VIP. عند سؤاله يُرسل نص رسالتك، مع الرسائل السابقة في المحادثة نفسها، عبر خادم لمسة إلى Groq لتوليد الرد.
       لا نحفظ محتوى محادثاتك على خوادمنا. نحفظ فقط <em>عدد</em> أسئلتك اليومية لتطبيق الحد المجاني.
     </p>
     <p>تجنّبي كتابة معلومات حساسة (صحية تفصيلية، مالية، أو هوية) في أسئلتك.</p>
