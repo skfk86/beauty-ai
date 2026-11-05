@@ -1,0 +1,22 @@
+name: Fetch product catalog
+on:
+  push:
+    branches: [catalog-fetch]
+    paths: [scripts/fetch_catalog.py, .github/workflows/fetch-catalog.yml]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pillow
+      - run: python scripts/fetch_catalog.py
+      - name: Commit results
+        run: |
+          git config user.name "github-actions"; git config user.email "github-actions@users.noreply.github.com"
+          git add data/shop_raw.json data/shop_report.txt www/assets/products
+          git commit -m "Fetched catalog data [skip ci]" || echo "nothing to commit"
+          git push
