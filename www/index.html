@@ -2708,6 +2708,42 @@ html.lang-en #app .obf-card-maker{text-align:left}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
 }
+
+/* ══ Free features ══ */
+.fa-tip{background:var(--v-rose-wash);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.8;color:var(--v-ink);margin-bottom:10px}
+.fa-note{font-size:13px;color:var(--v-mist);margin:4px 2px 10px}
+.fa-upsell{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;padding:10px 12px;border:1px dashed rgba(227,184,98,.45);border-radius:14px}
+.fa-upsell span{font-size:13px;color:var(--v-ink)}
+.fa-upsell button{border:0;border-radius:99px;padding:8px 14px;background:var(--v-rose-deep);color:#FFF6EA;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.fa-upsell button b{margin-inline-start:4px;color:var(--v-champ);font-size:11px}
+.fa-quiz-link{display:block;margin:10px auto 0;background:none;border:0;color:var(--v-rose);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.fg-row{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid var(--v-line)}
+.fg-row b{font-size:13px;color:var(--v-ink)} .fg-row span{font-size:13px;line-height:1.8;color:var(--v-mist)}
+.fg-row a{display:block;color:var(--v-rose);text-decoration:none;padding:2px 0;unicode-bidi:plaintext}
+.h-ai-vip{font-size:11px;font-weight:700;color:var(--v-champ);border:1px solid rgba(227,184,98,.45);border-radius:99px;padding:2px 8px}
+.h-quiz{width:100%;display:flex;align-items:center;gap:14px;padding:16px;text-align:right;cursor:pointer;
+  background:linear-gradient(135deg,#1E2747,#2A3358);border:1px solid var(--v-line);border-radius:var(--v-r-l);color:#F3E7D3;font-family:inherit}
+.h-quiz-ic{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(229,138,90,.18);color:#E58A5A;font-size:18px}
+.h-quiz-t{flex:1;display:flex;flex-direction:column;gap:2px}
+.h-quiz-t b{font-size:15px} .h-quiz-t small{font-size:12px;color:rgba(243,231,211,.7);line-height:1.6}
+.h-quiz-go{color:#E58A5A}
+html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-1)}
+.sq{position:fixed;inset:0;z-index:985;background:rgba(5,8,20,.7);backdrop-filter:blur(8px);display:none;align-items:flex-end;justify-content:center}
+.sq-sheet{width:100%;max-width:520px;max-height:92vh;overflow-y:auto;background:var(--v-bg);border-radius:26px 26px 0 0;padding:16px 18px calc(env(safe-area-inset-bottom,0px) + 20px)}
+.sq-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.sq-x{width:36px;height:36px;border-radius:50%;border:0;background:var(--v-raised);color:var(--v-ink);cursor:pointer}
+.sq-prog{flex:1;display:flex;gap:6px} .sq-prog i{flex:1;height:4px;border-radius:4px;background:var(--v-line)} .sq-prog i.on{background:var(--v-rose)}
+.sq-q{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--v-ink);margin:10px 2px 16px}
+.sq-opts{display:flex;flex-direction:column;gap:10px}
+.sq-opts button{padding:15px 16px;border-radius:14px;border:1.5px solid var(--v-line);background:var(--v-surface);color:var(--v-ink);font-family:inherit;font-size:15px;font-weight:500;text-align:right;cursor:pointer}
+.sq-opts button:active{border-color:var(--v-rose)}
+.sq-back{display:block;margin:16px auto 0;background:none;border:0;color:var(--v-mist);font-family:inherit;font-size:14px;cursor:pointer}
+.sq-sec{font-size:13px;font-weight:700;color:var(--v-rose);margin:14px 2px 8px}
+.sq-step{width:100%;display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:8px;border-radius:14px;border:1px solid var(--v-line);background:var(--v-surface);cursor:pointer;text-align:right;font-family:inherit}
+.sq-step img{width:56px;height:56px;border-radius:10px;object-fit:cover;background:#fff}
+.sq-step span{flex:1;display:flex;flex-direction:column;min-width:0}
+.sq-step small{font-size:11px;color:var(--v-rose);font-weight:600} .sq-step b{font-size:14px;color:var(--v-ink);unicode-bidi:plaintext;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .sq-step em{font-style:normal;font-size:12px;color:var(--v-mist)}
+.sq-step>i{color:var(--v-faint)}
 </style>
 </head>
 <body>
@@ -2756,6 +2792,7 @@ html.lang-en #app .obf-card-maker{text-align:left}
       <header class="h-ai-top">
         <span class="h-ai-av"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
         <span class="h-ai-who"><b>لمسة</b><small data-i18n="home.ai.status">مستشارتك للجمال</small></span>
+        <span class="h-ai-vip" id="h-ai-vip">VIP</span>
         <button id="ai-chat-clear" class="h-ai-clear" onclick="clearAIChat()" aria-label="محادثة جديدة" style="display:none"><i class="fa-solid fa-rotate-left"></i></button>
       </header>
       <div class="ai-chat-body" id="ai-chat-body">
@@ -2784,6 +2821,15 @@ html.lang-en #app .obf-card-maker{text-align:left}
     <div id="mic-btn" style="display:none"></div>
     <div id="wl" style="display:none"></div>
     <div id="wr" style="display:none"></div>
+
+    <!-- ── اختبار البشرة (مجاني) ── -->
+    <section class="h-sec">
+      <button class="h-quiz" onclick="openSkinQuiz()">
+        <span class="h-quiz-ic"><i class="fa-solid fa-spa"></i></span>
+        <span class="h-quiz-t"><b>اكتشفي روتينك في 30 ثانية</b><small>3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً</small></span>
+        <i class="fa-solid fa-chevron-left h-quiz-go"></i>
+      </button>
+    </section>
 
     <!-- ── Brand of the day ── -->
     <section class="h-sec">
@@ -3279,9 +3325,10 @@ html.lang-en #app .obf-card-maker{text-align:left}
 
       <div id="vip-sub-row">
         <ul class="pw-feats">
-          <li><i class="fa-solid fa-infinity"></i><div><b>أسئلة ذكاء اصطناعي بلا حدود</b><span>بدلاً من 5 أسئلة يومياً في الخطة المجانية</span></div></li>
-          <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>تحليل كل منتج تهتمين به</b><span>المكونات، لمن يناسب، وبدائل أوفر — متى شئتِ</span></div></li>
-          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير لمسة</b><span>اشتراكك يموّل ميزات ومنتجات جديدة باستمرار</span></div></li>
+          <li><i class="fa-solid fa-comments"></i><div><b>خبيرة جمال شخصية بالذكاء الاصطناعي</b><span>اسأليها أي شيء عن بشرتك وشعرك ومكياجك، بلا حدود</span></div></li>
+          <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>تحليل ذكي لأي منتج</b><span>هل يناسب بشرتك؟ مكوناته، طريقة استخدامه، وبدائل أوفر</span></div></li>
+          <li><i class="fa-solid fa-spa"></i><div><b>روتين مخصّص يتطوّر معكِ</b><span>تعدّلينه بالمحادثة حسب حالتك ومنتجاتك الحالية</span></div></li>
+          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير لمسة</b><span>منتجات وبراندات جديدة باستمرار</span></div></li>
         </ul>
 
         <div class="pw-plans" role="radiogroup" aria-label="اختاري الخطة">
@@ -3289,12 +3336,17 @@ html.lang-en #app .obf-card-maker{text-align:left}
             <span class="pw-tag" id="vip-save-badge">الأوفر</span>
             <span class="pw-radio"></span>
             <span class="pw-plan-txt"><b>سنوي</b><small id="vip-yearly-permonth">يُدفع مرة واحدة سنوياً</small></span>
-            <span class="pw-price"><b id="vip-price-yearly">£34.99</b><small>/ سنة</small></span>
+            <span class="pw-price"><b id="vip-price-yearly">—</b><small>/ سنة</small></span>
           </button>
           <button class="pw-plan" data-plan="monthly" role="radio" aria-checked="false" onclick="selectVipPlan('monthly')">
             <span class="pw-radio"></span>
-            <span class="pw-plan-txt"><b>شهري</b><small>مرونة كاملة</small></span>
-            <span class="pw-price"><b id="vip-price-monthly">£4.99</b><small>/ شهر</small></span>
+            <span class="pw-plan-txt"><b>شهري</b><small>الأكثر مرونة</small></span>
+            <span class="pw-price"><b id="vip-price-monthly">—</b><small>/ شهر</small></span>
+          </button>
+          <button class="pw-plan" data-plan="weekly" role="radio" aria-checked="false" onclick="selectVipPlan('weekly')">
+            <span class="pw-radio"></span>
+            <span class="pw-plan-txt"><b>أسبوعي</b><small>جرّبي VIP بأقل تكلفة</small></span>
+            <span class="pw-price"><b id="vip-price-weekly">—</b><small>/ أسبوع</small></span>
           </button>
         </div>
 
@@ -3767,10 +3819,15 @@ function catalogFind({q='', cat='', sub='', brand='', limit=0}={}){
     list = list.filter(x=>{ const xb=_catNorm(x.b); return xb===b || xb.startsWith(b) || b.startsWith(xb); });
   }
   if(q){
-    const words=_catNorm(q).split(' ').filter(w=>w.length>1);
+    const STOP=new Set(['عندي','اريد','ابغى','ابي','ممكن','افضل','احسن','منتج','منتجات','لي','في','من','على','عن','مع','ما','هو','هي','شي','شيء','فيه','عندها','بشره','للبشره','بشرتي','the','for','my']);
+    const words=_catNorm(q).split(' ').map(w=>w.replace(/^(وال|بال|لل|ال|و)(?=..)/,'')).filter(w=>w.length>1&&!STOP.has(w));
+    const qn=_catNorm(q);
+    const wantCat=/شعر|شامبو|بلسم|فروه/.test(qn)?'haircare':/عطر|رائحه|ريحه|بخاخ جسم/.test(qn)?'fragrances':/مكياج|ماسكارا|روج|احمر شفاه|بلاشر|فاونديشن|كونسيلر|ظلال/.test(qn)?'makeup':/بشر|حبوب|بقع|تجاعيد|مسام|واقي|غسول|سيروم/.test(qn)?'skincare':'';
     const scored=list.map(x=>{
-      const hay=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||''));
-      const sc=words.reduce((a,w)=>a+(hay.includes(w)?1:0),0);
+      // مطابقة من بداية الكلمة (تمنع «فيه» من مطابقة «مطفيه»)
+      const toks=_catNorm(x.n+' '+x.b+' '+x.k+' '+x.d+' '+(_CAT_LABEL[x.c]||'')).split(' ').flatMap(t=>[t,t.replace(/^(وال|بال|لل|ال|و)(?=...)/,'')]);
+      let sc=words.reduce((a,w)=>a+(toks.some(t=>t.startsWith(w)||(w.length>=5&&t.includes(w)))?1:0),0);
+      if(sc>0 && wantCat && x.c===wantCat) sc+=1.5;
       return {x,sc};
     }).filter(o=>o.sc>0).sort((a,b)=>b.sc-a.sc);
     list=scored.map(o=>o.x);
@@ -4089,7 +4146,8 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
   return out;
 }
 
-const DEFAULT_GROQ_KEY='__GROQ_API_KEY__';
+const DEFAULT_GROQ_KEY='server'; // المفتاح على خادم لمسة فقط — لا يوجد مفتاح داخل التطبيق
+const AI_PROXY_URL='https://lamsa-ai-dun.vercel.app/api/ai';
 let apiKey=DEFAULT_GROQ_KEY;
 
 let isRec=false,recog=null;
@@ -5034,7 +5092,7 @@ function _brandMono(nm){
 // مصدر الحقيقة: Google Play. عند فتح التطبيق والعودة إليه نسأل Play عن الاشتراكات
 // الفعّالة؛ إن وُجد اشتراك → VIP، وإن لم يوجد (والاستعلام نجح) → يُلغى VIP.
 // Firestore + localStorage مجرد نسخة مخبّأة للعمل بدون إنترنت.
-const VIP_PRODUCTS = { monthly:'rosiva_premium_monthly', yearly:'rosiva_premium_yearly' };
+const VIP_PRODUCTS = { weekly:'rosiva_premium_weekly', monthly:'rosiva_premium_monthly', yearly:'rosiva_premium_yearly' };
 const VIP_OFFLINE_GRACE_DAYS = 3; // مهلة إضافية بدون اتصال قبل اعتبار الاشتراك منتهياً
 let _NP = null;
 let _vipBusy = false;           // يمنع الضغط المزدوج على الشراء
@@ -5080,7 +5138,7 @@ function _vipNextRenewal(purchaseTime, plan){
   const now = Date.now();
   let guard = 0;
   do{
-    if(plan==='yearly') d.setFullYear(d.getFullYear()+1); else d.setMonth(d.getMonth()+1);
+    if(plan==='yearly') d.setFullYear(d.getFullYear()+1); else if(plan==='weekly') d.setDate(d.getDate()+7); else d.setMonth(d.getMonth()+1);
   }while(d.getTime() <= now && ++guard < 600);
   return d;
 }
@@ -5088,7 +5146,7 @@ function _vipNextRenewal(purchaseTime, plan){
 function _isValidVipPurchase(p){
   if(!p) return false;
   const id = p.productIdentifier || p.productId || '';
-  return !!p.purchaseToken && (id === VIP_PRODUCTS.monthly || id === VIP_PRODUCTS.yearly);
+  return !!p.purchaseToken && Object.values(VIP_PRODUCTS).includes(id);
 }
 
 // يختار الاشتراك الأفضل من قائمة Play ويتحقق أنه لهذا الحساب
@@ -5105,7 +5163,7 @@ async function _vipPickForAccount(purchases){
 
 async function _vipActivateFrom(purchase){
   const productId = purchase.productIdentifier || purchase.productId;
-  const plan = productId===VIP_PRODUCTS.yearly ? 'yearly' : 'monthly';
+  const plan = productId===VIP_PRODUCTS.yearly ? 'yearly' : productId===VIP_PRODUCTS.weekly ? 'weekly' : 'monthly';
   const info = {
     uid: window._authUser.uid,
     isPremium: true,
@@ -5155,11 +5213,11 @@ async function initVipBilling(){
 
     const loadPrices = async()=>{
       try{
-        const res = await _NP.getProducts({ productIdentifiers:[VIP_PRODUCTS.monthly, VIP_PRODUCTS.yearly] });
+        const res = await _NP.getProducts({ productIdentifiers:Object.values(VIP_PRODUCTS) });
         const prices = {};
         (res && res.products || []).forEach(p=>{
           prices[p.productIdentifier] = p;
-          const el = document.getElementById(p.productIdentifier===VIP_PRODUCTS.monthly ? 'vip-price-monthly' : 'vip-price-yearly');
+          const el = document.getElementById({[VIP_PRODUCTS.weekly]:'vip-price-weekly',[VIP_PRODUCTS.monthly]:'vip-price-monthly',[VIP_PRODUCTS.yearly]:'vip-price-yearly'}[p.productIdentifier]);
           if(el && p.localizedPrice) el.textContent = p.localizedPrice;
         });
         // نسبة التوفير الحقيقية للخطة السنوية
@@ -5192,7 +5250,7 @@ async function initVipBilling(){
 
 let _vipSelectedPlan = 'yearly';
 function selectVipPlan(plan){
-  _vipSelectedPlan = plan==='monthly' ? 'monthly' : 'yearly';
+  _vipSelectedPlan = ['weekly','monthly','yearly'].includes(plan) ? plan : 'yearly';
   document.querySelectorAll('.pw-plan').forEach(b=>{
     const on = b.dataset.plan===_vipSelectedPlan;
     b.classList.toggle('on', on); b.setAttribute('aria-checked', on?'true':'false');
@@ -5286,7 +5344,7 @@ async function openVipModal(){
     const info=_vipGetState();
     const expiry=info?.premiumExpiry?new Date(info.premiumExpiry):null;
     const dateStr=expiry?expiry.toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}):'';
-    const plan=info?.premiumPlan==='yearly'?'سنوي':'شهري';
+    const plan={yearly:'سنوي',weekly:'أسبوعي'}[info?.premiumPlan]||'شهري';
     const renews=info?.autoRenewing!==false;
     const daysLeft=expiry?Math.ceil((expiry-new Date())/(1000*60*60*24)):0;
     if(statusBox){
@@ -5319,6 +5377,7 @@ async function openVipModal(){
 }
 function closeVipModal(){ const m=document.getElementById('vip-modal'); if(m) m.style.display='none'; }
 function updateVipUI(){
+  isVipActive().then(on=>{ const b=document.getElementById('h-ai-vip'); if(b) b.style.display=on?'none':''; }).catch(()=>{});
   isVipActive().then(a=>{
     document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none');
     document.querySelectorAll('.hdr-vip').forEach(btn=>{
@@ -5356,18 +5415,10 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 async function doAI(text){
-  if(!apiKey){showToast('أضيفي مفتاح Groq API أولاً 🔑');return;}
-
-  if((await _aiQuotaRemaining())<=0){
-    const isRTL = !document.documentElement.classList.contains('lang-en');
-    showToast(isRTL
-      ? `⏳ وصلت للحد اليومي للذكاء الاصطناعي (${AI_DAILY_LIMIT} أسئلة). اشتركي في VIP لأسئلة بلا حدود 👑`
-      : `⏳ You've used today's daily limit (${AI_DAILY_LIMIT} questions). Try again tomorrow!`);
-    if(typeof openVipModal==='function') setTimeout(openVipModal, 600);
-    return;
-  }
-
-  const remaining = await _aiQuotaConsume();
+  if(!text) return;
+  // الذكاء الاصطناعي لمشتركات VIP فقط؛ المجانية تحصل على المساعدة الفورية من الكتالوج
+  if(!(await isVipActive())){ freeAssistant(text); return; }
+  const remaining = Infinity;
 
   // عرض loading في البطاقة الجديدة
   const reply=document.getElementById('ai-chat-reply');
@@ -5403,8 +5454,8 @@ async function doAI(text){
     const msg = e.message || '';
     console.error('Groq error detail:', msg);
     let errHtml='';
-    if(msg==='NO_KEY') errHtml='<span style="color:var(--gold2)">🔑 أضيفي مفتاح Groq API من الإعدادات</span>';
-    else if(msg.includes('401')||msg.includes('INVALID_KEY')) errHtml='<span style="color:#e06060">❌ مفتاح API غير صحيح</span>';
+    if(msg==='VIP_REQUIRED'){ freeAssistant(text); openVipModal(); return; }
+    if(msg==='AUTH_REQUIRED') errHtml='<span style="color:var(--gold2)">سجّلي الدخول لاستخدام لمسة AI</span>';
     else if(msg.includes('429')) errHtml='<span style="color:var(--gold2)">⏳ تم تجاوز الحد — '+msg+'</span>';
     else if(msg.includes('NET_ERR')) errHtml='<span style="color:#e06060">📵 تحققي من الاتصال بالإنترنت</span>';
     else {
@@ -5419,20 +5470,21 @@ async function doAI(text){
 }
 
 // ══ GROQ ══
-const _GROQ_MODELS = [
-  'llama-3.1-8b-instant',
-  'meta-llama/llama-4-scout-17b-16e-instruct',
-  'meta-llama/llama-4-maverick-17b-128e-instruct',
-  'llama-3.3-70b-versatile'
-];
+const _GROQ_MODELS = ['server']; // الخادم يختار النموذج المتاح ويتنقل تلقائياً
 
 function _groqUrl(){
-  return 'https://api.groq.com/openai/v1/chat/completions';
+  return AI_PROXY_URL;
 }
 
+// رأس الطلب: رمز Firebase للمستخدمة (يتحقق منه خادم لمسة)
+async function _aiHeaders(){
+  const u=window._authUser;
+  if(!u||typeof u.getIdToken!=='function') throw new Error('AUTH_REQUIRED');
+  if(!(await isVipActive())) throw new Error('VIP_REQUIRED');
+  return {'Content-Type':'application/json','Authorization':'Bearer '+(await u.getIdToken())};
+}
 async function callGemini(msg, sys=''){
-  if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey};
+  const headers = await _aiHeaders();
   let lastErr = '';
   for(const model of _GROQ_MODELS){
     let r;
@@ -5456,7 +5508,7 @@ async function callGemini(msg, sys=''){
     let errMsg='API_ERR_'+r.status;
     try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
     lastErr=errMsg;
-    if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+    if(r.status===401) throw new Error('AUTH_REQUIRED'); if(r.status===402) throw new Error('VIP_REQUIRED');
     if(r.status===429) continue;
   }
   throw new Error(lastErr || 'API_ERR: All models failed');
@@ -5477,8 +5529,7 @@ function _looksLikeProductOffer(text){
 
 // ── نداء Groq مع تفعيل أداة search_beauty_products (tool_calls) ──
 async function callGeminiWithProductTool(userMsg, sys=''){
-  if(!apiKey) throw new Error('NO_KEY');
-  const headers = {'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey};
+  const headers = await _aiHeaders();
 
   // أداة البحث بصيغة OpenAI/Groq
   const tools = [{
@@ -5531,7 +5582,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
         let errMsg='API_ERR_'+r.status;
         try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
         lastErr=errMsg;
-        if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+        if(r.status===401) throw new Error('AUTH_REQUIRED'); if(r.status===402) throw new Error('VIP_REQUIRED');
         if(r.status===429) continue;
         continue;
       }
@@ -5559,7 +5610,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
           } else {
             let errMsg='API_ERR_'+r.status;
             try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
-            if(r.status===401||r.status===403) throw new Error('INVALID_KEY: '+errMsg);
+            if(r.status===401) throw new Error('AUTH_REQUIRED'); if(r.status===402) throw new Error('VIP_REQUIRED');
             lastErr=errMsg; continue;
           }
         }
@@ -5588,6 +5639,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
 // يُستخدم لاكتشاف صور خاطئة المحتوى (خرائط، شاشات سوق...) رفعها مساهمون بالغلط على OBF
 // نتيجة كل منتج تُخزّن دائماً بالباركود — يُفحص مرة واحدة فقط مدى الحياة (لا تكلفة مكررة)
 async function validateProductImageAI(imgUrl, code){
+  return true; // صور الكتالوج رسمية ومراجعة؛ لا حاجة لفحص بالذكاء الاصطناعي
   if(!apiKey || !code || !imgUrl) return true; // بدون مفتاح أو باركود: لا نحظر بدون تأكيد
   const cacheKey = 'bai_imgchk_'+code;
   const cached = localStorage.getItem(cacheKey);
@@ -5735,6 +5787,145 @@ function _renderCatalogGrid(prods, q){
     return;
   }
   renderOBFCards(prods,false);
+}
+
+// ══════════════════════════════════════════════════════
+// المزايا المجانية (بدون ذكاء اصطناعي، بدون تكلفة)
+//  1) "اختبار البشرة" → روتين لمسة مخصّص من منتجات الكتالوج
+//  2) مساعدة البحث الذكي: إجابة فورية من الكتالوج + نصائح محفوظة
+//  3) دليل المنتج: طريقة الاستخدام ولمن يناسب ومنتجات مشابهة
+// الذكاء الاصطناعي (محادثة، تحليل) لمشتركات VIP فقط
+// ══════════════════════════════════════════════════════
+const _FREE_TIPS = [
+  [/دهني|لمعان|زيوت/, 'للبشرة الدهنية: غسول جل لطيف مرتين يومياً، سيروم نياسيناميد لتنظيم الدهون، مرطب خفيف بتركيبة جل، وواقي شمس غير دهني. لا تهملي الترطيب؛ الجفاف يزيد إفراز الدهون.'],
+  [/جاف|جفاف|تشقق/, 'للبشرة الجافة: غسول كريمي لا يحتوي صابون، سيروم هيالورونيك على بشرة رطبة، ثم مرطب غني بالسيراميد. قلّلي الماء الساخن، واستخدمي ماسكاً مرطباً ليلياً مرتين أسبوعياً.'],
+  [/حبوب|حب الشباب|بثور|رؤوس/, 'للحبوب: غسول بحمض الساليسيليك أو البنزويل، لصقات الحبوب للبثور الظاهرة، ومرطب خفيف غير مسبب للانسداد. لا تعصري الحبوب، وغيّري غطاء الوسادة باستمرار.'],
+  [/هالات|انتفاخ|تحت العين/, 'للهالات والانتفاخ: كريم عين بالكافيين صباحاً، نوم كافٍ، وكونسيلر بلون مصحح (خوخي للبشرة المتوسطة والسمراء) قبل الكونسيلر العادي.'],
+  [/بقع|تصبغ|تفتيح|اسمرار/, 'للبقع والتصبغات: سيروم فيتامين سي صباحاً، أزيليك أو نياسيناميد مساءً، والأهم واقي شمس يومياً؛ بدونه لا تختفي البقع.'],
+  [/تجاعيد|خطوط|شد|تقدم/, 'لعلامات التقدم: ريتينول أو ريتينال مساءً (ابدئي مرتين أسبوعياً)، ببتيدات ومرطب غني، وواقي شمس كل صباح.'],
+  [/مسام/, 'للمسام الواسعة: تقشير بـ BHA مرتين أسبوعياً، نياسيناميد يومياً، وبرايمر يخفي المسام قبل المكياج.'],
+  [/شمس|واقي/, 'واقي الشمس: SPF 30 على الأقل يومياً حتى في البيت، بمقدار ملعقة صغيرة للوجه والرقبة، وجدّديه كل ساعتين في الخارج.'],
+  [/تساقط|تالف|هيشان|شعر/, 'للشعر: علاج إصلاح الروابط (مثل Olaplex أو K18) للشعر التالف، بلسم بدون شطف لمكافحة الهيشان، وزيت خفيف على الأطراف. قللي الحرارة واستخدمي واقي حرارة.'],
+  [/عطر|ريحة|رائحة/, 'لثبات العطر: رطّبي البشرة أولاً، ورشّي على نقاط النبض (الرسغ، خلف الأذن، الرقبة) دون فرك، ويمكنك رش القليل على الشعر.'],
+  [/ماسكارا|رموش/, 'للرموش: ابدئي من الجذور بحركة متعرجة للأعلى، وطبقة ثانية قبل جفاف الأولى. ماسكارا مقاومة للماء للمناسبات فقط.'],
+  [/فاونديشن|كريم اساس|كونسيلر|تغطية/, 'لاختيار درجة الفاونديشن: جرّبيها على خط الفك في ضوء النهار. ابدئي بطبقة خفيفة وزيدي التغطية حيث تحتاجين فقط.'],
+];
+function _freeTip(q){ const n=_catNorm(q); const hit=_FREE_TIPS.find(([re])=>re.test(n)); return hit?hit[1]:''; }
+
+function freeAssistant(text){
+  const reply=document.getElementById('ai-chat-reply');
+  const empty=document.getElementById('ai-chat-empty');
+  const quickRow=document.getElementById('ai-quick-row');
+  const clearBtn=document.getElementById('ai-chat-clear');
+  if(empty) empty.style.display='none';
+  if(quickRow) quickRow.style.display='none';
+  if(clearBtn) clearBtn.style.display='flex';
+  const tip=_freeTip(text);
+  const prods=catalogFind({q:text, limit:6});
+  // ملاحظة: البحث يتجاهل كلمات الحشو ويطابق الجذور (وحبوب ← حبوب)
+  const ar=!document.documentElement.classList.contains('lang-en');
+  if(reply){
+    reply.style.display='block';
+    reply.innerHTML=`
+      ${tip?`<div class="fa-tip">${tip}</div>`:''}
+      <div class="fa-upsell">
+        <span>${ar?'تريدين إجابة شخصية لحالتك بالذات؟':'Want a personal answer?'}</span>
+        <button onclick="openVipModal()">${ar?'اسألي خبيرة لمسة AI':'Ask Lamsa AI'} <b>VIP</b></button>
+      </div>
+      <div class="fa-note">${prods.length?(ar?'منتجات من مختارات لمسة تناسب طلبك:':'Lamsa picks for you:'):(ar?'لم أجد منتجاً مطابقاً. جرّبي كلمات مثل: مرطب، واقي شمس، ماسكارا، شامبو.':'No match. Try: moisturizer, sunscreen, mascara.')}</div>
+      <button class="fa-quiz-link" onclick="openSkinQuiz()">${ar?'أو اكتشفي روتينك المناسب مجاناً في 30 ثانية':'Or find your routine free in 30 seconds'}</button>`;
+  }
+  const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
+  if(prods.length && typeof showAIProductCards==='function') showAIProductCards(prods);
+}
+
+// ── دليل المنتج المجاني ──
+const _USAGE = [
+  [/cleanser|wash|غسول|cleansing/i, 'بلّلي الوجه، دلّكي كمية صغيرة دقيقة كاملة ثم اشطفي. صباحاً ومساءً.'],
+  [/oil|balm/i, 'دلّكيه على بشرة جافة لإذابة المكياج، ثم أضيفي قليلاً من الماء واشطفي، وأتبعيه بغسول مائي.'],
+  [/toner|pad|تونر|mist/i, 'بعد الغسول: مرّري الفوطة أو ربّتي بكفّيك على الوجه، ثم تابعي السيروم.'],
+  [/serum|ampoule|essence|سيروم|drops/i, '2–3 قطرات على بشرة نظيفة رطبة قبل المرطب. ابدئي بمرة يومياً وراقبي البشرة.'],
+  [/spf|sun|واقي/i, 'آخر خطوة صباحاً: كمية ملعقة صغيرة للوجه والرقبة، وجدّديه كل ساعتين تحت الشمس.'],
+  [/eye/i, 'كمية بحجم حبة الأرز تربيتاً بالبنصر حول العين، صباحاً ومساءً.'],
+  [/cream|moistur|butter|lotion|مرطب|gel/i, 'بعد السيروم، وزّعيه بحركات للأعلى. للمساء يمكن زيادة الكمية قليلاً.'],
+  [/mask|ماسك/i, 'طبقة على بشرة نظيفة، اتركيه حسب التعليمات (أو طوال الليل للأقنعة الليلية).'],
+  [/mascara/i, 'من الجذور للأطراف بحركة متعرجة، وطبقة ثانية قبل جفاف الأولى.'],
+  [/lip|gloss|شفاه/i, 'على شفاه مرطبة. للثبات حدّدي أولاً بالقلم ثم املئي.'],
+  [/blush|bronz|contour|highlight/i, 'نقطتان على أعلى الخد وادمجي للأعلى بالأصابع أو الإسفنجة. ابدئي بكمية قليلة.'],
+  [/foundation|tint|concealer|powder|primer|setting/i, 'ابدئي من منتصف الوجه وادمجي للخارج. ثبّتي منطقة T بالبودرة إن لزم.'],
+  [/shampoo|wash/i, 'على فروة رأس مبللة، دلّكي دقيقة واشطفي جيداً.'],
+  [/conditioner|leave-in|hair mask|treatment|repair/i, 'على الأطراف ومنتصف الشعر، وفي العلاجات اتركيه المدة المكتوبة.'],
+  [/hair oil|oil/i, 'قطرتان على أطراف الشعر الرطب أو الجاف لمعالجة الهيشان واللمعان.'],
+  [/parfum|perfume|fragrance|mist|eau/i, 'رشّي على نقاط النبض بعد الترطيب، دون فرك.'],
+];
+function freeProductGuide(p, el){
+  const x=_catByName(p.name)||{};
+  const use=(_USAGE.find(([re])=>re.test(p.name))||[,'استخدميه حسب التعليمات على العبوة.'])[1];
+  const sim=LAMSA_CATALOG.filter(y=>y.c===x.c && y.n!==x.n && y.k && x.k && y.k.split(' ').some(w=>w.length>2&&x.k.includes(w))).slice(0,3);
+  el.innerHTML=`
+    <div class="fg-row"><b>طريقة الاستخدام</b><span>${use}</span></div>
+    ${sim.length?`<div class="fg-row"><b>منتجات مشابهة</b><span>${sim.map(y=>`<a href="#" onclick="event.preventDefault();openProdDetail({name:'${y.n.replace(/'/g,"\\'")}',brand:'${y.b.replace(/'/g,"\\'")}',img:'${y.img||''}',ingr:'',labels:''})">${y.b} — ${y.n}</a>`).join('')}</span></div>`:''}
+    <div class="fa-upsell"><span>تحليل شخصي يناسب بشرتك وتركيبة المنتج؟</span><button onclick="openVipModal()">حلّليه بالذكاء الاصطناعي <b>VIP</b></button></div>`;
+  el.style.display='block';
+}
+
+// ── اختبار البشرة → روتين لمسة ──
+const _QUIZ=[
+  {k:'type', q:'ما نوع بشرتك؟', a:[['oily','دهنية'],['dry','جافة'],['combo','مختلطة'],['sensitive','حساسة'],['normal','عادية']]},
+  {k:'concern', q:'ما أكثر ما يزعجك؟', a:[['acne','الحبوب'],['spots','البقع والتصبغات'],['dull','البهتان وقلة الإشراق'],['aging','الخطوط والتجاعيد'],['pores','المسام الواسعة'],['dehyd','الجفاف والشد']]},
+  {k:'time', q:'كم وقتاً تخصّصين لروتينك؟', a:[['min','دقيقتان (أساسيات)'],['full','روتين كامل صباحاً ومساءً']]},
+];
+let _quizAns={}, _quizStep=0;
+function openSkinQuiz(){
+  _quizAns={}; _quizStep=0;
+  let m=document.getElementById('skin-quiz');
+  if(!m){ m=document.createElement('div'); m.id='skin-quiz'; m.className='sq'; document.body.appendChild(m); }
+  m.style.display='flex'; _renderQuiz();
+}
+function closeSkinQuiz(){ const m=document.getElementById('skin-quiz'); if(m) m.style.display='none'; }
+function _renderQuiz(){
+  const m=document.getElementById('skin-quiz'); const s=_QUIZ[_quizStep];
+  m.innerHTML=`<div class="sq-sheet" role="dialog" aria-modal="true">
+    <div class="sq-top"><button class="sq-x" onclick="closeSkinQuiz()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
+      <div class="sq-prog">${_QUIZ.map((_,i)=>`<i class="${i<=_quizStep?'on':''}"></i>`).join('')}</div></div>
+    <h3 class="sq-q">${s.q}</h3>
+    <div class="sq-opts">${s.a.map(([v,l])=>`<button onclick="_quizPick('${s.k}','${v}')">${l}</button>`).join('')}</div>
+    ${_quizStep?`<button class="sq-back" onclick="_quizStep--;_renderQuiz()">رجوع</button>`:''}
+  </div>`;
+}
+function _quizPick(k,v){ _quizAns[k]=v; if(++_quizStep<_QUIZ.length) _renderQuiz(); else _renderRoutine(); }
+function _pick(q, used, cat='skincare', nameRe=null){
+  const all=catalogFind({q,cat}).filter(p=>!used.has(p.product_name));
+  const r=(nameRe&&all.find(p=>nameRe.test(p.product_name)))||all[0];
+  if(r) used.add(r.product_name); return r;
+}
+function _buildRoutine(a){
+  const used=new Set();
+  const cleanser={oily:'غسول جل دهنية',dry:'غسول لطيف جافة',combo:'غسول',sensitive:'غسول حساسة',normal:'غسول'}[a.type];
+  const treat={acne:'حبوب ازيليك',spots:'بقع تفتيح فيتامين سي',dull:'اشراقة سيروم',aging:'تجاعيد ريتينول ببتيد',pores:'مسام نياسيناميد',dehyd:'ترطيب هيالورونيك سيروم'}[a.concern];
+  const moist={oily:'مرطب جل خفيف',dry:'مرطب سيراميد',combo:'مرطب خفيف',sensitive:'مهدئ حساسة',normal:'مرطب'}[a.type];
+  const SER=/serum|ampoule|essence|drops|treatment/i;
+  const am=[['الغسول',_pick(cleanser,used,'skincare',/cleanser|wash|foam/i)],['السيروم',_pick(treat+' سيروم',used,'skincare',SER)],
+            ['المرطب',_pick(moist,used,'skincare',/cream|moistur|gel|lotion/i)],['واقي الشمس',_pick('واقي شمس',used,'skincare',/spf|sun/i)]];
+  const pm=a.time==='full'?[['مزيل المكياج',_pick('زيت منظف مزيل مكياج بلسم',used,'skincare',/cleansing|balm|oil/i)],
+            ['علاج مسائي',_pick(a.concern==='aging'?'ريتينال ريتينول تجاعيد':a.concern==='acne'?'حبوب علاج لصقات':treat,used,'skincare',a.concern==='acne'?/patch|treat|dots|spot/i:SER)],
+            ['المرطب الليلي',_pick(a.type==='oily'?'مرطب خفيف جل':'ماسك ليلي ترطيب',used,'skincare',/mask|cream|moistur/i)]]:[];
+  return {am:am.filter(s=>s[1]),pm:pm.filter(s=>s[1])};
+}
+function _renderRoutine(){
+  const r=_buildRoutine(_quizAns);
+  try{ localStorage.setItem('lamsaRoutine', JSON.stringify(_quizAns)); }catch(e){}
+  const row=([step,p])=>`<button class="sq-step" onclick="closeSkinQuiz();openProdDetail({name:'${p.product_name.replace(/'/g,"\\'")}',brand:'${p.brands.replace(/'/g,"\\'")}',img:'${p.image_url}',ingr:'',labels:''})">
+      <img src="${p.image_url}" alt=""><span><small>${step}</small><b>${p.product_name}</b><em>${p.brands}</em></span><i class="fa-solid fa-chevron-left"></i></button>`;
+  const m=document.getElementById('skin-quiz');
+  m.innerHTML=`<div class="sq-sheet" role="dialog" aria-modal="true">
+    <div class="sq-top"><button class="sq-x" onclick="closeSkinQuiz()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
+    <h3 class="sq-q">روتينك من لمسة</h3>
+    <div class="sq-sec">الصباح</div>${r.am.map(row).join('')}
+    ${r.pm.length?`<div class="sq-sec">المساء</div>${r.pm.map(row).join('')}`:''}
+    <div class="fa-upsell"><span>تريدين روتيناً يراعي تفاصيلك ومنتجاتك الحالية؟</span><button onclick="closeSkinQuiz();openVipModal()">اطلبيه من لمسة AI <b>VIP</b></button></div>
+    <button class="sq-back" onclick="openSkinQuiz()">إعادة الاختبار</button>
+  </div>`;
 }
 
 // ══ PRODUCT CARD FACTORY ══
@@ -6463,7 +6654,7 @@ async function loadProdAI(p){
   const analyzeBtn = document.getElementById('pdm-analyze-btn');
   const askBtn = document.getElementById('pdm-ask-btn');
   if(!el || !p) return;
-  if(!apiKey){ showToast('أضيفي مفتاح Groq API أولاً 🔑'); return; }
+  if(!(await isVipActive())){ freeProductGuide(p, el); return; }
 
   // اخفي زر التحليل وأظهر loading
   if(analyzeBtn){
@@ -6496,7 +6687,8 @@ async function loadProdAI(p){
     if(askBtn) askBtn.style.display='block';
 
   }catch(e){
-    el.innerHTML='<span style="color:var(--dim);font-size:12px">تعذّر التحليل، حاولي مرة أخرى.</span>';
+    if(e && e.message==='VIP_REQUIRED'){ freeProductGuide(p, el); }
+    else el.innerHTML='<span style="color:var(--dim);font-size:12px">'+(e&&e.message==='AUTH_REQUIRED'?'سجّلي الدخول لاستخدام التحليل الذكي.':'تعذّر التحليل، تحققي من الاتصال وحاولي مرة أخرى.')+'</span>';
     el.style.display='block';
     if(analyzeBtn){
       analyzeBtn.style.opacity='1';
