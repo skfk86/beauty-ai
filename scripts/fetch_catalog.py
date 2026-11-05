@@ -5,27 +5,25 @@
 import json, re, io, os, sys, time, html, urllib.request
 from PIL import Image
 
-STORES = [  # (brand, domain, default category)
- ("Rare Beauty","www.rarebeauty.com","makeup"), ("Fenty Beauty","fentybeauty.com","makeup"),
- ("Huda Beauty","hudabeauty.com","makeup"), ("Kylie Cosmetics","kyliecosmetics.com","makeup"),
- ("Makeup by Mario","www.makeupbymario.com","makeup"), ("Kosas","kosas.com","makeup"),
- ("ILIA","iliabeauty.com","makeup"), ("Tower 28","www.tower28beauty.com","makeup"),
- ("Patrick Ta","patrickta.com","makeup"), ("Merit","www.meritbeauty.com","makeup"),
- ("Saie","www.saiehello.com","makeup"), ("Westman Atelier","www.westman-atelier.com","makeup"),
- ("rhode","www.rhodeskin.com","skincare"), ("Glow Recipe","www.glowrecipe.com","skincare"),
- ("Summer Fridays","summerfridays.com","skincare"), ("COSRX","www.cosrx.com","skincare"),
- ("Beauty of Joseon","beautyofjoseon.com","skincare"), ("Anua","anua.com","skincare"),
- ("Naturium","naturium.com","skincare"), ("Topicals","mytopicals.com","skincare"),
- ("Byoma","byoma.com","skincare"), ("Bubble","hellobubble.com","skincare"),
- ("Peach Slices","peachslices.com","skincare"), ("Sol de Janeiro","soldejaneiro.com","fragrances"),
- ("Gisou","gisou.com","haircare"), ("OUAI","theouai.com","haircare"),
- ("Briogeo","briogeohair.com","haircare"), ("Olaplex","olaplex.com","haircare"),
- ("Mielle","mielleorganics.com","haircare"), ("PHLUR","phlur.com","fragrances"),
- ("Dossier","dossier.co","fragrances"), ("Kayali","kayali.com","fragrances"),
- ("Glossier","www.glossier.com","makeup"),
+STORES_V1 = "see git history"
+STORES = [  # الدفعة الثانية — براندات جديدة
+ ("Milk Makeup","milkmakeup.com","makeup"), ("Haus Labs","www.hauslabs.com","makeup"),
+ ("ONE/SIZE","onesizebeauty.com","makeup"), ("Danessa Myricks","danessamyricksbeauty.com","makeup"),
+ ("Kulfi","kulfibeauty.com","makeup"), ("Live Tinted","livetinted.com","makeup"),
+ ("Laneige","us.laneige.com","skincare"), ("Supergoop!","supergoop.com","skincare"),
+ ("The INKEY List","www.theinkeylist.com","skincare"), ("Youth To The People","www.youthtothepeople.com","skincare"),
+ ("Biossance","biossance.com","skincare"), ("Dieux","dieuxskin.com","skincare"),
+ ("Medicube","medicube.us","skincare"), ("Skin1004","skin1004.com","skincare"),
+ ("Bread Beauty","breadbeautysupply.com","haircare"), ("K18","www.k18hair.com","haircare"),
+ ("amika","loveamika.com","haircare"), ("Color Wow","colorwowhair.com","haircare"),
+ ("Fable & Mane","fableandmane.com","haircare"), ("Pattern","patternbeauty.com","haircare"),
+ ("Ellis Brooklyn","ellisbrooklyn.com","fragrances"), ("Snif","snif.co","fragrances"),
+ ("Maison Louis Marie","maisonlouismarie.com","fragrances"), ("Henry Rose","henryrose.com","fragrances"),
+ ("Commodity","commodityfragrances.com","fragrances"), ("Rare Beauty","www.rarebeauty.com","makeup"),
 ]
-PER_BRAND = int(os.environ.get("PER_BRAND","7"))
-SKIP = re.compile(r"gift|bundle|\bset\b|\bkit\b|duo|trio|value|mini|sample|card|tote|bag|merch|hoodie|shirt|\bhat\b|candle|refill|travel|discovery|vault|collection|box|sticker|accessor|brush case|mirror|keychain|subscription|e-?gift|warranty|shipping|protection|insurance|donation", re.I)
+SKIP_TITLES = set(json.load(open("data/shop_raw.json"))) if False else {p["title"] for p in json.load(open("data/shop_raw.json"))}
+PER_BRAND = int(os.environ.get("PER_BRAND","8"))
+SKIP = re.compile(r"short-?dated|\(.*dated|gift|bundle|\bset\b|\bkit\b|duo|trio|value|mini|sample|card|tote|bag|merch|hoodie|shirt|\bhat\b|candle|refill|travel|discovery|vault|collection|box|sticker|accessor|brush case|mirror|keychain|subscription|e-?gift|warranty|shipping|protection|insurance|donation", re.I)
 UA = {"User-Agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36","Accept":"application/json,*/*"}
 OUT_IMG = "www/assets/products"; os.makedirs(OUT_IMG, exist_ok=True)
 
@@ -57,6 +55,7 @@ for brand, dom, defcat in STORES:
     n = 0
     for p in prods:
         title = p.get("title","").strip()
+        if title in SKIP_TITLES: continue
         if not title or SKIP.search(title) or SKIP.search(p.get("product_type","") or ""): continue
         vs = p.get("variants") or []
         if vs and not any(v.get("available", True) for v in vs): continue
@@ -86,6 +85,6 @@ for brand, dom, defcat in STORES:
     report.append(f"OK {brand}: {n} from {src}")
     print(report[-1], flush=True)
 
-json.dump(out, open("data/shop_raw.json","w"), ensure_ascii=False, indent=1)
-open("data/shop_report.txt","w").write("\n".join(report)+f"\nTOTAL {len(out)}\n")
+json.dump(out, open("data/shop_raw2.json","w"), ensure_ascii=False, indent=1)
+open("data/shop_report2.txt","w").write("\n".join(report)+f"\nTOTAL {len(out)}\n")
 print("\n".join(report)); print("TOTAL", len(out))
