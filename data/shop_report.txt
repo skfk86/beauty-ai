@@ -1,0 +1,34 @@
+OK Rare Beauty: 7 from /collections/bestsellers/products.json
+OK Fenty Beauty: 7 from /collections/bestsellers/products.json
+OK Huda Beauty: 7 from /collections/best-sellers/products.json
+OK Kylie Cosmetics: 7 from /collections/best-sellers/products.json
+OK Makeup by Mario: 7 from /collections/bestsellers/products.json
+OK Kosas: 7 from /collections/bestsellers/products.json
+OK ILIA: 7 from /collections/best-sellers/products.json
+OK Tower 28: 7 from /collections/bestsellers/products.json
+OK Patrick Ta: 7 from /collections/bestsellers/products.json
+OK Merit: 7 from /collections/bestsellers/products.json
+OK Saie: 7 from /collections/bestsellers/products.json
+OK Westman Atelier: 7 from /collections/best-sellers/products.json
+OK rhode: 7 from /collections/all/products.json
+OK Glow Recipe: 7 from /collections/bestsellers/products.json
+OK Summer Fridays: 7 from /collections/best-sellers/products.json
+OK COSRX: 7 from /collections/all/products.json
+OK Beauty of Joseon: 7 from /collections/best-sellers/products.json
+OK Anua: 7 from /collections/all/products.json
+OK Naturium: 7 from /collections/best-sellers/products.json
+FAIL Topicals
+OK Byoma: 7 from /collections/bestsellers/products.json
+FAIL Bubble
+OK Peach Slices: 7 from /collections/best-sellers/products.json
+OK Sol de Janeiro: 7 from /collections/best-sellers/products.json
+OK Gisou: 5 from /collections/bestsellers/products.json
+OK OUAI: 7 from /collections/best-sellers/products.json
+FAIL Briogeo
+OK Olaplex: 7 from /collections/best-seller/products.json
+OK Mielle: 7 from /collections/all/products.json
+FAIL PHLUR
+FAIL Dossier
+OK Kayali: 7 from /collections/best-sellers/products.json
+OK Glossier: 7 from /collections/best-sellers/products.json
+TOTAL 194

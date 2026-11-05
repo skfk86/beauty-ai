@@ -1,75 +1,2271 @@
 [
-["CeraVe","CeraVe Hydrating Facial Cleanser","skincare","غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.","غسول منظف cleanser بشرة جافة حساسة"],
-["Paula's Choice","Paula's Choice 2% BHA Liquid Exfoliant","skincare","مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.","مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant"],
-["Neutrogena","Neutrogena Hydro Boost Water Gel","skincare","مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.","مرطب ترطيب جل دهنية moisturizer"],
-["The Ordinary","The Ordinary Niacinamide 10% + Zinc 1%","skincare","سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.","سيروم نياسيناميد مسام توحيد لون دهنية serum"],
-["EltaMD","EltaMD UV Clear SPF 46","skincare","واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.","واقي شمس حماية حبوب sunscreen spf"],
-["COSRX","COSRX Snail Mucin 96% Power Essence","skincare","إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.","ايسنس حلزون ترطيب كوري essence"],
-["Laneige","Laneige Lip Sleeping Mask","makeup","ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.","شفايف شفاه ماسك ترطيب lip","lip"],
-["La Roche-Posay","La Roche-Posay Toleriane Double Repair","skincare","مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.","مرطب حساسة سيراميد moisturizer"],
-["Biodance","Biodance Bio-Collagen Real Deep Mask","skincare","ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.","ماسك كولاجين ترطيب نضارة كوري mask"],
-["Medicube","Medicube Zero Pore Pad 2.0","skincare","فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.","تونر فوط مسام تقشير toner pads كوري"],
-["TruSkin","TruSkin Vitamin C Face Serum","skincare","سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.","سيروم فيتامين سي تفتيح بقع اشراقة vitamin c"],
-["CeraVe","CeraVe Eye Repair Cream","skincare","كريم للعين يخفف الهالات السوداء والانتفاخ.","كريم عين هالات سوداء انتفاخ eye cream"],
-["First Aid Beauty","First Aid Beauty KP Bump Eraser","skincare","مقشر للجسم يخفف النتوءات والجلد الخشن.","جسم مقشر نتوءات خشونة body scrub"],
-["Olay","Olay Regenerist Micro-Sculpting Cream","skincare","كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.","تجاعيد مضاد شيخوخة كريم anti aging"],
-["Kiehl's","Kiehl's Ultra Facial Cream","skincare","مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.","مرطب يومي ترطيب moisturizer"],
-["PanOxyl","PanOxyl Acne Foaming Wash 10%","skincare","غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.","غسول حب الشباب حبوب بنزويل acne wash"],
-["Aquaphor","Aquaphor Healing Ointment","skincare","مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.","مرهم جفاف تشقق شفايف جافة جدا ointment"],
-["Bio-Oil","Bio-Oil Skincare Oil","skincare","زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.","زيت ندبات تشققات علامات تمدد oil"],
-["Differin","Differin Adapalene Gel 0.1%","skincare","جل أدابالين لعلاج حب الشباب ومنع ظهوره.","حب الشباب حبوب ريتينويد adapalene"],
-["Tatcha","Tatcha The Water Cream","skincare","مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.","مرطب خفيف دهنية فاخر moisturizer"],
-["Glow Recipe","Glow Recipe Watermelon Glow Niacinamide Dew Drops","skincare","سيروم بالنياسيناميد والبطيخ لإشراقة ندية.","سيروم اشراقة نضارة نياسيناميد glow"],
-["Cetaphil","Cetaphil Gentle Skin Cleanser","skincare","غسول لطيف جداً للبشرة الحساسة والجافة.","غسول لطيف حساسة جافة cleanser"],
-["La Roche-Posay","La Roche-Posay Anthelios SPF 60","skincare","واقي شمس سائل خفيف جداً بحماية عالية.","واقي شمس حماية عالية sunscreen spf"],
-["Clinique","Clinique Smart Clinical Repair Eye Cream","skincare","كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.","كريم عين تجاعيد خطوط eye cream"],
-["Sunday Riley","Sunday Riley Good Genes","skincare","علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.","تقشير لاكتيك اشراقة تجديد"],
-["Dr. Jart+","Dr. Jart+ Cicapair Tiger Grass","skincare","كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.","احمرار تهدئة مصحح لون سيكا"],
-["SkinCeuticals","SkinCeuticals C E Ferulic","skincare","سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.","سيروم فيتامين سي مضاد اكسدة فاخر"],
-["Mighty Patch","Mighty Patch Original","skincare","لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.","لصقات حبوب حب الشباب pimple patch"],
-["Anua","Anua Heartleaf Pore Control Cleansing Oil","skincare","زيت منظف يذيب المكياج والدهون وينظف المسام.","زيت منظف مزيل مكياج مسام كوري cleansing oil"],
-["Torriden","Torriden DIVE-IN Hyaluronic Acid Serum","skincare","سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.","سيروم ترطيب هيالورونيك كوري"],
-["Dr. Althea","Dr. Althea 345 Relief Cream","skincare","كريم مهدئ للبشرة الحساسة والمتهيجة.","مهدئ حساسة تهيج كريم كوري"],
-["Mediheal","Mediheal Tea Tree Essential Mask","skincare","ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.","ماسك ورقي شجرة الشاي حبوب sheet mask"],
-["SK-II","SK-II Facial Treatment Essence","skincare","إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.","ايسنس فاخر تجديد صفاء"],
-["Estée Lauder","Estée Lauder Advanced Night Repair","skincare","سيروم ليلي يدعم تجدد البشرة أثناء النوم.","سيروم ليلي تجديد تجاعيد فاخر night"],
-["Neutrogena","Neutrogena Rapid Wrinkle Repair","skincare","كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.","ريتينول تجاعيد خطوط retinol"],
-["L'Oréal Paris","L'Oréal Revitalift Vitamin C Serum","skincare","سيروم فيتامين سي نقي لإشراقة البشرة.","سيروم فيتامين سي اشراقة"],
-["CeraVe","CeraVe PM Facial Moisturizing Lotion","skincare","مرطب ليلي خفيف بالنياسيناميد والسيراميد.","مرطب ليلي خفيف نياسيناميد"],
-["Mario Badescu","Mario Badescu Drying Lotion","skincare","علاج موضعي يجفف الحبوب بين ليلة وضحاها.","حبوب علاج موضعي حب الشباب"],
-["Thayers","Thayers Witch Hazel Toner","skincare","تونر خالٍ من الكحول بالبندق الساحر وماء الورد.","تونر بندق ساحر ورد مسام toner"],
-["Aveeno","Aveeno Daily Moisturizing Lotion","skincare","لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.","لوشن جسم شوفان ترطيب جافة body"],
-["Eucerin","Eucerin Advanced Repair Cream","skincare","كريم للبشرة الجافة جداً والخشنة.","كريم جفاف شديد خشونة جسم"],
-["Garnier","Garnier Micellar Cleansing Water","skincare","ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.","ميسيلار مزيل مكياج منظف micellar"],
-["SkinMedica","SkinMedica HA5 Hydrator","skincare","مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.","ترطيب هيالورونيك فاخر"],
-["Obagi","Obagi Nu-Derm Foaming Gel","skincare","غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.","غسول دهنية طبي"],
-["SKIN1004","SKIN1004 Madagascar Centella Ampoule","skincare","أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.","سنتيلا تهدئة امبول كوري"],
-["Beauty of Joseon","Beauty of Joseon Relief Sun SPF 50+","skincare","واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.","واقي شمس كوري ارز sunscreen"],
-["Haruharu Wonder","Haruharu Wonder Black Rice Toner","skincare","تونر بالأرز الأسود وحمض الهيالورونيك.","تونر ارز اسود ترطيب كوري"],
-["Caudalie","Caudalie Vinoperfect Radiance Serum","skincare","سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.","بقع داكنة تفتيح توحيد لون سيروم"],
-["Peach Slices","Peach Slices Snail Rescue Serum","skincare","سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.","سيروم حلزون حبوب"],
-["Maybelline","Maybelline Lash Sensational Sky High Mascara","makeup","ماسكارا تطويل بفرشاة مرنة لرموش أطول.","ماسكارا رموش تطويل mascara"],
-["essence","essence Lash Princess Mascara","makeup","ماسكارا بتأثير الرموش الصناعية وسعر مناسب.","ماسكارا رموش كثافة mascara"],
-["Julep","Julep Eyeshadow 101 Stick","makeup","ظل عيون كريمي على شكل قلم مقاوم للماء.","ظل عيون قلم مقاوم للماء eyeshadow"],
-["Neutrogena","Neutrogena Makeup Remover Wipes","makeup","مناديل مزيلة للمكياج حتى المقاوم للماء.","مزيل مكياج مناديل wipes"],
-["COVERGIRL","COVERGIRL Clean Invisible Foundation","makeup","كريم أساس خفيف بمظهر طبيعي.","فاونديشن كريم اساس foundation"],
-["NYX","NYX Butter Gloss","makeup","ملمع شفايف ناعم غير لزج بألوان كثيرة.","قلوس ملمع شفايف شفاه gloss lip","lip"],
-["e.l.f.","e.l.f. Halo Glow Liquid Filter","makeup","مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.","هايلايتر توهج اشراقة glow"],
-["L'Oréal Paris","L'Oréal Lumi Glotion","makeup","مرطب ملوّن يضيف إشراقة طبيعية للبشرة.","اشراقة توهج مرطب ملون glow"],
-["Benefit","Benefit The POREfessional Primer","makeup","برايمر يخفي المسام ويثبت المكياج.","برايمر مسام تثبيت primer"],
-["IT Cosmetics","IT Cosmetics CC+ Cream SPF 50","makeup","كريم CC بتغطية كاملة وحماية من الشمس.","سي سي كريم تغطية فاونديشن cc cream"],
-["Revlon","Revlon ColorStay Eyeliner","makeup","آيلاينر مقاوم للماء يدوم 24 ساعة.","ايلاينر كحل مقاوم للماء eyeliner"],
-["Real Techniques","Real Techniques Miracle Complexion Sponge","makeup","إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.","اسفنجة بيوتي بلندر دمج sponge"],
-["Milani","Milani Make It Last Setting Spray","makeup","بخاخ تثبيت يحافظ على المكياج طوال اليوم.","بخاخ تثبيت مكياج setting spray"],
-["Laura Mercier","Laura Mercier Translucent Setting Powder","makeup","بودرة شفافة لتثبيت المكياج دون تكتل.","بودرة تثبيت شفافة powder"],
-["Urban Decay","Urban Decay Naked3 Palette","makeup","باليت ظلال عيون بدرجات الوردي الدافئ.","باليت ظلال عيون palette"],
-["Nizoral","Nizoral Anti-Dandruff Shampoo","haircare","شامبو بالكيتوكونازول 1% لمكافحة القشرة.","شامبو قشرة فروة الرأس shampoo"],
-["Olaplex","Olaplex No. 3 Hair Perfector","haircare","علاج يصلح روابط الشعر التالف قبل الغسل.","شعر تالف علاج اصلاح هيشان olaplex"],
-["Moroccanoil","Moroccanoil Treatment","haircare","زيت أرغان للشعر يمنحه نعومة ولمعاناً.","زيت ارغان شعر لمعان نعومة"],
-["Mielle","Mielle Rosemary Mint Scalp & Hair Oil","haircare","زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.","زيت اكليل الجبل روزماري تساقط تقوية شعر"],
-["Revlon","Revlon One-Step Volumizer","haircare","فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.","سشوار فرشاة تصفيف شعر"],
-["Gucci","Gucci Bloom Eau de Parfum","fragrances","عطر نسائي زهري غني بالياسمين ومسك الروم.","عطر نسائي زهري ياسمين perfume","women"],
-["Ralph Lauren","Ralph Lauren Polo Blue","fragrances","عطر رجالي منعش بنفحات مائية.","عطر رجالي منعش cologne","men"],
-["Dior","Dior Sauvage","fragrances","عطر رجالي قوي بنفحات البرغموت والعنبر.","عطر رجالي قوي سوفاج perfume","men"],
-["Beetles","Beetles Gel Nail Polish Kit","makeup","مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.","مناكير طلاء اظافر جل nail","nail"]
+{
+"b": "Rare Beauty",
+"n": "Jumbo Brow Harmony Flexible Lifting Gel",
+"c": "makeup",
+"s": "",
+"d": "جل حواجب شفاف يرفع الشعيرات ويثبتها طوال اليوم بمظهر طبيعي.",
+"k": "حواجب جل تثبيت Brow Gel",
+"img": "assets/products/rare-beauty--brow-harmony-flexible-lifting-gel-jumbo.webp",
+"id": "lm001"
+},
+{
+"b": "Rare Beauty",
+"n": "Rare Beginnings Eau de Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر نسائي ناعم بنفحات زهرية ومسكية دافئة.",
+"k": "عطر نسائي زهري Fragrance",
+"img": "assets/products/rare-beauty--rare-beginnings-eau-de-parfum.webp",
+"id": "lm002"
+},
+{
+"b": "Rare Beauty",
+"n": "Rare Eau de Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر Rare الأول: زهري خشبي بلمسة مسك ناعمة.",
+"k": "عطر نسائي Fragrance",
+"img": "assets/products/rare-beauty--rare-eau-de-parfum.webp",
+"id": "lm003"
+},
+{
+"b": "Rare Beauty",
+"n": "Soft Pinch Liquid Blush",
+"c": "makeup",
+"s": "",
+"d": "البلاشر السائل الأشهر: قطرة واحدة تكفي لخدود متوردة طبيعية تدوم طويلاً.",
+"k": "بلاشر احمر خدود سائل Blush",
+"img": "assets/products/rare-beauty--soft-pinch-liquid-blush.webp",
+"id": "lm004"
+},
+{
+"b": "Rare Beauty",
+"n": "Soft Pinch Lip Oil Stick",
+"c": "makeup",
+"s": "lip",
+"d": "زيت شفاه على شكل ستيك يرطب ويمنح لوناً شفافاً لامعاً.",
+"k": "شفايف زيت ترطيب Lip Oil Stick",
+"img": "assets/products/rare-beauty--soft-pinch-lip-oil-stick.webp",
+"id": "lm005"
+},
+{
+"b": "Rare Beauty",
+"n": "Fragrance Layering Balm – Sweet Marshmallow",
+"c": "fragrances",
+"s": "women",
+"d": "بلسم عطري صلب بنفحة المارشميلو الحلوة، يُطبّق على النبض أو تحت العطر.",
+"k": "عطر صلب بلسم فانيلا Fragrance",
+"img": "assets/products/rare-beauty--fragrance-layering-balm-sweet-marshmallow.webp",
+"id": "lm006"
+},
+{
+"b": "Fenty Beauty",
+"n": "Allover Body Mist — Green Raspberry",
+"c": "fragrances",
+"s": "women",
+"d": "بخاخ عطري للجسم والشعر بنفحة التوت الأخضر المنعشة.",
+"k": "بخاخ جسم معطر body mist Bath & Body",
+"img": "assets/products/fenty-beauty--allover-body-mist-green-raspberry.webp",
+"id": "lm007"
+},
+{
+"b": "Fenty Beauty",
+"n": "Allover Body Mist — Lil Miss Wonderful",
+"c": "fragrances",
+"s": "women",
+"d": "بخاخ عطري للجسم والشعر بنفحة زهرية دافئة.",
+"k": "بخاخ جسم معطر body mist Bath & Body",
+"img": "assets/products/fenty-beauty--allover-body-mist-lil-miss-wonderful.webp",
+"id": "lm008"
+},
+{
+"b": "Fenty Beauty",
+"n": "Butta Drop Hydrating Body Milk — Fenty Fresh",
+"c": "skincare",
+"s": "",
+"d": "حليب ترطيب للجسم خفيف يمتص بسرعة ويترك البشرة ناعمة.",
+"k": "لوشن جسم ترطيب Lotion & Moisturizer",
+"img": "assets/products/fenty-beauty--butta-drop-hydrating-body-milk.webp",
+"id": "lm009"
+},
+{
+"b": "Fenty Beauty",
+"n": "Butta Drop Whipped Oil Body Cream with Tropical Oils + Shea Butter — Fenty Fresh",
+"c": "skincare",
+"s": "",
+"d": "كريم جسم مخفوق بالزيوت الاستوائية لترطيب عميق ولمعة صحية.",
+"k": "كريم جسم زبدة Lotion & Moisturizer",
+"img": "assets/products/fenty-beauty--butta-drop-whipped-oil-body-cream-with-tropical-oils-shea-bu.webp",
+"id": "lm010"
+},
+{
+"b": "Huda Beauty",
+"n": "Easy Bake Loose Baking & Setting Powder",
+"c": "makeup",
+"s": "",
+"d": "بودرة تثبيت سائبة للخبز تمنع التكتل وتطيل ثبات الكونسيلر.",
+"k": "بودرة تثبيت خبز Setting Powder",
+"img": "assets/products/huda-beauty--easy-bake-loose-baking-setting-powder-hb00140m.webp",
+"id": "lm011"
+},
+{
+"b": "Huda Beauty",
+"n": "Easy Bake Pressed Powder",
+"c": "makeup",
+"s": "",
+"d": "بودرة مضغوطة لتثبيت المكياج وتنعيم المسام أثناء اليوم.",
+"k": "بودرة مضغوطة Setting Powder",
+"img": "assets/products/huda-beauty--easy-bake-pressed-powder-hb01500m.webp",
+"id": "lm012"
+},
+{
+"b": "Huda Beauty",
+"n": "Lip Contour Stain",
+"c": "makeup",
+"s": "lip",
+"d": "صبغة شفاه مع قلم تحديد تدوم طويلاً دون أن تبهت.",
+"k": "شفايف قلم تحديد تنت Lip Stain",
+"img": "assets/products/huda-beauty--lip-contour-stain-hb01481m.webp",
+"id": "lm013"
+},
+{
+"b": "Huda Beauty",
+"n": "#FauxFilter Luminous Matte Concealer",
+"c": "makeup",
+"s": "",
+"d": "كونسيلر بتغطية كاملة ولمسة مطفية مضيئة لإخفاء الهالات والعيوب.",
+"k": "كونسيلر هالات تغطية Concealer",
+"img": "assets/products/huda-beauty--fauxfilter-luminous-matte-concealer-hb00855m.webp",
+"id": "lm014"
+},
+{
+"b": "Huda Beauty",
+"n": "Easy Blur Natural Airbrush Foundation with Niacinamide",
+"c": "makeup",
+"s": "",
+"d": "كريم أساس خفيف بالنياسيناميد يمنح مظهراً ضبابياً ناعماً كالبخاخ.",
+"k": "فاونديشن كريم اساس Foundation",
+"img": "assets/products/huda-beauty--easy-blur-natural-airbrush-foundation-with-niacinamide-hb011.webp",
+"id": "lm015"
+},
+{
+"b": "Huda Beauty",
+"n": "#FAUXFILTER Under Eye Color Corrector",
+"c": "makeup",
+"s": "",
+"d": "مصحح لون تحت العين يعادل الهالات الداكنة قبل الكونسيلر.",
+"k": "مصحح هالات Colour Corrector",
+"img": "assets/products/huda-beauty--fauxfilter-under-eye-color-corrector-hb01025m.webp",
+"id": "lm016"
+},
+{
+"b": "Huda Beauty",
+"n": "Blush Filter Blurring Blushlighters Palette",
+"c": "makeup",
+"s": "",
+"d": "باليت بلاشر وهايلايتر بدرجات وردية لإشراقة الخدود.",
+"k": "بلاشر هايلايتر باليت Blush",
+"img": "assets/products/huda-beauty--blush-filter-blurring-blushlighters-palette-hb01577m.webp",
+"id": "lm017"
+},
+{
+"b": "Kylie Cosmetics",
+"n": "Velvet Brew Eau De Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر دافئ بنفحات القهوة والفانيلا.",
+"k": "عطر نسائي فانيلا قهوة Fragrance",
+"img": "assets/products/kylie-cosmetics--velvet-brew-eau-de-parfum.webp",
+"id": "lm018"
+},
+{
+"b": "Kylie Cosmetics",
+"n": "Blush Wood Eau De Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر خشبي زهري ناعم بلمسة دافئة.",
+"k": "عطر نسائي خشبي Fragrance",
+"img": "assets/products/kylie-cosmetics--blush-wood-eau-de-parfum.webp",
+"id": "lm019"
+},
+{
+"b": "Kylie Cosmetics",
+"n": "Cashmere Muse Eau De Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر مسكي ناعم بنفحة الكشمير.",
+"k": "عطر نسائي مسك Fragrance",
+"img": "assets/products/kylie-cosmetics--cashmere-muse-eau-de-parfum.webp",
+"id": "lm020"
+},
+{
+"b": "Kylie Cosmetics",
+"n": "Natural Blur Brightening Powder",
+"c": "makeup",
+"s": "",
+"d": "بودرة تفتيح تحت العين تضيء وتثبت الكونسيلر.",
+"k": "بودرة تفتيح Brightening Powder",
+"img": "assets/products/kylie-cosmetics--natural-blur-brightening-powder.webp",
+"id": "lm021"
+},
+{
+"b": "Makeup by Mario",
+"n": "Ethereal Eyes Eyeshadow Palette: The Original",
+"c": "makeup",
+"s": "",
+"d": "باليت ظلال عيون بدرجات محايدة دافئة بين المطفي واللامع.",
+"k": "ظلال عيون باليت Eyes",
+"img": "assets/products/makeup-by-mario--ethereal-eyes-eyeshadow-palette-the-original.webp",
+"id": "lm022"
+},
+{
+"b": "Makeup by Mario",
+"n": "Master Mattes Long-Wear Cream Eyeshadow",
+"c": "makeup",
+"s": "",
+"d": "ظل عيون كريمي مطفي يدوم طويلاً ويسهل دمجه بالإصبع.",
+"k": "ظلال عيون كريمي Eyes",
+"img": "assets/products/makeup-by-mario--master-mattes-long-wear-cream-eyeshadow.webp",
+"id": "lm023"
+},
+{
+"b": "Makeup by Mario",
+"n": "Master Mattes Eyeshadow Palette: The Neutrals",
+"c": "makeup",
+"s": "",
+"d": "باليت ظلال مطفية بدرجات محايدة للإطلالات اليومية.",
+"k": "ظلال عيون مطفي Eyes",
+"img": "assets/products/makeup-by-mario--master-mattes-eyeshadow-palette-the-neutrals.webp",
+"id": "lm024"
+},
+{
+"b": "Makeup by Mario",
+"n": "SoftSculpt Transforming Skin Enhancer",
+"c": "makeup",
+"s": "",
+"d": "مستحضر كريمي لنحت الوجه وإضاءته بلمسة واحدة.",
+"k": "كونتور نحت اشراقة Face",
+"img": "assets/products/makeup-by-mario--soft-sculpt-transforming-skin-enhancer.webp",
+"id": "lm025"
+},
+{
+"b": "Makeup by Mario",
+"n": "Ultra Suede Sculpting Lip Pencil",
+"c": "makeup",
+"s": "lip",
+"d": "قلم شفاه مخملي لتحديد الشفاه ونحتها.",
+"k": "قلم شفايف تحديد Lips",
+"img": "assets/products/makeup-by-mario--ultra-suede-sculpting-lip-pencil-1.webp",
+"id": "lm026"
+},
+{
+"b": "Makeup by Mario",
+"n": "SurrealSkin Soft Blur Setting Powder",
+"c": "makeup",
+"s": "",
+"d": "بودرة تثبيت ناعمة تمنح البشرة مظهراً ضبابياً دون جفاف.",
+"k": "بودرة تثبيت Face",
+"img": "assets/products/makeup-by-mario--surrealskin-soft-blur-setting-powder.webp",
+"id": "lm027"
+},
+{
+"b": "Kosas",
+"n": "Revealer Concealer",
+"c": "makeup",
+"s": "",
+"d": "كونسيلر خفيف بتغطية قابلة للبناء ومكونات للعناية بالبشرة.",
+"k": "كونسيلر concealer",
+"img": "assets/products/kosas--revealer-concealer.webp",
+"id": "lm028"
+},
+{
+"b": "Kosas",
+"n": "Revealer Extra Bright",
+"c": "makeup",
+"s": "",
+"d": "كونسيلر فاتح جداً لإضاءة منطقة تحت العين.",
+"k": "كونسيلر هالات تفتيح concealer",
+"img": "assets/products/kosas--revealer-extra-bright.webp",
+"id": "lm029"
+},
+{
+"b": "Kosas",
+"n": "Impressionist Multistick",
+"c": "makeup",
+"s": "",
+"d": "ستيك ملون متعدد الاستخدام للخدود والشفاه والعيون.",
+"k": "بلاشر ستيك Multistick",
+"img": "assets/products/kosas--impressionist-multistick.webp",
+"id": "lm030"
+},
+{
+"b": "Kosas",
+"n": "Soulgazer Mascara",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا تطويل وتكثيف لا تتكتل ولا تتفتت.",
+"k": "ماسكارا رموش mascara",
+"img": "assets/products/kosas--soulgazer-mascara.webp",
+"id": "lm031"
+},
+{
+"b": "Kosas",
+"n": "Soulgazer",
+"c": "makeup",
+"s": "",
+"d": "آيلاينر سائل دقيق مقاوم للماء.",
+"k": "ايلاينر كحل eyeliner",
+"img": "assets/products/kosas--soulgazer.webp",
+"id": "lm032"
+},
+{
+"b": "Kosas",
+"n": "Revealer Skin-Improving Foundation SPF 25",
+"c": "makeup",
+"s": "",
+"d": "كريم أساس بتغطية متوسطة وحماية SPF 25 يحسّن البشرة مع الوقت.",
+"k": "فاونديشن كريم اساس واقي foundation",
+"img": "assets/products/kosas--revealer-skin-improving-foundation-spf-25.webp",
+"id": "lm033"
+},
+{
+"b": "Kosas",
+"n": "DreamBeam SPF 40 PA++++",
+"c": "skincare",
+"s": "",
+"d": "واقي شمس SPF 40 بلمعة وردية خفيفة تمنح إشراقة.",
+"k": "واقي شمس اشراقة sunscreen",
+"img": "assets/products/kosas--dreambeam-spf-40-pa.webp",
+"id": "lm034"
+},
+{
+"b": "ILIA",
+"n": "Super Serum Skin Tint SPF 40",
+"c": "makeup",
+"s": "",
+"d": "تنت للبشرة بسيروم وحماية SPF 40 لتغطية خفيفة طبيعية.",
+"k": "تنت سيروم واقي فاونديشن Super Serum Skin Tint SPF 40",
+"img": "assets/products/ilia--super-serum-skin-tint-spf-40-tinted-moisturizer.webp",
+"id": "lm035"
+},
+{
+"b": "ILIA",
+"n": "Limitless Lash Mascara",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا تطويل وفصل الرموش بتركيبة نظيفة.",
+"k": "ماسكارا رموش Limitless Lash Mascara",
+"img": "assets/products/ilia--limitless-lash-lengthening-mascara.webp",
+"id": "lm036"
+},
+{
+"b": "ILIA",
+"n": "Lip Sketch Hydrating Crayon",
+"c": "makeup",
+"s": "lip",
+"d": "قلم شفاه مرطب بلون غني ولمسة ناعمة.",
+"k": "شفايف قلم ترطيب Lip Sketch Hydrating Crayon",
+"img": "assets/products/ilia--lip-sketch-hydrating-crayon-lipstick-lip-liner.webp",
+"id": "lm037"
+},
+{
+"b": "ILIA",
+"n": "Eye Stylus Shadow Stick",
+"c": "makeup",
+"s": "",
+"d": "ظل عيون على شكل قلم كريمي سهل التطبيق.",
+"k": "ظلال عيون قلم Eye Stylus Shadow Stick",
+"img": "assets/products/ilia--eye-stylus-eyeshadow-stick.webp",
+"id": "lm038"
+},
+{
+"b": "ILIA",
+"n": "Multi-Stick",
+"c": "makeup",
+"s": "",
+"d": "ستيك ملون للخدود والشفاه بلمسة ندية.",
+"k": "بلاشر ستيك شفايف Multi-Stick",
+"img": "assets/products/ilia--multi-stick-cream-blush-stick-lip-cheek-tint.webp",
+"id": "lm039"
+},
+{
+"b": "ILIA",
+"n": "Thru Line Waterproof Eyeliner",
+"c": "makeup",
+"s": "",
+"d": "آيلاينر جل مقاوم للماء بلون عميق.",
+"k": "ايلاينر كحل مقاوم للماء Thru Line Waterproof Eyeliner",
+"img": "assets/products/ilia--24h-thru-line-waterproof-eyeliner.webp",
+"id": "lm040"
+},
+{
+"b": "ILIA",
+"n": "Skin Blur Serum Concealer",
+"c": "makeup",
+"s": "",
+"d": "كونسيلر سيروم يخفي العيوب ويرطب منطقة العين.",
+"k": "كونسيلر سيروم Skin Blur Serum Concealer",
+"img": "assets/products/ilia--hydrating-skin-blur-serum-concealer.webp",
+"id": "lm041"
+},
+{
+"b": "Tower 28",
+"n": "Swipe Serum Foundation",
+"c": "makeup",
+"s": "",
+"d": "كريم أساس سيروم خفيف مناسب للبشرة الحساسة.",
+"k": "فاونديشن سيروم Foundations & Concealers",
+"img": "assets/products/tower-28--swipe-foundation.webp",
+"id": "lm042"
+},
+{
+"b": "Tower 28",
+"n": "ShineOn Plumping Lip Jelly",
+"c": "makeup",
+"s": "lip",
+"d": "جلوس شفاه منفّخ بلمعة زجاجية دون لزوجة.",
+"k": "قلوس ملمع شفايف ",
+"img": "assets/products/tower-28--shineon-plumping-lip-jelly.webp",
+"id": "lm043"
+},
+{
+"b": "Tower 28",
+"n": "Swipe Serum Concealer",
+"c": "makeup",
+"s": "",
+"d": "كونسيلر سيروم خفيف بتغطية قابلة للبناء.",
+"k": "كونسيلر Foundations & Concealers",
+"img": "assets/products/tower-28--swipe-serum-concealer.webp",
+"id": "lm044"
+},
+{
+"b": "Tower 28",
+"n": "SOS Rescue Spray",
+"c": "skincare",
+"s": "",
+"d": "بخاخ مهدئ للبشرة المتهيجة والحساسة بحمض الهيبوكلوروس.",
+"k": "بخاخ مهدئ حساسة احمرار ",
+"img": "assets/products/tower-28--sos-daily-facial-rescue-spray.webp",
+"id": "lm045"
+},
+{
+"b": "Tower 28",
+"n": "SOS FaceGuard SPF 30 Sunscreen PA+++",
+"c": "skincare",
+"s": "",
+"d": "واقي شمس معدني SPF 30 للبشرة الحساسة.",
+"k": "واقي شمس معدني حساسة ",
+"img": "assets/products/tower-28--sos-faceguard-spf-30.webp",
+"id": "lm046"
+},
+{
+"b": "Tower 28",
+"n": "SunnyDays Tinted SPF 30",
+"c": "makeup",
+"s": "",
+"d": "واقي شمس ملوّن SPF 30 بتغطية خفيفة.",
+"k": "واقي شمس ملون تنت Foundations & Concealers",
+"img": "assets/products/tower-28--sunnydays-tinted-spf.webp",
+"id": "lm047"
+},
+{
+"b": "Tower 28",
+"n": "SOS Recovery Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم مهدئ لترميم حاجز البشرة الحساسة.",
+"k": "كريم مهدئ حساسة ",
+"img": "assets/products/tower-28--sos-daily-barrier-recovery-cream.webp",
+"id": "lm048"
+},
+{
+"b": "Patrick Ta",
+"n": "Major Dimension Dream Date Eyeshadow Palette",
+"c": "makeup",
+"s": "",
+"d": "باليت ظلال عيون بدرجات دافئة للسهرات.",
+"k": "ظلال عيون باليت Eye Makeup",
+"img": "assets/products/patrick-ta--major-dimension-dream-date-eyeshadow-palette.webp",
+"id": "lm049"
+},
+{
+"b": "Patrick Ta",
+"n": "Major Dimension Essential Artistry Edit Eyeshadow Palette",
+"c": "makeup",
+"s": "",
+"d": "باليت ظلال عيون محايدة للإطلالات اليومية.",
+"k": "ظلال عيون باليت Eye Shadow",
+"img": "assets/products/patrick-ta--major-dimension-essential-artistry-edit-eyeshadow-palette.webp",
+"id": "lm050"
+},
+{
+"b": "Patrick Ta",
+"n": "Major Sculpt Shape & Shade Anywhere Artistry Sticks",
+"c": "makeup",
+"s": "",
+"d": "أقلام كريمية للكونتور والتظليل بدقة.",
+"k": "كونتور ستيك Face Makeup",
+"img": "assets/products/patrick-ta--major-sculpt-shape-shade-anywhere-artistry-sticks.webp",
+"id": "lm051"
+},
+{
+"b": "Patrick Ta",
+"n": "Major Moisture Smoothing Lip Balm",
+"c": "makeup",
+"s": "lip",
+"d": "بلسم شفاه مرطب ينعّم الشفاه الجافة.",
+"k": "مرطب شفايف بلسم Lip Makeup",
+"img": "assets/products/patrick-ta--major-moisture-smoothing-lip-balm.webp",
+"id": "lm052"
+},
+{
+"b": "Patrick Ta",
+"n": "Liquid Transition Brightening Blush",
+"c": "makeup",
+"s": "",
+"d": "بلاشر سائل مضيء يمنح الخدود توهجاً طبيعياً.",
+"k": "بلاشر سائل Face Makeup",
+"img": "assets/products/patrick-ta--liquid-transition-brightening-blush.webp",
+"id": "lm053"
+},
+{
+"b": "Merit",
+"n": "Flush Balm",
+"c": "makeup",
+"s": "",
+"d": "بلاشر كريمي بلمسة طبيعية سهلة الدمج.",
+"k": "بلاشر كريمي Blush",
+"img": "assets/products/merit--flush-balm.webp",
+"id": "lm054"
+},
+{
+"b": "Merit",
+"n": "Solo Shadow",
+"c": "makeup",
+"s": "",
+"d": "ظل عيون أحادي بتركيبة ناعمة سهلة الدمج.",
+"k": "ظلال عيون Eye Shadow",
+"img": "assets/products/merit--solo-shadow.webp",
+"id": "lm055"
+},
+{
+"b": "Merit",
+"n": "Bronze Balm",
+"c": "makeup",
+"s": "",
+"d": "برونزر كريمي يمنح دفئاً طبيعياً للوجه.",
+"k": "برونزر Bronzer",
+"img": "assets/products/merit--bronze-balm.webp",
+"id": "lm056"
+},
+{
+"b": "Merit",
+"n": "Great Skin Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم متعدد الفوائد يرطب ويحسن ملمس البشرة.",
+"k": "سيروم ترطيب Serum",
+"img": "assets/products/merit--great-skin-serum.webp",
+"id": "lm057"
+},
+{
+"b": "Merit",
+"n": "Signature Lip Blush",
+"c": "makeup",
+"s": "lip",
+"d": "أحمر شفاه بلمسة ضبابية ناعمة ولون طبيعي.",
+"k": "احمر شفاه روج Lipstick",
+"img": "assets/products/merit--signature-lip-blush.webp",
+"id": "lm058"
+},
+{
+"b": "Saie",
+"n": "Slip Tint Tinted Moisturizer",
+"c": "makeup",
+"s": "",
+"d": "مرطب ملوّن خفيف يوحّد لون البشرة بلمسة ندية.",
+"k": "مرطب ملون تنت Makeup",
+"img": "assets/products/saie--slip-tint-tinted-moisturizer.webp",
+"id": "lm059"
+},
+{
+"b": "Saie",
+"n": "Glowy Super Gel",
+"c": "makeup",
+"s": "",
+"d": "جل مضيء متعدد الاستخدام لإشراقة البشرة.",
+"k": "هايلايتر اشراقة Finished Good",
+"img": "assets/products/saie--glowy-super-gel-luminizer.webp",
+"id": "lm060"
+},
+{
+"b": "Saie",
+"n": "Dew Blush",
+"c": "makeup",
+"s": "",
+"d": "بلاشر سائل ندي بلون شفاف قابل للبناء.",
+"k": "بلاشر سائل Finished Good",
+"img": "assets/products/saie--dew-blush.webp",
+"id": "lm061"
+},
+{
+"b": "Saie",
+"n": "Sun Melt",
+"c": "makeup",
+"s": "",
+"d": "برونزر بلسمي يذوب على البشرة لدفء طبيعي.",
+"k": "برونزر Finished Good",
+"img": "assets/products/saie--sun-melt.webp",
+"id": "lm062"
+},
+{
+"b": "Saie",
+"n": "Mascara 101",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا تطويل ورفع بتركيبة نظيفة.",
+"k": "ماسكارا رموش Finished Good",
+"img": "assets/products/saie--mascara-101.webp",
+"id": "lm063"
+},
+{
+"b": "Saie",
+"n": "Glossybounce",
+"c": "makeup",
+"s": "lip",
+"d": "جلوس شفاه بلمعة عالية ولون شفاف.",
+"k": "قلوس ملمع شفايف Finished Good",
+"img": "assets/products/saie--glossybounce.webp",
+"id": "lm064"
+},
+{
+"b": "Westman Atelier",
+"n": "Baby Cheeks Blush Stick - Mimi",
+"c": "makeup",
+"s": "",
+"d": "بلاشر ستيك كريمي بلمسة طبيعية.",
+"k": "بلاشر ستيك Blush Stick",
+"img": "assets/products/westman-atelier--baby-cheeks-blush-stick-mimi.webp",
+"id": "lm065"
+},
+{
+"b": "Westman Atelier",
+"n": "Face Trace Contour Stick - Biscuit",
+"c": "makeup",
+"s": "",
+"d": "ستيك كونتور لنحت الوجه بلون طبيعي.",
+"k": "كونتور Contour Stick",
+"img": "assets/products/westman-atelier--face-trace-contour-stick-biscuit.webp",
+"id": "lm066"
+},
+{
+"b": "Westman Atelier",
+"n": "HydroBalm Tinted Lipstick - English Rose",
+"c": "makeup",
+"s": "lip",
+"d": "أحمر شفاه مرطب بلون شفاف.",
+"k": "احمر شفاه مرطب Hydrating Lipstick",
+"img": "assets/products/westman-atelier--hydrobalm-tinted-lipstick-english-rose.webp",
+"id": "lm067"
+},
+{
+"b": "Westman Atelier",
+"n": "Eye Want You Mascara - Clean Black",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا تكثيف وتطويل بسواد عميق.",
+"k": "ماسكارا رموش Mascara",
+"img": "assets/products/westman-atelier--eye-want-you-mascara-clean-black.webp",
+"id": "lm068"
+},
+{
+"b": "Westman Atelier",
+"n": "Lit Up Highlight Stick - Nectar",
+"c": "makeup",
+"s": "",
+"d": "هايلايتر ستيك لإشراقة ندية على عظام الخد.",
+"k": "هايلايتر Highlight Stick",
+"img": "assets/products/westman-atelier--lit-up-highlight-stick-nectar.webp",
+"id": "lm069"
+},
+{
+"b": "Westman Atelier",
+"n": "Skin Activator Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم فاخر لتجديد البشرة ونضارتها.",
+"k": "سيروم فاخر تجديد Serum",
+"img": "assets/products/westman-atelier--skin-activator-serum.webp",
+"id": "lm070"
+},
+{
+"b": "rhode",
+"n": "barrier butter",
+"c": "skincare",
+"s": "",
+"d": "بلسم ترطيب غني لحماية حاجز البشرة.",
+"k": "مرطب بلسم جافة Moisturizer",
+"img": "assets/products/rhode--barrier-butter.webp",
+"id": "lm071"
+},
+{
+"b": "rhode",
+"n": "barrier restore cream",
+"c": "skincare",
+"s": "",
+"d": "كريم لترميم حاجز البشرة وترطيبها.",
+"k": "مرطب حاجز البشرة Moisturizer",
+"img": "assets/products/rhode--barrier-restore-cream.webp",
+"id": "lm072"
+},
+{
+"b": "rhode",
+"n": "caffeine reset",
+"c": "skincare",
+"s": "",
+"d": "مرطب للعين بالكافيين يقلل الانتفاخ.",
+"k": "عين انتفاخ هالات كافيين Skin Care",
+"img": "assets/products/rhode--caffeine-reset.webp",
+"id": "lm073"
+},
+{
+"b": "rhode",
+"n": "glazing milk",
+"c": "skincare",
+"s": "",
+"d": "حليب مرطب يمنح البشرة لمعة زجاجية.",
+"k": "تونر حليب ترطيب Essence",
+"img": "assets/products/rhode--glazing-milk.webp",
+"id": "lm074"
+},
+{
+"b": "rhode",
+"n": "glazing mist",
+"c": "skincare",
+"s": "",
+"d": "بخاخ للوجه يرطب وينعش البشرة خلال اليوم.",
+"k": "بخاخ وجه ترطيب Facial Spray",
+"img": "assets/products/rhode--glazing-mist.webp",
+"id": "lm075"
+},
+{
+"b": "rhode",
+"n": "highlight milk 01",
+"c": "makeup",
+"s": "",
+"d": "هايلايتر سائل خفيف بلمعة طبيعية.",
+"k": "هايلايتر Essence",
+"img": "assets/products/rhode--highlight-milk-01.webp",
+"id": "lm076"
+},
+{
+"b": "Glow Recipe",
+"n": "Watermelon Glow Niacinamide Dew Drops",
+"c": "skincare",
+"s": "",
+"d": "سيروم بالنياسيناميد والبطيخ لإشراقة ندية.",
+"k": "سيروم نياسيناميد اشراقة Serum",
+"img": "assets/products/glow-recipe--watermelon-glow-niacinamide-dew-drops.webp",
+"id": "lm077"
+},
+{
+"b": "Glow Recipe",
+"n": "Watermelon Glow PHA+BHA Pore-Tight Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر بأحماض PHA وBHA لتنقية المسام.",
+"k": "تونر مسام تقشير Toners & Mists",
+"img": "assets/products/glow-recipe--watermelon-glow-pha-bha-pore-tight-toner.webp",
+"id": "lm078"
+},
+{
+"b": "Glow Recipe",
+"n": "Prickly Pear Peptide Mucin",
+"c": "skincare",
+"s": "",
+"d": "سيروم ببتيدات لترطيب وتنعيم البشرة.",
+"k": "سيروم ببتيد Serum",
+"img": "assets/products/glow-recipe--prickly-pear-peptide-mucin.webp",
+"id": "lm079"
+},
+{
+"b": "Glow Recipe",
+"n": "Banana Souffle Moisture Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم مرطب خفيف بالموز والسيراميد.",
+"k": "مرطب كريم Moisturizer",
+"img": "assets/products/glow-recipe--banana-cream.webp",
+"id": "lm080"
+},
+{
+"b": "Glow Recipe",
+"n": "PDRN+ Repair + Soothe Korean Toner Pads",
+"c": "skincare",
+"s": "",
+"d": "فوط تونر كورية مهدئة لترميم البشرة.",
+"k": "تونر فوط مهدئ Toners & Mists",
+"img": "assets/products/glow-recipe--pdrn-repair-and-soothe-korean-toner-pads.webp",
+"id": "lm081"
+},
+{
+"b": "Glow Recipe",
+"n": "Vitamin C Brightening Korean Toner Pads",
+"c": "skincare",
+"s": "",
+"d": "فوط تونر بفيتامين سي للإشراقة.",
+"k": "تونر فيتامين سي اشراقة Toners & Mists",
+"img": "assets/products/glow-recipe--vitamin-c-brightening-korean-toner-pads.webp",
+"id": "lm082"
+},
+{
+"b": "Glow Recipe",
+"n": "LHA + AHA Korean Watermelon Toner Pads",
+"c": "skincare",
+"s": "",
+"d": "فوط تونر للتقشير اللطيف وتنعيم البشرة.",
+"k": "تونر تقشير فوط Toners & Mists",
+"img": "assets/products/glow-recipe--lha-aha-korean-watermelon-toner-pads.webp",
+"id": "lm083"
+},
+{
+"b": "Summer Fridays",
+"n": "Lip Butter Balm Mocha Bonbon",
+"c": "makeup",
+"s": "lip",
+"d": "بلسم شفاه زبدي مرطب بنكهة الموكا.",
+"k": "مرطب شفايف بلسم Lip",
+"img": "assets/products/summer-fridays--lip-butter-balm-mocha-bonbon.webp",
+"id": "lm084"
+},
+{
+"b": "Summer Fridays",
+"n": "Body Fragrance Mist Vanilla",
+"c": "fragrances",
+"s": "women",
+"d": "بخاخ عطري للجسم بنفحة الفانيلا.",
+"k": "بخاخ جسم فانيلا Body Fragrance Mist",
+"img": "assets/products/summer-fridays--body-fragrance-mist-vanilla.webp",
+"id": "lm085"
+},
+{
+"b": "Summer Fridays",
+"n": "Body Butter Balm Vanilla",
+"c": "skincare",
+"s": "",
+"d": "زبدة جسم مرطبة بنفحة الفانيلا.",
+"k": "زبدة جسم ترطيب Body Moisturizer",
+"img": "assets/products/summer-fridays--body-butter-balm-vanilla.webp",
+"id": "lm086"
+},
+{
+"b": "COSRX",
+"n": "5 Peptide B5 Sensitive Repair Salve Lip Balm",
+"c": "makeup",
+"s": "lip",
+"d": "بلسم شفاه بالببتيدات للشفاه الحساسة.",
+"k": "مرطب شفايف ",
+"img": "assets/products/cosrx--5-peptide-b5-sensitive-repair-salve-lip-balm.webp",
+"id": "lm087"
+},
+{
+"b": "COSRX",
+"n": "5 Peptide Ceramide Barrier Comfort Lip Mask",
+"c": "makeup",
+"s": "lip",
+"d": "ماسك شفاه ليلي بالسيراميد.",
+"k": "ماسك شفايف ",
+"img": "assets/products/cosrx--5-peptide-ceramide-barrier-comfort-lip-mask.webp",
+"id": "lm088"
+},
+{
+"b": "COSRX",
+"n": "5 Peptide Collagen Tinted Lip Fill Treatment",
+"c": "makeup",
+"s": "lip",
+"d": "علاج للشفاه بالكولاجين بلون خفيف.",
+"k": "شفايف تنت ",
+"img": "assets/products/cosrx--5-peptide-collagen-tinted-lip-fill-treatment.webp",
+"id": "lm089"
+},
+{
+"b": "COSRX",
+"n": "Acne Pimple Master Patch",
+"c": "skincare",
+"s": "",
+"d": "لصقات الحبوب الشهيرة تمتص الإفرازات وتسرّع الشفاء.",
+"k": "لصقات حبوب ",
+"img": "assets/products/cosrx--acne-pimple-master-patch.webp",
+"id": "lm090"
+},
+{
+"b": "COSRX",
+"n": "Advanced Snail 92 All in One Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم بمخاط الحلزون 92% للترطيب والإصلاح.",
+"k": "حلزون مرطب كوري ",
+"img": "assets/products/cosrx--advanced-snail-92-all-in-one-cream.webp",
+"id": "lm091"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Dynasty Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم مرطب كوري بالأرز والجينسنغ.",
+"k": "مرطب كوري ",
+"img": "assets/products/beauty-of-joseon--dynasty-cream.webp",
+"id": "lm092"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Revive Eye Serum : Ginseng + Retinal",
+"c": "skincare",
+"s": "",
+"d": "سيروم للعين بالريتينال والجينسنغ.",
+"k": "عين سيروم ريتينال ",
+"img": "assets/products/beauty-of-joseon--revive-eye-serum-ginseng-retinal.webp",
+"id": "lm093"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Green Plum Refreshing Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول منعش بالبرقوق الأخضر.",
+"k": "غسول ",
+"img": "assets/products/beauty-of-joseon--green-plum-refreshing-cleanser.webp",
+"id": "lm094"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Revive Firming Moisturizer : Ginseng + Retinol",
+"c": "skincare",
+"s": "",
+"d": "مرطب بالريتينول والجينسنغ لشد البشرة.",
+"k": "ريتينول مرطب تجاعيد ",
+"img": "assets/products/beauty-of-joseon--revive-firming-moisturizer.webp",
+"id": "lm095"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Glow Serum : Propolis + Niacinamide",
+"c": "skincare",
+"s": "",
+"d": "سيروم بالعكبر والنياسيناميد للإشراقة.",
+"k": "سيروم اشراقة كوري ",
+"img": "assets/products/beauty-of-joseon--glow-serum-propolis-niacinamide.webp",
+"id": "lm096"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Glow Replenishing Rice Milk",
+"c": "skincare",
+"s": "",
+"d": "تونر حليبي بالأرز لترطيب وإشراق.",
+"k": "تونر ارز ",
+"img": "assets/products/beauty-of-joseon--glow-replenishing-rice-milk.webp",
+"id": "lm097"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Ginseng Cleansing Oil",
+"c": "skincare",
+"s": "",
+"d": "زيت تنظيف بالجينسنغ يذيب المكياج.",
+"k": "زيت منظف مزيل مكياج ",
+"img": "assets/products/beauty-of-joseon--ginseng-cleansing-oil.webp",
+"id": "lm098"
+},
+{
+"b": "Anua",
+"n": "3 Ceramide Panthenol Moisture Barrier Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم بالسيراميد والبانثينول لحماية الحاجز.",
+"k": "مرطب سيراميد Moisturizer",
+"img": "assets/products/anua--3-ceramide-panthenol-moisture-barrier-cream.webp",
+"id": "lm099"
+},
+{
+"b": "Anua",
+"n": "8 Hyaluronic Acid Catechin Calming Pad",
+"c": "skincare",
+"s": "",
+"d": "فوط مهدئة بحمض الهيالورونيك.",
+"k": "فوط تونر مهدئ Toner",
+"img": "assets/products/anua--8-hyaluronic-acid-catechin-calming-pad.webp",
+"id": "lm100"
+},
+{
+"b": "Anua",
+"n": "8 Hyaluronic Acid Hydrating Gentle Foaming Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول رغوي لطيف بحمض الهيالورونيك.",
+"k": "غسول Cleanser",
+"img": "assets/products/anua--8-hyaluronic-acid-hydrating-gentle-foaming-cleanser.webp",
+"id": "lm101"
+},
+{
+"b": "Anua",
+"n": "8 Hyaluronic Acid Moisturizing Gentle Gel Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول جل لطيف للبشرة الحساسة.",
+"k": "غسول حساسة Cleanser",
+"img": "assets/products/anua--8-hyaluronic-acid-moisturizing-gentle-gel-cleanser.webp",
+"id": "lm102"
+},
+{
+"b": "Anua",
+"n": "Azelaic 10 Hyaluron Redness Soothing Pad",
+"c": "skincare",
+"s": "",
+"d": "فوط بحمض الأزيليك لتهدئة الاحمرار.",
+"k": "احمرار ازيليك Toner",
+"img": "assets/products/anua--azelaic-10-hyaluron-redness-soothing-pad.webp",
+"id": "lm103"
+},
+{
+"b": "Anua",
+"n": "Azelaic 3 Cica Skin Clarifying Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر بحمض الأزيليك والسيكا لتنقية البشرة.",
+"k": "تونر ازيليك حبوب Toner",
+"img": "assets/products/anua--azelaic-3-cica-skin-clarifying-toner.webp",
+"id": "lm104"
+},
+{
+"b": "Anua",
+"n": "Azelaic Acid 10 Hyaluron Redness Soothing Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم أزيليك 10% لتهدئة الاحمرار.",
+"k": "سيروم ازيليك احمرار Ampoule/Serum",
+"img": "assets/products/anua--azelaic-acid-10-hyaluron-redness-soothing-serum.webp",
+"id": "lm105"
+},
+{
+"b": "Naturium",
+"n": "The Glow Getter Multi-Oil Hydrating Body Wash",
+"c": "skincare",
+"s": "",
+"d": "غسول جسم بالزيوت يمنح البشرة نعومة ولمعة.",
+"k": "غسول جسم Body Wash",
+"img": "assets/products/naturium--the-glow-getter-multi-oil-hydrating-body-wash.webp",
+"id": "lm106"
+},
+{
+"b": "Naturium",
+"n": "Vitamin C Complex Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم فيتامين سي للإشراقة وتوحيد اللون.",
+"k": "سيروم فيتامين سي Serum",
+"img": "assets/products/naturium--vitamin-c-complex-serum.webp",
+"id": "lm107"
+},
+{
+"b": "Naturium",
+"n": "The Energizer Mandelic Acid Body Wash",
+"c": "skincare",
+"s": "",
+"d": "غسول جسم بحمض المانديليك لتنعيم البشرة.",
+"k": "غسول جسم تقشير Body Wash",
+"img": "assets/products/naturium--the-energizer-mandelic-acid-body-wash.webp",
+"id": "lm108"
+},
+{
+"b": "Naturium",
+"n": "Multi-Peptide Moisturizer - Jumbo",
+"c": "skincare",
+"s": "",
+"d": "مرطب ببتيدات متعددة لشد البشرة.",
+"k": "مرطب ببتيد تجاعيد Moisturizer",
+"img": "assets/products/naturium--multi-peptide-moisturizer-jumbo.webp",
+"id": "lm109"
+},
+{
+"b": "Naturium",
+"n": "The Glow Getter Multi-Oil Body Butter",
+"c": "skincare",
+"s": "",
+"d": "زبدة جسم غنية بالزيوت.",
+"k": "زبدة جسم Body Lotion",
+"img": "assets/products/naturium--the-glow-getter-multi-oil-body-butter.webp",
+"id": "lm110"
+},
+{
+"b": "Naturium",
+"n": "Multi-Peptide Advanced Serum - Jumbo",
+"c": "skincare",
+"s": "",
+"d": "سيروم ببتيدات متقدم لمقاومة علامات التقدم.",
+"k": "سيروم ببتيد تجاعيد Serum",
+"img": "assets/products/naturium--multi-peptide-advanced-serum-jumbo.webp",
+"id": "lm111"
+},
+{
+"b": "Naturium",
+"n": "Dew-Glow Moisturizer Mineral SPF 50",
+"c": "skincare",
+"s": "",
+"d": "مرطب بواقي شمس معدني SPF 50 ولمسة ندية.",
+"k": "مرطب واقي شمس Moisturizer",
+"img": "assets/products/naturium--dew-glow-moisturizer-mineral-spf-50.webp",
+"id": "lm112"
+},
+{
+"b": "Byoma",
+"n": "Moisturising Gel Cream",
+"c": "skincare",
+"s": "",
+"d": "مرطب جل خفيف للبشرة المختلطة.",
+"k": "مرطب جل ",
+"img": "assets/products/byoma--moisturizing-gel-cream.webp",
+"id": "lm113"
+},
+{
+"b": "Byoma",
+"n": "Creamy Jelly Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول جيلي كريمي لطيف.",
+"k": "غسول ",
+"img": "assets/products/byoma--creamy-jelly-cleanser.webp",
+"id": "lm114"
+},
+{
+"b": "Byoma",
+"n": "Balancing Face Mist",
+"c": "skincare",
+"s": "",
+"d": "بخاخ وجه لموازنة البشرة وترطيبها.",
+"k": "بخاخ وجه ",
+"img": "assets/products/byoma--balancing-face-mist.webp",
+"id": "lm115"
+},
+{
+"b": "Byoma",
+"n": "Hydrating Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم ترطيب بالسيراميد.",
+"k": "سيروم ترطيب ",
+"img": "assets/products/byoma--hydrating-serum.webp",
+"id": "lm116"
+},
+{
+"b": "Byoma",
+"n": "De-Puff + Brighten Eye Gel",
+"c": "skincare",
+"s": "",
+"d": "جل للعين يقلل الانتفاخ ويضيء.",
+"k": "عين انتفاخ هالات ",
+"img": "assets/products/byoma--de-puff-brighten-eye-gel.webp",
+"id": "lm117"
+},
+{
+"b": "Byoma",
+"n": "Hydrating Milky Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر حليبي مرطب.",
+"k": "تونر ترطيب ",
+"img": "assets/products/byoma--hydrating-milky-toner.webp",
+"id": "lm118"
+},
+{
+"b": "Byoma",
+"n": "Phyto-Mucin Glow Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم بالميوسين النباتي لإشراقة ندية.",
+"k": "سيروم اشراقة ",
+"img": "assets/products/byoma--phyto-mucin-glow-serum.webp",
+"id": "lm119"
+},
+{
+"b": "Peach Slices",
+"n": "Smoothing Solution Ingrown Hair Treatment",
+"c": "skincare",
+"s": "",
+"d": "علاج للشعر تحت الجلد ونتوءات الحلاقة.",
+"k": "نتوءات شعر تحت الجلد Body Treatments",
+"img": "assets/products/peach-slices--smoothing-solution-ingrown-hair-treatment.webp",
+"id": "lm120"
+},
+{
+"b": "Peach Slices",
+"n": "Fix All Recovery Spray",
+"c": "skincare",
+"s": "",
+"d": "بخاخ مهدئ لترميم البشرة المتهيجة.",
+"k": "بخاخ مهدئ Mists",
+"img": "assets/products/peach-slices--fix-all-recovery-spray.webp",
+"id": "lm121"
+},
+{
+"b": "Peach Slices",
+"n": "Redness Relief Azelaic Acid Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم أزيليك لتهدئة الاحمرار.",
+"k": "احمرار ازيليك سيروم Serums",
+"img": "assets/products/peach-slices--redness-relief-azelaic-acid-serum.webp",
+"id": "lm122"
+},
+{
+"b": "Peach Slices",
+"n": "Super Fade Discoloration Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم لتفتيح البقع الداكنة.",
+"k": "بقع داكنة تفتيح سيروم Serums",
+"img": "assets/products/peach-slices--super-fade-discoloration-serum.webp",
+"id": "lm123"
+},
+{
+"b": "Peach Slices",
+"n": "L-Glutathione Glow On Brightening Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر بالغلوتاثيون للإشراقة.",
+"k": "تونر اشراقة Toners",
+"img": "assets/products/peach-slices--l-glutathione-glow-on-brightening-toner.webp",
+"id": "lm124"
+},
+{
+"b": "Peach Slices",
+"n": "Acne Spot Dots",
+"c": "skincare",
+"s": "",
+"d": "لصقات للحبوب الصغيرة.",
+"k": "لصقات حبوب Spot Treatments",
+"img": "assets/products/peach-slices--acne-spot-dots.webp",
+"id": "lm125"
+},
+{
+"b": "Peach Slices",
+"n": "Nose Pore Patches",
+"c": "skincare",
+"s": "",
+"d": "لصقات أنف لإزالة الرؤوس السوداء.",
+"k": "رؤوس سوداء مسام Spot Treatments",
+"img": "assets/products/peach-slices--nose-pore-patches.webp",
+"id": "lm126"
+},
+{
+"b": "Sol de Janeiro",
+"n": "Brazilian Bum Bum Cream Iconic Glass Edition",
+"c": "skincare",
+"s": "",
+"d": "كريم الجسم الأشهر بالكاكاو والغوارانا ورائحة مميزة.",
+"k": "كريم جسم Body Cream",
+"img": "assets/products/sol-de-janeiro--brazilian-bum-bum-cream-iconic-glass-edition.webp",
+"id": "lm127"
+},
+{
+"b": "Sol de Janeiro",
+"n": "Cheirosa 40 Jelly Perfume Balm",
+"c": "fragrances",
+"s": "women",
+"d": "عطر جيلي صلب برائحة Cheirosa 40.",
+"k": "عطر صلب Fragrance",
+"img": "assets/products/sol-de-janeiro--cheirosa-40-jelly-perfume-balm.webp",
+"id": "lm128"
+},
+{
+"b": "Sol de Janeiro",
+"n": "Cheirosa 91 Perfume Mist",
+"c": "fragrances",
+"s": "women",
+"d": "بخاخ عطري للجسم والشعر.",
+"k": "بخاخ جسم معطر Fragrance",
+"img": "assets/products/sol-de-janeiro--cheirosa-91-perfume-mist.webp",
+"id": "lm129"
+},
+{
+"b": "Sol de Janeiro",
+"n": "Brazilian Joia Strengthening + Smoothing Conditioner",
+"c": "haircare",
+"s": "",
+"d": "بلسم يقوّي الشعر وينعّمه.",
+"k": "بلسم شعر تقوية Hair",
+"img": "assets/products/sol-de-janeiro--brazilian-joia-strengthening-smoothing-conditioner.webp",
+"id": "lm130"
+},
+{
+"b": "Sol de Janeiro",
+"n": "Brazilian Joia Strengthening + Smoothing Shampoo",
+"c": "haircare",
+"s": "",
+"d": "شامبو يقوّي الشعر وينعّمه.",
+"k": "شامبو شعر تقوية Hair",
+"img": "assets/products/sol-de-janeiro--brazilian-joia-strengthening-smoothing-shampoo.webp",
+"id": "lm131"
+},
+{
+"b": "Gisou",
+"n": "Honey Gloss Ceramide Therapy Hair Mask",
+"c": "haircare",
+"s": "",
+"d": "ماسك شعر بالعسل والسيراميد للترطيب.",
+"k": "ماسك شعر ترطيب Hair Mask",
+"img": "assets/products/gisou--honey-gloss-ceramide-therapy-hair-mask.webp",
+"id": "lm132"
+},
+{
+"b": "Gisou",
+"n": "Honey Milk Active Repair Leave-In Conditioner Mist",
+"c": "haircare",
+"s": "",
+"d": "بخاخ بلسم بدون شطف لإصلاح الشعر.",
+"k": "بلسم بدون شطف Hair Treatment",
+"img": "assets/products/gisou--honey-milk-leave-in-conditioner.webp",
+"id": "lm133"
+},
+{
+"b": "Gisou",
+"n": "Honey Infused Hair Oil",
+"c": "haircare",
+"s": "",
+"d": "زيت شعر بالعسل يمنح لمعاناً ونعومة.",
+"k": "زيت شعر لمعان Hair Oil",
+"img": "assets/products/gisou--honey-infused-hair-oil.webp",
+"id": "lm134"
+},
+{
+"b": "Gisou",
+"n": "Honey Gloss Collagen Drops Hair Oil",
+"c": "haircare",
+"s": "",
+"d": "قطرات زيت بالكولاجين للمعان الشعر.",
+"k": "زيت شعر Hair Oil",
+"img": "assets/products/gisou--honey-gloss-collagen-drops-hair-oil.webp",
+"id": "lm135"
+},
+{
+"b": "Gisou",
+"n": "Honey Gloss Ceramide Therapy Hydrating Shampoo",
+"c": "haircare",
+"s": "",
+"d": "شامبو مرطب بالعسل والسيراميد.",
+"k": "شامبو ترطيب Hair Wash",
+"img": "assets/products/gisou--honey-gloss-ceramide-therapy-hydrating-shampoo.webp",
+"id": "lm136"
+},
+{
+"b": "OUAI",
+"n": "Detox Clarifying Hair Shampoo",
+"c": "haircare",
+"s": "",
+"d": "شامبو منقٍّ يزيل تراكم المنتجات.",
+"k": "شامبو تنظيف عميق Shampoo",
+"img": "assets/products/ouai--detox-shampoo.webp",
+"id": "lm137"
+},
+{
+"b": "OUAI",
+"n": "Bond Repair Balm",
+"c": "haircare",
+"s": "",
+"d": "بلسم لإصلاح روابط الشعر التالف.",
+"k": "شعر تالف اصلاح Hair Treatment",
+"img": "assets/products/ouai--bond-repair-balm.webp",
+"id": "lm138"
+},
+{
+"b": "OUAI",
+"n": "Leave in Conditioner North Bondi",
+"c": "haircare",
+"s": "",
+"d": "بلسم بدون شطف يحمي الشعر من الحرارة.",
+"k": "بلسم بدون شطف حرارة Hair Styling Product",
+"img": "assets/products/ouai--leave-in-conditioner-north-bondi.webp",
+"id": "lm139"
+},
+{
+"b": "OUAI",
+"n": "Hair Oil",
+"c": "haircare",
+"s": "",
+"d": "زيت شعر خفيف للمعان ومكافحة الهيشان.",
+"k": "زيت شعر هيشان Hair Styling Product",
+"img": "assets/products/ouai--hair-oil.webp",
+"id": "lm140"
+},
+{
+"b": "OUAI",
+"n": "Fine Hair Conditioner - Jumbo",
+"c": "haircare",
+"s": "",
+"d": "بلسم للشعر الخفيف.",
+"k": "بلسم شعر خفيف Conditioner",
+"img": "assets/products/ouai--fine-hair-conditioner-jumbo.webp",
+"id": "lm141"
+},
+{
+"b": "Olaplex",
+"n": "N°.4 BOND MAINTENANCE STRENGTHENING SHAMPOO FULL SIZE",
+"c": "haircare",
+"s": "",
+"d": "شامبو Olaplex رقم 4 لتقوية الشعر التالف.",
+"k": "شامبو شعر تالف Retail",
+"img": "assets/products/olaplex--olaplex-n4-bond-maintenance-strengthening-shampoo-250ml.webp",
+"id": "lm142"
+},
+{
+"b": "Olaplex",
+"n": "N°.5 BOND MAINTENANCE STRENGTHENING CONDITIONER FULL SIZE",
+"c": "haircare",
+"s": "",
+"d": "بلسم Olaplex رقم 5 لتقوية الشعر.",
+"k": "بلسم شعر تالف Retail",
+"img": "assets/products/olaplex--olaplex-n5-bond-maintenance-strengthening-conditioner-250ml.webp",
+"id": "lm143"
+},
+{
+"b": "Olaplex",
+"n": "OLAPLEX °7 BONDING OIL FULL SIZE",
+"c": "haircare",
+"s": "",
+"d": "زيت Olaplex رقم 7 للمعان وحماية الحرارة.",
+"k": "زيت شعر حرارة Retail",
+"img": "assets/products/olaplex--olaplex-n-7-bonding-oil-30ml.webp",
+"id": "lm144"
+},
+{
+"b": "Olaplex",
+"n": "N°.3PLUS COMPLETE REPAIR TREATMENT FULL SIZE",
+"c": "haircare",
+"s": "",
+"d": "علاج Olaplex رقم 3 لإصلاح الشعر التالف.",
+"k": "شعر تالف علاج Retail",
+"img": "assets/products/olaplex--olaplex-n-3plus-complete-repair-treatment-100ml.webp",
+"id": "lm145"
+},
+{
+"b": "Olaplex",
+"n": "OLAPLEX °7 SHINE SERUM OIL MIST",
+"c": "haircare",
+"s": "",
+"d": "بخاخ زيت للمعان الشعر.",
+"k": "زيت شعر لمعان Retail",
+"img": "assets/products/olaplex--olaplex-7-shine-serum-oil-mist-80ml.webp",
+"id": "lm146"
+},
+{
+"b": "Olaplex",
+"n": "RICH HYDRATION MASK",
+"c": "haircare",
+"s": "",
+"d": "ماسك ترطيب عميق للشعر.",
+"k": "ماسك شعر ترطيب Retail",
+"img": "assets/products/olaplex--olaplex-rich-hydration-mask-200ml.webp",
+"id": "lm147"
+},
+{
+"b": "Mielle",
+"n": "Avocado & Tamanu Anti-Frizz Conditioner",
+"c": "haircare",
+"s": "",
+"d": "بلسم بالأفوكادو لمكافحة الهيشان.",
+"k": "بلسم هيشان Conditioners",
+"img": "assets/products/mielle--avocado-tamanu-anti-frizz-conditioner.webp",
+"id": "lm148"
+},
+{
+"b": "Mielle",
+"n": "Avocado & Tamanu Anti-Frizz Shampoo",
+"c": "haircare",
+"s": "",
+"d": "شامبو بالأفوكادو لمكافحة الهيشان.",
+"k": "شامبو هيشان Shampoo",
+"img": "assets/products/mielle--avocado-tamanu-anti-frizz-shampoo.webp",
+"id": "lm149"
+},
+{
+"b": "Mielle",
+"n": "Avocado Moisturizing Hair Milk",
+"c": "haircare",
+"s": "",
+"d": "حليب مرطب للشعر بالأفوكادو.",
+"k": "ترطيب شعر كيرلي Moisturizers",
+"img": "assets/products/mielle--avocado-moisturizing-hair-milk.webp",
+"id": "lm150"
+},
+{
+"b": "Mielle",
+"n": "Babassu & Mint Damage Repair Bond Treatment",
+"c": "haircare",
+"s": "",
+"d": "علاج للشعر التالف بالبابسو والنعناع.",
+"k": "شعر تالف علاج Scalp Treatment",
+"img": "assets/products/mielle--babassu-mint-damage-repair-bond-treatment.webp",
+"id": "lm151"
+},
+{
+"b": "Kayali",
+"n": "Vanilla | 28",
+"c": "fragrances",
+"s": "women",
+"d": "عطر فانيلا Kayali الشهير الدافئ.",
+"k": "عطر فانيلا Fragrances",
+"img": "assets/products/kayali--vanilla-28.webp",
+"id": "lm152"
+},
+{
+"b": "Kayali",
+"n": "Musk | 12",
+"c": "fragrances",
+"s": "women",
+"d": "عطر مسك نظيف ناعم.",
+"k": "عطر مسك Fragrances",
+"img": "assets/products/kayali--musk-12.webp",
+"id": "lm153"
+},
+{
+"b": "Kayali",
+"n": "Yum Boujee Marshmallow | 81",
+"c": "fragrances",
+"s": "women",
+"d": "عطر حلو بنفحة المارشميلو.",
+"k": "عطر حلو Fragrances",
+"img": "assets/products/kayali--yum-boujee-marshmallow-81.webp",
+"id": "lm154"
+},
+{
+"b": "Kayali",
+"n": "Vanilla Candy Rock Sugar | 42",
+"c": "fragrances",
+"s": "women",
+"d": "عطر فانيلا بنفحة السكر.",
+"k": "عطر فانيلا Fragrances",
+"img": "assets/products/kayali--vanilla-candy-rock-sugar-42.webp",
+"id": "lm155"
+},
+{
+"b": "Kayali",
+"n": "Eden Juicy Apple | 01",
+"c": "fragrances",
+"s": "women",
+"d": "عطر فاكهي بنفحة التفاح.",
+"k": "عطر فواكه Fragrances",
+"img": "assets/products/kayali--eden-juicy-apple-01.webp",
+"id": "lm156"
+},
+{
+"b": "Glossier",
+"n": "Glossier You",
+"c": "fragrances",
+"s": "women",
+"d": "عطر Glossier You المسكي الدافئ.",
+"k": "عطر مسك Fragrance",
+"img": "assets/products/glossier--glossier-you.webp",
+"id": "lm157"
+},
+{
+"b": "Glossier",
+"n": "Glossier You Doux",
+"c": "fragrances",
+"s": "women",
+"d": "نسخة أنعم من عطر Glossier You.",
+"k": "عطر مسك Fragrance",
+"img": "assets/products/glossier--glossier-you-doux.webp",
+"id": "lm158"
+},
+{
+"b": "Glossier",
+"n": "Lash Slick",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا طبيعية تطوّل وترفع الرموش.",
+"k": "ماسكارا رموش Makeup",
+"img": "assets/products/glossier--lash-slick.webp",
+"id": "lm159"
+},
+{
+"b": "Glossier",
+"n": "Boy Brow",
+"c": "makeup",
+"s": "",
+"d": "جل حواجب يكثّف ويثبّت الحواجب.",
+"k": "حواجب جل Makeup",
+"img": "assets/products/glossier--boy-brow.webp",
+"id": "lm160"
+},
+{
+"b": "Glossier",
+"n": "Balm Dotcom",
+"c": "makeup",
+"s": "lip",
+"d": "بلسم شفاه متعدد الاستخدام.",
+"k": "مرطب شفايف بلسم Balms",
+"img": "assets/products/glossier--balm-dotcom.webp",
+"id": "lm161"
+},
+{
+"b": "Glossier",
+"n": "After Baume",
+"c": "skincare",
+"s": "",
+"d": "كريم مرطب لحماية حاجز البشرة.",
+"k": "مرطب Skincare",
+"img": "assets/products/glossier--glossier-after-baume.webp",
+"id": "lm162"
+},
+{
+"b": "Glossier",
+"n": "Futuredew",
+"c": "skincare",
+"s": "",
+"d": "سيروم زيتي يمنح لمعة ندية.",
+"k": "اشراقة سيروم Skincare",
+"img": "assets/products/glossier--futuredew.webp",
+"id": "lm163"
+},
+{
+"b": "CeraVe",
+"n": "CeraVe Hydrating Facial Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول مرطب بالسيراميد وحمض الهيالورونيك، ينظف دون أن يجفف البشرة.",
+"k": "غسول منظف cleanser بشرة جافة حساسة",
+"id": "lm164"
+},
+{
+"b": "Paula's Choice",
+"n": "Paula's Choice 2% BHA Liquid Exfoliant",
+"c": "skincare",
+"s": "",
+"d": "مقشر سائل بحمض الساليسيليك 2% يفتح المسام ويقلل الرؤوس السوداء.",
+"k": "مقشر تقشير رؤوس سوداء مسام حبوب دهنية exfoliant",
+"id": "lm165"
+},
+{
+"b": "Neutrogena",
+"n": "Neutrogena Hydro Boost Water Gel",
+"c": "skincare",
+"s": "",
+"d": "مرطب جل خفيف بحمض الهيالورونيك، مناسب للبشرة الدهنية والمختلطة.",
+"k": "مرطب ترطيب جل دهنية moisturizer",
+"id": "lm166"
+},
+{
+"b": "The Ordinary",
+"n": "The Ordinary Niacinamide 10% + Zinc 1%",
+"c": "skincare",
+"s": "",
+"d": "سيروم نياسيناميد يقلل ظهور المسام ويوحّد لون البشرة.",
+"k": "سيروم نياسيناميد مسام توحيد لون دهنية serum",
+"id": "lm167"
+},
+{
+"b": "EltaMD",
+"n": "EltaMD UV Clear SPF 46",
+"c": "skincare",
+"s": "",
+"d": "واقي شمس خفيف بالنياسيناميد، مناسب للبشرة المعرضة للحبوب.",
+"k": "واقي شمس حماية حبوب sunscreen spf",
+"id": "lm168"
+},
+{
+"b": "COSRX",
+"n": "COSRX Snail Mucin 96% Power Essence",
+"c": "skincare",
+"s": "",
+"d": "إيسنس بمخاط الحلزون يرطب ويهدئ البشرة ويحسن ملمسها.",
+"k": "ايسنس حلزون ترطيب كوري essence",
+"id": "lm169"
+},
+{
+"b": "Laneige",
+"n": "Laneige Lip Sleeping Mask",
+"c": "makeup",
+"s": "lip",
+"d": "ماسك شفايف ليلي يرطب الشفاه الجافة بعمق حتى الصباح.",
+"k": "شفايف شفاه ماسك ترطيب lip",
+"id": "lm170"
+},
+{
+"b": "La Roche-Posay",
+"n": "La Roche-Posay Toleriane Double Repair",
+"c": "skincare",
+"s": "",
+"d": "مرطب للوجه بالسيراميد والنياسيناميد للبشرة الحساسة.",
+"k": "مرطب حساسة سيراميد moisturizer",
+"id": "lm171"
+},
+{
+"b": "Biodance",
+"n": "Biodance Bio-Collagen Real Deep Mask",
+"c": "skincare",
+"s": "",
+"d": "ماسك ليلي بالكولاجين يمنح البشرة ترطيباً عميقاً ونضارة.",
+"k": "ماسك كولاجين ترطيب نضارة كوري mask",
+"id": "lm172"
+},
+{
+"b": "Medicube",
+"n": "Medicube Zero Pore Pad 2.0",
+"c": "skincare",
+"s": "",
+"d": "فوط تونر بأحماض AHA/BHA لتنظيف المسام وتنعيم البشرة.",
+"k": "تونر فوط مسام تقشير toner pads كوري",
+"id": "lm173"
+},
+{
+"b": "TruSkin",
+"n": "TruSkin Vitamin C Face Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم فيتامين سي لتفتيح البقع الداكنة وإشراقة البشرة.",
+"k": "سيروم فيتامين سي تفتيح بقع اشراقة vitamin c",
+"id": "lm174"
+},
+{
+"b": "CeraVe",
+"n": "CeraVe Eye Repair Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم للعين يخفف الهالات السوداء والانتفاخ.",
+"k": "كريم عين هالات سوداء انتفاخ eye cream",
+"id": "lm175"
+},
+{
+"b": "First Aid Beauty",
+"n": "First Aid Beauty KP Bump Eraser",
+"c": "skincare",
+"s": "",
+"d": "مقشر للجسم يخفف النتوءات والجلد الخشن.",
+"k": "جسم مقشر نتوءات خشونة body scrub",
+"id": "lm176"
+},
+{
+"b": "Olay",
+"n": "Olay Regenerist Micro-Sculpting Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم مضاد للتجاعيد بالببتيدات والنياسيناميد.",
+"k": "تجاعيد مضاد شيخوخة كريم anti aging",
+"id": "lm177"
+},
+{
+"b": "Kiehl's",
+"n": "Kiehl's Ultra Facial Cream",
+"c": "skincare",
+"s": "",
+"d": "مرطب يومي خفيف يمنح ترطيباً يدوم 24 ساعة.",
+"k": "مرطب يومي ترطيب moisturizer",
+"id": "lm178"
+},
+{
+"b": "PanOxyl",
+"n": "PanOxyl Acne Foaming Wash 10%",
+"c": "skincare",
+"s": "",
+"d": "غسول رغوي بالبنزويل بيروكسايد 10% لعلاج حب الشباب.",
+"k": "غسول حب الشباب حبوب بنزويل acne wash",
+"id": "lm179"
+},
+{
+"b": "Aquaphor",
+"n": "Aquaphor Healing Ointment",
+"c": "skincare",
+"s": "",
+"d": "مرهم متعدد الاستخدامات للبشرة الجافة جداً والمتشققة.",
+"k": "مرهم جفاف تشقق شفايف جافة جدا ointment",
+"id": "lm180"
+},
+{
+"b": "Bio-Oil",
+"n": "Bio-Oil Skincare Oil",
+"c": "skincare",
+"s": "",
+"d": "زيت للعناية بالندبات وعلامات التمدد وتوحيد لون الجلد.",
+"k": "زيت ندبات تشققات علامات تمدد oil",
+"id": "lm181"
+},
+{
+"b": "Differin",
+"n": "Differin Adapalene Gel 0.1%",
+"c": "skincare",
+"s": "",
+"d": "جل أدابالين لعلاج حب الشباب ومنع ظهوره.",
+"k": "حب الشباب حبوب ريتينويد adapalene",
+"id": "lm182"
+},
+{
+"b": "Tatcha",
+"n": "Tatcha The Water Cream",
+"c": "skincare",
+"s": "",
+"d": "مرطب خالٍ من الزيوت يمنح البشرة نعومة وإشراقاً.",
+"k": "مرطب خفيف دهنية فاخر moisturizer",
+"id": "lm183"
+},
+{
+"b": "Cetaphil",
+"n": "Cetaphil Gentle Skin Cleanser",
+"c": "skincare",
+"s": "",
+"d": "غسول لطيف جداً للبشرة الحساسة والجافة.",
+"k": "غسول لطيف حساسة جافة cleanser",
+"id": "lm184"
+},
+{
+"b": "La Roche-Posay",
+"n": "La Roche-Posay Anthelios SPF 60",
+"c": "skincare",
+"s": "",
+"d": "واقي شمس سائل خفيف جداً بحماية عالية.",
+"k": "واقي شمس حماية عالية sunscreen spf",
+"id": "lm185"
+},
+{
+"b": "Clinique",
+"n": "Clinique Smart Clinical Repair Eye Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم عين يقلل الخطوط الدقيقة والتجاعيد حول العين.",
+"k": "كريم عين تجاعيد خطوط eye cream",
+"id": "lm186"
+},
+{
+"b": "Sunday Riley",
+"n": "Sunday Riley Good Genes",
+"c": "skincare",
+"s": "",
+"d": "علاج بحمض اللاكتيك يجدد البشرة ويمنحها إشراقاً فورياً.",
+"k": "تقشير لاكتيك اشراقة تجديد",
+"id": "lm187"
+},
+{
+"b": "Dr. Jart+",
+"n": "Dr. Jart+ Cicapair Tiger Grass",
+"c": "skincare",
+"s": "",
+"d": "كريم مصحح للون يهدئ الاحمرار ويوحّد البشرة.",
+"k": "احمرار تهدئة مصحح لون سيكا",
+"id": "lm188"
+},
+{
+"b": "SkinCeuticals",
+"n": "SkinCeuticals C E Ferulic",
+"c": "skincare",
+"s": "",
+"d": "سيروم فيتامين سي مضاد للأكسدة لحماية البشرة ونضارتها.",
+"k": "سيروم فيتامين سي مضاد اكسدة فاخر",
+"id": "lm189"
+},
+{
+"b": "Mighty Patch",
+"n": "Mighty Patch Original",
+"c": "skincare",
+"s": "",
+"d": "لصقات هيدروكولويد تمتص الحبوب وتسرّع شفاءها.",
+"k": "لصقات حبوب حب الشباب pimple patch",
+"id": "lm190"
+},
+{
+"b": "Anua",
+"n": "Anua Heartleaf Pore Control Cleansing Oil",
+"c": "skincare",
+"s": "",
+"d": "زيت منظف يذيب المكياج والدهون وينظف المسام.",
+"k": "زيت منظف مزيل مكياج مسام كوري cleansing oil",
+"id": "lm191"
+},
+{
+"b": "Torriden",
+"n": "Torriden DIVE-IN Hyaluronic Acid Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم بحمض الهيالورونيك منخفض الوزن الجزيئي لترطيب عميق.",
+"k": "سيروم ترطيب هيالورونيك كوري",
+"id": "lm192"
+},
+{
+"b": "Dr. Althea",
+"n": "Dr. Althea 345 Relief Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم مهدئ للبشرة الحساسة والمتهيجة.",
+"k": "مهدئ حساسة تهيج كريم كوري",
+"id": "lm193"
+},
+{
+"b": "Mediheal",
+"n": "Mediheal Tea Tree Essential Mask",
+"c": "skincare",
+"s": "",
+"d": "ماسك ورقي بشجرة الشاي للبشرة المعرضة للحبوب.",
+"k": "ماسك ورقي شجرة الشاي حبوب sheet mask",
+"id": "lm194"
+},
+{
+"b": "SK-II",
+"n": "SK-II Facial Treatment Essence",
+"c": "skincare",
+"s": "",
+"d": "إيسنس فاخر بالبيتيرا يجدد البشرة ويمنحها صفاءً.",
+"k": "ايسنس فاخر تجديد صفاء",
+"id": "lm195"
+},
+{
+"b": "Estée Lauder",
+"n": "Estée Lauder Advanced Night Repair",
+"c": "skincare",
+"s": "",
+"d": "سيروم ليلي يدعم تجدد البشرة أثناء النوم.",
+"k": "سيروم ليلي تجديد تجاعيد فاخر night",
+"id": "lm196"
+},
+{
+"b": "Neutrogena",
+"n": "Neutrogena Rapid Wrinkle Repair",
+"c": "skincare",
+"s": "",
+"d": "كريم بالريتينول لتقليل الخطوط الدقيقة والتجاعيد.",
+"k": "ريتينول تجاعيد خطوط retinol",
+"id": "lm197"
+},
+{
+"b": "L'Oréal Paris",
+"n": "L'Oréal Revitalift Vitamin C Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم فيتامين سي نقي لإشراقة البشرة.",
+"k": "سيروم فيتامين سي اشراقة",
+"id": "lm198"
+},
+{
+"b": "CeraVe",
+"n": "CeraVe PM Facial Moisturizing Lotion",
+"c": "skincare",
+"s": "",
+"d": "مرطب ليلي خفيف بالنياسيناميد والسيراميد.",
+"k": "مرطب ليلي خفيف نياسيناميد",
+"id": "lm199"
+},
+{
+"b": "Mario Badescu",
+"n": "Mario Badescu Drying Lotion",
+"c": "skincare",
+"s": "",
+"d": "علاج موضعي يجفف الحبوب بين ليلة وضحاها.",
+"k": "حبوب علاج موضعي حب الشباب",
+"id": "lm200"
+},
+{
+"b": "Thayers",
+"n": "Thayers Witch Hazel Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر خالٍ من الكحول بالبندق الساحر وماء الورد.",
+"k": "تونر بندق ساحر ورد مسام toner",
+"id": "lm201"
+},
+{
+"b": "Aveeno",
+"n": "Aveeno Daily Moisturizing Lotion",
+"c": "skincare",
+"s": "",
+"d": "لوشن للجسم بالشوفان يرطب البشرة الجافة يومياً.",
+"k": "لوشن جسم شوفان ترطيب جافة body",
+"id": "lm202"
+},
+{
+"b": "Eucerin",
+"n": "Eucerin Advanced Repair Cream",
+"c": "skincare",
+"s": "",
+"d": "كريم للبشرة الجافة جداً والخشنة.",
+"k": "كريم جفاف شديد خشونة جسم",
+"id": "lm203"
+},
+{
+"b": "Garnier",
+"n": "Garnier Micellar Cleansing Water",
+"c": "skincare",
+"s": "",
+"d": "ماء ميسيلار ينظف البشرة ويزيل المكياج بخطوة واحدة.",
+"k": "ميسيلار مزيل مكياج منظف micellar",
+"id": "lm204"
+},
+{
+"b": "SkinMedica",
+"n": "SkinMedica HA5 Hydrator",
+"c": "skincare",
+"s": "",
+"d": "مرطب فاخر بخمسة أنواع من حمض الهيالورونيك.",
+"k": "ترطيب هيالورونيك فاخر",
+"id": "lm205"
+},
+{
+"b": "Obagi",
+"n": "Obagi Nu-Derm Foaming Gel",
+"c": "skincare",
+"s": "",
+"d": "غسول جل رغوي بدرجة طبية للبشرة العادية والدهنية.",
+"k": "غسول دهنية طبي",
+"id": "lm206"
+},
+{
+"b": "SKIN1004",
+"n": "SKIN1004 Madagascar Centella Ampoule",
+"c": "skincare",
+"s": "",
+"d": "أمبول بخلاصة السنتيلا النقية لتهدئة البشرة.",
+"k": "سنتيلا تهدئة امبول كوري",
+"id": "lm207"
+},
+{
+"b": "Beauty of Joseon",
+"n": "Beauty of Joseon Relief Sun SPF 50+",
+"c": "skincare",
+"s": "",
+"d": "واقي شمس كوري بالأرز والبروبيوتيك بملمس خفيف.",
+"k": "واقي شمس كوري ارز sunscreen",
+"id": "lm208"
+},
+{
+"b": "Haruharu Wonder",
+"n": "Haruharu Wonder Black Rice Toner",
+"c": "skincare",
+"s": "",
+"d": "تونر بالأرز الأسود وحمض الهيالورونيك.",
+"k": "تونر ارز اسود ترطيب كوري",
+"id": "lm209"
+},
+{
+"b": "Caudalie",
+"n": "Caudalie Vinoperfect Radiance Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم لتصحيح البقع الداكنة وتوحيد لون البشرة.",
+"k": "بقع داكنة تفتيح توحيد لون سيروم",
+"id": "lm210"
+},
+{
+"b": "Peach Slices",
+"n": "Peach Slices Snail Rescue Serum",
+"c": "skincare",
+"s": "",
+"d": "سيروم بمخاط الحلزون للبشرة المعرضة للحبوب.",
+"k": "سيروم حلزون حبوب",
+"id": "lm211"
+},
+{
+"b": "Maybelline",
+"n": "Maybelline Lash Sensational Sky High Mascara",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا تطويل بفرشاة مرنة لرموش أطول.",
+"k": "ماسكارا رموش تطويل mascara",
+"id": "lm212"
+},
+{
+"b": "essence",
+"n": "essence Lash Princess Mascara",
+"c": "makeup",
+"s": "",
+"d": "ماسكارا بتأثير الرموش الصناعية وسعر مناسب.",
+"k": "ماسكارا رموش كثافة mascara",
+"id": "lm213"
+},
+{
+"b": "Julep",
+"n": "Julep Eyeshadow 101 Stick",
+"c": "makeup",
+"s": "",
+"d": "ظل عيون كريمي على شكل قلم مقاوم للماء.",
+"k": "ظل عيون قلم مقاوم للماء eyeshadow",
+"id": "lm214"
+},
+{
+"b": "Neutrogena",
+"n": "Neutrogena Makeup Remover Wipes",
+"c": "makeup",
+"s": "",
+"d": "مناديل مزيلة للمكياج حتى المقاوم للماء.",
+"k": "مزيل مكياج مناديل wipes",
+"id": "lm215"
+},
+{
+"b": "COVERGIRL",
+"n": "COVERGIRL Clean Invisible Foundation",
+"c": "makeup",
+"s": "",
+"d": "كريم أساس خفيف بمظهر طبيعي.",
+"k": "فاونديشن كريم اساس foundation",
+"id": "lm216"
+},
+{
+"b": "NYX",
+"n": "NYX Butter Gloss",
+"c": "makeup",
+"s": "lip",
+"d": "ملمع شفايف ناعم غير لزج بألوان كثيرة.",
+"k": "قلوس ملمع شفايف شفاه gloss lip",
+"id": "lm217"
+},
+{
+"b": "e.l.f.",
+"n": "e.l.f. Halo Glow Liquid Filter",
+"c": "makeup",
+"s": "",
+"d": "مستحضر سائل يمنح البشرة توهجاً ناعماً كالفلتر.",
+"k": "هايلايتر توهج اشراقة glow",
+"id": "lm218"
+},
+{
+"b": "L'Oréal Paris",
+"n": "L'Oréal Lumi Glotion",
+"c": "makeup",
+"s": "",
+"d": "مرطب ملوّن يضيف إشراقة طبيعية للبشرة.",
+"k": "اشراقة توهج مرطب ملون glow",
+"id": "lm219"
+},
+{
+"b": "Benefit",
+"n": "Benefit The POREfessional Primer",
+"c": "makeup",
+"s": "",
+"d": "برايمر يخفي المسام ويثبت المكياج.",
+"k": "برايمر مسام تثبيت primer",
+"id": "lm220"
+},
+{
+"b": "IT Cosmetics",
+"n": "IT Cosmetics CC+ Cream SPF 50",
+"c": "makeup",
+"s": "",
+"d": "كريم CC بتغطية كاملة وحماية من الشمس.",
+"k": "سي سي كريم تغطية فاونديشن cc cream",
+"id": "lm221"
+},
+{
+"b": "Revlon",
+"n": "Revlon ColorStay Eyeliner",
+"c": "makeup",
+"s": "",
+"d": "آيلاينر مقاوم للماء يدوم 24 ساعة.",
+"k": "ايلاينر كحل مقاوم للماء eyeliner",
+"id": "lm222"
+},
+{
+"b": "Real Techniques",
+"n": "Real Techniques Miracle Complexion Sponge",
+"c": "makeup",
+"s": "",
+"d": "إسفنجة لدمج كريم الأساس والكونسيلر بسلاسة.",
+"k": "اسفنجة بيوتي بلندر دمج sponge",
+"id": "lm223"
+},
+{
+"b": "Milani",
+"n": "Milani Make It Last Setting Spray",
+"c": "makeup",
+"s": "",
+"d": "بخاخ تثبيت يحافظ على المكياج طوال اليوم.",
+"k": "بخاخ تثبيت مكياج setting spray",
+"id": "lm224"
+},
+{
+"b": "Laura Mercier",
+"n": "Laura Mercier Translucent Setting Powder",
+"c": "makeup",
+"s": "",
+"d": "بودرة شفافة لتثبيت المكياج دون تكتل.",
+"k": "بودرة تثبيت شفافة powder",
+"id": "lm225"
+},
+{
+"b": "Urban Decay",
+"n": "Urban Decay Naked3 Palette",
+"c": "makeup",
+"s": "",
+"d": "باليت ظلال عيون بدرجات الوردي الدافئ.",
+"k": "باليت ظلال عيون palette",
+"id": "lm226"
+},
+{
+"b": "Nizoral",
+"n": "Nizoral Anti-Dandruff Shampoo",
+"c": "haircare",
+"s": "",
+"d": "شامبو بالكيتوكونازول 1% لمكافحة القشرة.",
+"k": "شامبو قشرة فروة الرأس shampoo",
+"id": "lm227"
+},
+{
+"b": "Moroccanoil",
+"n": "Moroccanoil Treatment",
+"c": "haircare",
+"s": "",
+"d": "زيت أرغان للشعر يمنحه نعومة ولمعاناً.",
+"k": "زيت ارغان شعر لمعان نعومة",
+"id": "lm228"
+},
+{
+"b": "Mielle",
+"n": "Mielle Rosemary Mint Scalp & Hair Oil",
+"c": "haircare",
+"s": "",
+"d": "زيت إكليل الجبل لتقوية الشعر وتغذية فروة الرأس.",
+"k": "زيت اكليل الجبل روزماري تساقط تقوية شعر",
+"id": "lm229"
+},
+{
+"b": "Revlon",
+"n": "Revlon One-Step Volumizer",
+"c": "haircare",
+"s": "",
+"d": "فرشاة هواء ساخن لتجفيف الشعر وتصفيفه بخطوة واحدة.",
+"k": "سشوار فرشاة تصفيف شعر",
+"id": "lm230"
+},
+{
+"b": "Gucci",
+"n": "Gucci Bloom Eau de Parfum",
+"c": "fragrances",
+"s": "women",
+"d": "عطر نسائي زهري غني بالياسمين ومسك الروم.",
+"k": "عطر نسائي زهري ياسمين perfume",
+"id": "lm231"
+},
+{
+"b": "Ralph Lauren",
+"n": "Ralph Lauren Polo Blue",
+"c": "fragrances",
+"s": "men",
+"d": "عطر رجالي منعش بنفحات مائية.",
+"k": "عطر رجالي منعش cologne",
+"id": "lm232"
+},
+{
+"b": "Dior",
+"n": "Dior Sauvage",
+"c": "fragrances",
+"s": "men",
+"d": "عطر رجالي قوي بنفحات البرغموت والعنبر.",
+"k": "عطر رجالي قوي سوفاج perfume",
+"id": "lm233"
+},
+{
+"b": "Beetles",
+"n": "Beetles Gel Nail Polish Kit",
+"c": "makeup",
+"s": "nail",
+"d": "مجموعة طلاء أظافر جل كاملة للاستخدام المنزلي.",
+"k": "مناكير طلاء اظافر جل nail",
+"id": "lm234"
+}
 ]
