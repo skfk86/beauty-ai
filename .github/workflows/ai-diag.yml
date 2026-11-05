@@ -24,7 +24,7 @@ jobs:
               if mode=="tool": body["tools"]=tool; body["tool_choice"]="auto"
               t=time.time()
               try:
-                r=urllib.request.urlopen(urllib.request.Request("https://api.groq.com/openai/v1/chat/completions",data=json.dumps(body).encode(),headers={"Authorization":"Bearer "+K,"Content-Type":"application/json"}),timeout=60)
+                r=urllib.request.urlopen(urllib.request.Request("https://api.groq.com/openai/v1/chat/completions",data=json.dumps(body).encode(),headers={"Authorization":"Bearer "+K,"Content-Type":"application/json","User-Agent":"lamsa-diag/1.0"}),timeout=60)
                 d=json.load(r); m=d["choices"][0]["message"]
                 out=("TOOL_CALL "+json.dumps(m["tool_calls"][0]["function"],ensure_ascii=False)) if m.get("tool_calls") else (m.get("content") or "")[:300].replace("\n"," ")
                 print(f"{M} [{mode}] {time.time()-t:.1f}s OK :: {out}")
