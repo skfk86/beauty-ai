@@ -2744,6 +2744,21 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
 .sq-step span{flex:1;display:flex;flex-direction:column;min-width:0}
 .sq-step small{font-size:11px;color:var(--v-rose);font-weight:600} .sq-step b{font-size:14px;color:var(--v-ink);unicode-bidi:plaintext;white-space:nowrap;overflow:hidden;text-overflow:ellipsis} .sq-step em{font-style:normal;font-size:12px;color:var(--v-mist)}
 .sq-step>i{color:var(--v-faint)}
+
+/* ══ Audit fixes ══ */
+.pdm-thumbs{display:none}
+html.lang-en body :where(h1,h2,h3,p,span,b,small,div,label,button,a){unicode-bidi:plaintext}
+html.lang-en .h-title,html.lang-en .h-sec-t,html.lang-en .h-hello,html.lang-en .sq-q,html.lang-en .pw-title,html.lang-en .h-ai-empty{text-align:left}
+body.light-mode .pdm-header{background:transparent}
+.pdm-header,.pdm-header-v2{background:transparent}
+.pdm-more{padding:8px 0 110px}
+.pdm-more-t{font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--v-ink);margin:8px 18px 12px}
+.pdm-more-row{display:flex;gap:10px;overflow-x:auto;padding:0 18px 4px;scrollbar-width:none}
+.pdm-more-it{flex:0 0 132px;display:flex;flex-direction:column;gap:3px;padding:0 0 10px;border-radius:16px;overflow:hidden;border:1px solid var(--v-line);background:var(--v-surface);cursor:pointer;text-align:right;font-family:inherit}
+.pdm-more-it img{width:100%;aspect-ratio:1;object-fit:cover;background:#fff}
+.pdm-more-it small{font-size:11px;font-weight:600;color:var(--v-rose);padding:0 10px;direction:ltr;text-align:right}
+.pdm-more-it b{font-size:12.5px;font-weight:600;line-height:1.4;color:var(--v-ink);padding:0 10px;unicode-bidi:plaintext;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.lang-en .pdm-more-it,html.lang-en .pdm-more-it small{text-align:left}
 </style>
 </head>
 <body>
@@ -2826,7 +2841,7 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
     <section class="h-sec">
       <button class="h-quiz" onclick="openSkinQuiz()">
         <span class="h-quiz-ic"><i class="fa-solid fa-spa"></i></span>
-        <span class="h-quiz-t"><b>اكتشفي روتينك في 30 ثانية</b><small>3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً</small></span>
+        <span class="h-quiz-t"><b data-i18n="q.card.t">اكتشفي روتينك في 30 ثانية</b><small data-i18n="q.card.s">3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً</small></span>
         <i class="fa-solid fa-chevron-left h-quiz-go"></i>
       </button>
     </section>
@@ -3019,7 +3034,7 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
       <i class="fa-solid fa-bag-shopping"></i>
     </button>
     <button class="pdm-cta-main" id="pdm-cta-main">
-      <span>عرض المنتج في المتجر</span>
+      <span data-i18n="misc.viewprod">عرض المنتج في المتجر</span>
       <i class="fa-solid fa-arrow-up-right-from-square"></i>
     </button>
   </div>
@@ -3058,7 +3073,7 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
           <i class="fa-solid fa-user" style="color:var(--v-rose);font-size:20px"></i>
         </div>
         <div>
-          <div style="font-size:16px;font-weight:900;letter-spacing:-.3px;color:var(--text)" id="prof-username">مستخدمة لمسة</div>
+          <div style="font-size:16px;font-weight:900;letter-spacing:-.3px;color:var(--text)" id="prof-username" data-i18n="prof.user">مستخدمة لمسة</div>
           <div style="font-size:11px;color:var(--dim);margin-top:3px" id="prof-email">خصوصيتكِ هي أولويتنا</div>
         </div>
       </div>
@@ -3084,17 +3099,16 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
     <!-- Settings -->
     <div id="prof-auth-actions">
     <div style="margin:14px 18px 0;background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden">
-      <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)">
-        <div style="width:32px;height:32px;border-radius:10px;background:rgba(76,175,80,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <i class="fa-solid fa-robot" style="color:#4caf50;font-size:13px"></i>
+      <div onclick="openVipModal()" role="button" style="cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)">
+        <div style="width:32px;height:32px;border-radius:50%;background:rgba(227,184,98,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="fa-solid fa-crown" style="color:var(--v-champ);font-size:13px"></i>
         </div>
         <div style="flex:1">
-          <div style="font-size:12.5px;font-weight:800;color:var(--text)" data-i18n="prof.ai.label">مساعدة لمسة الذكية</div>
-          <div style="font-size:10.5px;color:#4caf50;font-weight:700;margin-top:1px" data-i18n="prof.ai.badge">مفعّلة ✓</div>
+          <div style="font-size:12.5px;font-weight:800;color:var(--text)" data-i18n="prof.vip">اشتراك VIP</div>
+          <div style="font-size:11.5px;color:var(--v-mist);font-weight:500;margin-top:2px" id="prof-vip-state" data-i18n="prof.vip.off">غير مشتركة — اعرفي المزايا</div>
         </div>
       </div>
-      <div class="pitem" style="border-bottom:1px solid var(--border)"><div class="pic"><i class="fa-solid fa-robot"></i></div><div class="plb" data-i18n="prof.item.model">نموذج AI</div><div class="pvl">Groq Llama 4</div></div>
-      <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb" data-i18n="prof.item.theme">وضع العرض</div><div class="pvl" id="theme-lbl" data-i18n="prof.item.theme.val">داكن / فاتح</div></div>
+            <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="toggleTheme()" style="cursor:pointer"><div class="pic"><i id="theme-icon" class="fa-solid fa-moon"></i></div><div class="plb" data-i18n="prof.item.theme">وضع العرض</div><div class="pvl" id="theme-lbl" data-i18n="prof.item.theme.val">داكن / فاتح</div></div>
       <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="toggleLang()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-globe"></i></div><div class="plb" data-i18n="prof.lang.label">اللغة</div><div class="pvl" id="prof-lang-val">العربية 🇸🇦</div></div>
       <div class="pitem" style="border-bottom:1px solid var(--border)" onclick="openPrivacy()" style="cursor:pointer"><div class="pic"><i class="fa-solid fa-lock"></i></div><div class="plb" data-i18n="prof.item.privacy">الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
       <div class="pitem" onclick="openPrivacy()" style="cursor:pointer"><div class="pic" style="background:var(--rose-d)"><i class="fa-solid fa-shield-halved" style="color:var(--rose2)"></i></div><div class="plb" style="color:var(--rose2);font-weight:800" data-i18n="prof.item.policy">سياسة الخصوصية</div><div class="pvl"><i class="fa-solid fa-chevron-left" style="font-size:10px"></i></div></div>
@@ -3242,8 +3256,8 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
           <img src="assets/lamsa-logo.png" alt="لمسة" style="width:100%;height:100%;object-fit:cover">
         </div>
         <div>
-          <div class="sb-logo-txt">Lamsa</div>
-          <div class="sb-logo-sub">Your Smart Beauty Assistant</div>
+          <div class="sb-logo-txt">لمسة</div>
+          <div class="sb-logo-sub" data-i18n="sb.tag">مستشارتكِ الذكية في الجمال</div>
         </div>
       </div>
       <div style="padding:14px 16px 0">
@@ -3252,7 +3266,7 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
         </div>
         <div style="display:flex;align-items:center;gap:8px;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:9px 12px">
           <i class="fa-solid fa-circle-check" style="color:#4caf50;font-size:13px"></i>
-          <span style="font-size:11.5px;color:var(--dim);font-weight:700" data-i18n="misc.ai.active">الذكاء الاصطناعي مفعّل ويعمل تلقائياً</span>
+          <span style="font-size:11.5px;color:var(--dim);font-weight:700" id="sb-ai-status" data-i18n="sb.vip.off">الذكاء الاصطناعي متاح لمشتركات VIP</span>
         </div>
       </div>
     </div>
@@ -3316,8 +3330,8 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
           <defs><linearGradient id="pwcg" x1="2" y1="4" x2="28" y2="25" gradientUnits="userSpaceOnUse"><stop stop-color="#EED19A"/><stop offset="1" stop-color="#B8862F"/></linearGradient></defs>
         </svg>
       </div>
-      <div class="pw-eyebrow">لمسة VIP</div>
-      <h2 class="pw-title" id="pw-title">خبيرة جمالك الشخصية<br><span>بلا حدود</span></h2>
+      <div class="pw-eyebrow" data-i18n="pw.eyebrow">لمسة VIP</div>
+      <h2 class="pw-title" id="pw-title"><span data-i18n="pw.title" style="color:inherit">خبيرة جمالك الشخصية</span><br><span data-i18n="pw.title2">بلا حدود</span></h2>
     </div>
 
     <div class="pw-body">
@@ -3325,40 +3339,40 @@ html.lang-en .h-quiz{text-align:left} html.lang-en .h-quiz-go{transform:scaleX(-
 
       <div id="vip-sub-row">
         <ul class="pw-feats">
-          <li><i class="fa-solid fa-comments"></i><div><b>خبيرة جمال شخصية بالذكاء الاصطناعي</b><span>اسأليها أي شيء عن بشرتك وشعرك ومكياجك، بلا حدود</span></div></li>
-          <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>تحليل ذكي لأي منتج</b><span>هل يناسب بشرتك؟ مكوناته، طريقة استخدامه، وبدائل أوفر</span></div></li>
-          <li><i class="fa-solid fa-spa"></i><div><b>روتين مخصّص يتطوّر معكِ</b><span>تعدّلينه بالمحادثة حسب حالتك ومنتجاتك الحالية</span></div></li>
-          <li><i class="fa-solid fa-heart"></i><div><b>تدعمين تطوير لمسة</b><span>منتجات وبراندات جديدة باستمرار</span></div></li>
+          <li><i class="fa-solid fa-comments"></i><div><b data-i18n="pw.f1">خبيرة جمال شخصية بالذكاء الاصطناعي</b><span data-i18n="pw.f1s">اسأليها أي شيء عن بشرتك وشعرك ومكياجك، بلا حدود</span></div></li>
+          <li><i class="fa-solid fa-wand-magic-sparkles"></i><div><b data-i18n="pw.f2">تحليل ذكي لأي منتج</b><span data-i18n="pw.f2s">هل يناسب بشرتك؟ مكوناته، طريقة استخدامه، وبدائل أوفر</span></div></li>
+          <li><i class="fa-solid fa-spa"></i><div><b data-i18n="pw.f3">روتين مخصّص يتطوّر معكِ</b><span data-i18n="pw.f3s">تعدّلينه بالمحادثة حسب حالتك ومنتجاتك الحالية</span></div></li>
+          <li><i class="fa-solid fa-heart"></i><div><b data-i18n="pw.f4">تدعمين تطوير لمسة</b><span data-i18n="pw.f4s">منتجات وبراندات جديدة باستمرار</span></div></li>
         </ul>
 
         <div class="pw-plans" role="radiogroup" aria-label="اختاري الخطة">
           <button class="pw-plan on" data-plan="yearly" role="radio" aria-checked="true" onclick="selectVipPlan('yearly')">
-            <span class="pw-tag" id="vip-save-badge">الأوفر</span>
+            <span class="pw-tag" id="vip-save-badge" data-i18n="pw.best">الأوفر</span>
             <span class="pw-radio"></span>
-            <span class="pw-plan-txt"><b>سنوي</b><small id="vip-yearly-permonth">يُدفع مرة واحدة سنوياً</small></span>
-            <span class="pw-price"><b id="vip-price-yearly">—</b><small>/ سنة</small></span>
+            <span class="pw-plan-txt"><b data-i18n="pw.yearly">سنوي</b><small id="vip-yearly-permonth" data-i18n="pw.yearly.s">يُدفع مرة واحدة سنوياً</small></span>
+            <span class="pw-price"><b id="vip-price-yearly">—</b><small data-i18n="pw.per.y">/ سنة</small></span>
           </button>
           <button class="pw-plan" data-plan="monthly" role="radio" aria-checked="false" onclick="selectVipPlan('monthly')">
             <span class="pw-radio"></span>
-            <span class="pw-plan-txt"><b>شهري</b><small>الأكثر مرونة</small></span>
-            <span class="pw-price"><b id="vip-price-monthly">—</b><small>/ شهر</small></span>
+            <span class="pw-plan-txt"><b data-i18n="pw.monthly">شهري</b><small data-i18n="pw.monthly.s">الأكثر مرونة</small></span>
+            <span class="pw-price"><b id="vip-price-monthly">—</b><small data-i18n="pw.per.m">/ شهر</small></span>
           </button>
           <button class="pw-plan" data-plan="weekly" role="radio" aria-checked="false" onclick="selectVipPlan('weekly')">
             <span class="pw-radio"></span>
-            <span class="pw-plan-txt"><b>أسبوعي</b><small>جرّبي VIP بأقل تكلفة</small></span>
-            <span class="pw-price"><b id="vip-price-weekly">—</b><small>/ أسبوع</small></span>
+            <span class="pw-plan-txt"><b data-i18n="pw.weekly">أسبوعي</b><small data-i18n="pw.weekly.s">جرّبي VIP بأقل تكلفة</small></span>
+            <span class="pw-price"><b id="vip-price-weekly">—</b><small data-i18n="pw.per.w">/ أسبوع</small></span>
           </button>
         </div>
 
         <button class="pw-cta vip-plan-btn" id="pw-cta" data-plan="cta" onclick="purchaseVip(_vipSelectedPlan)">
-          <span class="pw-cta-lbl">اشتركي في VIP</span><span class="pw-spin"></span>
+          <span class="pw-cta-lbl" data-i18n="pw.cta">اشتركي في VIP</span><span class="pw-spin"></span>
         </button>
-        <p class="pw-legal">يتجدد الاشتراك تلقائياً بنفس السعر حتى تلغيه. يمكنك الإلغاء في أي وقت من إعدادات اشتراكات Google Play قبل 24 ساعة على الأقل من موعد التجديد.</p>
+        <p class="pw-legal" data-i18n="pw.legal">يتجدد الاشتراك تلقائياً بنفس السعر حتى تلغيه. يمكنك الإلغاء في أي وقت من إعدادات اشتراكات Google Play قبل 24 ساعة على الأقل من موعد التجديد.</p>
       </div>
 
       <div class="pw-links">
-        <button onclick="restoreVipPurchases()">استعادة المشتريات</button><i></i>
-        <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener">الخصوصية</a>
+        <button onclick="restoreVipPurchases()" data-i18n="pw.restore">استعادة المشتريات</button><i></i>
+        <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" data-i18n="pw.privacy">الخصوصية</a>
       </div>
       <div style="height:env(safe-area-inset-bottom,0px)"></div>
     </div>
@@ -3443,22 +3457,22 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
     </div>
 
     <div id="auth-name-wrap" class="auth-field au-field" style="display:none">
-      <label for="auth-name">الاسم</label>
+      <label for="auth-name" data-i18n="au.name">الاسم</label>
       <input id="auth-name" type="text" data-i18n-ph="auth.name.ph" placeholder="كيف نناديكِ؟" autocomplete="name">
     </div>
 
     <div class="auth-field au-field">
-      <label for="auth-email">البريد الإلكتروني</label>
+      <label for="auth-email" data-i18n="au.email">البريد الإلكتروني</label>
       <input id="auth-email" type="email" data-i18n-ph="auth.email.ph" placeholder="name@example.com" dir="ltr" autocomplete="email" inputmode="email">
     </div>
 
     <div class="auth-field au-field">
       <div class="au-label-row">
-        <label for="auth-pass">كلمة المرور</label>
-        <button type="button" id="auth-forgot-wrap" class="au-link" onclick="handleForgotPassword()">نسيتِ كلمة المرور؟</button>
+        <label for="auth-pass" data-i18n="au.pass">كلمة المرور</label>
+        <button type="button" id="auth-forgot-wrap" class="au-link" onclick="handleForgotPassword()" data-i18n="au.forgot">نسيتِ كلمة المرور؟</button>
       </div>
       <div class="au-pass">
-        <input id="auth-pass" type="password" placeholder="6 أحرف على الأقل" dir="ltr" autocomplete="current-password">
+        <input id="auth-pass" type="password" data-i18n-ph="au.pass.ph" placeholder="6 أحرف على الأقل" dir="ltr" autocomplete="current-password">
         <button type="button" class="auth-field-eye au-eye" onclick="toggleAuthPassVis()" aria-label="إظهار أو إخفاء كلمة المرور"><i class="fa-regular fa-eye" id="auth-pass-icon"></i></button>
       </div>
     </div>
@@ -3467,20 +3481,313 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
 
     <label class="au-agree">
       <input id="auth-agree" type="checkbox" onchange="hideAuthErrorIfAny()">
-      <span>أوافق على <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">سياسة الخصوصية</a> وشروط استخدام لمسة</span>
+      <span data-i18n="au.agree">أوافق على <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">سياسة الخصوصية</a> وشروط استخدام لمسة</span>
     </label>
 
     <button id="auth-submit-btn" class="auth-submit au-submit" onclick="handleAuthSubmit()">
-      <span id="auth-submit-label">تسجيل الدخول</span>
+      <span id="auth-submit-label" data-i18n="auth.submit.login">تسجيل الدخول</span>
       <i class="fa-solid fa-arrow-left" id="auth-submit-icon"></i>
     </button>
 
-    <button type="button" class="au-guest" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()">المتابعة بدون حساب</button>
+    <button type="button" class="au-guest" onclick="window.hideAuthScreenGlobal&&window.hideAuthScreenGlobal()" data-i18n="au.guest">المتابعة بدون حساب</button>
     <p class="au-foot">Gilgamesh LLC — لمسة © 2026</p>
   </main>
 </div>
 
 <script>
+var TRANSLATIONS = {
+  ar:{
+    'q.card.t':'اكتشفي روتينك في 30 ثانية',
+    'q.card.s':'3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً',
+    'q.q1':'ما نوع بشرتك؟',
+    'q.q2':'ما أكثر ما يزعجك؟',
+    'q.q3':'كم وقتاً تخصّصين لروتينك؟',
+    'q.oily':'دهنية',
+    'q.dry':'جافة',
+    'q.combo':'مختلطة',
+    'q.sensitive':'حساسة',
+    'q.normal':'عادية',
+    'q.acne':'الحبوب',
+    'q.spots':'البقع والتصبغات',
+    'q.dull':'البهتان وقلة الإشراق',
+    'q.aging':'الخطوط والتجاعيد',
+    'q.pores':'المسام الواسعة',
+    'q.dehyd':'الجفاف والشد',
+    'q.min':'دقيقتان (أساسيات)',
+    'q.full':'روتين كامل صباحاً ومساءً',
+    'q.back':'رجوع',
+    'q.result':'روتينك من لمسة',
+    'q.am':'الصباح',
+    'q.pm':'المساء',
+    'q.retake':'إعادة الاختبار',
+    'q.s.cleanser':'الغسول',
+    'q.s.serum':'السيروم',
+    'q.s.moist':'المرطب',
+    'q.s.spf':'واقي الشمس',
+    'q.s.remover':'مزيل المكياج',
+    'q.s.night':'علاج مسائي',
+    'q.s.nmoist':'المرطب الليلي',
+    'up.chat':'تريدين إجابة شخصية لحالتك بالذات؟',
+    'up.chat.btn':'اسألي خبيرة لمسة AI',
+    'up.routine':'تريدين روتيناً يراعي تفاصيلك ومنتجاتك الحالية؟',
+    'up.routine.btn':'اطلبيه من لمسة AI',
+    'up.prod':'تحليل شخصي يناسب بشرتك وتركيبة المنتج؟',
+    'up.prod.btn':'حلّليه بالذكاء الاصطناعي',
+    'fa.picks':'منتجات من مختارات لمسة تناسب طلبك:',
+    'fa.none':'لم أجد منتجاً مطابقاً. جرّبي كلمات مثل: مرطب، واقي شمس، ماسكارا، شامبو.',
+    'fa.quiz':'أو اكتشفي روتينك المناسب مجاناً في 30 ثانية',
+    'fg.use':'طريقة الاستخدام',
+    'fg.similar':'منتجات مشابهة',
+    'card.view':'عرض التفاصيل',
+    'cat.skincare':'عناية بالبشرة',
+    'cat.makeup':'مكياج',
+    'cat.haircare':'عناية بالشعر',
+    'cat.fragrances':'عطور',
+    'pdm.analyze':'حللي المنتج بالذكاء الاصطناعي',
+    'pdm.ask':'اسأليني عن هذا المنتج',
+    'pdm.howto':'طريقة الاستخدام',
+    'pdm.more':'قد يعجبكِ أيضاً',
+    'pw.eyebrow':'لمسة VIP',
+    'pw.title':'خبيرة جمالك الشخصية',
+    'pw.title2':'بلا حدود',
+    'pw.f1':'خبيرة جمال شخصية بالذكاء الاصطناعي',
+    'pw.f1s':'اسأليها أي شيء عن بشرتك وشعرك ومكياجك، بلا حدود',
+    'pw.f2':'تحليل ذكي لأي منتج',
+    'pw.f2s':'هل يناسب بشرتك؟ مكوناته، طريقة استخدامه، وبدائل أوفر',
+    'pw.f3':'روتين مخصّص يتطوّر معكِ',
+    'pw.f3s':'تعدّلينه بالمحادثة حسب حالتك ومنتجاتك الحالية',
+    'pw.f4':'تدعمين تطوير لمسة',
+    'pw.f4s':'منتجات وبراندات جديدة باستمرار',
+    'pw.yearly':'سنوي',
+    'pw.yearly.s':'يُدفع مرة واحدة سنوياً',
+    'pw.best':'الأوفر',
+    'pw.monthly':'شهري',
+    'pw.monthly.s':'الأكثر مرونة',
+    'pw.weekly':'أسبوعي',
+    'pw.weekly.s':'جرّبي VIP بأقل تكلفة',
+    'pw.per.y':'/ سنة',
+    'pw.per.m':'/ شهر',
+    'pw.per.w':'/ أسبوع',
+    'pw.cta':'اشتركي في VIP',
+    'pw.legal':'يتجدد الاشتراك تلقائياً بنفس السعر حتى تلغيه. يمكنك الإلغاء في أي وقت من إعدادات اشتراكات Google Play قبل 24 ساعة على الأقل من موعد التجديد.',
+    'pw.restore':'استعادة المشتريات',
+    'pw.privacy':'الخصوصية',
+    'au.email':'البريد الإلكتروني',
+    'au.pass':'كلمة المرور',
+    'au.name':'الاسم',
+    'au.forgot':'نسيتِ كلمة المرور؟',
+    'au.pass.ph':'6 أحرف على الأقل',
+    'au.agree':'أوافق على <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">سياسة الخصوصية</a> وشروط استخدام لمسة',
+    'au.guest':'المتابعة بدون حساب',
+    'sb.tag':'مستشارتكِ الذكية في الجمال',
+    'sb.vip.on':'اشتراك VIP فعّال',
+    'sb.vip.off':'الذكاء الاصطناعي متاح لمشتركات VIP',
+    'prof.vip':'اشتراك VIP','prof.user':'مستخدمة لمسة',
+    'prof.vip.on':'فعّال',
+    'prof.vip.off':'غير مشتركة — اعرفي المزايا',
+    'nav.home':'الرئيسية','nav.discover':'اكتشفي','nav.brands':'براندات',
+    'nav.favs':'مفضلتي','nav.account':'حسابي',
+    'home.subtitle':'مساعدة الجمال الذكية',
+    'home.greeting':'عن أي جمالٍ تبحثين اليوم؟',
+    'home.ai.status':'مستشارتك للجمال',
+    'home.ai.empty':'اسأليني عن منتج، مكوّن، أو روتين يناسبكِ',
+    'home.ai.placeholder':'اكتبي سؤالك…',
+    'home.featured':'منتج اليوم',
+    'home.hero.badge':'من مختارات لمسة','home.hero.btn':'عرض التفاصيل',
+    'home.cat.title':'تسوّقي حسب الفئة',
+    'home.cat.makeup':'ماكياج','home.cat.fragrance':'عطور',
+    'home.cat.skincare':'عناية بالبشرة','home.cat.hair':'عناية بالشعر',
+    'home.cat.brands':'كل المنتجات','home.cat.favs':'مفضلتي',
+    'home.cat.sub.bp':'براندات ومنتجات','home.cat.sub.ab':'جميع البراندات','home.cat.sub.sv':'المحفوظات',
+    'brands.title':'البراندات','brands.search':'ابحثي عن براند...',
+    'brands.filter.all':'الكل','brands.filter.makeup':'ماكياج',
+    'brands.filter.fragrance':'عطور','brands.filter.skincare':'بشرة','brands.filter.hair':'شعر',
+    'brands.viewall':'عرض جميع البراندات',
+    'bdet.back':'تفاصيل البراند','bdet.founded':'تأسست','bdet.origin':'المنشأ','bdet.category':'الفئة',
+    'bdet.ai.btn':'احصل على توصيات','bdet.recs.title':'✨ منتجات موصى بها لكِ',
+    'bdet.filter.all':'الكل','bdet.filter.women':'نسائي','bdet.filter.men':'رجالي',
+    'bdet.filter.new':'جديد','bdet.filter.best':'أكثر مبيعاً',
+    'bdet.featured':'أبرز المنتجات','bdet.sort':'ترتيب','bdet.viewall.prefix':'عرض جميع منتجات ',
+    'favs.title':'مفضلتي','favs.clearall':'حذف الكل',
+    'favs.empty.title':'لا توجد مفضّلة بعد',
+    'favs.empty.sub':'تصفّحي المنتجات واضغطي على قلب أي منتج لحفظه هنا',
+    'favs.empty.btn':'اكتشفي المنتجات','favs.trending':'منتجات قد تعجبكِ',
+    'favs.count.suffix':' منتج محفوظ',
+    'prof.title':'حسابي',
+    'prof.ai.label':'مساعدة لمسة الذكية',
+    'prof.ai.status':'الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨',
+    'prof.ai.badge':'مفعّلة',
+    'prof.item.model':'نموذج الذكاء الاصطناعي','prof.item.voice':'لغة الصوت',
+    'prof.item.version':'الإصدار','prof.item.theme':'وضع العرض','prof.item.theme.val':'داكن / فاتح',
+    'prof.item.privacy':'الخصوصية','prof.item.privacy.val':'لا تحليل للصور','prof.item.policy':'سياسة الخصوصية',
+    'prof.lang.label':'اللغة / Language','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
+    'prof.logout':'تسجيل الخروج','prof.login':'تسجيل الدخول / إنشاء حساب','prof.clearfavs':'حذف جميع بياناتي نهائياً',
+    'discover.title':'اكتشفي','discover.search':'ابحثي عن أي منتج...',
+    'discover.cat.makeup':'ماكياج','discover.cat.fragrance':'عطور',
+    'discover.cat.women':'عطر نسائي','discover.cat.men':'عطر رجالي',
+    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر','discover.cat.all':'الكل',
+    'discover.cat.lips':'شفاه','discover.cat.nails':'أظافر',
+    'sb.nav':'التنقل','sb.home':'الرئيسية','sb.brands':'البراندات العالمية',
+    'sb.favs':'مفضلتي','sb.cats':'التصنيفات','sb.makeup':'ماكياج',
+    'sb.fragrance':'عطور','sb.skincare':'عناية بالبشرة','sb.hair':'عناية بالشعر',
+    'sb.account':'الحساب','sb.myaccount':'حسابي','sb.vip':'اشتراك VIP','sb.coming':'قريباً',
+    'auth.login.tab':'تسجيل الدخول','auth.signup.tab':'حساب جديد',
+    'auth.name.ph':'كيف نناديكِ؟','auth.email.ph':'name@example.com','auth.pass.ph':'كلمة المرور',
+    'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'مستشارتكِ الذكية في الجمال',
+    'auth.submit.login':'تسجيل الدخول','auth.submit.signup':'إنشاء حساب',
+    'misc.viewprod':'عرض المنتج في المتجر',
+    'misc.ai.active':'الذكاء الاصطناعي مفعّل ويعمل تلقائياً',
+    'misc.ai.lang':'أجيبي دائماً باللغة العربية',
+    'misc.filter.noresult':'لا توجد بيانات كافية للفلترة — تم عرض الكل',
+    'misc.brands.viewall.tpl':'عرض جميع البراندات ({n})',
+  },
+  en:{
+    'q.card.t':'Find your routine in 30 seconds',
+    'q.card.s':'3 questions about your skin, a full routine from Lamsa picks — free',
+    'q.q1':'What is your skin type?',
+    'q.q2':'What bothers you most?',
+    'q.q3':'How much time for your routine?',
+    'q.oily':'Oily',
+    'q.dry':'Dry',
+    'q.combo':'Combination',
+    'q.sensitive':'Sensitive',
+    'q.normal':'Normal',
+    'q.acne':'Breakouts',
+    'q.spots':'Dark spots',
+    'q.dull':'Dullness',
+    'q.aging':'Fine lines',
+    'q.pores':'Large pores',
+    'q.dehyd':'Dryness & tightness',
+    'q.min':'2 minutes (basics)',
+    'q.full':'Full morning & evening routine',
+    'q.back':'Back',
+    'q.result':'Your Lamsa routine',
+    'q.am':'Morning',
+    'q.pm':'Evening',
+    'q.retake':'Retake the quiz',
+    'q.s.cleanser':'Cleanser',
+    'q.s.serum':'Serum',
+    'q.s.moist':'Moisturizer',
+    'q.s.spf':'Sunscreen',
+    'q.s.remover':'Makeup remover',
+    'q.s.night':'Night treatment',
+    'q.s.nmoist':'Night moisturizer',
+    'up.chat':'Want a personal answer for you?',
+    'up.chat.btn':'Ask Lamsa AI',
+    'up.routine':'Want a routine tailored to your details?',
+    'up.routine.btn':'Ask Lamsa AI',
+    'up.prod':'A personal analysis for your skin?',
+    'up.prod.btn':'Analyze with AI',
+    'fa.picks':'Lamsa picks for you:',
+    'fa.none':'No match. Try: moisturizer, sunscreen, mascara, shampoo.',
+    'fa.quiz':'Or find your routine free in 30 seconds',
+    'fg.use':'How to use',
+    'fg.similar':'Similar products',
+    'card.view':'View details',
+    'cat.skincare':'Skincare',
+    'cat.makeup':'Makeup',
+    'cat.haircare':'Hair care',
+    'cat.fragrances':'Fragrance',
+    'pdm.analyze':'Analyze with AI',
+    'pdm.ask':'Ask about this product',
+    'pdm.howto':'How to use',
+    'pdm.more':'You may also like',
+    'pw.eyebrow':'Lamsa VIP',
+    'pw.title':'Your personal beauty expert',
+    'pw.title2':'unlimited',
+    'pw.f1':'A personal AI beauty expert',
+    'pw.f1s':'Ask anything about skin, hair and makeup, unlimited',
+    'pw.f2':'Smart analysis of any product',
+    'pw.f2s':'Is it right for you? Ingredients, how to use, cheaper swaps',
+    'pw.f3':'A routine that grows with you',
+    'pw.f3s':'Adjust it by chat to your needs and products',
+    'pw.f4':'Support Lamsa',
+    'pw.f4s':'New products and brands all the time',
+    'pw.yearly':'Yearly',
+    'pw.yearly.s':'Billed once a year',
+    'pw.best':'Best value',
+    'pw.monthly':'Monthly',
+    'pw.monthly.s':'Most flexible',
+    'pw.weekly':'Weekly',
+    'pw.weekly.s':'Try VIP for less',
+    'pw.per.y':'/ year',
+    'pw.per.m':'/ month',
+    'pw.per.w':'/ week',
+    'pw.cta':'Subscribe to VIP',
+    'pw.legal':'Renews automatically at the same price until cancelled. Cancel anytime in Google Play subscriptions at least 24 hours before renewal.',
+    'pw.restore':'Restore purchases',
+    'pw.privacy':'Privacy',
+    'au.email':'Email',
+    'au.pass':'Password',
+    'au.name':'Name',
+    'au.forgot':'Forgot password?',
+    'au.pass.ph':'At least 6 characters',
+    'au.agree':'I agree to the <a href="https://skfk86.github.io/beauty-ai/index.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Privacy Policy</a> and Lamsa terms',
+    'au.guest':'Continue without an account',
+    'sb.tag':'Your smart beauty advisor',
+    'sb.vip.on':'VIP is active',
+    'sb.vip.off':'AI is available with VIP',
+    'prof.vip':'VIP subscription','prof.user':'Lamsa user',
+    'prof.vip.on':'Active',
+    'prof.vip.off':'Not subscribed — see benefits',
+    'nav.home':'Home','nav.discover':'Discover','nav.brands':'Brands',
+    'nav.favs':'Favorites','nav.account':'Account',
+    'home.subtitle':'Smart Beauty Assistant',
+    'home.greeting':'What are you looking for today?',
+    'home.ai.status':'Your beauty advisor',
+    'home.ai.empty':'Ask about a product, an ingredient, or a routine',
+    'home.ai.placeholder':'Type your question…',
+    'home.featured':'Product of the day',
+    'home.hero.badge':'Lamsa pick','home.hero.btn':'View details',
+    'home.cat.title':'Shop by category',
+    'home.cat.makeup':'Makeup','home.cat.fragrance':'Fragrances',
+    'home.cat.skincare':'Skincare','home.cat.hair':'Hair Care',
+    'home.cat.brands':'All products','home.cat.favs':'Favorites',
+    'home.cat.sub.bp':'Brands & Products','home.cat.sub.ab':'All Brands','home.cat.sub.sv':'Saved',
+    'brands.title':'Brands','brands.search':'Search brands...',
+    'brands.filter.all':'All','brands.filter.makeup':'Makeup',
+    'brands.filter.fragrance':'Fragrances','brands.filter.skincare':'Skincare','brands.filter.hair':'Hair',
+    'brands.viewall':'View All Brands',
+    'bdet.back':'Brand Details','bdet.founded':'Founded','bdet.origin':'Origin','bdet.category':'Category',
+    'bdet.ai.btn':'Get Recommendations','bdet.recs.title':'✨ Recommended for you',
+    'bdet.filter.all':'All','bdet.filter.women':'Women','bdet.filter.men':'Men',
+    'bdet.filter.new':'New','bdet.filter.best':'Best Sellers',
+    'bdet.featured':'Featured Products','bdet.sort':'Sort','bdet.viewall.prefix':'View all products of ',
+    'favs.title':'Favorites','favs.clearall':'Clear All',
+    'favs.empty.title':'No favorites yet',
+    'favs.empty.sub':'Browse products and tap the heart on any item to save it here',
+    'favs.empty.btn':'Explore Products','favs.trending':'Products you might like',
+    'favs.count.suffix':' saved',
+    'prof.title':'Account',
+    'prof.ai.label':'Lamsa Smart Assistant',
+    'prof.ai.status':'AI ready and working automatically — no setup needed ✨',
+    'prof.ai.badge':'Active',
+    'prof.item.model':'AI Model','prof.item.voice':'Voice Language',
+    'prof.item.version':'Version','prof.item.theme':'Display Mode','prof.item.theme.val':'Dark / Light',
+    'prof.item.privacy':'Privacy','prof.item.privacy.val':'No Image Analysis','prof.item.policy':'Privacy Policy',
+    'prof.lang.label':'Language / اللغة','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
+    'prof.logout':'Sign Out','prof.login':'Sign In / Create Account','prof.clearfavs':'Delete All My Data Permanently',
+    'discover.title':'Discover','discover.search':'Search any product...',
+    'discover.cat.makeup':'Makeup','discover.cat.fragrance':'Fragrances',
+    'discover.cat.women':'Women\'s Scent','discover.cat.men':'Men\'s Scent',
+    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair','discover.cat.all':'All',
+    'discover.cat.lips':'Lips','discover.cat.nails':'Nails',
+    'sb.nav':'Navigation','sb.home':'Home','sb.brands':'Global Brands',
+    'sb.favs':'My Favorites','sb.cats':'Categories','sb.makeup':'Makeup',
+    'sb.fragrance':'Fragrances','sb.skincare':'Skincare','sb.hair':'Hair Care',
+    'sb.account':'Account','sb.myaccount':'My Account','sb.vip':'VIP Subscription','sb.coming':'Coming Soon',
+    'auth.login.tab':'Sign In','auth.signup.tab':'New Account',
+    'auth.name.ph':'What should we call you?','auth.email.ph':'name@example.com','auth.pass.ph':'Password',
+    'auth.forgot':'Forgot password?','auth.tagline':'Your smart beauty advisor',
+    'auth.submit.login':'Sign In','auth.submit.signup':'Create Account',
+    'misc.viewprod':'View Product in Store',
+    'misc.ai.active':'AI is active and working automatically',
+    'misc.ai.lang':'Always respond in English',
+    'misc.filter.noresult':'Not enough data for filtering — showing all',
+    'misc.brands.viewall.tpl':'View All Brands ({n})',
+  }
+};
+
 // ══════════════════════════════════════════════════════
 // كتالوج لمسة — منتجات مختارة يدوياً (بديل Open Beauty Facts)
 // المصدر: data/catalog.json — لإضافة منتج عدّلي الملف ثم انسخي السطر هنا.
@@ -4236,7 +4543,7 @@ function initHeroCard(){
   const x = pool[Math.floor(Date.now()/864e5) % pool.length];
   _heroProd = x;
   document.getElementById('hero-name').textContent = x.n;
-  document.getElementById('hero-cat').textContent = x.b+' · '+(_CAT_LABEL[x.c]||'');
+  document.getElementById('hero-cat').textContent = x.b+' · '+t('cat.'+x.c);
   const wrap=document.getElementById('hero-logo-wrap');
   if(wrap){
     if(x.img){ wrap.innerHTML=`<img src="${x.img}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<span class=&quot;h-feat-mono&quot;>${_brandMono(x.b)}</span>'">`; }
@@ -5377,7 +5684,11 @@ async function openVipModal(){
 }
 function closeVipModal(){ const m=document.getElementById('vip-modal'); if(m) m.style.display='none'; }
 function updateVipUI(){
-  isVipActive().then(on=>{ const b=document.getElementById('h-ai-vip'); if(b) b.style.display=on?'none':''; }).catch(()=>{});
+  isVipActive().then(on=>{
+    const b=document.getElementById('h-ai-vip'); if(b) b.style.display=on?'none':'';
+    const ps=document.getElementById('prof-vip-state'); if(ps){ ps.setAttribute('data-i18n',on?'prof.vip.on':'prof.vip.off'); ps.textContent=t(on?'prof.vip.on':'prof.vip.off'); ps.style.color=on?'var(--v-champ)':''; }
+    const ss=document.getElementById('sb-ai-status'); if(ss){ ss.setAttribute('data-i18n',on?'sb.vip.on':'sb.vip.off'); ss.textContent=t(on?'sb.vip.on':'sb.vip.off'); }
+  }).catch(()=>{});
   isVipActive().then(a=>{
     document.querySelectorAll('.vip-badge').forEach(el=>el.style.display=a?'inline-flex':'none');
     document.querySelectorAll('.hdr-vip').forEach(btn=>{
@@ -5743,7 +6054,7 @@ function applyTheme(){
   const icon=document.getElementById('theme-icon');
   const lbl=document.getElementById('theme-lbl');
   if(icon) icon.className=isDark?'fa-solid fa-moon':'fa-solid fa-sun';
-  if(lbl)  lbl.textContent=isDark?'🌙 Dark':'☀️ Light';
+  if(lbl)  lbl.textContent=(typeof currentLang!=='undefined'&&currentLang==='en')?(isDark?'Dark':'Light'):(isDark?'داكن':'فاتح');
 }
 function toggleTheme(){
   const isLight=document.body.classList.contains('light-mode');
@@ -5758,14 +6069,15 @@ init();
 applyTheme();
 initSplash();
 const AMZN_TAG = 'rosivabeauty-21'; // Amazon UK Associates
-let obfLoading = false;
-let obfPage = 1;
-let obfHasMore = true;
-let obfCurrentParams = '';
-let obfLoadedCount = 0;
-let obfSeenSet = new Set();
-let obfCatParamsList = []; // قائمة params للفئة الحالية
-let obfCatParamsIdx  = 0;  // الـ param الحالي
+var obfLoading = false;
+var obfPage = 1;
+var obfHasMore = true;
+var obfCurrentParams = '';
+var obfLoadedCount = 0;
+var obfSeenSet = new Set();
+var obfCatParamsList = []; // قائمة params للفئة الحالية
+var obfCatParamsIdx  = 0;  // الـ param الحالي
+// (var بدل let: تُستدعى شاشة اكتشفي أحياناً أثناء init() قبل هذا السطر)
 
 async function searchOBF(){
   const q = document.getElementById('obf-srch').value.trim();
@@ -5829,11 +6141,11 @@ function freeAssistant(text){
     reply.innerHTML=`
       ${tip?`<div class="fa-tip">${tip}</div>`:''}
       <div class="fa-upsell">
-        <span>${ar?'تريدين إجابة شخصية لحالتك بالذات؟':'Want a personal answer?'}</span>
-        <button onclick="openVipModal()">${ar?'اسألي خبيرة لمسة AI':'Ask Lamsa AI'} <b>VIP</b></button>
+        <span>${t('up.chat')}</span>
+        <button onclick="openVipModal()">${t('up.chat.btn')} <b>VIP</b></button>
       </div>
-      <div class="fa-note">${prods.length?(ar?'منتجات من مختارات لمسة تناسب طلبك:':'Lamsa picks for you:'):(ar?'لم أجد منتجاً مطابقاً. جرّبي كلمات مثل: مرطب، واقي شمس، ماسكارا، شامبو.':'No match. Try: moisturizer, sunscreen, mascara.')}</div>
-      <button class="fa-quiz-link" onclick="openSkinQuiz()">${ar?'أو اكتشفي روتينك المناسب مجاناً في 30 ثانية':'Or find your routine free in 30 seconds'}</button>`;
+      <div class="fa-note">${prods.length?t('fa.picks'):t('fa.none')}</div>
+      <button class="fa-quiz-link" onclick="openSkinQuiz()">${t('fa.quiz')}</button>`;
   }
   const oldCards=document.getElementById('ai-prod-recs'); if(oldCards) oldCards.remove();
   if(prods.length && typeof showAIProductCards==='function') showAIProductCards(prods);
@@ -5863,19 +6175,19 @@ function freeProductGuide(p, el){
   const use=(_USAGE.find(([re])=>re.test(p.name))||[,'استخدميه حسب التعليمات على العبوة.'])[1];
   const sim=LAMSA_CATALOG.filter(y=>y.c===x.c && y.n!==x.n && y.k && x.k && y.k.split(' ').some(w=>w.length>2&&x.k.includes(w))).slice(0,3);
   el.innerHTML=`
-    <div class="fg-row"><b>طريقة الاستخدام</b><span>${use}</span></div>
-    ${sim.length?`<div class="fg-row"><b>منتجات مشابهة</b><span>${sim.map(y=>`<a href="#" onclick="event.preventDefault();openProdDetail({name:'${y.n.replace(/'/g,"\\'")}',brand:'${y.b.replace(/'/g,"\\'")}',img:'${y.img||''}',ingr:'',labels:''})">${y.b} — ${y.n}</a>`).join('')}</span></div>`:''}
-    <div class="fa-upsell"><span>تحليل شخصي يناسب بشرتك وتركيبة المنتج؟</span><button onclick="openVipModal()">حلّليه بالذكاء الاصطناعي <b>VIP</b></button></div>`;
+    <div class="fg-row"><b>${t('fg.use')}</b><span>${use}</span></div>
+    ${sim.length?`<div class="fg-row"><b>${t('fg.similar')}</b><span>${sim.map(y=>`<a href="#" onclick="event.preventDefault();openProdDetail({name:'${y.n.replace(/'/g,"\\'")}',brand:'${y.b.replace(/'/g,"\\'")}',img:'${y.img||''}',ingr:'',labels:''})">${y.b} — ${y.n}</a>`).join('')}</span></div>`:''}
+    <div class="fa-upsell"><span>${t('up.prod')}</span><button onclick="openVipModal()">${t('up.prod.btn')} <b>VIP</b></button></div>`;
   el.style.display='block';
 }
 
 // ── اختبار البشرة → روتين لمسة ──
 const _QUIZ=[
-  {k:'type', q:'ما نوع بشرتك؟', a:[['oily','دهنية'],['dry','جافة'],['combo','مختلطة'],['sensitive','حساسة'],['normal','عادية']]},
-  {k:'concern', q:'ما أكثر ما يزعجك؟', a:[['acne','الحبوب'],['spots','البقع والتصبغات'],['dull','البهتان وقلة الإشراق'],['aging','الخطوط والتجاعيد'],['pores','المسام الواسعة'],['dehyd','الجفاف والشد']]},
-  {k:'time', q:'كم وقتاً تخصّصين لروتينك؟', a:[['min','دقيقتان (أساسيات)'],['full','روتين كامل صباحاً ومساءً']]},
+  {k:'type', q:'q.q1', a:['oily','dry','combo','sensitive','normal']},
+  {k:'concern', q:'q.q2', a:['acne','spots','dull','aging','pores','dehyd']},
+  {k:'time', q:'q.q3', a:['min','full']},
 ];
-let _quizAns={}, _quizStep=0;
+var _quizAns={}, _quizStep=0;
 function openSkinQuiz(){
   _quizAns={}; _quizStep=0;
   let m=document.getElementById('skin-quiz');
@@ -5888,9 +6200,9 @@ function _renderQuiz(){
   m.innerHTML=`<div class="sq-sheet" role="dialog" aria-modal="true">
     <div class="sq-top"><button class="sq-x" onclick="closeSkinQuiz()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button>
       <div class="sq-prog">${_QUIZ.map((_,i)=>`<i class="${i<=_quizStep?'on':''}"></i>`).join('')}</div></div>
-    <h3 class="sq-q">${s.q}</h3>
-    <div class="sq-opts">${s.a.map(([v,l])=>`<button onclick="_quizPick('${s.k}','${v}')">${l}</button>`).join('')}</div>
-    ${_quizStep?`<button class="sq-back" onclick="_quizStep--;_renderQuiz()">رجوع</button>`:''}
+    <h3 class="sq-q">${t(s.q)}</h3>
+    <div class="sq-opts">${s.a.map(v=>`<button onclick="_quizPick('${s.k}','${v}')">${t('q.'+v)}</button>`).join('')}</div>
+    ${_quizStep?`<button class="sq-back" onclick="_quizStep--;_renderQuiz()">${t('q.back')}</button>`:''}
   </div>`;
 }
 function _quizPick(k,v){ _quizAns[k]=v; if(++_quizStep<_QUIZ.length) _renderQuiz(); else _renderRoutine(); }
@@ -5905,11 +6217,11 @@ function _buildRoutine(a){
   const treat={acne:'حبوب ازيليك',spots:'بقع تفتيح فيتامين سي',dull:'اشراقة سيروم',aging:'تجاعيد ريتينول ببتيد',pores:'مسام نياسيناميد',dehyd:'ترطيب هيالورونيك سيروم'}[a.concern];
   const moist={oily:'مرطب جل خفيف',dry:'مرطب سيراميد',combo:'مرطب خفيف',sensitive:'مهدئ حساسة',normal:'مرطب'}[a.type];
   const SER=/serum|ampoule|essence|drops|treatment/i;
-  const am=[['الغسول',_pick(cleanser,used,'skincare',/cleanser|wash|foam/i)],['السيروم',_pick(treat+' سيروم',used,'skincare',SER)],
-            ['المرطب',_pick(moist,used,'skincare',/cream|moistur|gel|lotion/i)],['واقي الشمس',_pick('واقي شمس',used,'skincare',/spf|sun/i)]];
-  const pm=a.time==='full'?[['مزيل المكياج',_pick('زيت منظف مزيل مكياج بلسم',used,'skincare',/cleansing|balm|oil/i)],
-            ['علاج مسائي',_pick(a.concern==='aging'?'ريتينال ريتينول تجاعيد':a.concern==='acne'?'حبوب علاج لصقات':treat,used,'skincare',a.concern==='acne'?/patch|treat|dots|spot/i:SER)],
-            ['المرطب الليلي',_pick(a.type==='oily'?'مرطب خفيف جل':'ماسك ليلي ترطيب',used,'skincare',/mask|cream|moistur/i)]]:[];
+  const am=[[t('q.s.cleanser'),_pick(cleanser,used,'skincare',/cleanser|wash|foam/i)],[t('q.s.serum'),_pick(treat+' سيروم',used,'skincare',SER)],
+            [t('q.s.moist'),_pick(moist,used,'skincare',/cream|moistur|gel|lotion/i)],[t('q.s.spf'),_pick('واقي شمس',used,'skincare',/spf|sun/i)]];
+  const pm=a.time==='full'?[[t('q.s.remover'),_pick('زيت منظف مزيل مكياج بلسم',used,'skincare',/cleansing|balm|oil/i)],
+            [t('q.s.night'),_pick(a.concern==='aging'?'ريتينال ريتينول تجاعيد':a.concern==='acne'?'حبوب علاج لصقات':treat,used,'skincare',a.concern==='acne'?/patch|treat|dots|spot/i:SER)],
+            [t('q.s.nmoist'),_pick(a.type==='oily'?'مرطب خفيف جل':'ماسك ليلي ترطيب',used,'skincare',/mask|cream|moistur/i)]]:[];
   return {am:am.filter(s=>s[1]),pm:pm.filter(s=>s[1])};
 }
 function _renderRoutine(){
@@ -5920,11 +6232,11 @@ function _renderRoutine(){
   const m=document.getElementById('skin-quiz');
   m.innerHTML=`<div class="sq-sheet" role="dialog" aria-modal="true">
     <div class="sq-top"><button class="sq-x" onclick="closeSkinQuiz()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
-    <h3 class="sq-q">روتينك من لمسة</h3>
-    <div class="sq-sec">الصباح</div>${r.am.map(row).join('')}
-    ${r.pm.length?`<div class="sq-sec">المساء</div>${r.pm.map(row).join('')}`:''}
-    <div class="fa-upsell"><span>تريدين روتيناً يراعي تفاصيلك ومنتجاتك الحالية؟</span><button onclick="closeSkinQuiz();openVipModal()">اطلبيه من لمسة AI <b>VIP</b></button></div>
-    <button class="sq-back" onclick="openSkinQuiz()">إعادة الاختبار</button>
+    <h3 class="sq-q">${t('q.result')}</h3>
+    <div class="sq-sec">${t('q.am')}</div>${r.am.map(row).join('')}
+    ${r.pm.length?`<div class="sq-sec">${t('q.pm')}</div>${r.pm.map(row).join('')}`:''}
+    <div class="fa-upsell"><span>${t('up.routine')}</span><button onclick="closeSkinQuiz();openVipModal()">${t('up.routine.btn')} <b>VIP</b></button></div>
+    <button class="sq-back" onclick="openSkinQuiz()">${t('q.retake')}</button>
   </div>`;
 }
 
@@ -5992,7 +6304,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
 
   // محتوى البطاقة (اسم + تصنيف + مكونات + رابط التفاصيل)
   const _ce = _catByName(name);
-  const {cat} = _ce ? {cat:_CAT_LABEL[_ce.c]} : guessArabicDesc(name, labels);
+  const {cat} = _ce ? {cat:t('cat.'+_ce.c)} : guessArabicDesc(name, labels);
   const chips = parseIngrChips(ingr);
 
   const body = document.createElement('div');
@@ -6022,7 +6334,7 @@ function makeProductCard(name, brand, img, ingr, labels, code){
   footer.className = 'obf-card-footer';
   const link = document.createElement('span');
   link.className = 'obf-card-link';
-  link.innerHTML = '<i class="fa-solid fa-arrow-left"></i> عرض التفاصيل';
+  link.innerHTML = '<i class="fa-solid fa-arrow-left"></i> '+t('card.view');
   const cartBtn = document.createElement('button');
   cartBtn.className = 'obf-card-cart';
   cartBtn.title = 'شراء';
@@ -6102,7 +6414,7 @@ function detectProductIntent(text){
 }
 
 // حالة انتظار تأكيد المستخدم
-let _pendingProductQuery = null;
+var _pendingProductQuery = null;
 const CONFIRM_KEYWORDS = ['نعم','أيوا','اعرض','ايوه','يلا','تمام','اكيد','yes','ok','sure','show'];
 const DENY_KEYWORDS    = ['لا','لأ','لع','no','nope','cancel'];
 
@@ -6202,7 +6514,7 @@ function showAIProductCards(prods){
       ${brand?`<div style="font-size:8.5px;color:var(--rose2);font-weight:900;letter-spacing:.15em;margin-bottom:4px">${brand}</div>`:''}
       <div style="font-size:12px;color:var(--text);font-weight:700;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">${name}</div>
       <div style="margin-top:8px;display:flex;align-items:center;gap:4px;color:var(--dim);font-size:10px;font-weight:700">
-        <i class="fa-solid fa-arrow-left" style="font-size:8px"></i> عرض التفاصيل
+        <i class="fa-solid fa-arrow-left" style="font-size:8px"></i> ${t('card.view')}
       </div>`;
     card.appendChild(info);
     grid.appendChild(card);
@@ -6415,7 +6727,7 @@ async function loadBrandProdsOBF(b){
 
 
 // ══ PRODUCT DETAIL — Amazon Style ══
-let currentProd = null;
+var currentProd = null;
 
 function openProdDetail(p){
   currentProd = p;
@@ -6449,7 +6761,8 @@ function openProdDetail(p){
   const isNatural = lLow.includes('natural');
   const isCruelty = lLow.includes('cruelty');
 
-  const {cat, desc, extra} = guessArabicDesc(p.name, labels);
+  let {cat, desc, extra} = guessArabicDesc(p.name, labels);
+  { const _ce=_catByName(p.name); if(_ce) cat=t('cat.'+_ce.c); }
   const chips = parseIngrChips(p.ingr);
 
   body.innerHTML = `
@@ -6500,10 +6813,10 @@ function openProdDetail(p){
                color:var(--rose2);transition:transform .15s,box-shadow .15s;
                box-shadow:0 4px 20px rgba(181,83,42,.1)">
         <i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i>
-        <span>حللي المنتج بالذكاء الاصطناعي ✨</span>
+        <span>${t('pdm.analyze')}</span>
       </button>
       <button id="pdm-ask-btn" onclick="askProdAI()" style="display:none;width:100%;margin-top:8px;border:none;border-radius:14px;padding:11px;cursor:pointer;background:var(--card2);border:1px solid var(--border);font-family:'IBM Plex Sans Arabic','Cairo',sans-serif;font-size:12.5px;font-weight:700;color:var(--dim);transition:transform .15s">
-        <i class="fa-solid fa-comment-dots"></i> اسأليني عن هذا المنتج
+        <i class="fa-solid fa-comment-dots"></i> ${t('pdm.ask')}
       </button>
     </div>
 
@@ -6524,7 +6837,7 @@ function openProdDetail(p){
     <!-- How to use -->
     <div class="pdm-section">
       <div class="pdm-section-hd" onclick="togglePdmSection(this)">
-        <i class="fa-solid fa-circle-info"></i> طريقة الاستخدام
+        <i class="fa-solid fa-circle-info"></i> ${t('pdm.howto')}
         <i class="fa-solid fa-chevron-down chevron"></i>
       </div>
       <div class="pdm-section-body">
@@ -6543,6 +6856,7 @@ function openProdDetail(p){
   document.getElementById('pdm-cta-main').onclick = ()=> buyOnAmazon(p.name, p.brand||'');
   document.getElementById('pdm-cta-bag').onclick  = ()=> searchSephora(p.name);
 
+  _pdmMore(p);
   modal.classList.add('open');
 
   // إعادة ضبط قسم AI في كل فتح
@@ -6556,7 +6870,7 @@ function openProdDetail(p){
     aiBtn.style.borderColor='rgba(181,83,42,.25)';
     aiBtn.style.color='var(--rose2)';
     aiBtn.style.padding='15px 20px';
-    aiBtn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i><span>حللي المنتج بالذكاء الاصطناعي ✨</span>';
+    aiBtn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i><span>'+t('pdm.analyze')+'</span>';
   }
   if(askBtn) askBtn.style.display='none';
 }
@@ -6693,21 +7007,33 @@ async function loadProdAI(p){
     if(analyzeBtn){
       analyzeBtn.style.opacity='1';
       analyzeBtn.style.pointerEvents='all';
-      analyzeBtn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i><span>حللي المنتج بالذكاء الاصطناعي ✨</span>';
+      analyzeBtn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles" style="font-size:16px"></i><span>'+t('pdm.analyze')+'</span>';
     }
   }
 }
 
+function _pdmMore(p){
+  const body=document.getElementById('pdm-body'); if(!body) return;
+  const x=_catByName(p.name); if(!x) return;
+  const kw=(x.k||'').split(' ').filter(w=>w.length>2);
+  const pool=LAMSA_CATALOG.filter(y=>y.c===x.c && y.n!==x.n && y.img);
+  pool.sort((a,b)=>kw.filter(w=>b.k.includes(w)).length-kw.filter(w=>a.k.includes(w)).length || (a.b===x.b)-(b.b===x.b));
+  const list=pool.slice(0,8); if(!list.length) return;
+  const esc=v=>String(v).replace(/\\/g,'').replace(/'/g,"\\'");
+  const sec=document.createElement('div'); sec.className='pdm-more';
+  sec.innerHTML=`<div class="pdm-more-t">${t('pdm.more')}</div><div class="pdm-more-row">${list.map(y=>`
+    <button class="pdm-more-it" onclick="openProdDetail({name:'${esc(y.n)}',brand:'${esc(y.b)}',img:'${y.img}',ingr:'',labels:''});document.getElementById('pdm-body').scrollTop=0">
+      <img src="${y.img}" alt="" loading="lazy"><small>${y.b}</small><b>${y.n}</b></button>`).join('')}</div>`;
+  body.appendChild(sec);
+}
 function askProdAI(){
   if(!currentProd) return;
+  const name=currentProd.name;
   closeProdDetail();
   navTo('home');
   setTimeout(()=>{
-    const inp = document.getElementById('ai-inp');
-    if(inp){
-      inp.value = 'Tell me about: ' + currentProd.name;
-      doAI();
-    }
+    const inp=document.getElementById('ai-chat-inp');
+    if(inp){ inp.value=(currentLang==='en'?'Tell me about: ':'حدّثيني عن: ')+name; sendAIChat(); }
   },300);
 }
 
@@ -6765,7 +7091,7 @@ function updateProfView(){
     // مستخدم مسجّل
     if(guestBox) guestBox.style.display='none';
     if(authBox)  authBox.style.display='block';
-    if(usernameEl) usernameEl.textContent = window._authUser.displayName || 'مستخدمة لمسة';
+    if(usernameEl) usernameEl.textContent = window._authUser.displayName || t('prof.user');
     if(emailEl)    emailEl.textContent    = window._authUser.email || '';
     if(authBtn){
       authBtn.innerHTML=`<i class="fa-solid fa-arrow-right-from-bracket"></i> ${t('prof.logout')}`;
@@ -6806,127 +7132,12 @@ function updateProfAuthBtn(){
 // ══════════════════════════════════════
 //  I18N SYSTEM — نظام ثنائية اللغة
 // ══════════════════════════════════════
-const TRANSLATIONS = {
-  ar:{
-    'nav.home':'الرئيسية','nav.discover':'اكتشفي','nav.brands':'براندات',
-    'nav.favs':'مفضلتي','nav.account':'حسابي',
-    'home.subtitle':'مساعدة الجمال الذكية',
-    'home.greeting':'عن أي جمالٍ تبحثين اليوم؟',
-    'home.ai.status':'مستشارتك للجمال',
-    'home.ai.empty':'اسأليني عن منتج، مكوّن، أو روتين يناسبكِ',
-    'home.ai.placeholder':'اكتبي سؤالك…',
-    'home.featured':'منتج اليوم',
-    'home.hero.badge':'من مختارات لمسة','home.hero.btn':'عرض التفاصيل',
-    'home.cat.title':'تسوّقي حسب الفئة',
-    'home.cat.makeup':'ماكياج','home.cat.fragrance':'عطور',
-    'home.cat.skincare':'عناية بالبشرة','home.cat.hair':'عناية بالشعر',
-    'home.cat.brands':'كل المنتجات','home.cat.favs':'مفضلتي',
-    'home.cat.sub.bp':'براندات ومنتجات','home.cat.sub.ab':'جميع البراندات','home.cat.sub.sv':'المحفوظات',
-    'brands.title':'البراندات','brands.search':'ابحثي عن براند...',
-    'brands.filter.all':'الكل','brands.filter.makeup':'ماكياج',
-    'brands.filter.fragrance':'عطور','brands.filter.skincare':'بشرة','brands.filter.hair':'شعر',
-    'brands.viewall':'عرض جميع البراندات',
-    'bdet.back':'تفاصيل البراند','bdet.founded':'تأسست','bdet.origin':'المنشأ','bdet.category':'الفئة',
-    'bdet.ai.btn':'احصل على توصيات','bdet.recs.title':'✨ منتجات موصى بها لكِ',
-    'bdet.filter.all':'الكل','bdet.filter.women':'نسائي','bdet.filter.men':'رجالي',
-    'bdet.filter.new':'جديد','bdet.filter.best':'أكثر مبيعاً',
-    'bdet.featured':'أبرز المنتجات','bdet.sort':'ترتيب','bdet.viewall.prefix':'عرض جميع منتجات ',
-    'favs.title':'مفضلتي','favs.clearall':'حذف الكل',
-    'favs.empty.title':'لا توجد مفضّلة بعد',
-    'favs.empty.sub':'تصفّحي المنتجات واضغطي على قلب أي منتج لحفظه هنا',
-    'favs.empty.btn':'اكتشفي المنتجات','favs.trending':'منتجات قد تعجبكِ',
-    'favs.count.suffix':' منتج محفوظ',
-    'prof.title':'حسابي',
-    'prof.ai.label':'مساعدة لمسة الذكية',
-    'prof.ai.status':'الذكاء الاصطناعي جاهز ويعمل تلقائياً — لا حاجة لأي إعداد ✨',
-    'prof.ai.badge':'مفعّلة',
-    'prof.item.model':'نموذج الذكاء الاصطناعي','prof.item.voice':'لغة الصوت',
-    'prof.item.version':'الإصدار','prof.item.theme':'وضع العرض','prof.item.theme.val':'داكن / فاتح',
-    'prof.item.privacy':'الخصوصية','prof.item.privacy.val':'لا تحليل للصور','prof.item.policy':'سياسة الخصوصية',
-    'prof.lang.label':'اللغة / Language','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
-    'prof.logout':'تسجيل الخروج','prof.login':'تسجيل الدخول / إنشاء حساب','prof.clearfavs':'حذف جميع بياناتي نهائياً',
-    'discover.title':'اكتشفي','discover.search':'ابحثي عن أي منتج...',
-    'discover.cat.makeup':'ماكياج','discover.cat.fragrance':'عطور',
-    'discover.cat.women':'عطر نسائي','discover.cat.men':'عطر رجالي',
-    'discover.cat.skin':'بشرة','discover.cat.hair':'شعر','discover.cat.all':'الكل',
-    'discover.cat.lips':'شفاه','discover.cat.nails':'أظافر',
-    'sb.nav':'التنقل','sb.home':'الرئيسية','sb.brands':'البراندات العالمية',
-    'sb.favs':'مفضلتي','sb.cats':'التصنيفات','sb.makeup':'ماكياج',
-    'sb.fragrance':'عطور','sb.skincare':'عناية بالبشرة','sb.hair':'عناية بالشعر',
-    'sb.account':'الحساب','sb.myaccount':'حسابي','sb.vip':'اشتراك VIP','sb.coming':'قريباً',
-    'auth.login.tab':'تسجيل الدخول','auth.signup.tab':'حساب جديد',
-    'auth.name.ph':'كيف نناديكِ؟','auth.email.ph':'name@example.com','auth.pass.ph':'كلمة المرور',
-    'auth.forgot':'نسيتِ كلمة المرور؟','auth.tagline':'مستشارتكِ الذكية في الجمال',
-    'auth.submit.login':'تسجيل الدخول','auth.submit.signup':'إنشاء حساب',
-    'misc.viewprod':'عرض المنتج في المتجر',
-    'misc.ai.active':'الذكاء الاصطناعي مفعّل ويعمل تلقائياً',
-    'misc.ai.lang':'أجيبي دائماً باللغة العربية',
-    'misc.filter.noresult':'لا توجد بيانات كافية للفلترة — تم عرض الكل',
-    'misc.brands.viewall.tpl':'عرض جميع البراندات ({n})',
-  },
-  en:{
-    'nav.home':'Home','nav.discover':'Discover','nav.brands':'Brands',
-    'nav.favs':'Favorites','nav.account':'Account',
-    'home.subtitle':'Smart Beauty Assistant',
-    'home.greeting':'What are you looking for today?',
-    'home.ai.status':'Your beauty advisor',
-    'home.ai.empty':'Ask about a product, an ingredient, or a routine',
-    'home.ai.placeholder':'Type your question…',
-    'home.featured':'Product of the day',
-    'home.hero.badge':'Lamsa pick','home.hero.btn':'View details',
-    'home.cat.title':'Shop by category',
-    'home.cat.makeup':'Makeup','home.cat.fragrance':'Fragrances',
-    'home.cat.skincare':'Skincare','home.cat.hair':'Hair Care',
-    'home.cat.brands':'All products','home.cat.favs':'Favorites',
-    'home.cat.sub.bp':'Brands & Products','home.cat.sub.ab':'All Brands','home.cat.sub.sv':'Saved',
-    'brands.title':'Brands','brands.search':'Search brands...',
-    'brands.filter.all':'All','brands.filter.makeup':'Makeup',
-    'brands.filter.fragrance':'Fragrances','brands.filter.skincare':'Skincare','brands.filter.hair':'Hair',
-    'brands.viewall':'View All Brands',
-    'bdet.back':'Brand Details','bdet.founded':'Founded','bdet.origin':'Origin','bdet.category':'Category',
-    'bdet.ai.btn':'Get Recommendations','bdet.recs.title':'✨ Recommended for you',
-    'bdet.filter.all':'All','bdet.filter.women':'Women','bdet.filter.men':'Men',
-    'bdet.filter.new':'New','bdet.filter.best':'Best Sellers',
-    'bdet.featured':'Featured Products','bdet.sort':'Sort','bdet.viewall.prefix':'View all products of ',
-    'favs.title':'Favorites','favs.clearall':'Clear All',
-    'favs.empty.title':'No favorites yet',
-    'favs.empty.sub':'Browse products and tap the heart on any item to save it here',
-    'favs.empty.btn':'Explore Products','favs.trending':'Products you might like',
-    'favs.count.suffix':' saved',
-    'prof.title':'Account',
-    'prof.ai.label':'Lamsa Smart Assistant',
-    'prof.ai.status':'AI ready and working automatically — no setup needed ✨',
-    'prof.ai.badge':'Active',
-    'prof.item.model':'AI Model','prof.item.voice':'Voice Language',
-    'prof.item.version':'Version','prof.item.theme':'Display Mode','prof.item.theme.val':'Dark / Light',
-    'prof.item.privacy':'Privacy','prof.item.privacy.val':'No Image Analysis','prof.item.policy':'Privacy Policy',
-    'prof.lang.label':'Language / اللغة','prof.lang.val.ar':'العربية 🇸🇦','prof.lang.val.en':'English 🇬🇧',
-    'prof.logout':'Sign Out','prof.login':'Sign In / Create Account','prof.clearfavs':'Delete All My Data Permanently',
-    'discover.title':'Discover','discover.search':'Search any product...',
-    'discover.cat.makeup':'Makeup','discover.cat.fragrance':'Fragrances',
-    'discover.cat.women':'Women\'s Scent','discover.cat.men':'Men\'s Scent',
-    'discover.cat.skin':'Skincare','discover.cat.hair':'Hair','discover.cat.all':'All',
-    'discover.cat.lips':'Lips','discover.cat.nails':'Nails',
-    'sb.nav':'Navigation','sb.home':'Home','sb.brands':'Global Brands',
-    'sb.favs':'My Favorites','sb.cats':'Categories','sb.makeup':'Makeup',
-    'sb.fragrance':'Fragrances','sb.skincare':'Skincare','sb.hair':'Hair Care',
-    'sb.account':'Account','sb.myaccount':'My Account','sb.vip':'VIP Subscription','sb.coming':'Coming Soon',
-    'auth.login.tab':'Sign In','auth.signup.tab':'New Account',
-    'auth.name.ph':'What should we call you?','auth.email.ph':'name@example.com','auth.pass.ph':'Password',
-    'auth.forgot':'Forgot password?','auth.tagline':'Your smart beauty advisor',
-    'auth.submit.login':'Sign In','auth.submit.signup':'Create Account',
-    'misc.viewprod':'View Product in Store',
-    'misc.ai.active':'AI is active and working automatically',
-    'misc.ai.lang':'Always respond in English',
-    'misc.filter.noresult':'Not enough data for filtering — showing all',
-    'misc.brands.viewall.tpl':'View All Brands ({n})',
-  }
-};
+// (TRANSLATIONS نُقل إلى أعلى الصفحة ليتوفر أثناء init)
 
-let currentLang = localStorage.getItem('rosiva_lang') || 'ar';
+var currentLang = (function(){try{return localStorage.getItem('rosiva_lang')||'ar'}catch(e){return 'ar'}})();
 
 function t(key){
-  return (TRANSLATIONS[currentLang]||{})[key] || (TRANSLATIONS.ar||{})[key] || key;
+  try{ return (TRANSLATIONS[currentLang]||{})[key] || (TRANSLATIONS.ar||{})[key] || key; }catch(e){ return key; }
 }
 // نكشف t() عالمياً للـ module scripts
 window.t = t;
@@ -6992,8 +7203,10 @@ function setLang(lang){
     const fs=document.getElementById('s-favs');
     if(fs && fs.classList.contains('on')) renderFavs();
   }
+  if(typeof _refreshDynamicLang==='function') _refreshDynamicLang();
 }
 
+function _refreshDynamicLang(){ try{ initHeroCard(); updateVipUI(); if(typeof _updateQuickChips==='function') _updateQuickChips(); }catch(e){} }
 function toggleLang(){
   setLang(currentLang==='ar'?'en':'ar');
 }
