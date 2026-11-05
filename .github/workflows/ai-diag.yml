@@ -1,0 +1,22 @@
+name: AI diagnostics
+on:
+  push:
+    branches: [ai-diag]
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test Groq key and models (key is never printed)
+        env:
+          K: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          echo "key length: ${#K}  prefix: ${K:0:4}"
+          echo "== models endpoint =="
+          curl -s -o m.json -w "HTTP %{http_code}\n" https://api.groq.com/openai/v1/models -H "Authorization: Bearer $K"
+          python3 -c "import json;d=json.load(open('m.json'));print('ERROR:',d.get('error')) if 'error' in d else print('available:',sorted(m['id'] for m in d['data']))"
+          for M in llama-3.1-8b-instant meta-llama/llama-4-scout-17b-16e-instruct meta-llama/llama-4-maverick-17b-128e-instruct llama-3.3-70b-versatile; do
+            code=$(curl -s -o r.json -w "%{http_code}" https://api.groq.com/openai/v1/chat/completions \
+              -H "Authorization: Bearer $K" -H "Content-Type: application/json" \
+              -d "{\"model\":\"$M\",\"messages\":[{\"role\":\"user\",\"content\":\"قل مرحبا\"}],\"max_tokens\":10}")
+            echo "$M -> HTTP $code :: $(python3 -c "import json;d=json.load(open('r.json'));print(d['error']['message'][:160] if 'error' in d else d['choices'][0]['message']['content'])")"
+          done
