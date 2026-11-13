@@ -1,0 +1,8 @@
+name = "lamsa-ai"
+main = "src.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+FIREBASE_PROJECT_ID = "rosiva-929c8"
+HOURLY_LIMIT = "60"
