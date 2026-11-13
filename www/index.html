@@ -2729,6 +2729,14 @@ body.light-mode .sc-cam{color:#fff}
 .sc-f.warn{border-inline-start-color:#E0A458}.sc-f b{font-size:14px;color:var(--v-ink);unicode-bidi:plaintext}.sc-f span{font-size:13px;color:var(--v-mist)}
 .sc-ai{font-size:14px;line-height:1.8;color:var(--v-ink);padding:12px;border-radius:12px;background:var(--v-rose-wash)}
 .sc-raw{margin-top:14px;font-size:13px;color:var(--v-mist)}.sc-raw pre{white-space:pre-wrap;direction:ltr;text-align:left;font-size:12px;max-height:160px;overflow:auto}
+.sc-hist-btn{display:block;margin:10px auto 0}
+.sc-h{border:1px solid var(--v-line);border-radius:12px;padding:10px 12px;margin:6px 0}
+.sc-h summary{display:flex;justify-content:space-between;gap:8px;cursor:pointer;list-style:none}
+.sc-h summary b{font-size:14px;color:var(--v-ink);unicode-bidi:plaintext;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-h summary small{color:var(--v-faint);font-size:12px;flex-shrink:0}
+.sc-tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.sc-tag{font-size:12px;padding:3px 9px;border-radius:99px;background:rgba(127,191,142,.15);color:#7FBF8E}.sc-tag.warn{background:rgba(224,164,88,.15);color:#E0A458}
+.sc-del{margin-top:8px;background:none;border:0;color:var(--v-faint);font-size:12px;cursor:pointer}
 .sc-again{display:block;text-align:center;cursor:pointer}
 .h-quiz{width:100%;display:flex;align-items:center;gap:14px;padding:16px;text-align:right;cursor:pointer;
   background:linear-gradient(135deg,#1E2747,#2A3358);border:1px solid var(--v-line);border-radius:var(--v-r-l);color:#F3E7D3;font-family:inherit}
@@ -3515,6 +3523,9 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
 <script>
 var TRANSLATIONS = {
   ar:{
+    'sc.hist':'تحليلاتي السابقة','sc.hist.login':'سجّلي الدخول لحفظ تحليلاتك والرجوع إليها من أي جهاز.',
+    'sc.hist.empty':'لا توجد تحليلات محفوظة بعد.','sc.hist.err':'تعذّر تحميل السجل. تحققي من الإنترنت.',
+    'sc.hist.item':'منتج','sc.hist.del':'حذف',
     'sc.card.t':'صوّري أي منتج واعرفي مكوناته','sc.card.s':'صورة للعبوة أو قائمة المكونات — وتحليل فوري',
     'sc.title':'تحليل منتج من صورة','sc.hint':'صوّري قائمة المكونات (INGREDIENTS) بوضوح وبإضاءة جيدة.',
     'sc.cam':'التقاط صورة','sc.reading':'جارٍ قراءة الصورة…','sc.ai':'جارٍ تحليل المنتج لبشرتك…',
@@ -3669,6 +3680,9 @@ var TRANSLATIONS = {
     'misc.brands.viewall.tpl':'عرض جميع البراندات ({n})',
   },
   en:{
+    'sc.hist':'My past scans','sc.hist.login':'Sign in to save your scans and see them on any device.',
+    'sc.hist.empty':'No saved scans yet.','sc.hist.err':'Could not load history. Check your connection.',
+    'sc.hist.item':'Product','sc.hist.del':'Delete',
     'sc.card.t':'Snap any product, know its ingredients','sc.card.s':'Photo of the pack or ingredient list — instant read',
     'sc.title':'Analyze a product from a photo','sc.hint':'Take a clear, well-lit photo of the INGREDIENTS list.',
     'sc.cam':'Take a photo','sc.reading':'Reading the photo…','sc.ai':'Analyzing it for your skin…',
@@ -6266,8 +6280,33 @@ function openScan(){
     <h3 class="sq-q">${t('sc.title')}</h3><p class="sc-hint">${t('sc.hint')}</p>
     <label class="sc-cam"><i class="fa-solid fa-camera"></i> ${t('sc.cam')}
       <input type="file" accept="image/*" capture="environment" hidden onchange="_scanFile(this.files[0])"></label>
+    <button class="sq-back sc-hist-btn" onclick="openScanHistory()"><i class="fa-solid fa-clock-rotate-left"></i> ${t('sc.hist')}</button>
     <div id="sc-out"></div></div>`;
 }
+let _scanCur=null;
+async function _scanSave(patch){
+  Object.assign(_scanCur||(_scanCur={}),patch);
+  if(!window._authUser||!window._fsAddScan) return;
+  if(_scanCur._saving) return; _scanCur._saving=true;
+  const {_saving,...it}=_scanCur; await window._fsAddScan(it);
+}
+async function openScanHistory(){
+  const out=document.getElementById('sc-out'); if(!out) return;
+  if(!window._authUser){ out.innerHTML=`<p class="sc-msg">${t('sc.hist.login')}</p>`; return; }
+  out.innerHTML=`<p class="sc-msg"><i class="fa-solid fa-spinner fa-spin"></i></p>`;
+  const list=await (window._fsListScans?window._fsListScans():null);
+  if(!list){ out.innerHTML=`<p class="sc-msg">${t('sc.hist.err')}</p>`; return; }
+  if(!list.length){ out.innerHTML=`<p class="sc-msg">${t('sc.hist.empty')}</p>`; return; }
+  const en=currentLang==='en';
+  out.innerHTML=`<div class="sq-sec">${t('sc.hist')}</div>`+list.map(it=>{
+    const d=new Date(it.createdAt).toLocaleDateString(en?'en-GB':'ar-EG',{day:'numeric',month:'short',year:'numeric'});
+    const fl=(it.flags||[]).map(f=>`<span class="sc-tag ${f.k}">${_scEsc(f.n)}</span>`).join('');
+    return `<details class="sc-h"><summary><b>${_scEsc(it.title||t('sc.hist.item'))}</b><small>${d}</small></summary>
+      <div class="sc-tags">${fl||`<span class="sc-msg">${t('sc.nothing')}</span>`}</div>
+      ${it.verdict?`<div class="sc-ai">${_scEsc(it.verdict).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>')}</div>`:''}
+      <button class="sc-del" onclick="_scanDel('${it.id}',this)">${t('sc.hist.del')}</button></details>`;}).join('');
+}
+async function _scanDel(id,btn){ await window._fsDelScan?.(id); btn.closest('details')?.remove(); }
 function closeScan(){ const m=document.getElementById('scan-m'); if(m) m.style.display='none'; }
 function _scanImg(file){
   return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>{ const im=new Image(); im.onload=()=>{
@@ -6292,7 +6331,8 @@ async function _scanFile(file){
   html+=`<details class="sc-raw"><summary>${t('sc.text')}</summary><pre>${_scEsc(text.slice(0,1500))}</pre></details>
     <label class="sq-back sc-again">${t('sc.retry')}<input type="file" accept="image/*" capture="environment" hidden onchange="_scanFile(this.files[0])"></label>`;
   out.innerHTML=html;
-  if(vip) _scanAI(text);
+  _scanCur={flags:flags.map(f=>({n:f[1],k:f[2]})),text:text.slice(0,600),title:(text.split('\n').find(l=>l.trim().length>3&&!/ingredient/i.test(l))||'').slice(0,60)};
+  if(vip) _scanAI(text); else _scanSave({});
 }
 async function _scanAI(text){
   const el=document.getElementById('sc-ai'); if(!el) return;
@@ -6306,11 +6346,12 @@ async function _scanAI(text){
   try{
     let r=await callGemini(msg,sys);
     const m=r.match(/SEARCH:\s*(.+)\s*$/i); r=r.replace(/SEARCH:[\s\S]*$/i,'').trim();
+    { const nm=(r.split('\n')[0]||'').replace(/[*#١1)\.\-:]+/g,' ').trim().slice(0,60); _scanSave({verdict:r.slice(0,1200),...(nm?{title:nm}:{})}); }
     el.innerHTML=_scEsc(r).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
     const alt=m&&catalogFind({q:m[1],cat:'skincare'})[0];
     if(alt) el.insertAdjacentHTML('afterend',`<div class="sq-sec">${t('sc.alt')}</div><button class="sq-step" onclick="closeScan();openProdDetail({name:'${alt.product_name.replace(/'/g,"\\'")}',brand:'${alt.brands.replace(/'/g,"\\'")}',img:'${alt.image_url}',ingr:'',labels:''})"><img src="${alt.image_url}" alt=""><span><b>${alt.product_name}</b><em>${alt.brands}</em></span><i class="fa-solid fa-chevron-left"></i></button>`);
     if(!prof.type) el.insertAdjacentHTML('beforeend',`<p class="sc-msg" style="margin-top:8px"><a href="#" onclick="closeScan();openSkinQuiz();return false">${t('sc.quizFirst')}</a></p>`);
-  }catch(e){ el.textContent=(e.message==='VIP_REQUIRED'||e.message==='AUTH_REQUIRED')?t('sc.up'):t('sc.none'); }
+  }catch(e){ _scanSave({}); el.textContent=(e.message==='VIP_REQUIRED'||e.message==='AUTH_REQUIRED')?t('sc.up'):t('sc.none'); }
 }
 
 const _QUIZ=[
@@ -7372,7 +7413,7 @@ function _updateQuickChips(){
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
   import {
     getFirestore, collection, query, where, limit,
-    getDocs, setDoc, getDoc, doc, deleteDoc
+    getDocs, setDoc, getDoc, doc, deleteDoc, addDoc, orderBy
   } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
   import {
     getAuth,
@@ -7415,6 +7456,21 @@ function _updateQuickChips(){
   };
   window._fsSetAIUsage = async function(uid,count){
     try{ await setDoc(doc(db,'users',uid),{aiQuotaDate:new Date().toDateString(),aiQuotaCount:count},{merge:true}); }catch(e){}
+  };
+
+  // ══ سجل تحليلات الصور — users/{uid}/scans (نفس قاعدة البيانات، يتبع قواعد users) ══
+  window._fsAddScan = async function(item){
+    const u=auth.currentUser; if(!u) return false;
+    try{ await addDoc(collection(db,'users',u.uid,'scans'),{...item,createdAt:Date.now()}); return true; }catch(e){ return false; }
+  };
+  window._fsListScans = async function(){
+    const u=auth.currentUser; if(!u) return null;
+    try{ const q=query(collection(db,'users',u.uid,'scans'),orderBy('createdAt','desc'),limit(30));
+      return (await getDocs(q)).docs.map(d=>({id:d.id,...d.data()})); }catch(e){ return null; }
+  };
+  window._fsDelScan = async function(id){
+    const u=auth.currentUser; if(!u) return;
+    try{ await deleteDoc(doc(db,'users',u.uid,'scans',id)); }catch(e){}
   };
 
   // ══ مساعدات VIP — Firestore ══
@@ -7533,6 +7589,7 @@ function _updateQuickChips(){
     if(auth.currentUser){
       // احذفي سجل المستخدمة في Firestore أولاً (الاشتراك، عداد الأسئلة) — قبل حذف الحساب
       // لأن قواعد الأمان تتطلب أن تكون مسجّلة الدخول لحذف مستندها
+      try{ const ss=await getDocs(collection(db,'users',auth.currentUser.uid,'scans')); await Promise.all(ss.docs.map(d=>deleteDoc(d.ref))); }catch(e){}
       try{ await deleteDoc(doc(db,'users',auth.currentUser.uid)); }catch(e){}
       try{
         await deleteUser(auth.currentUser);
