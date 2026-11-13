@@ -1,0 +1,38 @@
+name: Deploy AI server (Cloudflare)
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths: ['worker/**', '.github/workflows/deploy-worker.yml']
+permissions:
+  contents: write
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secrets
+        env: { T: "${{ secrets.CLOUDFLARE_API_TOKEN }}", A: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}", G: "${{ secrets.GROQ_API_KEY }}" }
+        run: |
+          [ -n "$T" ] && [ -n "$A" ] && [ -n "$G" ] || { echo "::error::Add CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID and GROQ_API_KEY in repo Settings → Secrets → Actions"; exit 1; }
+      - name: Deploy worker
+        id: dep
+        working-directory: worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx --yes wrangler@4 deploy 2>&1 | tee out.txt
+          URL=$(grep -oE 'https://lamsa-ai\.[a-z0-9-]+\.workers\.dev' out.txt | head -1)
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          printf '%s' "${{ secrets.GROQ_API_KEY }}" | npx --yes wrangler@4 secret put GROQ_API_KEY
+      - name: Health check
+        run: curl -fsS "${{ steps.dep.outputs.url }}" | tee /dev/stderr | grep -q '"configured":true'
+      - name: Point the app at Cloudflare
+        if: steps.dep.outputs.url != ''
+        run: |
+          U="${{ steps.dep.outputs.url }}"
+          grep -q "const CF_AI_URL='$U'" www/index.html && exit 0
+          sed -i "s#^const CF_AI_URL='[^']*';#const CF_AI_URL='$U';#" www/index.html
+          git config user.name "lamsa-bot"; git config user.email "actions@github.com"
+          git commit -am "Point app AI to Cloudflare worker" && git push

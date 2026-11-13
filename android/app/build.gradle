@@ -52,6 +52,8 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
     // Google Play Billing — مطلوب لإنشاء الاشتراكات في Play Console
     implementation 'com.android.billingclient:billing:7.1.1'
+    // قراءة النص من الصور على الجهاز (مجاني، النموذج مدمج — لا يحتاج إنترنت)
+    implementation 'com.google.mlkit:text-recognition:16.0.1'
 }
 
 apply from: 'capacitor.build.gradle'

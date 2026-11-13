@@ -2721,6 +2721,15 @@ html.lang-en #app .obf-card-maker{text-align:left}
 .fg-row b{font-size:13px;color:var(--v-ink)} .fg-row span{font-size:13px;line-height:1.8;color:var(--v-mist)}
 .fg-row a{display:block;color:var(--v-rose);text-decoration:none;padding:2px 0;unicode-bidi:plaintext}
 .h-ai-vip{font-size:11px;font-weight:700;color:var(--v-champ);border:1px solid rgba(227,184,98,.45);border-radius:99px;padding:2px 8px}
+.sc-hint{color:var(--v-mist);font-size:14px;margin:0 0 14px;line-height:1.7}
+.sc-cam{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px;border-radius:99px;background:var(--v-rose);color:#2A1220;font-weight:700;cursor:pointer}
+body.light-mode .sc-cam{color:#fff}
+.sc-msg{color:var(--v-mist);font-size:14px;line-height:1.7;margin:12px 0}
+.sc-f{display:flex;flex-direction:column;gap:2px;padding:10px 12px;margin:6px 0;border-radius:12px;border:1px solid var(--v-line);border-inline-start:3px solid #7FBF8E}
+.sc-f.warn{border-inline-start-color:#E0A458}.sc-f b{font-size:14px;color:var(--v-ink);unicode-bidi:plaintext}.sc-f span{font-size:13px;color:var(--v-mist)}
+.sc-ai{font-size:14px;line-height:1.8;color:var(--v-ink);padding:12px;border-radius:12px;background:var(--v-rose-wash)}
+.sc-raw{margin-top:14px;font-size:13px;color:var(--v-mist)}.sc-raw pre{white-space:pre-wrap;direction:ltr;text-align:left;font-size:12px;max-height:160px;overflow:auto}
+.sc-again{display:block;text-align:center;cursor:pointer}
 .h-quiz{width:100%;display:flex;align-items:center;gap:14px;padding:16px;text-align:right;cursor:pointer;
   background:linear-gradient(135deg,#1E2747,#2A3358);border:1px solid var(--v-line);border-radius:var(--v-r-l);color:#F3E7D3;font-family:inherit}
 .h-quiz-ic{flex-shrink:0;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(229,138,90,.18);color:#E58A5A;font-size:18px}
@@ -2842,6 +2851,15 @@ html.lang-en .pdm-more-it,html.lang-en .pdm-more-it small{text-align:left}
       <button class="h-quiz" onclick="openSkinQuiz()">
         <span class="h-quiz-ic"><i class="fa-solid fa-spa"></i></span>
         <span class="h-quiz-t"><b data-i18n="q.card.t">اكتشفي روتينك في 30 ثانية</b><small data-i18n="q.card.s">3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً</small></span>
+        <i class="fa-solid fa-chevron-left h-quiz-go"></i>
+      </button>
+    </section>
+
+    <!-- ── تحليل صورة منتج ── -->
+    <section class="h-sec" style="padding-top:10px">
+      <button class="h-quiz" onclick="openScan()">
+        <span class="h-quiz-ic"><i class="fa-solid fa-camera"></i></span>
+        <span class="h-quiz-t"><b data-i18n="sc.card.t">صوّري أي منتج واعرفي مكوناته</b><small data-i18n="sc.card.s">صورة للعبوة أو قائمة المكونات — وتحليل فوري</small></span>
         <i class="fa-solid fa-chevron-left h-quiz-go"></i>
       </button>
     </section>
@@ -3497,6 +3515,15 @@ body.light-mode .pw-x{background:rgba(0,0,0,.06);color:#4A4660}
 <script>
 var TRANSLATIONS = {
   ar:{
+    'sc.card.t':'صوّري أي منتج واعرفي مكوناته','sc.card.s':'صورة للعبوة أو قائمة المكونات — وتحليل فوري',
+    'sc.title':'تحليل منتج من صورة','sc.hint':'صوّري قائمة المكونات (INGREDIENTS) بوضوح وبإضاءة جيدة.',
+    'sc.cam':'التقاط صورة','sc.reading':'جارٍ قراءة الصورة…','sc.ai':'جارٍ تحليل المنتج لبشرتك…',
+    'sc.none':'لم نتمكن من قراءة نص واضح. جرّبي صورة أقرب وأوضح.','sc.appOnly':'تحليل الصور متاح داخل تطبيق لمسة على أندرويد.',
+    'sc.found':'مكونات لاحظناها','sc.nothing':'لم نجد مكونات من قائمتنا المعروفة في هذه الصورة.',
+    'sc.good':'مفيد','sc.warn':'انتبهي','sc.text':'النص المقروء','sc.retry':'صورة أخرى',
+    'sc.verdict':'رأي لمسة لبشرتك','sc.alt':'بديل من لمسة',
+    'sc.up':'مع VIP: حكم كامل يناسب بشرتك تحديداً + بديل من لمسة.','sc.up.btn':'جرّبي',
+    'sc.quizFirst':'لنتيجة أدق، أكملي اختبار البشرة أولاً.',
     'q.card.t':'اكتشفي روتينك في 30 ثانية',
     'q.card.s':'3 أسئلة عن بشرتك، وروتين كامل من منتجات لمسة — مجاناً',
     'q.q1':'ما نوع بشرتك؟',
@@ -3642,6 +3669,15 @@ var TRANSLATIONS = {
     'misc.brands.viewall.tpl':'عرض جميع البراندات ({n})',
   },
   en:{
+    'sc.card.t':'Snap any product, know its ingredients','sc.card.s':'Photo of the pack or ingredient list — instant read',
+    'sc.title':'Analyze a product from a photo','sc.hint':'Take a clear, well-lit photo of the INGREDIENTS list.',
+    'sc.cam':'Take a photo','sc.reading':'Reading the photo…','sc.ai':'Analyzing it for your skin…',
+    'sc.none':'We could not read clear text. Try a closer, sharper photo.','sc.appOnly':'Photo analysis is available in the Lamsa Android app.',
+    'sc.found':'Ingredients we noticed','sc.nothing':'None of our known ingredients were found in this photo.',
+    'sc.good':'Helpful','sc.warn':'Watch out','sc.text':'Text read','sc.retry':'Another photo',
+    'sc.verdict':"Lamsa's take for your skin",'sc.alt':'A Lamsa alternative',
+    'sc.up':'With VIP: a full verdict for your skin + a Lamsa alternative.','sc.up.btn':'Try',
+    'sc.quizFirst':'For a sharper result, take the skin quiz first.',
     'q.card.t':'Find your routine in 30 seconds',
     'q.card.s':'3 questions about your skin, a full routine from Lamsa picks — free',
     'q.q1':'What is your skin type?',
@@ -4454,7 +4490,18 @@ async function qFilterProducts(list, seenSet, minScore, skipImageCheck){
 }
 
 const DEFAULT_GROQ_KEY='server'; // المفتاح على خادم لمسة فقط — لا يوجد مفتاح داخل التطبيق
+const CF_AI_URL=''; // يملؤه سير عمل النشر على Cloudflare تلقائياً
 const AI_PROXY_URL='https://lamsa-ai-dun.vercel.app/api/ai';
+const AI_URLS=[CF_AI_URL,AI_PROXY_URL].filter(Boolean);
+// يجرّب Cloudflare أولاً، ثم Vercel عند فشل الشبكة أو الخادم
+async function _aiFetch(opts){
+  let last;
+  for(const u of AI_URLS){
+    try{ const r=await fetch(u,opts); if(r.status<500&&r.status!==404) return r; last=r; }
+    catch(e){ last=e; }
+  }
+  if(last instanceof Response) return last; throw last||new Error('NET_ERR');
+}
 let apiKey=DEFAULT_GROQ_KEY;
 
 let isRec=false,recog=null;
@@ -5804,7 +5851,7 @@ async function callGemini(msg, sys=''){
       if(sys) messages.push({role:'system', content:sys});
       messages.push({role:'user', content:msg});
       const body = {model, messages, max_tokens:800, temperature:0.7};
-      r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
+      r = await _aiFetch({method:'POST',headers,body:JSON.stringify(body)});
     }catch(netErr){
       lastErr='NET_ERR: '+netErr.message;
       continue;
@@ -5888,7 +5935,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
   for(const model of _GROQ_MODELS){
     try{
       let body = {model, messages, tools, tool_choice:'auto', max_tokens:800, temperature:0.7};
-      let r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
+      let r = await _aiFetch({method:'POST',headers,body:JSON.stringify(body)});
       if(!r.ok){
         let errMsg='API_ERR_'+r.status;
         try{const ej=await r.json();errMsg+=' — '+(ej?.error?.message||'');}catch(e){}
@@ -5915,7 +5962,7 @@ async function callGeminiWithProductTool(userMsg, sys=''){
           messages.push({role:'assistant', content:null, tool_calls:[tc]});
           messages.push({role:'tool', tool_call_id:tc.id, content:res.summary});
           body = {model, messages, max_tokens:800, temperature:0.7};
-          r = await fetch(_groqUrl(),{method:'POST',headers,body:JSON.stringify(body)});
+          r = await _aiFetch({method:'POST',headers,body:JSON.stringify(body)});
           if(r.ok){
             d = await r.json(); choice = d.choices?.[0];
           } else {
@@ -5974,7 +6021,7 @@ async function validateProductImageAI(imgUrl, code){
       ]}],
       max_tokens:5
     };
-    const r = await fetch(_groqUrl(),{
+    const r = await _aiFetch({
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
       body:JSON.stringify(body)
@@ -6002,7 +6049,7 @@ async function _testGeminiKey(k){
       messages:[{role:'user',content:'hi'}],
       max_tokens:5
     });
-    const r = await fetch(_groqUrl(),{
+    const r = await _aiFetch({
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+k},
       body
@@ -6182,6 +6229,90 @@ function freeProductGuide(p, el){
 }
 
 // ── اختبار البشرة → روتين لمسة ──
+
+// ══ تحليل منتج من صورة ══
+// المكونات المعروفة: [نمط، اسم، نوع، وصف عربي، وصف إنجليزي]
+const _INGR=[
+ [/niacinamide/i,'Niacinamide','good','يقلل المسام والبقع ويهدئ الدهون','Refines pores, fades spots, balances oil'],
+ [/hyalur|sodium hyaluronate/i,'Hyaluronic acid','good','ترطيب عميق لكل البشرات','Deep hydration for all skin types'],
+ [/ceramide/i,'Ceramides','good','يقوي حاجز البشرة','Strengthens the skin barrier'],
+ [/glycerin/i,'Glycerin','good','مرطب لطيف','Gentle humectant'],
+ [/panthenol/i,'Panthenol (B5)','good','يهدئ ويرمم','Soothes and repairs'],
+ [/centella|madecassoside|cica/i,'Centella','good','مهدئ للبشرة الحساسة','Calms sensitive skin'],
+ [/ascorbic|ascorbyl|vitamin c/i,'Vitamin C','good','إشراقة وتوحيد اللون','Brightens and evens tone'],
+ [/peptide/i,'Peptides','good','يدعم المرونة ضد التجاعيد','Supports firmness'],
+ [/squalane/i,'Squalane','good','ترطيب خفيف غير دهني','Light, non-greasy moisture'],
+ [/azelaic/i,'Azelaic acid','good','للحبوب والاحمرار والبقع','For acne, redness, spots'],
+ [/zinc oxide|titanium dioxide/i,'Mineral SPF','good','حماية معدنية من الشمس','Mineral sun filter'],
+ [/retinol|retinal|retinyl/i,'Retinoid','warn','فعّال للتجاعيد، يُستخدم ليلاً مع واقي شمس، ويُتجنّب في الحمل','Powerful anti-aging; night only, use SPF, avoid in pregnancy'],
+ [/salicylic|\bbha\b/i,'Salicylic acid (BHA)','warn','ممتاز للمسام والحبوب، وقد يجفف','Great for pores/acne, can dry'],
+ [/glycolic|lactic acid|mandelic|\baha\b/i,'AHA exfoliant','warn','مقشّر — لا تكثري منه، واستخدمي واقي شمس','Exfoliant — do not overdo it, wear SPF'],
+ [/benzoyl peroxide/i,'Benzoyl peroxide','warn','قوي للحبوب، وقد يهيّج','Strong for acne, can irritate'],
+ [/alcohol denat|sd alcohol|ethanol/i,'Drying alcohol','warn','قد يجفف ويهيّج البشرة الحساسة','Can dry/irritate sensitive skin'],
+ [/parfum|fragrance/i,'Fragrance','warn','أكثر مسبب للتحسس — انتبهي إن كانت بشرتك حساسة','Top irritant for sensitive skin'],
+ [/limonene|linalool|citral|geraniol|eugenol/i,'Fragrance allergens','warn','مكونات عطرية قد تسبب تحسساً','Fragrance allergens'],
+ [/essential oil|lavandula|peppermint|menthol/i,'Essential oils','warn','قد تهيّج البشرة الحساسة','May irritate sensitive skin'],
+ [/coconut oil|cocos nucifera|isopropyl myristate/i,'Pore-clogging','warn','قد يسد المسام عند البشرة الدهنية','May clog pores on oily skin'],
+ [/paraben/i,'Parabens','warn','مادة حافظة يتجنبها البعض','Preservative some prefer to avoid'],
+];
+function _scanFlags(txt){ return _INGR.filter(r=>r[0].test(txt)); }
+function _scEsc(x){ return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function openScan(){
+  let m=document.getElementById('scan-m');
+  if(!m){ m=document.createElement('div'); m.id='scan-m'; m.className='sq'; document.body.appendChild(m); }
+  m.style.display='flex';
+  m.innerHTML=`<div class="sq-sheet" role="dialog" aria-modal="true">
+    <div class="sq-top"><button class="sq-x" onclick="closeScan()" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
+    <h3 class="sq-q">${t('sc.title')}</h3><p class="sc-hint">${t('sc.hint')}</p>
+    <label class="sc-cam"><i class="fa-solid fa-camera"></i> ${t('sc.cam')}
+      <input type="file" accept="image/*" capture="environment" hidden onchange="_scanFile(this.files[0])"></label>
+    <div id="sc-out"></div></div>`;
+}
+function closeScan(){ const m=document.getElementById('scan-m'); if(m) m.style.display='none'; }
+function _scanImg(file){
+  return new Promise((res,rej)=>{ const fr=new FileReader(); fr.onload=()=>{ const im=new Image(); im.onload=()=>{
+    const k=Math.min(1,1600/Math.max(im.width,im.height)); const c=document.createElement('canvas');
+    c.width=Math.round(im.width*k); c.height=Math.round(im.height*k); c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    res(c.toDataURL('image/jpeg',.85)); }; im.onerror=rej; im.src=fr.result; }; fr.onerror=rej; fr.readAsDataURL(file); });
+}
+async function _scanFile(file){
+  if(!file) return; const out=document.getElementById('sc-out');
+  const TS=window.Capacitor?.Plugins?.TextScan;
+  if(!TS){ out.innerHTML=`<p class="sc-msg">${t('sc.appOnly')}</p>`; return; }
+  out.innerHTML=`<p class="sc-msg"><i class="fa-solid fa-spinner fa-spin"></i> ${t('sc.reading')}</p>`;
+  let text='';
+  try{ text=((await TS.recognize({image:await _scanImg(file)})).text||'').trim(); }catch(e){}
+  if(text.length<8){ out.innerHTML=`<p class="sc-msg">${t('sc.none')}</p>`; return; }
+  const en=currentLang==='en', flags=_scanFlags(text);
+  const chip=f=>`<div class="sc-f ${f[2]}"><b>${f[1]}</b><span>${f[2]==='good'?t('sc.good'):t('sc.warn')} · ${en?f[4]:f[3]}</span></div>`;
+  let html=`<div class="sq-sec">${t('sc.found')}</div>${flags.length?flags.map(chip).join(''):`<p class="sc-msg">${t('sc.nothing')}</p>`}`;
+  let vip=false; try{ vip=await isVipActive(); }catch(e){}
+  if(vip) html+=`<div class="sq-sec">${t('sc.verdict')}</div><div id="sc-ai" class="sc-ai"><i class="fa-solid fa-spinner fa-spin"></i> ${t('sc.ai')}</div>`;
+  else html+=`<div class="fa-upsell"><span>${t('sc.up')}</span><button onclick="closeScan();openVipModal()">${t('sc.up.btn')} <b>VIP</b></button></div>`;
+  html+=`<details class="sc-raw"><summary>${t('sc.text')}</summary><pre>${_scEsc(text.slice(0,1500))}</pre></details>
+    <label class="sq-back sc-again">${t('sc.retry')}<input type="file" accept="image/*" capture="environment" hidden onchange="_scanFile(this.files[0])"></label>`;
+  out.innerHTML=html;
+  if(vip) _scanAI(text);
+}
+async function _scanAI(text){
+  const el=document.getElementById('sc-ai'); if(!el) return;
+  let prof={}; try{ prof=JSON.parse(localStorage.getItem('lamsaRoutine')||'{}'); }catch(e){}
+  const en=currentLang==='en';
+  const skin=prof.type?`Skin type: ${prof.type}. Main concern: ${prof.concern}.`:'Skin profile unknown.';
+  const sys=en?'You are Lamsa, a concise skincare expert. Answer in English.':'أنتِ لمسة، خبيرة عناية بالبشرة. أجيبي بالعربية المبسطة وباختصار.';
+  const ask=en?'1) Name the product if identifiable. 2) Verdict: is it suitable for this skin (Yes / With care / No) and why, in 3 short bullet points. 3) One usage tip. On the last line write exactly: SEARCH: <2-4 English words for a similar product type, e.g. niacinamide serum>'
+     :'١) اسم المنتج إن أمكن. ٢) الحكم: هل يناسب هذه البشرة (نعم / بحذر / لا) ولماذا في ٣ نقاط قصيرة. ٣) نصيحة استخدام واحدة. في السطر الأخير اكتبي حرفياً: SEARCH: <2-4 كلمات إنجليزية لنوع منتج مشابه مثل niacinamide serum>';
+  const msg=skin+'\nText read from a product photo (OCR, may be messy):\n<<<'+text.slice(0,2500)+'>>>\n\n'+ask;
+  try{
+    let r=await callGemini(msg,sys);
+    const m=r.match(/SEARCH:\s*(.+)\s*$/i); r=r.replace(/SEARCH:[\s\S]*$/i,'').trim();
+    el.innerHTML=_scEsc(r).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\n/g,'<br>');
+    const alt=m&&catalogFind({q:m[1],cat:'skincare'})[0];
+    if(alt) el.insertAdjacentHTML('afterend',`<div class="sq-sec">${t('sc.alt')}</div><button class="sq-step" onclick="closeScan();openProdDetail({name:'${alt.product_name.replace(/'/g,"\\'")}',brand:'${alt.brands.replace(/'/g,"\\'")}',img:'${alt.image_url}',ingr:'',labels:''})"><img src="${alt.image_url}" alt=""><span><b>${alt.product_name}</b><em>${alt.brands}</em></span><i class="fa-solid fa-chevron-left"></i></button>`);
+    if(!prof.type) el.insertAdjacentHTML('beforeend',`<p class="sc-msg" style="margin-top:8px"><a href="#" onclick="closeScan();openSkinQuiz();return false">${t('sc.quizFirst')}</a></p>`);
+  }catch(e){ el.textContent=(e.message==='VIP_REQUIRED'||e.message==='AUTH_REQUIRED')?t('sc.up'):t('sc.none'); }
+}
+
 const _QUIZ=[
   {k:'type', q:'q.q1', a:['oily','dry','combo','sensitive','normal']},
   {k:'concern', q:'q.q2', a:['acne','spots','dull','aging','pores','dehyd']},
